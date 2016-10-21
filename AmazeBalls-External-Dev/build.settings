@@ -1,0 +1,34 @@
+settings = {
+	orientation =
+	{
+		default = "landscapeRight",
+	},
+	iphone =
+	{
+		plist=
+		{
+			UIStatusBarHidden=true,
+	        CFBundleIconFile = "Icon.png",
+	        CFBundleIconFiles = {
+	           "Icon.png", 
+	           "Icon@2x.png", 
+	           "Icon-72.png", 
+	        },
+	        UIApplicationExitsOnSuspend = false,
+            FacebookAppID = "1494868020767014",  --replace XXXXXXXXXX with your Facebook App ID
+            CFBundleURLTypes = {
+                {
+                CFBundleURLSchemes = { "fb1494868020767014", }  --replace XXXXXXXXXX with your Facebook App ID
+                }
+            }
+		},
+		plugins =
+	    {
+	        ["facebook"] =
+	        {
+	            publisherId = "com.coronalabs",
+	            supportedPlatforms = { iphone=true, ["iphone-sim"]=true },
+	        },
+	    },
+	}
+}

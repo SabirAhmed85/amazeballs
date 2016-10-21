@@ -1,0 +1,83 @@
+direction = "up"
+	if moveslow_Counter == 0 then
+	    ballspeed = 5
+	    Runtime:addEventListener( "enterFrame", moveSomethingThroughTunnel )
+	    Runtime:addEventListener( "enterFrame", moveSomething )
+	    Runtime:addEventListener( "enterFrame", moveSomethingSlow )
+	    moveslow_Counter = 1
+	end
+        
+__________________
+        
+local function moveSomethingSlow (event)
+
+    if tunnelCounter == 1 then
+	
+	tunnelVertScreenPositioning = ((tunnelVertScreen - 1) * display.contentHeight)
+	tunnelHorzScreenPositioning = ((tunnelHorzScreen - 1) * display.contentWidth)
+	
+	if  instance2.y < (tunnelVertScreenPositioning + 60) and
+	    instance2.y > (tunnelVertScreenPositioning + 50) and direction == "up" then
+		direction = "up-left"
+	end
+	
+	if  instance2.y < (tunnelVertScreenPositioning + 50) and
+	    instance2.y > (tunnelVertScreenPositioning + 40) and direction == "up-left" then
+		direction = "left"
+	end
+	
+	if  instance2.x < (tunnelHorzScreenPositioning + 230) and
+	    instance2.x > (tunnelHorzScreenPositioning + 220) and direction == "left" then
+		direction = "down-left"
+        end
+	
+	if  instance2.x < (tunnelHorzScreenPositioning + 220) and
+	    instance2.x > (tunnelHorzScreenPositioning + 210) and
+	    instance2.y < (tunnelVertScreenPositioning + 170) and direction == "down-left" then
+		direction = "down"
+	end
+	
+	if  instance2.y < (tunnelVertScreenPositioning + 180) and
+	    instance2.y > (tunnelVertScreenPositioning + 170) and direction == "down" then
+		direction = "down-left"
+	end
+		
+	if  instance2.y > (tunnelVertScreenPositioning + 180) and
+	    instance2.y < (tunnelVertScreenPositioning + 190) and direction == "down-left" then
+		direction = "left"
+		tunnelCounter = 0
+		ballspeed = 13
+		Runtime:removeEventListener( "enterFrame", moveSomethingSlow )
+		Runtime:removeEventListener( "enterFrame", moveSomethingThroughTunnel )
+	end
+    
+    end
+    
+end
+
+________________
+
+local function moveSomethingThroughTunnel (event)
+    
+    if shouldBallMoveState == "true" then
+
+	if (direction) == "up-left" then
+	    instance2.x = instance2.x - ballspeed
+	    instance2.y = instance2.y - ballspeed
+	    
+	elseif (direction) == "up-right" then
+	    instance2.x = instance2.x + ballspeed
+	    instance2.y = instance2.y - ballspeed
+	
+	elseif (direction) == "down-left" then
+	    instance2.x = instance2.x - ballspeed
+	    instance2.y = instance2.y + ballspeed
+	    
+	elseif (direction) == "down-right" then
+	    instance2.x = instance2.x + ballspeed
+	    instance2.y = instance2.y + ballspeed
+	    
+	end
+    end
+    
+end
