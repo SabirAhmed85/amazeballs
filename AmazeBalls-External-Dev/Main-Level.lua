@@ -20,6 +20,9 @@ local function dummyListener(event)
     return true
 end
 
+
+--[[]]
+
  --- IAP RELATED STARTS
 if (iapAvail) then
     IAPScript = require("modules.IAP.IAP-config")
@@ -1079,7 +1082,7 @@ function scene:show( event )
         end
 
         --- Create Transition Settings
-
+		--starting point
         mainFunc.transitionFunctionScript.prepareTransitioningObjects(mainFunc)
        
         mainFunc.ballAndButtonAndScreenCreateScript.createBall(mainFunc)
@@ -1313,20 +1316,26 @@ function scene:show( event )
 	        end
 	    end
 	    
-	    mainFunc.ballAndButtonAndScreenCreateScript.mapScreen:toFront()
-        mainFunc.ballAndButtonAndScreenCreateScript.levelTimerLabel:toFront()
+		mainFunc.ballAndButtonAndScreenCreateScript.mapScreen:toFront()
+		mainFunc.ballAndButtonAndScreenCreateScript.levelTimerLabel:toFront()
         mainFunc.ballAndButtonAndScreenCreateScript.levelTimerLabel.text:toFront()
 	    mainFunc.ballAndButtonAndScreenCreateScript.mapShowAndClockLabel:toFront()
 	    mainFunc.ballAndButtonAndScreenCreateScript.mapShowAndClockLabel.map:toFront()
 	    mainFunc.ballAndButtonAndScreenCreateScript.mapShowAndClockLabel.compass:toFront()
-	    mainFunc.ballAndButtonAndScreenCreateScript.randomBtn:toFront()
-	    mainFunc.ballAndButtonAndScreenCreateScript.backBtn:toFront()
+		
+		mainFunc.ballAndButtonAndScreenCreateScript.randomBtn:toFront()
+       	mainFunc.ballAndButtonAndScreenCreateScript.backBtn:toFront()	--GO
+
 	    mainFunc.ballAndButtonAndScreenCreateScript.randomBtn:toFront()
 	    mainFunc.ballAndButtonAndScreenCreateScript.rightBtn:toFront()
+
+	   
 	    mainFunc.ballAndButtonAndScreenCreateScript.leftBtn:toFront()
 	    mainFunc.ballAndButtonAndScreenCreateScript.upBtn:toFront()
 	    mainFunc.ballAndButtonAndScreenCreateScript.downBtn:toFront()
 	    mainFunc.allLevelSettings.itemScreenObjectsGroup:toFront()
+
+		
 	    mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen:toFront()
         mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.bottomSelectedTile:toFront()
         mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.topSelectedTile:toFront()

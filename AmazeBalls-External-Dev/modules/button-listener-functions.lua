@@ -481,7 +481,9 @@ local beganPlayPressedFunction = function (mainFunc, shapeArray, shapeArrayParam
 
     if mainFunc.thisLevelSettings.thisScreenHorzValue == mainFunc.allLevelSettings.ballScreenHorzValue and mainFunc.thisLevelSettings.thisScreenVertValue == mainFunc.allLevelSettings.ballScreenVertValue then
 		if mainFunc.allLevelSettings.pressCount == 0 then
-
+			
+			--print("pres")
+			
 		    mainFunc.allLevelSettings.pressCount = 1
 		    if mainFunc.allLevelSettings.moveSomethingCounter == 0 then
 			--Runtime:addEventListener( "enterFrame", moveSomething )
@@ -503,7 +505,7 @@ local beganPlayPressedFunction = function (mainFunc, shapeArray, shapeArrayParam
             mainFunc.allLevelSettings.isBallMovingState = "true"
             mainFunc.allLevelSettings.shouldBallMoveState = "true"
 
-            if mainFunc.levelConfigArray[currentWorld]["level"..currentLevel][currentMedal]["tutorial"] then
+            if mainFunc.levelConfigArray[currentWorld]["level"..currentLevel][currentMedal]["tutorial"] then	-- check if exist
                 if mainFunc.levelConfigArray[currentWorld]["level"..currentLevel][currentMedal]["tutorial"]["onGoPress"] then
                     mainFunc.levelConfigArray[currentWorld]["level"..currentLevel][currentMedal]["tutorial"]["onGoPress"](mainFunc, shapeArray)
                 end
@@ -520,6 +522,7 @@ local beganPlayPressedFunction = function (mainFunc, shapeArray, shapeArrayParam
 end
 	t.beganPlayPressedFunction = beganPlayPressedFunction
 
+	--finger swipe handling
 local movedPlayPressedFunction = function (event, mainFunc, shapeArray)
         
     --event.target.isFocus = true

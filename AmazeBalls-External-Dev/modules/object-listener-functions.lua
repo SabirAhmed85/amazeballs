@@ -3,8 +3,9 @@ local t = {}
 
 --------- MAP DIRECTION BUTTONS-----------
 local objectListener = function (event, mainFunc, shapeArray, shapeArrayParameters)
-
+	print("sadsadsa")
     if event.target.objectType == "characterChangePointButton" then
+	--print("if")
         local characterChangeSprites, characterChangePointDisplay, chooseCharacter, spriteSequenceData, closeChooseCharacter, characterChangeBg
         local isSpecificCharacter = false
         local originalButton = event.target
@@ -176,7 +177,8 @@ local objectListener = function (event, mainFunc, shapeArray, shapeArrayParamete
         end
         
     else
-
+	--print("else")
+	
         for d=1, #mainFunc.allLevelSettings.transitionArrayIndex do
             if (mainFunc.allLevelSettings.transitionArrayIndex[d][2][1] == "flip-horizontal"
             or mainFunc.allLevelSettings.transitionArrayIndex[d][2][1] == "flip-vertical")
@@ -591,6 +593,7 @@ local objectBallActivate = function (event, mainFunc, shapeArray, shapeArrayPara
                 if mainFunc.levelConfigArray[currentWorld]["level"..currentLevel][currentMedal]["tutorial"] then
                     if mainFunc.levelConfigArray[currentWorld]["level"..currentLevel][currentMedal]["tutorial"]["onFanRelease"] then
                         mainFunc.levelConfigArray[currentWorld]["level"..currentLevel][currentMedal]["tutorial"]["onFanRelease"](mainFunc, thisFan, shapeArray)
+						print("have tutorial")
                     end
                 end
             end

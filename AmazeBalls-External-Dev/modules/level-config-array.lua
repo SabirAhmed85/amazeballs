@@ -236,9 +236,13 @@ local levelConfigArray = {
 				    	mainFunc.popUpTimer = {}
 				        
 					end,
+					
+					
 					onGoPress = function (mainFunc, shapeArray)
 					    tutorialPopUp = mainFunc.tutorialPopUp
 
+						
+						
 						tutorialPopUp[1] = display.newImageRect("images/central-images/Tutorials/Pop-ups/popUp1-2.png", 250, 65)
 					    tutorialPopUp[1].anchorX = 0
 					    tutorialPopUp[1].anchorY = 0
@@ -399,12 +403,18 @@ local levelConfigArray = {
 
 					    	end)
 					    end})
-
+					
+					
+					
 					end,
+					
+					
+					
 					onSlideAction = function (mainFunc, objectSlided, shapeArray)
 						for b = 1, #mainFunc.tutorialActions do
 							if objectSlided.name == mainFunc.tutorialActions[b].actionPieceName then
-								if mainFunc.tutorialActions[b].actionPieceSwitchCounter == 0 then
+							
+								if mainFunc.tutorialActions[b].actionPieceSwitchCounter == 0 then 
 									if mainFunc.tutorialActions[b].actionCompletedOnce == false then
 										timer.cancel(mainFunc.popUpTimer[1])
 										tutorialPopUp[11].currentBlinkPopUpShouldCancel = true
@@ -463,7 +473,7 @@ local levelConfigArray = {
 									if (mainFunc.tutorialPopUp[12].alpha == 1) then
 										transition.to(mainFunc.tutorialPopUp[12], {alpha = 0, time = 200})
 									end
-
+									
 									transition.to(mainFunc.tutorialPopUp[3], {alpha = 1, time = 200})
 									transition.to(mainFunc.tutorialPopUp[4], {alpha = 1, time = 200})
 								end
@@ -504,8 +514,10 @@ local levelConfigArray = {
 
 				    	mainFunc.popUpTimer = {}
 					end,
+					
 					onGoPress = function (mainFunc, shapeArray)
-
+						
+						print("go")
 					    mainFunc.tutorialPopUp = {}
 					    tutorialPopUp = mainFunc.tutorialPopUp
 
@@ -522,11 +534,16 @@ local levelConfigArray = {
 				    	transition.to(tutorialPopUp[1], {alpha = 1, time = 200})
 
 				        for c = 1, #shapeArray do
+						print(#shapeArray)
 							if (shapeArray[c].name == "triangle1_1_1")
 							and shapeArray[c].mainFuncListenerAdded == false then
 				        		shapeArray[c]:addEventListener("touch", mainFunc.listener)
 				        		shapeArray[c].mainFuncListenerAdded = true
 				        	end
+							
+							if (shapeArray[c].name == "triangle1_1_1") then
+								--print(shapeArray[c].mainFuncListenerAdded)
+							end
 				    	end 
 
 				    	tutorialPopUp[2] = display.newSprite(t.swipeImageSheet, t.swipeSequenceData)
@@ -555,6 +572,7 @@ local levelConfigArray = {
 				    	end})
 
 					end,
+					
 					onSlideAction = function (mainFunc, objectSlided, shapeArray)
 						for b = 1, #mainFunc.tutorialActions do
 							if objectSlided.name == mainFunc.tutorialActions[b].actionPieceName then
