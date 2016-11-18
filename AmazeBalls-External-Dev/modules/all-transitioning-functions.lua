@@ -325,6 +325,7 @@ end
 	t.transitionArrayStateCheckNew = transitionArrayStateCheckNew
 
 local mainTransitionMoveSomething = function (thisTransitionObject, mainFunc, shapeArray, shapeArrayParameters, isActualConnector)
+	print("dkn")
 	local endTransition, prepareSimpleTransition, prepareSpitterTransition, firstSlideTransition, secondSlideTransition, moveBallWithObjectTransition, endFirstTransition
 
 	moveBallWithObjectTransition = function (thisTransitionObject, direction, distance, slideTime)
@@ -636,6 +637,8 @@ end
 
 
 -- NOW CREATE TRANSITION SETTINGS
+-- EXT: Loop through TransitionArrayIndex at start of Level, (after Level Object Creation)
+-- And apply relevant Transitions
 local prepareTransitioningObjects = function (mainFunc)
 	for y = 1, #mainFunc.allLevelSettings.transitionArrayIndex do
 	    
@@ -1030,6 +1033,8 @@ local prepareTransitioningObjects = function (mainFunc)
 		    end
 	        
 	        for z = 1, #shapeArray do
+	        	--EXT: Loop through Level Objects to decide which particular TransitionHorzSquare & TransitionVertSquare the object is on
+	        	-- TransitionHorzSquare means which particular horizontal stage of it's transtition this object is at
 	            if shapeArray[z].name == transitionArrayIndex[y][1][1] then
 	                shapeArray[z].transitionArrayState = transitionArrayIndex[y][4][1]
 	                thisTransitioningObject = shapeArray[z]

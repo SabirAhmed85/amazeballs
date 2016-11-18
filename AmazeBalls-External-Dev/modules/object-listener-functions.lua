@@ -1,6 +1,8 @@
 
 local t = {}
 
+-- Listens for event of player clicking on an object like a Triangle, a Fan, a CharacterChangePoint
+
 --------- MAP DIRECTION BUTTONS-----------
 local objectListener = function (event, mainFunc, shapeArray, shapeArrayParameters)
 	print("sadsadsa")

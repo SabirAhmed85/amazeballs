@@ -976,12 +976,13 @@ function scene:show( event )
         mainFunc.createLevelObject = createLevelObject
     
     local function insertGroupsIntoMainGroup(mainFunc, shapeArray, shapeArrayParameters)
-
+        --EXT: Function occurs at start of level, to Create Level objects
         -------------------------
         --Shape Objects In Game--
         -------------------------
 
         local tutorialItemsToDoProcessed = {}
+        --EXT: Loop through ShapeArrayParameters for initial ShapeArray objects creation
         for index = 1, #shapeArrayParameters do
             createLevelObject(shapeArrayParameters, shapeArray, index, mainFunc)
 
@@ -1081,8 +1082,12 @@ function scene:show( event )
             createLevelObject(shapeArrayParameters, shapeArray, #shapeArrayParameters, mainFunc)
         end
 
+<<<<<<< HEAD
         --- Create Transition Settings
 		--starting point
+=======
+        --EXT: Create Transition Settings
+>>>>>>> 0d34f3408700bf2340e2438bde7f92f83c840f8d
         mainFunc.transitionFunctionScript.prepareTransitioningObjects(mainFunc)
        
         mainFunc.ballAndButtonAndScreenCreateScript.createBall(mainFunc)

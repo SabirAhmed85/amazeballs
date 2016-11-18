@@ -1,0 +1,13 @@
+mainFunc.listener --> refers to objectListenerScript --> Script which listens for event of player clicking on an object like a Triangle, a Fan, a CharacterChangePoint
+
+General Definitions
+___________________
+
+ShapeArray -> it is the Array which holds all the Level Objects which are created in the level (the actual object, including the display.newImage and the physics Body)
+
+ShapeArrayParameters -> the Array which holds all the initial Parameters which define the Level Objects at start of level
+
+TransitionArrayIndex -> the Array which holds the parameters for all the transitions which should occur to Level Objects
+
+
+
