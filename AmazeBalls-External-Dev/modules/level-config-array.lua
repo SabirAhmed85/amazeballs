@@ -2,6 +2,9 @@ local t = {}
 local worldRequirementsArray = {
 	WoodyWalk = {
 		silver = 0
+	},
+	FieryFortress = {
+		silver = 0
 	}
 }
 
@@ -222,12 +225,12 @@ local levelConfigArray = {
 				end,
 				gemTotal = 10,
 				tutorial = {
-					-- NOTE: These are the Level Tutorial Functions which should be placed into a separate array.
 					onLevelStart = function (mainFunc, shapeArray)
 						for c = 1, #shapeArray do
 							for d=1, #mainFunc.allLevelSettings.transitionArrayIndex do
 					            if mainFunc.allLevelSettings.transitionArrayIndex[d][1][1] == shapeArrayParameters[c][2] then
 					                shapeArray[c]:removeEventListener("touch", mainFunc.listener)
+					        		shapeArray[c].mainFuncListenerAdded = false
 					            end
 					        end
 					    end
@@ -352,7 +355,7 @@ local levelConfigArray = {
 											    tutorialPopUp[11].anchorY = 0
 											    tutorialPopUp[11].alpha = 0
 											    tutorialPopUp[11].x = xCalc(272)
-											    tutorialPopUp[11].y = yCalc(50)
+											    tutorialPopUp[11].y = yCalc(150)
 											    tutorialPopUp[11].popUpTimerIndex = 1
 
 											    tutorialPopUp[12] = display.newSprite(t.swipeArrowImageSheet, t.swipeArrowSequenceData)
@@ -367,6 +370,7 @@ local levelConfigArray = {
 											    	
 											    	tutorialPopUp[11].currentBlinkPopUpShouldCancel = false
 											    	timer.performWithDelay(300, function ()
+											    		print("1")
 											    		t.blinkPopUp(tutorialPopUp[11], mainFunc)
 											    	end)
 											    end})
@@ -392,6 +396,13 @@ local levelConfigArray = {
 										    mainFunc.tutorialActions[1].actionPieceName = "triangle2_1_1"
 										    mainFunc.tutorialActions[1].actionCompletedOnce = false
 										    mainFunc.tutorialActions[1].actionPieceSwitchCounter = 0
+
+										    -- add event listener for this action piece only
+										    for c = 1, #shapeArray do
+									            if shapeArray[c].name == mainFunc.tutorialActions[1].actionPieceName then
+									                shapeArray[c]:addEventListener("touch", mainFunc.listener)
+									            end
+										    end
 										end})
 							    	end)
 
@@ -406,7 +417,8 @@ local levelConfigArray = {
 							if objectSlided.name == mainFunc.tutorialActions[b].actionPieceName then
 								if mainFunc.tutorialActions[b].actionPieceSwitchCounter == 0 then
 									if mainFunc.tutorialActions[b].actionCompletedOnce == false then
-										timer.cancel(mainFunc.popUpTimer[1])
+										print("2")
+										if (mainFunc.popUpTimer[1]) then timer.cancel(mainFunc.popUpTimer[1]) end
 										tutorialPopUp[11].currentBlinkPopUpShouldCancel = true
 										tutorialPopUp[11].alpha = 0
 										transition.to(mainFunc.tutorialPopUp[10], {alpha = 0, time = 300})
@@ -447,7 +459,7 @@ local levelConfigArray = {
 									--if ball is on another, show another
 								else
 									mainFunc.tutorialActions[b].actionPieceSwitchCounter = 0
-									timer.cancel(mainFunc.popUpTimer[1]) 
+									if (mainFunc.popUpTimer[1]) then timer.cancel(mainFunc.popUpTimer[1]) end
 									tutorialPopUp[11].alpha = 0
 									tutorialPopUp[11].currentBlinkPopUpShouldCancel = true
 									-- change the guideline direction arrows
@@ -477,10 +489,9 @@ local levelConfigArray = {
 		},
 		level2 = {
 			silver = {
-				silver = 0,
+				silver = 1,
 
 				tutorial = {
-					-- NOTE: These are the Level Tutorial Functions which should be placed into a separate array.
 					onLevelStart = function (mainFunc, shapeArray)
 					    mainFunc.tutorialActions = {}
 
@@ -498,6 +509,7 @@ local levelConfigArray = {
 					        for c = 1, #shapeArray do
 								if (shapeArray[c].name == mainFunc.tutorialActions[b].actionPieceName) then
 					        		shapeArray[c]:removeEventListener("touch", mainFunc.listener)
+					        		shapeArray[c].mainFuncListenerAdded = false
 					        	end
 					    	end
 				    	end
@@ -772,9 +784,8 @@ local levelConfigArray = {
 		},
 		level3 = {
 			silver = {
-				silver = 0,
+				silver = 2,
 				tutorial = {
-					-- NOTE: These are the Level Tutorial Funcitons which should be placed into a separate array.
 					onLevelStart = function (mainFunc, shapeArray)
 				    	mainFunc.tutorialPopUp = {}
 
@@ -920,7 +931,7 @@ local levelConfigArray = {
 		},
 		level4 = {
 			silver = {
-				silver = 0,
+				silver = 3,
 				onLevelComplete = 
 				function ()
 					myGameSettings["gems_discovered_second"] = true
@@ -1155,13 +1166,730 @@ local levelConfigArray = {
 				silver = 0
 			}
 		}
+	},
+	FieryFortress = {
+		level1 = {
+			silver = {
+				silver = 0, 
+				onLevelComplete = function ()
+					myGameSettings["gems_discovered_first"] = true
+				end
+			},
+			gold = {
+			}
+		},
+		level2 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level3 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level4 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level5 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level6 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level7 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level8 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level9 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level10 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level11 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level12 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level13 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level14 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level15 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level16 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level17 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level18 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		}
+	},
+	IcyIsland = {
+		level1 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level2 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level3 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level4 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level5 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level6 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level7 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level8 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 00
+			}
+		},
+		level9 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 00
+			}
+		},
+		level10 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 00
+			}
+		},
+		level11 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level12 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level13 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level14 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level15 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level16 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level17 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level18 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level19 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level20 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level21 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level22 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level23 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level24 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		}
+	},
+	BallTimore = {
+		level1 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level2 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level3 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level4 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level5 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level6 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level7 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level8 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level9 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level10 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level11 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level12 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level13 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level14 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level15 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level16 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level17 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level18 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},level19 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level20 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level21 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level22 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level23 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level24 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		}
+	},
+	HyrollCastle = {
+		level1 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level2 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level3 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level4 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 00
+			}
+		},
+		level5 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 00
+			}
+		},
+		level6 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 00
+			}
+		},
+		level7 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 00
+			}
+		},
+		level8 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 00
+			}
+		},
+		level9 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 00
+			}
+		},
+		level10 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 00
+			}
+		},
+		level11 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level12 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level13 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level14 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level15 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level16 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level17 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level18 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level19 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level20 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level21 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		},
+		level22 = {
+			silver = {
+				silver = 0
+			},
+			gold = {
+				silver = 0
+			}
+		}
 	}
 }
 
 t.levelConfigArray = levelConfigArray
 
 local worldConfigArray = {
-	{"WoodyWalk", {silver = 0, gold = 0}}
+	{"WoodyWalk", {silver = 0, gold = 0}},
+	{"FieryFortress", {silver = 0, gold = 0}},
+	{"HyrollCastle", {silver = 0, gold = 0}},
+	{"IcyIsland", {silver = 0, gold = 0}},
+	{"BallTimore", {silver = 0, gold = 0}}
 }
 t.worldConfigArray = worldConfigArray
 

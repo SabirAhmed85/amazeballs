@@ -93,7 +93,7 @@ local levelConfigScript = require("modules.level-config-array")
     itemConfigArray = levelConfigScript.itemConfigArray
 local gameSettingsConfigScript = require("modules.game-settings-config-array")
 
-local iapAvail = false
+iapAvail = true
 
 
 if( myGameSettings ) then
