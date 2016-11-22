@@ -812,9 +812,22 @@ function scene:show( event )
                 totalLevels = totalLevels + 1
             end
             for a = 1, totalLevels do
+			
+            --[[
+            print(key)
+			print(a)
+			print(totalLevels)
+			print(goldMedalCounter)
+
+
+			print(myGameSettings[key]["levels"][a]["gold_gained"])
+--]]
+
+			--[[
                 if myGameSettings[key]["levels"][a]["gold_gained"] == true then
                     goldMedalCounter = goldMedalCounter + 1
                 end
+				--]]
             end
 
             for a = 1, totalLevels do
@@ -1323,8 +1336,14 @@ function scene:show( event )
                 worldButton[i].infoTile.goldMedalIcon.x = worldButton[i].x + 65
 
                 if (worldButton[i].fullyBlocked == true) then
-                    worldButton[i].overlay = display.newImage("images/central-images/Layout/WorldSelectTile-overlay.png")
+
                 else
+                    print("start print")
+                    print(silverMedalCounter, thisWorldButtonValue)
+
+                    print(sliverMedalCounterInt, thisWorldSilverMedalsRequired, goldMedalCounterInt)
+                    print(thisWorldGoldMedalsRequired, myGameSettings["worldUnlocked"][thisWorldButtonValue])
+                    print("end print")
                     worldButton[i].overlay = display.newImage("images/central-images/Layout/WorldSelectTile-overlay.png")
                     worldButton[i].overlay:addEventListener("tap", levelVariables.openIAP)
                 end

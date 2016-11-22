@@ -1082,12 +1082,13 @@ function scene:show( event )
             createLevelObject(shapeArrayParameters, shapeArray, #shapeArrayParameters, mainFunc)
         end
 
-<<<<<<< HEAD
+--<<<<<<< HEAD
         --- Create Transition Settings
 		--starting point
-=======
+--=======
         --EXT: Create Transition Settings
->>>>>>> 0d34f3408700bf2340e2438bde7f92f83c840f8d
+-->>>>>>> 0d34f3408700bf2340e2438bde7f92f83c840f8d
+
         mainFunc.transitionFunctionScript.prepareTransitioningObjects(mainFunc)
        
         mainFunc.ballAndButtonAndScreenCreateScript.createBall(mainFunc)

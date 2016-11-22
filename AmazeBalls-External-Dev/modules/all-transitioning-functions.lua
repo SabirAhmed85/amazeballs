@@ -317,7 +317,7 @@ local transitionArrayStateCheckNew = function (thisTransitionObject, mainFunc, s
     if mainFunc.levelConfigArray[currentWorld]["level"..currentLevel][currentMedal]["tutorial"] then
     	if mainFunc.levelConfigArray[currentWorld]["level"..currentLevel][currentMedal]["tutorial"]["onSlideAction"] then
         	mainFunc.levelConfigArray[currentWorld]["level"..currentLevel][currentMedal]["tutorial"]["onSlideAction"](mainFunc, thisTransitionObject, shapeArray)
-			print("have tutorial")
+			--print("have tutorial")
     	end
     end
 
@@ -325,7 +325,7 @@ end
 	t.transitionArrayStateCheckNew = transitionArrayStateCheckNew
 
 local mainTransitionMoveSomething = function (thisTransitionObject, mainFunc, shapeArray, shapeArrayParameters, isActualConnector)
-	print("dkn")
+	--print("dkn")
 	local endTransition, prepareSimpleTransition, prepareSpitterTransition, firstSlideTransition, secondSlideTransition, moveBallWithObjectTransition, endFirstTransition
 
 	moveBallWithObjectTransition = function (thisTransitionObject, direction, distance, slideTime)

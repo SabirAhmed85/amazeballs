@@ -2057,6 +2057,9 @@ end
 
 local itemGainedFunction = function (mainFunc, shapeArray, shapeArrayParameters, itemType, itemLabel, relevantShapeArrayIndex, relevantToolArrayCounter)
     if (mainFunc.allLevelSettings.itemBagIsOpen == false and itemLabel ~= 'coins') then
+
+    	print("itemLabel: ",itemLabel)
+
     	display.getCurrentStage():setFocus( nil )
         mainFunc.allLevelSettings.itemBagIsOpen = true
 
@@ -2078,7 +2081,12 @@ local itemGainedFunction = function (mainFunc, shapeArray, shapeArrayParameters,
     	screen.itemYVal = 165
     	if relevantShapeArrayIndex ~= nil then
     		-- this is an item-present, multiple items
+
+    		print(#shapeArrayParameters[relevantShapeArrayIndex][7])
+
     		local itemNum = #shapeArrayParameters[relevantShapeArrayIndex][8]
+    		--print("itemNum: ",itemNum)
+
     		if #shapeArrayParameters[relevantShapeArrayIndex][8] > 5 then
     			itemNum = 5
     		end
@@ -2506,6 +2514,8 @@ local autoFanAndEtcTransition = function (mainFunc, shapeArray, shapeArrayParame
 		            end
 
 		            local function processItem (thisArray)
+		            	print("thisArray1",thisArray[1])
+		            	print("thisArray2",thisArray[2])
 		            	if thisArray[2] == "bomb" then
 		            		thisItemsObject = {name = thisArray[2], properties = {squares = thisArray[8], directions = thisArray[9]}, quantity = thisArray[10]}
 		            		thisItemsIncrease = thisArray[10]
@@ -2520,6 +2530,7 @@ local autoFanAndEtcTransition = function (mainFunc, shapeArray, shapeArrayParame
 		            	and thisArray[2] ~= "bomb"
 		            	and thisArray[2] ~= "hook"
 		            	and thisArray[2] ~= "jet" then
+		            		print("this should be present")
 		            		thisItemsObject = {name = thisArray[2], properties = {seconds = thisArray[8]}, quantity = thisArray[9]}
 		            		thisItemsIncrease = thisArray[9]
 		            	elseif thisArray[1] ~= "item" then
@@ -2754,8 +2765,25 @@ local autoFanAndEtcTransition = function (mainFunc, shapeArray, shapeArrayParame
 		            elseif shapeArrayParameters[b][2] == "big-present"
 		            or shapeArrayParameters[b][2] == "small-present" then
 		            	shapeArray[b].relevantToolIndexArray = {}
-		            	for a = 1, #shapeArrayParameters[b][8] do
-		            		processItem(shapeArrayParameters[b][8][a])
+
+						--[[
+		            	print("start print")
+		            	
+		            	print("maxn: ", table.maxn(shapeArrayParameters))
+		            	print("#: ", #shapeArrayParameters)
+
+		            	for i = 1, 7 do
+		            		print(i,": ",shapeArrayParameters[b][i])
+		            	end
+
+
+		            	--print(table.maxn(shapeArrayParameters[b][8]))
+		            	print("end print")
+						--]]
+
+						--processItem(shapeArrayParameters[b])
+		            	for a = 1, #shapeArrayParameters[b][7] do
+		            		processItem(shapeArrayParameters[b][7][a])
 		            	end
 		            end
 

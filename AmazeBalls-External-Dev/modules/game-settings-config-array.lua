@@ -1,6 +1,7 @@
 local t = {}
 
 local createFreshGameSettings = function (levelConfigArray, characterConfigArray, itemConfigArray)
+    print("create fresh game setting")
 
 	myGameSettings = {}
 
@@ -45,8 +46,15 @@ local createFreshGameSettings = function (levelConfigArray, characterConfigArray
     myGameSettings["worldUnlocked"] = {}
 
     for key, val in pairs(levelConfigArray) do
+
+        print("key: "..key)
+
     	myGameSettings[key] = {}
+        
         myGameSettings["worldUnlocked"][key] = true -- should be FALSE
+
+        print(myGameSettings["worldUnlocked"][key])
+
         if key == "WoodyWalk" then
             myGameSettings["worldUnlocked"][key] = true
         end
@@ -94,6 +102,7 @@ local createFreshGameSettings = function (levelConfigArray, characterConfigArray
 
     return myGameSettings
 end
+
     t.createFreshGameSettings = createFreshGameSettings
 
 local createFreshToolArray = function (levelConfigArray)

@@ -39,7 +39,9 @@ local function createLevelTimeString (timeSeconds, timeMinutes, timeCounter, sho
     
     for a = 1, #levelTimeString do
         local index = a + stringLengthDiff
-        timeCounter[index]:setSequence(string.sub(levelTimeString, a, a))
+        if timeCounter[index] then
+            timeCounter[index]:setSequence(string.sub(levelTimeString, a, a))
+        end
     end
 end
     t.createLevelTimeString = createLevelTimeString

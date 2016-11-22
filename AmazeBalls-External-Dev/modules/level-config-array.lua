@@ -428,11 +428,13 @@ local levelConfigArray = {
 								if mainFunc.tutorialActions[b].actionPieceSwitchCounter == 0 then 
 									if mainFunc.tutorialActions[b].actionCompletedOnce == false then
 										print("2")
-										if (mainFunc.popUpTimer[1]) then timer.cancel(mainFunc.popUpTimer[1]) end
-										tutorialPopUp[11].currentBlinkPopUpShouldCancel = true
-										tutorialPopUp[11].alpha = 0
-										transition.to(mainFunc.tutorialPopUp[10], {alpha = 0, time = 300})
-										mainFunc.tutorialActions[b].actionCompletedOnce = true
+										if (mainFunc.popUpTimer[1]) then 
+											timer.cancel(mainFunc.popUpTimer[1]) 
+											tutorialPopUp[11].currentBlinkPopUpShouldCancel = true
+											tutorialPopUp[11].alpha = 0
+											transition.to(mainFunc.tutorialPopUp[10], {alpha = 0, time = 300})
+											mainFunc.tutorialActions[b].actionCompletedOnce = true
+										end
 									end
 									mainFunc.tutorialActions[b].actionPieceSwitchCounter = 1
 									-- change the guideline direction arrows
@@ -443,14 +445,16 @@ local levelConfigArray = {
 									local function showWrongTurnPopUp ()
 										transition.to(mainFunc.tutorialPopUp[8], {alpha = 1, time = 200})
 										transition.to(mainFunc.tutorialPopUp[9], {alpha = 1, time = 200})
-										tutorialPopUp[12].rotation = 180
-										tutorialPopUp[12]:setSequence("loop")
-								    	tutorialPopUp[12]:play()
-										transition.to(mainFunc.tutorialPopUp[12], {alpha = 1, time = 200})
-										tutorialPopUp[11].y = 198
-										tutorialPopUp[11].alpha = 1
-										tutorialPopUp[11].currentBlinkPopUpShouldCancel = false
-										t.blinkPopUp(tutorialPopUp[11], mainFunc)
+										if (tutorialPopUp[12]) then
+											tutorialPopUp[12].rotation = 180
+											tutorialPopUp[12]:setSequence("loop")
+									    	tutorialPopUp[12]:play()
+											transition.to(mainFunc.tutorialPopUp[12], {alpha = 1, time = 200})
+											tutorialPopUp[11].y = 198
+											tutorialPopUp[11].alpha = 1
+											tutorialPopUp[11].currentBlinkPopUpShouldCancel = false
+											t.blinkPopUp(tutorialPopUp[11], mainFunc)
+										end
 									end
 
 									if (mainFunc.ballAndButtonAndScreenCreateScript.instance2.x > xCalc(90)
@@ -469,9 +473,10 @@ local levelConfigArray = {
 									--if ball is on another, show another
 								else
 									mainFunc.tutorialActions[b].actionPieceSwitchCounter = 0
-									if (mainFunc.popUpTimer[1]) then timer.cancel(mainFunc.popUpTimer[1]) end
-									tutorialPopUp[11].alpha = 0
-									tutorialPopUp[11].currentBlinkPopUpShouldCancel = true
+									if (mainFunc.popUpTimer[1]) then timer.cancel(mainFunc.popUpTimer[1]) 
+										tutorialPopUp[11].alpha = 0
+										tutorialPopUp[11].currentBlinkPopUpShouldCancel = true
+									end
 									-- change the guideline direction arrows
 									if (mainFunc.tutorialPopUp[5].alpha == 1) then
 										transition.to(mainFunc.tutorialPopUp[5], {alpha = 0, time = 200})
@@ -482,10 +487,13 @@ local levelConfigArray = {
 										transition.to(mainFunc.tutorialPopUp[9], {alpha = 0, time = 200})
 									end
 
-									if (mainFunc.tutorialPopUp[12].alpha == 1) then
-										transition.to(mainFunc.tutorialPopUp[12], {alpha = 0, time = 200})
+									if (mainFunc.tutorialPopUp[12] ~= nil) then
+										if (mainFunc.tutorialPopUp[12].alpha == 1) then
+											transition.to(mainFunc.tutorialPopUp[12], {alpha = 0, time = 200})
+										end
 									end
-									
+
+
 									transition.to(mainFunc.tutorialPopUp[3], {alpha = 1, time = 200})
 									transition.to(mainFunc.tutorialPopUp[4], {alpha = 1, time = 200})
 								end
@@ -807,136 +815,120 @@ local levelConfigArray = {
 					onLevelStart = function (mainFunc, shapeArray)
 				    	mainFunc.tutorialPopUp = {}
 
-				    	t.popUpIntroTutorial(mainFunc, 1, "simple", mainFunc.allLevelSettings.tutorialPopUpParams["simple"])
+						t.popUpIntroTutorial(mainFunc, 1, "simple", mainFunc.allLevelSettings.tutorialPopUpParams["simple"])
+
+						print("start")
+						for a = 1, #mainFunc.allLevelSettings.tutorialPopUpParams["simple"] do
+							print(mainFunc.allLevelSettings.tutorialPopUpParams["simple"][a][1])
+
+						end
+						print("end")
+
+				    	--print("toatl slide: ",mainFunc.allLevelSettings.tutorialPopUpParams["simple"])
 
 				    	mainFunc.popUpTimer = {}
+
+
 					end,
 					onFanLanding = function (mainFunc, thisFan, shapeArray)
 						tutorialPopUp = mainFunc.tutorialPopUp
 
 					    if (thisFan.name == "simple1_1_1") then
-
 						    tutorialPopUp[2] = display.newSprite(t.swipeImageSheet, t.swipeSequenceData)
-						    tutorialPopUp[2]:setSequence("hold")
+						    tutorialPopUp[2]:setSequence("tap")
 						    tutorialPopUp[2]:play()
 						    tutorialPopUp[2].anchorX = 0
 						    tutorialPopUp[2].anchorY = 0
 						    tutorialPopUp[2].alpha = 0
-						    tutorialPopUp[2].x = xCalc(- 1)
-						    tutorialPopUp[2].y = yCalc(287)
+						    tutorialPopUp[2].x = xCalc(270)
+						    tutorialPopUp[2].y = yCalc(245)
 
-						    mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(tutorialPopUp[2])
+						    mainFunc.allLevelSettings.frontScreenObjectsGroup:insert(tutorialPopUp[2])
 
 						    transition.to(tutorialPopUp[2], {alpha = 1, time = 200})
 
-						    tutorialPopUp[3] = display.newSprite(t.swipeImageSheet, t.swipeSequenceData)
-						    tutorialPopUp[3]:setSequence("tap")
-						    tutorialPopUp[3]:play()
+						    tutorialPopUp[3] = display.newImageRect("images/central-images/Tutorials/Guides/2h.png", 120, 52)
+						    tutorialPopUp[3].width = xCalc(120)
+						    tutorialPopUp[3].height = yCalc(52)
 						    tutorialPopUp[3].anchorX = 0
 						    tutorialPopUp[3].anchorY = 0
 						    tutorialPopUp[3].alpha = 0
 						    tutorialPopUp[3].x = xCalc(270)
-						    tutorialPopUp[3].y = yCalc(245)
+						    tutorialPopUp[3].y = yCalc(238)
 
-						    mainFunc.allLevelSettings.frontScreenObjectsGroup:insert(tutorialPopUp[3])
+						    mainFunc.allLevelSettings.backgroundObjectsGroup:insert(tutorialPopUp[3])
 
 						    transition.to(tutorialPopUp[3], {alpha = 1, time = 200})
 
-						    tutorialPopUp[4] = display.newImageRect("images/central-images/Tutorials/Guides/2h.png", 120, 52)
-						    tutorialPopUp[4].width = xCalc(120)
-						    tutorialPopUp[4].height = yCalc(52)
+						    tutorialPopUp[4] = display.newImageRect("images/central-images/Tutorials/Guides/5v.png", 60, 260)
+						    tutorialPopUp[4].width = xCalc(60)
+						    tutorialPopUp[4].height = yCalc(260)
 						    tutorialPopUp[4].anchorX = 0
 						    tutorialPopUp[4].anchorY = 0
 						    tutorialPopUp[4].alpha = 0
-						    tutorialPopUp[4].x = xCalc(270)
-						    tutorialPopUp[4].y = yCalc(238)
+						    tutorialPopUp[4].x = xCalc(390)
+						    tutorialPopUp[4].y = yCalc(30)
 
 						    mainFunc.allLevelSettings.backgroundObjectsGroup:insert(tutorialPopUp[4])
 
 						    transition.to(tutorialPopUp[4], {alpha = 1, time = 200})
 
-						    tutorialPopUp[5] = display.newImageRect("images/central-images/Tutorials/Guides/5v.png", 60, 260)
+						    tutorialPopUp[5] = display.newImageRect("images/central-images/Tutorials/Guides/1.png", 60, 52)
 						    tutorialPopUp[5].width = xCalc(60)
-						    tutorialPopUp[5].height = yCalc(260)
+						    tutorialPopUp[5].height = yCalc(52)
 						    tutorialPopUp[5].anchorX = 0
 						    tutorialPopUp[5].anchorY = 0
 						    tutorialPopUp[5].alpha = 0
-						    tutorialPopUp[5].x = xCalc(390)
+						    tutorialPopUp[5].x = xCalc(330)
 						    tutorialPopUp[5].y = yCalc(30)
 
 						    mainFunc.allLevelSettings.backgroundObjectsGroup:insert(tutorialPopUp[5])
-
-						    transition.to(tutorialPopUp[5], {alpha = 1, time = 200})
-
-						    tutorialPopUp[6] = display.newImageRect("images/central-images/Tutorials/Guides/1.png", 60, 52)
-						    tutorialPopUp[6].width = xCalc(60)
-						    tutorialPopUp[6].height = yCalc(52)
-						    tutorialPopUp[6].anchorX = 0
-						    tutorialPopUp[6].anchorY = 0
-						    tutorialPopUp[6].alpha = 0
-						    tutorialPopUp[6].x = xCalc(330)
-						    tutorialPopUp[6].y = yCalc(30)
-
-						    mainFunc.allLevelSettings.backgroundObjectsGroup:insert(tutorialPopUp[6])
 
 						    transition.to(tutorialPopUp[2], {alpha = 1, time = 200, onComplete = function ()
 						    	tutorialPopUp[2].currentBlinkPopUpShouldCancel = false
 					    		tutorialPopUp[2].popUpTimerIndex = 1
 					    		t.blinkPopUp(tutorialPopUp[2], mainFunc)
 						    end})
-						    transition.to(tutorialPopUp[3], {alpha = 1, time = 200, onComplete = function ()
-						    	tutorialPopUp[3].currentBlinkPopUpShouldCancel = false
-					    		tutorialPopUp[3].popUpTimerIndex = 2
-					    		t.blinkPopUp(tutorialPopUp[3], mainFunc)
-						    end})
 
-						    transition.to(tutorialPopUp[6], {alpha = 1, time = 200})
-
+						    transition.to(tutorialPopUp[5], {alpha = 1, time = 200})
+						
 					    elseif (thisFan.name == "simple2_1_1") then
 
+							transition.to(mainFunc.tutorialPopUp[3], {alpha = 0, time = 200})
 							transition.to(mainFunc.tutorialPopUp[4], {alpha = 0, time = 200})
 							transition.to(mainFunc.tutorialPopUp[5], {alpha = 0, time = 200})
-							transition.to(mainFunc.tutorialPopUp[6], {alpha = 0, time = 200})
 
-					    	tutorialPopUp[3].x = xCalc(330)
-						    tutorialPopUp[3].y = yCalc(38)
+					    	tutorialPopUp[2].x = xCalc(330)
+						    tutorialPopUp[2].y = yCalc(38)
 
-						    tutorialPopUp[7] = display.newImageRect("images/central-images/Tutorials/Guides/3h.png", 180, 52)
-						    tutorialPopUp[7].width = xCalc(180)
-						    tutorialPopUp[7].height = yCalc(52)
-						    tutorialPopUp[7].anchorX = 0
-						    tutorialPopUp[7].anchorY = 0
-						    tutorialPopUp[7].alpha = 0
-						    tutorialPopUp[7].x = xCalc(150)
-						    tutorialPopUp[7].y = yCalc(30)
+						    tutorialPopUp[6] = display.newImageRect("images/central-images/Tutorials/Guides/3h.png", 180, 52)
+						    tutorialPopUp[6].width = xCalc(180)
+						    tutorialPopUp[6].height = yCalc(52)
+						    tutorialPopUp[6].anchorX = 0
+						    tutorialPopUp[6].anchorY = 0
+						    tutorialPopUp[6].alpha = 0
+						    tutorialPopUp[6].x = xCalc(150)
+						    tutorialPopUp[6].y = yCalc(30)
 
-						    mainFunc.allLevelSettings.backgroundObjectsGroup:insert(tutorialPopUp[7])
+						    mainFunc.allLevelSettings.backgroundObjectsGroup:insert(tutorialPopUp[6])
 
-						    transition.to(tutorialPopUp[7], {alpha = 1, time = 200})
+						    transition.to(tutorialPopUp[6], {alpha = 1, time = 200})
 
 						    transition.to(tutorialPopUp[2], {alpha = 1, time = 200, onComplete = function ()
 						    	tutorialPopUp[2].currentBlinkPopUpShouldCancel = false
 					    		t.blinkPopUp(tutorialPopUp[2], mainFunc)
 						    end})
-						    transition.to(tutorialPopUp[3], {alpha = 1, time = 200, onComplete = function ()
-						    	tutorialPopUp[3].currentBlinkPopUpShouldCancel = false
-					    		t.blinkPopUp(tutorialPopUp[3], mainFunc)
-						    end})
+
 					    end
 					end,
 					onFanRelease = function (mainFunc, thisFan, shapeArray)
 					    if (thisFan.name == "simple1_1_1") then
 							mainFunc.tutorialPopUp[2].alpha = 0
 							timer.cancel(mainFunc.popUpTimer[1])
-							mainFunc.tutorialPopUp[3].alpha = 0
-							timer.cancel(mainFunc.popUpTimer[2])
 					    elseif (thisFan.name == "simple2_1_1") then
 					    	mainFunc.tutorialPopUp[2].currentBlinkPopUpShouldCancel = true
 							mainFunc.tutorialPopUp[2].alpha = 0
 							timer.cancel(mainFunc.popUpTimer[1])
-							mainFunc.tutorialPopUp[3].currentBlinkPopUpShouldCancel = true
-							mainFunc.tutorialPopUp[3].alpha = 0
-							timer.cancel(mainFunc.popUpTimer[2])
 
 							transition.to(mainFunc.tutorialPopUp[6], {alpha = 0, time = 200})
 					    end
@@ -967,7 +959,6 @@ local levelConfigArray = {
 						end
 					end,
 					onSlideAction = function (mainFunc, objectSlided, shapeArray)
-
 						if objectSlided.tutorialSlideCounter == 0 then
 							if tutorialPopUp[1] then
 								if tutorialPopUp[1].alpha == 1 then
@@ -979,37 +970,21 @@ local levelConfigArray = {
 									if tutorialPopUp[3] then
 
 									else
-										tutorialPopUp[3] = display.newSprite(t.swipeImageSheet, t.swipeSequenceData)
-									    tutorialPopUp[3]:setSequence("hold")
+									    tutorialPopUp[3] = display.newSprite(t.swipeImageSheet, t.swipeSequenceData)
+									    tutorialPopUp[3]:setSequence("tap")
 									    tutorialPopUp[3]:play()
 									    tutorialPopUp[3].anchorX = 0
 									    tutorialPopUp[3].anchorY = 0
 									    tutorialPopUp[3].alpha = 0
-									    tutorialPopUp[3].x = xCalc(- 1)
-									    tutorialPopUp[3].y = yCalc(287)
+									    tutorialPopUp[3].x = xCalc(210)
+									    tutorialPopUp[3].y = yCalc(141)
 
-								    	mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(tutorialPopUp[3])
-
-									    tutorialPopUp[4] = display.newSprite(t.swipeImageSheet, t.swipeSequenceData)
-									    tutorialPopUp[4]:setSequence("tap")
-									    tutorialPopUp[4]:play()
-									    tutorialPopUp[4].anchorX = 0
-									    tutorialPopUp[4].anchorY = 0
-									    tutorialPopUp[4].alpha = 0
-									    tutorialPopUp[4].x = xCalc(210)
-									    tutorialPopUp[4].y = yCalc(141)
-
-									    mainFunc.allLevelSettings.frontScreenObjectsGroup:insert(tutorialPopUp[4])
+									    mainFunc.allLevelSettings.frontScreenObjectsGroup:insert(tutorialPopUp[3])
 
 									    transition.to(tutorialPopUp[3], {alpha = 1, time = 200, onComplete = function ()
 									    	tutorialPopUp[3].currentBlinkPopUpShouldCancel = false
 								    		tutorialPopUp[3].popUpTimerIndex = 2
 								    		t.blinkPopUp(tutorialPopUp[3], mainFunc)
-									    end})
-									    transition.to(tutorialPopUp[4], {alpha = 1, time = 200, onComplete = function ()
-									    	tutorialPopUp[4].currentBlinkPopUpShouldCancel = false
-								    		tutorialPopUp[4].popUpTimerIndex = 3
-								    		t.blinkPopUp(tutorialPopUp[4], mainFunc)
 									    end})
 								    end
 								end
@@ -1019,10 +994,17 @@ local levelConfigArray = {
 								if tutorialPopUp[2].alpha == 1 then
 									transition.to(tutorialPopUp[2], {alpha = 0, time = 200})
 									transition.to(tutorialPopUp[3], {alpha = 0, time = 200})
-
 									transition.to(tutorialPopUp[1], {alpha = 1, time = 200})
 								end
 							end
+
+							if tutorialPopUp[3] then
+								if tutorialPopUp[3].currentBlinkPopUpShouldCancel == false then
+									mainFunc.tutorialPopUp[3].currentBlinkPopUpShouldCancel = true
+									mainFunc.tutorialPopUp[3].alpha = 0
+									timer.cancel(mainFunc.popUpTimer[2])
+						    	end
+						    end
 						end
 
 						if objectSlided.tutorialSlideCounter == 0 then
@@ -1031,6 +1013,7 @@ local levelConfigArray = {
 							objectSlided.tutorialSlideCounter = 0
 						end
 					end,
+
 					onFanLanding = function (mainFunc, thisFan, shapeArray)
 						if (thisFan.name == "simple1_1_1") then
 							tutorialPopUp = mainFunc.tutorialPopUp
@@ -1070,6 +1053,8 @@ local levelConfigArray = {
 							end
 						end
 					end,
+
+
 					onFanRelease = function (mainFunc, thisFan, shapeArray)
 						tutorialPopUp = mainFunc.tutorialPopUp
 
@@ -1078,14 +1063,15 @@ local levelConfigArray = {
 							mainFunc.tutorialPopUp[2].alpha = 0
 							timer.cancel(mainFunc.popUpTimer[1])
 						end
-						if tutorialPopUp[4].currentBlinkPopUpShouldCancel == false then
-							mainFunc.tutorialPopUp[3].currentBlinkPopUpShouldCancel = true
-				    		mainFunc.tutorialPopUp[3].alpha = 0
-							timer.cancel(mainFunc.popUpTimer[2])
-							mainFunc.tutorialPopUp[4].currentBlinkPopUpShouldCancel = true
-							mainFunc.tutorialPopUp[4].alpha = 0
-							timer.cancel(mainFunc.popUpTimer[3])
-				    	end
+
+
+						if tutorialPopUp[3] then
+							if tutorialPopUp[3].currentBlinkPopUpShouldCancel == false then
+								mainFunc.tutorialPopUp[3].currentBlinkPopUpShouldCancel = true
+								mainFunc.tutorialPopUp[3].alpha = 0
+								timer.cancel(mainFunc.popUpTimer[2])
+					    	end
+					    end
 					end
 				}
 			},

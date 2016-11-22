@@ -618,10 +618,12 @@ t.createLevelSettings = function (mainFunc, creationType)
 	    { name = "purpleFloating", start=8, count=1, loopCount=1 }
 	}
 
-	levelItemsBackboardImageSheet = "images/objects/level-item-backboards.png"
-	levelItemsBackboardImageSheetSettings = {width = 45, height = 37.5, numFrames = 10, sheetContentWidth = 225, sheetContentHeight =75}
-	--levelItemsBackboardImageSheet = graphics.newImageSheet( "images/objects/level-item-backboards.png", 
-	--{width = 45, height = 37.5, numFrames = 10, sheetContentWidth = 225, sheetContentHeight = 75})
+	--levelItemsBackboardImageSheet = "images/objects/level-item-backboards.png"
+	--levelItemsBackboardImageSheetSettings = {width = 45, height = 37.5, numFrames = 10, sheetContentWidth = 225, sheetContentHeight =75}
+	
+	levelItemsBackboardImageSheet = graphics.newImageSheet( "images/objects/level-item-backboards.png", {width = 45, height = 37, numFrames = 10, sheetContentWidth = 225, sheetContentHeight = 75})
+	-- does not accept 37.5, rounded to 38 then system cannot read the image sheet
+	
 	levelItemsBackboardSequenceData = {
         { name = "gem", start=1, count=1,   loopCount=1 },
         { name = "redCoin", start=2, count=1, loopCount=1 },
@@ -964,7 +966,7 @@ t.createLevelSettings = function (mainFunc, creationType)
 
 	tutorialPopUpParams = {}
 
-	tutorialPopUpParams["simple"] = {{"simple-1", 11, 6500, "simple-text-1"}, {"simple-2", 11, 6500, "simple-text-2"}}
+	tutorialPopUpParams["simple"] = {{"simple-1", 11, 6500, "simple-text-1"}, {"simple-2", 11, 6500, "simple-text-2"}, {"simple-2", 11, 6500, "simple-text-2"}}
 	tutorialPopUpParams["door"] = {{"simple-1", 11, 6500, "simple-text-1"}, {"simple-2", 11, 6500, "simple-text-2"}}
 	tutorialPopUpParams["autoFan"] = {{"autoFan-1", 5, 3000, "autoFan-text-1"}, {"autoFan-2", 5, 3000, "autoFan-text-2"}}
 	tutorialPopUpParams["backFire"] = {{"simple-1", 11, 6500, "simple-text-1"}, {"simple-2", 11, 6500, "simple-text-2"}}
@@ -1136,7 +1138,9 @@ t.createLevelSettings = function (mainFunc, creationType)
 	t.levelItems2ImageSheet = levelItems2ImageSheet
 	t.levelItems2ImageSheetSettings = levelItems2ImageSheetSettings
 	t.levelItems2SequenceData = levelItems2SequenceData
+
 	t.levelItemsBackboardImageSheet = levelItemsBackboardImageSheet
+	t.levelItemsBackboardImageSheetSettings = levelItemsBackboardImageSheetSettings
 	t.levelItemsBackboardSequenceData = levelItemsBackboardSequenceData
 
 	t.allFansImageSheet = allFansImageSheet

@@ -81,6 +81,8 @@ function yCalc(val)
 end
 
 myGameSettings = loadTable("myGameSettings.json")
+
+
 myTotalToolArray = loadTable("myTotalToolArray.json")
 musicChannel = {}
 
@@ -106,6 +108,7 @@ if( myGameSettings ) then
      saveTable(myTotalToolArray, "myTotalToolArray.json")
      saveTable(myTotalObjectArray, "myTotalObjectArray.json")
 ]]
+--print("create fresh game setting, if my game setting")
 else
     
     --There are no settings. This is the first time the user launches the game
@@ -118,6 +121,7 @@ else
     saveTable(myGameSettings, "myGameSettings.json")
     saveTable(myTotalToolArray, "myTotalToolArray.json")
     saveTable(myTotalObjectArray, "myTotalObjectArray.json")
+    --print("create fresh game setting, else")
 
 end
 
