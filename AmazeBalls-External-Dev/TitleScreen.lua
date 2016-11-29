@@ -1135,6 +1135,7 @@ function scene:show( event )
 
     for a = 1, #coinCounter do
         local i = 7 - #coinCounter + a
+        print("coinCounter: ", string.sub(coinCounter, a, a))
         titleScreenVariables.extrasScreen.dollarCounter[i]:setSequence(string.sub(coinCounter, a, a))
     end
 

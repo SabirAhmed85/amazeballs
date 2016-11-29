@@ -621,7 +621,7 @@ t.createLevelSettings = function (mainFunc, creationType)
 	--levelItemsBackboardImageSheet = "images/objects/level-item-backboards.png"
 	--levelItemsBackboardImageSheetSettings = {width = 45, height = 37.5, numFrames = 10, sheetContentWidth = 225, sheetContentHeight =75}
 	
-	levelItemsBackboardImageSheet = graphics.newImageSheet( "images/objects/level-item-backboards.png", {width = 45, height = 37, numFrames = 10, sheetContentWidth = 225, sheetContentHeight = 75})
+	levelItemsBackboardImageSheet = graphics.newImageSheet( "images/objects/level-item-backboards.png", {width = 45, height = 38, numFrames = 10, sheetContentWidth = 225, sheetContentHeight = 76})
 	-- does not accept 37.5, rounded to 38 then system cannot read the image sheet
 	
 	levelItemsBackboardSequenceData = {

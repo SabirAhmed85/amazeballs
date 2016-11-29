@@ -1708,6 +1708,9 @@ function scene:show( event )
 
         for a = 1, #coinCounter do
             local i = 7 - #coinCounter + a
+            print(dollarCounter[i])
+            print(string.sub(coinCounter,a,a))
+            print(a)
             dollarCounter[i]:setSequence(string.sub(coinCounter, a, a))
         end
 
