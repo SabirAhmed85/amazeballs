@@ -2242,6 +2242,7 @@ end
 	t.itemGainedFunction = itemGainedFunction
 
 
+--pick up function 
 local autoFanAndEtcTransition = function (mainFunc, shapeArray, shapeArrayParameters)
 	for b = 1, #shapeArray do
 		if (mainFunc.allLevelSettings.ballScreenHorzValue == shapeArrayParameters[b][3]
@@ -2314,7 +2315,7 @@ local autoFanAndEtcTransition = function (mainFunc, shapeArray, shapeArrayParame
 			            if shapeArray[b].isAutoSlideObject then
 			            	mainFunc.allLevelSettings.currentShapeBallShouldFollow = shapeArray[b]
 			            	local listener = function ()
-			            	print("still")
+			            	--print("still")
 			            		if mainFunc.ballAndButtonAndScreenCreateScript.instance2.x > mainFunc.allLevelSettings.currentShapeBallShouldFollow.x + 20 then
 			            			mainFunc.ballAndButtonAndScreenCreateScript.instance2.x = mainFunc.ballAndButtonAndScreenCreateScript.instance2.x - 7
 			            		end

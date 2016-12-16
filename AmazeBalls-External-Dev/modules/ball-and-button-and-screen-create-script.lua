@@ -1025,6 +1025,7 @@ local otherScreensAndButtonCreate = function (mainFunc, levelVariables, shapeArr
             local gemIconCounter = "00"
 
             for a = 1, #gemIconCounter do
+                print("sadjaslkdjkasldjkalsdjlsk")
                 gemIconCounterLabel[a] = display.newSprite(MainBarNumbersImageSheet, MainBarNumbersSequenceData)
                 gemIconCounterLabel[a]:setSequence(string.sub(gemIconCounter, a, a ))
                 --gemIconCounterLabel[a]:setReferencePoint(display.BottomLeftReferencePoint);

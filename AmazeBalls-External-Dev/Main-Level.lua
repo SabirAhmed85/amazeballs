@@ -1211,6 +1211,8 @@ function scene:show( event )
         mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.gemCounterSecondDigit)
         
         if (mainFunc.thisLevelSettings.totalGems > 0) then
+            --print("getmIconCounterLabel index: ", #mainFunc.ballAndButtonAndScreenCreateScript.gemIconCounterLabel)
+            print("getmIconCounterLabel index: ", mainFunc.ballAndButtonAndScreenCreateScript.getmIconCounterLabel)
         	for a = 1, #mainFunc.ballAndButtonAndScreenCreateScript.gemIconCounterLabel do
 	        	mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.gemIconCounterLabel[a])
 	        end

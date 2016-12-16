@@ -1147,6 +1147,7 @@ function scene:show( event )
                 if (i - lastWorldThatWasUnlockedIndex) > 1 then
                     worldButton[i].fullyBlocked = true
                 else
+
                     worldButton[i].fullyBlocked = false
                 end
             end
@@ -1330,6 +1331,26 @@ function scene:show( event )
                 end
             end
 
+
+            --[[
+            if silverMedalCounterInt >= thisWorldSilverMedalsRequired
+            and goldMedalCounterInt >= thisWorldGoldMedalsRequired
+            and myGameSettings["worldUnlocked"][thisWorldButtonValue] then
+                worldButton[i].locked = false
+                lastWorldThatWasUnlockedIndex = i
+            else
+                worldButton[i].locked = true
+                if (i - lastWorldThatWasUnlockedIndex) > 1 then
+                    worldButton[i].fullyBlocked = true
+                else
+
+                    worldButton[i].fullyBlocked = false
+                end
+            end
+
+            --]]
+
+
             if (worldButton[i].locked == true) then
                 worldButton[i].infoTile.silverMedalIcon.x = worldButton[i].x - 15
 
@@ -1338,23 +1359,55 @@ function scene:show( event )
                 if (worldButton[i].fullyBlocked == true) then
 
                 else
+
                     print("start print")
+
+                    --[[
                     print(silverMedalCounter, thisWorldButtonValue)
 
                     print(sliverMedalCounterInt, thisWorldSilverMedalsRequired, goldMedalCounterInt)
                     print(thisWorldGoldMedalsRequired, myGameSettings["worldUnlocked"][thisWorldButtonValue])
+                    ]]
+
+                    print("silverMedalCounterInt: ", silverMedalCounterInt)
+                    print("thisWorldSilverMedalsRequired: ", thisWorldSilverMedalsRequired)
+
+                    print("1 >= 2 and ")
+
+                    print("goldmedalCounterInt: ", goldMedalCounterInt)
+                    print("thisWorldGoldMedalRequired: ", thisWorldGoldMedalRequired)
+
+                    print("3 >= 4 and true")
+
+                    print("myGameSettings[worldUnlock][thisWorldButtonValue]: ", myGameSettings["worldUnlocked"][thisWorldButtonValue])
+
+                    print("else")
+                    print(">1? ", (i - lastWorldThatWasUnlockedIndex))
                     print("end print")
-                    worldButton[i].overlay = display.newImage("images/central-images/Layout/WorldSelectTile-overlay.png")
-                    worldButton[i].overlay:addEventListener("tap", levelVariables.openIAP)
+
+
+                    --worldButton[i].overlay = display.newImage("images/central-images/Layout/WorldSelectTile-overlay.png")
+                    worldButton[i].overlay = display.newImage("images/central-images/Layout/WorldSelectTile-unlocked.png")
+                    
+                    --if worldButton[i].overlay then
+                        print("worldButton Exist")
+                        worldButton[i].overlay:addEventListener("tap", levelVariables.openIAP)
+                   -- else
+                        print("worldButton not exist")
+                   -- end
+
                 end
 
-                worldButton[i].overlay.anchorX = 0
-                worldButton[i].overlay.anchorY = 0
-                worldButton[i].overlay.x = worldButton[i].x - (worldButton[i].contentWidth/2) - 1
-                worldButton[i].overlay.y = worldButton[i].y - 2
-                worldButton[i].overlay.value = "Unlock"
-                worldButton[i].overlay.relBool = true
-                scrollView:insert(worldButton[i].overlay)
+                if worldButton[i].overlay then 
+                    worldButton[i].overlay.anchorX = 0
+                    worldButton[i].overlay.anchorY = 0
+                    worldButton[i].overlay.x = worldButton[i].x - (worldButton[i].contentWidth/2) - 1
+                    worldButton[i].overlay.y = worldButton[i].y - 2
+                    worldButton[i].overlay.value = "Unlock"
+                    worldButton[i].overlay.relBool = true
+                    scrollView:insert(worldButton[i].overlay)
+                end
+
             else
                 worldButton[i].infoTile.silverMedalIcon.x = worldButton[i].x - 40
 
@@ -1366,7 +1419,7 @@ function scene:show( event )
 
 
             worldButton[i].valueTextButton = display.newImageRect("images/central-images/buttons/WorldSelectScene-WorldCounter.png", 55, 47)
-         --worldButton[i].valueTextButton:setReferencePoint(display.TopLeftReferencePoint);
+            --worldButton[i].valueTextButton:setReferencePoint(display.TopLeftReferencePoint);
             worldButton[i].valueTextButton.anchorX = 0.5
             worldButton[i].valueTextButton.anchorY = 0
             worldButton[i].valueTextButton.x = worldButton[i].x - (worldButton[i].contentWidth/2)
