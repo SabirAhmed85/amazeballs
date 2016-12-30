@@ -39,9 +39,7 @@ local function createLevelTimeString (timeSeconds, timeMinutes, timeCounter, sho
     
     for a = 1, #levelTimeString do
         local index = a + stringLengthDiff
-        if timeCounter[index] then
-            timeCounter[index]:setSequence(string.sub(levelTimeString, a, a))
-        end
+        timeCounter[index]:setSequence(string.sub(levelTimeString, a, a))
     end
 end
     t.createLevelTimeString = createLevelTimeString
@@ -73,20 +71,19 @@ local function createItemDetailedIcon (thisIsShapeScreen, itemName, viewScreenNa
     elseif viewScreenName == "ItemGainedScreenMulti" then
         propertiesArray = {}
         if (itemName == "bomb")
-        or (itemName == "hook")
-        or (itemName == "jet") then
+        or (itemName == "hook") then
             propertiesArray["directions"] = itemArray[9]
+        elseif (itemName == "jet") then
+            propertiesArray["directions"] = itemArray[8]
         elseif (itemName == "autoFan")
         or (itemName == "manualFan") then
             propertiesArray["directions"] = {itemArray[2]}
         elseif (itemName == "spitter") then
             propertiesArray["directions"] = itemArray[2]
         end
-        if (itemName == "bomb") then
+        if (itemName == "bomb")
+        or (itemName == "hook") then
             propertiesArray["squares"] = itemArray[8]
-            itemArray["quantity"] = itemArray[10]
-        elseif (itemName == "hook") then
-            propertiesArray["squares"] = itemArray[9]
             itemArray["quantity"] = itemArray[10]
         elseif (itemName == "jet") then
             itemArray["quantity"] = itemArray[9]
@@ -97,6 +94,9 @@ local function createItemDetailedIcon (thisIsShapeScreen, itemName, viewScreenNa
         or (itemName == "bulletVest") then
             propertiesArray["seconds"] = itemArray[8]
             itemArray["quantity"] = itemArray[9]
+        elseif (itemName == "dummyBall")
+        or (itemName == "superBall") then
+            itemArray["quantity"] = itemArray[8]
         end
     end
 
@@ -265,23 +265,23 @@ local function positionItemDetailedIcon (tool, xCord, yCord, thisIsShapeScreen, 
         propertiesArray = itemArray["properties"]
     elseif viewScreenName == "ItemGainedScreenMulti" then
         propertiesArray = {}
-        if (itemName == "triangle") then
+        if (itemName == "triangle")
+        or (itemName == "bar") then
             propertiesArray["shape"] = itemArray[2]
         elseif (itemName == "bomb")
-        or (itemName == "hook")
-        or (itemName == "jet") then
+        or (itemName == "hook") then
             propertiesArray["directions"] = itemArray[9]
+        elseif (itemName == "jet") then
+            propertiesArray["directions"] = itemArray[8]
         elseif (itemName == "autoFan")
         or (itemName == "manualFan") then
             propertiesArray["directions"] = {itemArray[2]}
         elseif (itemName == "spitter") then
             propertiesArray["directions"] = itemArray[2]
         end
-        if (itemName == "bomb") then
+        if (itemName == "bomb")
+        or (itemName == "hook") then
             propertiesArray["squares"] = itemArray[8]
-            itemArray["quantity"] = itemArray[10]
-        elseif (itemName == "hook") then
-            propertiesArray["squares"] = itemArray[9]
             itemArray["quantity"] = itemArray[10]
         elseif (itemName == "jet") then
             itemArray["quantity"] = itemArray[9]
@@ -323,9 +323,10 @@ local function positionItemDetailedIcon (tool, xCord, yCord, thisIsShapeScreen, 
         end
     elseif itemName == "bar" then
         if propertiesArray["shape"] == "horz" then
-            tool.rotation = 90
+            tool.rotation = 83
             tool.y = tool.y + 8
         else
+            tool.rotation = -7
             tool.y = tool.y - 3
         end
     end
