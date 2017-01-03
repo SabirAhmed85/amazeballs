@@ -8,7 +8,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     table.insert(shapeArrayParameters,{"autoFan","autoFan2_1_1", 1, 1, 1, 1, "down"})
     table.insert(shapeArrayParameters,{"autoFan","autoFan2_1_1", 1, 1, 3, 2, "right"})
     table.insert(shapeArrayParameters,{"shape","triangle1_1_1", 1, 1, 6, 2, "triangleBottomLeftShape"})
-    table.insert(shapeArrayParameters,{"item","big-present", 1, 1, 1, 3, "present1_1_1", 
+    table.insert(shapeArrayParameters,{"item","big-present", 1, 1, 1, 3, "present1_1_3", 
                                             { 
                                                 -- put BOMB here
                                                 {"item","clock", 1, 1, 3, 2, "clock1_1_1", 10, 1},
@@ -57,8 +57,8 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     table.insert(shapeArrayParameters,{"gem","purpleCoin", 1, 2, 4, 2, "purpleCoin"})
 
     --ITEMS
-    table.insert(shapeArrayParameters,{"item","big-present", 1, 1, 1, 3, "present2_1_1", {} })
-    table.insert(shapeArrayParameters,{"item","small-present", 1, 2, 7, 4, "present3_1_2", {} })
+    table.insert(shapeArrayParameters,{"item","big-present", 1, 1, 1, 3, "present2_1_3", {} })
+    table.insert(shapeArrayParameters,{"item","small-present", 1, 2, 7, 4, "present3_7_4", {} })
     --table.insert(shapeArrayParameters,{"item","coins", 1, 1, 4, 1, 90})
     --table.insert(shapeArrayParameters,{"item","coins", 1, 2, 6, 4, 250})
 
