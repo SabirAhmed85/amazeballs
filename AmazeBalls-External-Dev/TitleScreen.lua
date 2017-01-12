@@ -1072,7 +1072,7 @@ function scene:show( event )
 
     local MainBarNumbersImageSheet = graphics.newImageSheet( "images/central-images/Numbers/MainLivesAndCoinBar-numbers.png", {width = 13, height = 14, numFrames = 15, sheetContentWidth = 195, sheetContentHeight = 14})
     local MainBarNumbersSequenceData = {
-        { name = "1", start=1, count=1,   loopCount=1 },
+        { name = "1", start=1, count=1, loopCount=1 },
         { name = "2", start=2, count=1, loopCount=1 },
         { name = "3", start=3, count=1, loopCount=1 },
         { name = "4", start=4, count=1, loopCount=1 },
@@ -1133,10 +1133,18 @@ function scene:show( event )
 
     end
 
+	--i should be flexiable number not base on 7
+	--calcalate i base on varaible from myGameSetting(current coins)
     for a = 1, #coinCounter do
-        local i = 7 - #coinCounter + a
-        print("coinCounter: ", string.sub(coinCounter, a, a))
-        titleScreenVariables.extrasScreen.dollarCounter[i]:setSequence(string.sub(coinCounter, a, a))
+		local i = 7 - #coinCounter + a
+        print(i, " coinCounter: ", string.sub(coinCounter, a, a))
+		if i~= 0 then
+			titleScreenVariables.extrasScreen.dollarCounter[i]:setSequence("1")
+		end
+		
+		
+		--titleScreenVariables.extrasScreen.dollarCounter[i]:setSequence("1")
+        --titleScreenVariables.extrasScreen.dollarCounter[i]:setSequence(string.sub(coinCounter, a, a))
     end
 
     -------------

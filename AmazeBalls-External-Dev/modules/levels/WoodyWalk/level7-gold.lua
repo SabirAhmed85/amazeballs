@@ -61,7 +61,9 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
 
     table.insert(shapeArrayParameters,{"item","coins", 1, 1, 7, 1, 80}) 
     table.insert(shapeArrayParameters,{"item","coins", 1, 2, 3, 5, 120}) 
-    table.insert(shapeArrayParameters,{"item", "small-present", 1, 2, 1, 4, "present1_1_4", {} })
+    table.insert(shapeArrayParameters,{"item", "big-present", 1, 2, 1, 4, "present1_1_4", {
+		{"simple"}
+	} })
 end
     t.createLevelObjects = createLevelObjects
 

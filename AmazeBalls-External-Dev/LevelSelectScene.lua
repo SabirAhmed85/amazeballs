@@ -1711,7 +1711,11 @@ function scene:show( event )
             print(dollarCounter[i])
             print(string.sub(coinCounter,a,a))
             print(a)
-            dollarCounter[i]:setSequence(string.sub(coinCounter, a, a))
+			
+			--update later
+			if dollarCounter[i] then
+				dollarCounter[i]:setSequence(string.sub(coinCounter, a, a))
+			end
         end
 
 

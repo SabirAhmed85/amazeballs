@@ -61,11 +61,37 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     table.insert(shapeArrayParameters,{"item","coins", 1, 1, 7, 3, 250})  
     table.insert(shapeArrayParameters,{"item","coins", 1, 2, 7, 5, 200}) 
     table.insert(shapeArrayParameters,{"item","coins", 1, 2, 5, 1, 500})   
-    table.insert(shapeArrayParameters,{"item","small-present", 1, 1, 6, 5, "present1_6_5", {} })
-    table.insert(shapeArrayParameters,{"item","big-present", 1, 2, 3, 1, "present2_3_1", {} })
-    table.insert(shapeArrayParameters,{"item","big-present", 1, 1, 4, 1, "present3_4_1", {} })
-    table.insert(shapeArrayParameters,{"item","small-present", 1, 2, 4, 1, "present4_4_1", {} })
+	
+	--table.insert(shapeArrayParameters,{"item","small-present", 1, 2, 4, 1, "present1_4_1", {} })
+	
+    table.insert(shapeArrayParameters,{"item","small-present", 1, 1, 6, 5, "present1_6_5", {
+		{"item","clock", _, _, _, _, _, 10, 1},
+		{"item","clock", _, _, _, _, _, 5, 1}
+	} })
+    
+	--should introudece new item, one new item only
+	--[[
+	table.insert(shapeArrayParameters,{"item","big-present", 1, 2, 4, 1, "present2_4_1", {
+		{"item","clock", _, _, _, _, _, 10, 1},
+		{"item","bomb", _, _, _, _, _, 1, {"left"}, 1},
+		{"item","bomb", _, _, _, _, _, 1, {"up"}, 1}
+	} })
+	]]
+	
+	table.insert(shapeArrayParameters,{"item","small-present", 1, 2, 4, 1, "present2_4_1", {
+		{"item","bomb", _, _, _, _, _, 1, {"up"}, 1},
+		{"item","bomb", _, _, _, _, _, 1, {"down"}, 1}
+		
+	} })
+	
+    table.insert(shapeArrayParameters,{"item","big-present", 1, 1, 4, 1, "present3_4_1", {
+		{"item","bomb", _, _, _, _, _, 1, {"right"}, 1},
+		{"item","bomb", _, _, _, _, _, 1, {"left"}, 1},
+		{"item","bomb", _, _, _, _, _, 1, {"up"}, 1}
+	} })
+
     table.insert(shapeArrayParameters,{"item","fireCape", 1, 2, 2, 1, 1, 3 })
+	
 
 end
 	t.createLevelObjects = createLevelObjects

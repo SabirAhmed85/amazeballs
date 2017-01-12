@@ -728,8 +728,12 @@ function scene:show( event )
         end
 
         for a = 1, #coinCounter do
+		--i should be base on variable from myGameSetting
             local i = 7 - #coinCounter + a
-            dollarCounter[i]:setSequence(string.sub(coinCounter, a, a))
+			--update later
+			if dollarCounter[i] then
+				dollarCounter[i]:setSequence(string.sub(coinCounter, a, a))
+			end
         end
 
 

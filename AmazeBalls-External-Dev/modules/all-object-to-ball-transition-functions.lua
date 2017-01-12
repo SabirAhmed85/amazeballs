@@ -1439,7 +1439,10 @@ local fanCentering = function (obj, thisFan, fanCenterTime, mainFunc)
 
 				    	mainFunc.medalGainedScreen.CoinsCounterLength = #newVal - 1
 				    	for a = 1, #newVal do
-					    	mainFunc.medalGainedScreen.CoinsCounter[7 - (a - 1)]:setSequence(string.sub(newVal, #newVal - (a - 1), #newVal - (a - 1)))
+							--fix later
+							if mainFunc.medalGainedScreen.CoinsCounter[7 - (a - 1)] then
+								mainFunc.medalGainedScreen.CoinsCounter[7 - (a - 1)]:setSequence(string.sub(newVal, #newVal - (a - 1), #newVal - (a - 1)))
+							end
 				    	end
 
 				    	if (makeVisible) then
@@ -1965,6 +1968,9 @@ end
 	t.gemCollision = gemCollision
 
 local closeItemGainedScreenFunction = function (mainFunc, shapeArray, shapeArrayParameters)
+
+	--print("closeItemGainedScreenFunction")
+
 	if (mainFunc.allLevelSettings.itemBagIsOpen == true) then
 		local isSingleItem = false
 		mainFunc.allLevelSettings.itemBagIsOpen = false
@@ -1972,11 +1978,17 @@ local closeItemGainedScreenFunction = function (mainFunc, shapeArray, shapeArray
 		if #screen.itemArray == 1 then
 			isSingleItem = true
 		end
-
+		
+		print("isSingleItem: ", isSingleItem)
+		
+		
 		for a = 1, #screen.itemArray do
 			thisItem = screen.itemArray[a]
 
 			if thisItem.displayObjects then
+			
+			--print("this Item . Display Object")
+			
 				if thisItem.displayObjects["directionLabel"] then
 					for b = 1, #thisItem.displayObjects["directionLabel"] do
 	            		thisItem.displayObjects["directionLabel"][b]:removeSelf()
@@ -2058,8 +2070,11 @@ end
 local itemGainedFunction = function (mainFunc, shapeArray, shapeArrayParameters, itemType, itemLabel, relevantShapeArrayIndex, relevantToolArrayCounter)
     if (mainFunc.allLevelSettings.itemBagIsOpen == false and itemLabel ~= 'coins') then
 
+		print("pop up")
     	print("itemLabel: ",itemLabel)
-
+		
+		
+		
     	display.getCurrentStage():setFocus( nil )
         mainFunc.allLevelSettings.itemBagIsOpen = true
 
@@ -2783,8 +2798,8 @@ local autoFanAndEtcTransition = function (mainFunc, shapeArray, shapeArrayParame
 						--]]
 
 						--processItem(shapeArrayParameters[b])
-		            	for a = 1, #shapeArrayParameters[b][7] do
-		            		processItem(shapeArrayParameters[b][7][a])
+		            	for a = 1, #shapeArrayParameters[b][8] do
+		            		processItem(shapeArrayParameters[b][8][a])
 		            	end
 		            end
 
@@ -2827,6 +2842,7 @@ local autoFanAndEtcTransition = function (mainFunc, shapeArray, shapeArrayParame
 	            			end
 			            else
             				itemGainedFunction(mainFunc, shapeArray, shapeArrayParameters, "toolItem", nil, b, shapeArray[b].relevantToolIndexArray[a])
+							--itemGainedFunction(mainFunc, shapeArray, shapeArrayParameters, "toolItem", "pickedup", b, shapeArray[b].relevantToolIndexArray[a])
 			            end
 		            else
 		            	if shapeArrayParameters[b][2] ~= "mystery-block" then

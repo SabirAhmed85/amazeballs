@@ -61,9 +61,19 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     table.insert(shapeArrayParameters,{"item","coins", 1, 1, 6, 4, 70}) 
     table.insert(shapeArrayParameters,{"item","coins", 1, 2, 5, 5, 60}) 
     table.insert(shapeArrayParameters,{"item","coins", 1, 2, 7, 4, 130}) 
-    table.insert(shapeArrayParameters,{"item","small-present", 1, 2, 6, 5, "present1_6_5", {} })
-    table.insert(shapeArrayParameters,{"item","big-present", 1, 1, 2, 5, "present2_2_5", {} })
-    table.insert(shapeArrayParameters,{"item","small-present", 1, 2, 1, 5, "present3_1_5", {} })
+    table.insert(shapeArrayParameters,{"item","small-present", 1, 2, 6, 5, "present1_6_5", {
+		{"simple"},
+		{"simple"}
+	} })
+    table.insert(shapeArrayParameters,{"item","big-present", 1, 1, 2, 5, "present2_2_5", {
+		{"simple"},
+		{"item","bomb", _, _, _, _, _, 1, {"left"}, 1},
+		{"item","bomb", _, _, _, _, _, 1, {"right"}, 1},
+	} })
+    table.insert(shapeArrayParameters,{"item","small-present", 1, 2, 1, 5, "present3_1_5", {
+		{"item","clock", _, _, _, _, _, 5, 1},
+		{"item","clock", _, _, _, _, _, 10, 1}
+	} })
 
 end
     t.createLevelObjects = createLevelObjects

@@ -95,10 +95,24 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     table.insert(shapeArrayParameters,{"item","coins", 1, 1, 4, 5, 500}) 
     table.insert(shapeArrayParameters,{"item","coins", 1, 2, 1, 2, 450})    
     table.insert(shapeArrayParameters,{"item","coins", 1, 3, 3, 3, 300})    
-    table.insert(shapeArrayParameters,{"item","small-present", 1, 3, 2, 3, "present1_2_3", {} })
-    table.insert(shapeArrayParameters,{"item","small-present", 1, 3, 6, 5, "present2_6_5", {} })
-    table.insert(shapeArrayParameters,{"item","big-present", 1, 2, 7, 2, "present3_7_2", {} })
-    table.insert(shapeArrayParameters,{"item","big-present", 1, 1, 1, 5, "present4_1_5", {} })
+    table.insert(shapeArrayParameters,{"item","small-present", 1, 3, 2, 3, "present1_2_3", {
+		{"item","clock", _, _, _, _, _, 5, 1},
+		{"item","clock", _, _, _, _, _, 5, 1}
+	} })
+    table.insert(shapeArrayParameters,{"item","small-present", 1, 3, 6, 5, "present2_6_5", {
+		{"item","bomb", _, _, _, _, _, 1, {"down"}, 1},
+		{"item","bomb", _, _, _, _, _, 1, {"up"}, 1}
+	} })
+    table.insert(shapeArrayParameters,{"item","big-present", 1, 2, 7, 2, "present3_7_2", {
+		{"item","clock", _, _, _, _, _, 5, 1},
+		{"item","clock", _, _, _, _, _, 5, 1},
+		{"item","clock", _, _, _, _, _, 5, 1},
+	} })
+    table.insert(shapeArrayParameters,{"item","big-present", 1, 1, 1, 5, "present4_1_5", {
+		{"item","clock", _, _, _, _, _, 5, 2},
+		{"item","clock", _, _, _, _, _, 10, 1},
+		{"item","bomb", _, _, _, _, _, 1, {"right", "left", "up"}, 1}
+	} })
 
 end
 	t.createLevelObjects = createLevelObjects

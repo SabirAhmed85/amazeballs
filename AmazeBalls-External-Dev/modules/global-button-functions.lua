@@ -758,7 +758,10 @@ local createCoinDisplay = function (mainFunc, xVal , yVal, pauseScreenY, viewScr
 
     for a = 1, #coinCounter do
         local i = 7 - #coinCounter + a
-        objArray[i]:setSequence(string.sub(coinCounter, a, a))
+		--update later
+		if objArray[i] then
+			objArray[i]:setSequence(string.sub(coinCounter, a, a))
+		end
     end
 
     return objArray
