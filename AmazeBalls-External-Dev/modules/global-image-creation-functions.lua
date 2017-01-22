@@ -223,13 +223,17 @@ local function createItemDetailedIcon (thisIsShapeScreen, itemName, viewScreenNa
     or viewScreenName == "ItemGainedScreen" 
     or viewScreenName == "ItemGainedScreenMulti"
     or viewScreenName == "IAPPurchaseScreen" then
+
         local counterNumberImageSheet = t.settingsArray.itemBagScreenCounterImageSheet
         local counterNumberSequenceData = t.settingsArray.itemBagScreenCounterSequenceData
 
         tool.displayObjects["counterNumber"] = display.newSprite(counterNumberImageSheet, counterNumberSequenceData)
+        print("itemarray quantity: ", itemArray["quantity"])
         tool.displayObjects["counterNumber"]:setSequence(itemArray["quantity"])
         tool.displayObjects["counterNumber"].xScale = counterNumberScale
+        --tool.displayObjects["counterNumber"].xScale = 3
         tool.displayObjects["counterNumber"].yScale = counterNumberScale
+        --tool.displayObjects["counterNumber"].yScale = 3
     end
 
     tool.alpha = requiredAlpha
@@ -237,17 +241,24 @@ local function createItemDetailedIcon (thisIsShapeScreen, itemName, viewScreenNa
     if tool.displayObjects["text"] then
         for a = 1, #tool.displayObjects["text"] do
             tool.displayObjects["text"][a].alpha = requiredAlpha
+            --tool.displayObjects["text"][a].x = tool.displayObjects["text"][a].x + 300
+            --tool.displayObjects["text"][a].alpha = 0
         end
     end
 
     if tool.displayObjects["directionLabel"] then
         for a = 1, #tool.displayObjects["directionLabel"] do
             tool.displayObjects["directionLabel"][a].alpha = requiredAlpha
+            --tool.displayObjects["directionLabel"][a].x = tool.displayObjects["directionLabel"][a].x + 300
+            --tool.displayObjects["directionLabel"][a].alpha = 0
         end
     end
 
     if tool.displayObjects["counterNumber"] then
+        --print("got counter number to show")
         tool.displayObjects["counterNumber"].alpha = requiredAlpha
+        --tool.displayObjects["counterNumber"].x = tool.displayObjects["counterNumber"].x + 30
+        --tool.displayObjects["counterNumber"].alpha = 1
     end
 
     return tool
@@ -256,6 +267,8 @@ end
 
 local function positionItemDetailedIcon (tool, xCord, yCord, thisIsShapeScreen, itemName, viewScreenName, itemArray, a, showingArray, showingToolsArrayCounter)
     local directionArray, propertiesArray
+
+    print("positionTtemDetailedIcon")
 
     if viewScreenName == "IAPItemTile" or viewScreenName == "IAPPurchaseScreen"then
         itemArray = itemArray[itemName][a]
@@ -479,11 +492,16 @@ local function positionItemDetailedIcon (tool, xCord, yCord, thisIsShapeScreen, 
     end
 
     if viewScreenName == "itemBagScreen" or viewScreenName == "MedalGainedScreen" or viewScreenName == "ItemGainedScreen" or viewScreenName == "IAPPurchaseScreen" then
+    --if viewScreenName == "itemBagScreen" or viewScreenName == "MedalGainedScreen" or viewScreenName == "ItemGainedScreen" or viewScreenName == "IAPPurchaseScreen" or viewScreenName == "ItemGainedScreenMulti" then
+
         tool.displayObjects["counterNumber"].x = tool.x + 23
         tool.displayObjects["counterNumber"].y = tool.y + 19
     elseif viewScreenName == "IAPYouHaveDisplayfast" or viewScreenName == "IAPYouHaveDisplayslow" then
         tool.displayObjects["counterNumber"].x = tool.x + 13
         tool.displayObjects["counterNumber"].y = tool.y + 10
+    elseif viewScreenName == "ItemGainedScreenMulti" then
+        tool.displayObjects["counterNumber"].x = tool.x + 23
+        tool.displayObjects["counterNumber"].y = tool.y + 19
     end
 
 

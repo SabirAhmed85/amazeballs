@@ -85,4 +85,11 @@ t.ballFirstVertSquare = 3
 t.ballFirstDirection = "left"
 t.initialDirection = t.ballFirstDirection
 
+
+--Timer
+t.levelHasTimer = true
+
+t.toolArray = {}
+t.objectArray = {}
+
 return t

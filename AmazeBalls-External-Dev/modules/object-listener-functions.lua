@@ -396,6 +396,7 @@ local objectListener = function (event, mainFunc, shapeArray, shapeArrayParamete
                     mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.counterImg = nil
                 end
 
+                --[[
                 local itemsImageSheet = graphics.newImageSheet( "images/objects/items.png", {width = 60, height = 52, numFrames = 12, sheetContentWidth = 720, sheetContentHeight = 52})
                 local itemsSequenceData = {
                     { name = "bomb", start=1, count=1,   loopCount=1 },
@@ -411,7 +412,7 @@ local objectListener = function (event, mainFunc, shapeArray, shapeArrayParamete
                     { name = "small-present", start=11, count=1, loopCount=1 },
                     { name = "mystery-block", start=12, count=1, loopCount=1 }
                 }
-
+                --]]
                 mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.isActive = true
 
                 mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.img = display.newSprite(itemsImageSheet, itemsSequenceData)

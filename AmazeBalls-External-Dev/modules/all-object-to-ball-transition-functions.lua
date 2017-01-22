@@ -2162,6 +2162,7 @@ local itemGainedFunction = function (mainFunc, shapeArray, shapeArrayParameters,
 
 					mainFunc.allLevelSettings.itemScreenObjectsGroup:insert(item)
 			        item:toFront()
+			        
 
 			        if item.displayObjects["text"] then
 			            for a = 1, #item.displayObjects["text"] do
@@ -2179,6 +2180,7 @@ local itemGainedFunction = function (mainFunc, shapeArray, shapeArrayParameters,
 
 			        mainFunc.allLevelSettings.itemScreenObjectsGroup:insert(item.displayObjects["counterNumber"])
 			        item.displayObjects["counterNumber"]:toFront()
+					
 
 			        mainFunc.globalImageCreateFunctions.positionItemDetailedIcon(item, screen.itemXVal, screen.itemYVal, thisIsShape, name, "ItemGainedScreenMulti", shapeArrayParameters[relevantShapeArrayIndex][8], a, nil, nil) 
 					
@@ -2616,7 +2618,10 @@ local autoFanAndEtcTransition = function (mainFunc, shapeArray, shapeArrayParame
 			            				if (mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.relevantShapeArrayCounterForItem == a) then
 			            					mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.counterImg:removeSelf()
 							                mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.counterImg = nil
-
+							                --bug
+							                --crash if already select same kind of item and collect more
+							                --clock x9 wrong colour
+							                print("image number: ", mainFunc.thisLevelSettings.toolArray[a][3])
 							                mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.counterImg = display.newImage("images/objects/imageNumber" .. mainFunc.thisLevelSettings.toolArray[a][3] .. ".png")
 							                mainFunc.allLevelSettings.itemScreenObjectsGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.counterImg)
 							                itemBtnCounterImage = mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.counterImg

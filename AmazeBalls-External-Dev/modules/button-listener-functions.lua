@@ -773,7 +773,8 @@ local bombDirectionArrowArray = {
 }
     t.bombDirectionArrowArray = bombDirectionArrowArray
 
-local itemsImageSheet = graphics.newImageSheet( "images/objects/items.png", {width = 60, height = 52, numFrames = 12, sheetContentWidth = 720, sheetContentHeight = 52})
+--local itemsImageSheet = graphics.newImageSheet( "images/objects/items.png", {width = 60, height = 52, numFrames = 12, sheetContentWidth = 720, sheetContentHeight = 52})
+local itemsImageSheet = graphics.newImageSheet( "images/objects/items.png", {width = 60, height = 52, numFrames = 16, sheetContentWidth = 960, sheetContentHeight = 52})
 t.itemsImageSheet = itemsImageSheet
 local itemsSequenceData = {
     { name = "bomb", start=1, count=1,   loopCount=1 },
@@ -998,7 +999,7 @@ local createToolImage = function (thisBombProps, toolIndex, bombIndex, mainFunc,
 
         if (itemLabel) == "bomb"
         and itemTransactionType == "itemUsed" then
-            mainFunc.thisLevelSettings.bombArray[bombIndex] = display.newSprite(itemsImageSheet, itemsSequenceData)
+            mainFunc.thisLevelSettings.bombArray[bombIndex] = display.newSprite(t.itemsImageSheet, t.itemsSequenceData)
             item = mainFunc.thisLevelSettings.bombArray[bombIndex]
             item.props = thisBombProps
         else
@@ -1019,7 +1020,9 @@ local createToolImage = function (thisBombProps, toolIndex, bombIndex, mainFunc,
         item.itemType = itemLabel
 
         item:play()
+        
         item:setSequence(itemLabel)
+        
 
         item.relevantArrayIndex = toolIndex
 
@@ -1356,11 +1359,31 @@ local itemBtnFunction = function (mainFunc, shapeArray, shapeArrayParameters, le
             end})
 
         else
+            --print("tool name: ", toolArray[toolArrayCounter]["name"])
+            --print("setting has timer: ", mainFunc.thisLevelSettings.levelHasTimer)
+            
+           
+            
+
+
             if toolArray[toolArrayCounter]["name"] == "clock" then
+
+                print("properties second: ", toolArray[toolArrayCounter]["properties"]["seconds"])
+                local addSeconds = toolArray[toolArrayCounter]["properties"]["seconds"]
+
                 if mainFunc.thisLevelSettings.levelHasTimer == true then
                     removeItemFromToolArray(toolArrayCounter, mainFunc)
+                    print("use clock")
+
+
+
+                    print("before: ",mainFunc.ballAndButtonAndScreenCreateScript.levelTimeSeconds)
+                    mainFunc.ballAndButtonAndScreenCreateScript.levelTimeSeconds = mainFunc.ballAndButtonAndScreenCreateScript.levelTimeSeconds + addSeconds;
+                    print("after: ", mainFunc.ballAndButtonAndScreenCreateScript.levelTimeSeconds)
                     -- add number of seconds to timer based on clock settings
                 else
+                    print("cannot use clock")
+                    
                     -- show exclamationmark image above button
                     addBackListenerForItemBtn()
                 end
@@ -1525,6 +1548,7 @@ local itemBtnFunction = function (mainFunc, shapeArray, shapeArrayParameters, le
                         timer.performWithDelay(100, scaleBombUp)
                     end})
 
+                    print("use bomb")
                     mainFunc.objectFunctionsScript.bombExplode(toolArrayCounter, (bombArrayCounter + 1), mainFunc, shapeArray, shapeArrayParameters)
                     
                 else

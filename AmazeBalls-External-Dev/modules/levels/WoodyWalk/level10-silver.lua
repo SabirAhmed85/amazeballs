@@ -82,7 +82,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
 	
 	--small
     table.insert(shapeArrayParameters,{"item","big-present", 2, 1, 7, 4, "present2_7_4", {
-		{"shape", "triangleBottomRightShape"}
+		{"shape", "triangleBottomRightShape"},
 		{"shape", "triangleTopRightShape"},
 		{"shape", "triangleTopLeftShape"}
 	} })
