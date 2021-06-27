@@ -1,22 +1,7 @@
-local widget = require("widget")
-local t = {}
+local t = {};
+local getShapeArray = require("modules.utils.get-shape-array");
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
-    local getShapeArray = function (type, name, location, subType, props)
-        return {
-            type = type,
-            name = name,
-            location = {
-                xScreen = location[1],
-                yScreen = location[2],
-                xSquare = location[3],
-                ySquare = location[4]
-            },
-            subType = subType,
-            props = props
-        };
-    end;
-
     table.insert(shapeArrayParameters, getShapeArray("shape", "bar1_1_1", { 1, 1, 1, 2 }, "bar", { "vert", 2 }))
     table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"bar1_1_1"},{"slide"},{"brown"},{1},{1},{1,1,1,2},{2},{1,1,2,2}})
     table.insert(shapeArrayParameters, getShapeArray("manualFan","manualFan1_1_1", { 1, 1, 2, 1}, "down"))

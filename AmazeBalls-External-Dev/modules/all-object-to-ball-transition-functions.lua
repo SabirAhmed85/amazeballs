@@ -621,6 +621,7 @@ local fanCentering = function (obj, thisFan, fanCenterTime, mainFunc)
             if obj == ball then 
             	transition.to(obj, {xScale = 1, yScale = 1, time=210})
             end
+			print("HIIIII");
             mainFunc.projectileMovementRemoveAndRespawnScript.moveProjectileArray[obj.direction](obj, mainFunc)
             if obj == ball
             and mainFunc.allLevelSettings.followShapeWithBallApplied then
@@ -1753,10 +1754,10 @@ local prepareForFanCentering = function (obj, shapeIndex, fanCenterTime, fanCent
     mainFunc.tm[obj.projectileType][obj.relevantArrayIndex]:cancelAll()
     obj.autoFanCounter = 1
     obj.fanCenteringCounter = 0
-    shapeArray[shapeIndex].type = shapeArrayParameters[shapeIndex][1]
+    shapeArray[shapeIndex].type = shapeArrayParameters[shapeIndex]["type"];
     fanCentering(obj, shapeArray[shapeIndex], fanCenterTime, mainFunc)
     --bullet[a]:setSequence(bullet[a].direction)
-    if not hasValue({ "simple", "backFire", "characterChangePoint", "switch" }, shapeArrayParameters[shapeIndex][1]) then
+    if not hasValue({ "simple", "backFire", "characterChangePoint", "switch" }, shapeArrayParameters[shapeIndex]["type"]) then
     	obj.direction = shapeArray[shapeIndex].direction
     end
     
@@ -1767,8 +1768,9 @@ local prepareForFanCentering = function (obj, shapeIndex, fanCenterTime, fanCent
 
         obj:setSequence(obj.direction)
     end
+	print("PREPARED CENTERING");
     
-    if shapeArrayParameters[shapeIndex][1] == "spitter" then
+    if shapeArrayParameters[shapeIndex]["type"] == "spitter" then
         spitterCounter = 0
     end
 end
@@ -2232,7 +2234,6 @@ local autoFanAndEtcTransition = function (mainFunc, shapeArray, shapeArrayParame
 	local ball = mainFunc.ballAndButtonAndScreenCreateScript.instance2;
 
 	for b = 1, #shapeArray do
-		print("HEY", shapeArrayParameters[b]["type"]);
 		if (mainFunc.allLevelSettings.ballScreenHorzValue == shapeArrayParameters[b]["location"]["xScreen"]
 		and mainFunc.allLevelSettings.ballScreenVertValue == shapeArrayParameters[b]["location"]["yScreen"])
 		and (shapeArrayParameters[b]["type"] == "autoFan"
@@ -2432,7 +2433,7 @@ local autoFanAndEtcTransition = function (mainFunc, shapeArray, shapeArrayParame
 						end
 						shapeArray[b].shapeArrayIndex = b
 						mainFunc.allLevelSettings.isBallMovingState = "false"
-
+						print("FAN CENTERING");
 		            	prepareForFanCentering(ball, b, fanCenterTime, fanCentering, mainFunc, shapeArray, shapeArrayParameters)
 			    	end
 			    end

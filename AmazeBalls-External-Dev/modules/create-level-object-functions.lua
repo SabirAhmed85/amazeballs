@@ -8,29 +8,25 @@ local switchSequenceData = {
 
 local function spawn (z, mainFunc)
     local shapeParameters = shapeArrayParameters[z];
-
-    if shapeParameters["type"] == "autoFan"
-    or shapeParameters["type"] == "manualFan"
-    or shapeParameters["type"] == "simple"
-    or shapeParameters["type"] == "spitter"
-    or shapeParameters["type"] == "tunnel"
-    or shapeParameters["type"] == "backFire"
-    or shapeParameters["type"] == "characterChangePoint" then
+    local shapeType = shapeParameters["type"];
+    local shapeName = shapeArrayParameters["name"];
+    local shapeSubType = shapeArrayParameters["subType"];
+    
+    if hasValue({ "autoFan", "manualFan", "simple", "spitter", "tunnel", "backFire", "characterChangePoint" }, shapeType) then
         object = display.newSprite(mainFunc.allLevelSettings.allFansImageSheet, mainFunc.allLevelSettings.allFansSequenceData)
-        object:setSequence(shapeParameters["type"])
-        if (shapeParameters["type"] == "tunnel") then
+        object:setSequence(shapeType)
+        if (shapeType == "tunnel") then
             mainFunc.thisLevelSettings.tunnelCounter = mainFunc.thisLevelSettings.tunnelCounter + 1
         end
-    elseif shapeParameters["type"] == "door"
-    or shapeParameters["type"] == "switch" then
+    elseif shapeType == "door" or shapeType == "switch" then
         local shapeWidth = 60
         local shapeHeight = 52
-        if (shapeParameters["type"] == "door") then
+        if (shapeType == "door") then
             shapeWidth = 26
             shapeHeight = 54
         end
 
-        if (shapeParameters["type"] == "switch") then
+        if (shapeType == "switch") then
             object = display.newSprite(switchImageSheet, switchSequenceData)
             object:setSequence("off")
             object.width = xCalc(60)
@@ -38,33 +34,30 @@ local function spawn (z, mainFunc)
         else
             object = display.newImageRect("images/objects/"..shapeParameters["type"]..".png", shapeWidth, shapeHeight)
         end
-    elseif shapeParameters["type"] == "shape" then
+    elseif shapeType == "shape" then
         if shapeParameters["props"][3] ~= "breakable" then
-            if shapeParameters["subType"] == "triangleTopRightShape"
-            or shapeParameters["subType"] == "triangleBottomRightShape"
-            or shapeParameters["subType"] == "triangleBottomLeftShape"
-            or shapeParameters["subType"] == "triangleTopLeftShape" then
+            if hasValue({ "triangleTopRightShape", "triangleBottomRightShape", "triangleBottomLeftShape", "triangleTopLeftShape" }, shapeSubType) then
                 local shapeString = shapeParameters["subType"]
                 if shapeParameters["props"][3] and (shapeParameters["props"][3] == "icy" or shapeParameters["props"][3] == "fire" or shapeParameters["props"][3] == "hyroll") then
                     shapeString = shapeParameters["props"][3] .. "-" .. shapeString
                 end
                 object = display.newSprite(mainFunc.allLevelSettings.triangleImageSheet, mainFunc.allLevelSettings.triangleSequenceData)
                 object:setSequence(shapeString)
-            elseif shapeParameters["subType"] == "triangleLeftAndRightShape" then
+            elseif shapeSubType == "triangleLeftAndRightShape" then
                 object = display.newSprite(mainFunc.allLevelSettings.triangleLeftAndRightImageSheet, mainFunc.allLevelSettings.triangleLeftAndRightSequenceData)
                 object:setSequence(shapeParameters["subType"])
                 if shapeParameters["props"][1] == 2 then
                     object.rotation = 180
                 end
-            elseif shapeParameters["subType"] == "triangleTopAndBottomShape" then
+            elseif shapeSubType == "triangleTopAndBottomShape" then
                 object = display.newSprite(mainFunc.allLevelSettings.triangleTopAndBottomImageSheet, mainFunc.allLevelSettings.triangleTopAndBottomSequenceData)
                 object:setSequence(shapeParameters["subType"])
                 if shapeParameters["props"][1] == 1 then
                     object.rotation = 180
                 end
-            elseif shapeParameters["subType"] == "bar" or shapeParameters["subType"] == "doubleBar" then
+            elseif shapeSubType == "bar" or shapeSubType == "doubleBar" then
                 local barSize = "single"
-                if shapeParameters["subType"] == "doubleBar" then
+                if shapeSubType == "doubleBar" then
                     barSize = "double"
                 end
                 local barShape = "horz"
@@ -73,78 +66,70 @@ local function spawn (z, mainFunc)
                 end
 
                 object = display.newSprite(mainFunc.allLevelSettings.barImageSheet[barSize][barShape], mainFunc.allLevelSettings.barSequenceData[barSize][barShape])
-                object:setSequence(shapeParameters["subType"])
+                object:setSequence(shapeSubType)
             end
         else
             object = display.newSprite(mainFunc.allLevelSettings.triangleImageSheet, mainFunc.allLevelSettings.triangleSequenceData)
-            object:setSequence("breakable-" .. shapeParameters["subType"])
+            object:setSequence("breakable-" .. shapeSubType)
             object.broken = false
         end
-    elseif shapeParameters["type"] == "gem" then
+    elseif shapeType == "gem" then
         local levelItems2ImageSheet = graphics.newImageSheet(mainFunc.allLevelSettings.levelItems2ImageSheet, mainFunc.allLevelSettings.levelItems2ImageSheetSettings)
         local levelItems2SequenceData = mainFunc.allLevelSettings.levelItems2SequenceData
         object = display.newSprite(levelItems2ImageSheet, levelItems2SequenceData)
         object:play()
-        object:setSequence(shapeParameters["subType"] .. "Floating")
+        object:setSequence(shapeSubType .. "Floating")
 
         object.width = xCalc(60)
         object.height = yCalc(52)
-    elseif shapeParameters["type"] == "item" then
+    elseif shapeType == "item" then
         local itemsImageSheet = mainFunc.allLevelSettings.itemsImageSheet
         local itemsSequenceData = mainFunc.allLevelSettings.itemsSequenceData
 
         local levelItemsImageSheet = graphics.newImageSheet(mainFunc.allLevelSettings.levelItemsImageSheet, mainFunc.allLevelSettings.levelItemsImageSheetSettings)
         local levelItemsSequenceData = mainFunc.allLevelSettings.levelItemsSequenceData
 
-        if shapeParameters["name"] == "bomb"
-        or shapeParameters["name"] == "hook"
-        or shapeParameters["name"] == "jet"
-        or shapeParameters["name"] == "clock"
-        or shapeParameters["name"] == "mystery-block"
-        or shapeParameters["name"] == "big-present"
-        or shapeParameters["name"] == "small-present"
-        or shapeParameters["name"] == "coins" then
+        if hasValue({ "bomb", "hook", "jet", "clock", "mystery-block", "big-present", "small-present", "coins" }, shapeName) then
             object = display.newSprite(itemsImageSheet, itemsSequenceData)
             object.width = xCalc(60)
             object.height = yCalc(52)
-        elseif shapeParameters["name"] == "map"
-        or shapeParameters["name"] == "compass" then
+        elseif shapeName == "map" or shapeName == "compass" then
             object = display.newSprite(levelItemsImageSheet, levelItemsSequenceData)
             object.width = xCalc(43)
             object.height = yCalc(34)
         end
 
-        if (shapeParameters["name"] == "map")
+        if (shapeName == "map")
         and mainFunc.thisLevelSettings.mapObtained == true then
             object.x = -10000
             object.alpha = 0
-        elseif (shapeParameters["name"] == "compass")
+        elseif (shapeName == "compass")
         and mainFunc.thisLevelSettings.compassObtained == true then
             object.x = -10000
             object.alpha = 0
         else
             object:play()
-            if shapeParameters["name"] == "map" or shapeParameters["name"] == "compass" then
+            if shapeName == "map" or shapeName == "compass" then
                 local label = "Map"
                 if shapeParameters["name"] == "compass" then
                     label = "Compass"
                 end
                 object:setSequence(currentMedal .. label)
             else
-                local itemLabel = shapeParameters["name"]
-                if shapeParameters["name"] == "coins"
-                and shapeParameters["subType"] > 99 then
+                local itemLabel = shapeName;
+                if shapeName == "coins"
+                and shapeSubType > 99 then
                     itemLabel = itemLabel .. "-big"
-                elseif shapeParameters["name"] == "coins"
-                and shapeParameters["subType"] < 99 then
+                elseif shapeName == "coins"
+                and shapeSubType < 99 then
                     itemLabel = itemLabel .. "-small"
                 end
                 object:setSequence(itemLabel)
             end
         end
-    elseif shapeParameters["type"] == "endPoint" then
+    elseif shapeType == "endPoint" then
         object = display.newImageRect("images/objects/" .. currentMedal .. "Medal.png", 63, 55)
-    elseif shapeParameters["type"] == "gun" then
+    elseif shapeType == "gun" then
         local gunImageSheet = graphics.newImageSheet( "images/objects/gun.png", {width = 60, height = 52, numFrames = 4, sheetContentWidth = 240, sheetContentHeight = 52})
         local gunSequenceData = {
             { name = "up", start=1, count=1,   loopCount=1 },
@@ -154,7 +139,7 @@ local function spawn (z, mainFunc)
         }
         object = display.newSprite(gunImageSheet, gunSequenceData)
         object:play()
-        object:setSequence(shapeParameters["subType"])
+        object:setSequence(shapeSubType)
     end
     return object
 end
@@ -717,9 +702,9 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
             shapeArray[z].y = shapeArray[z].y
         end
         mainFunc.allLevelSettings.frontScreenObjectsGroup:insert( shapeArray[z] )
-        if shapeParameters["props"] and shapeParameters["props"][1] == "enabled" then
+        if shapeParameters["props"][1] and shapeParameters["props"][1] == "enabled" then
             shapeArray[z].enabled = true
-        elseif shapeParameters["props"] and shapeParameters["props"][1] == "disabled" then
+        elseif shapeParameters["props"][1] and shapeParameters["props"][1] == "disabled" then
             shapeArray[z].enabled = false
         else
             shapeArray[z].enabled = true
