@@ -1027,17 +1027,30 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
                 shapeArray[z].circle = display.newSprite(mainFunc.allLevelSettings.levelItemsBackboardImageSheet, mainFunc.allLevelSettings.levelItemsBackboardSequenceData)
                 shapeArray[z].circle:setSequence("purpleRing")
                 shapeArray[z].circle.x = shapeArray[z].x
-                shapeArray[z].circle.y = shapeArray[z].y - yCalc(1)
-                shapeArray[z].circle.xScale = 1.5
-                shapeArray[z].circle.yScale = 1.5
-                shapeArray[z].circle.alpha = 0.35
+                shapeArray[z].circle.y = shapeArray[z].y
+                shapeArray[z].circle.xScale = 0.7
+                shapeArray[z].circle.yScale = 0.7
+                shapeArray[z].circle.alpha = 0.5
                 mainFunc.allLevelSettings.backgroundObjectsGroup:insert( shapeArray[z].circle )
                 shapeArray[z].circle:toFront()
 
                 if shapeArray[z].wasCollectedPreviously == false then
                     shapeArray[z].circle.alpha = 0.6
                 end
-            end
+            else
+                shapeArray[z].backBoard = display.newSprite(mainFunc.allLevelSettings.levelItemsBackboardImageSheet, mainFunc.allLevelSettings.levelItemsBackboardSequenceData)
+                shapeArray[z].backBoard:setSequence(shapeArray[z].gemType)
+                shapeArray[z].backBoard.x = shapeArray[z].x
+                
+                if shapeArray[z].wasCollectedPreviously then
+                    shapeArray[z].backBoard.alpha = 0.7
+                    shapeArray[z].backBoard.xScale = 0.7
+                    shapeArray[z].backBoard.yScale = 0.7
+                end
+                shapeArray[z].backBoard.y = shapeArray[z].y
+                mainFunc.allLevelSettings.backgroundObjectsGroup:insert( shapeArray[z].backBoard )
+                shapeArray[z].backBoard:toFront()
+            end;
 
             physics.addBody(shapeArray[z], "static", { density = 1.0, friction = 0.3, bounce = 0.2, shape={-20, -17, 20, -17, 20, 17, -20, 17} })
             shapeArray[z].xScale = 0.55
@@ -1045,22 +1058,6 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
             mainFunc.allLevelSettings.backgroundObjectsGroup:insert( shapeArray[z] )
             shapeArray[z]:toFront()
             shapeArray[z]:addEventListener("collision", mainFunc.gemCollisionListener)
-        end
-
-        if shapeArray[z].gemType ~= "purple" then
-            shapeArray[z].backBoard = display.newSprite(mainFunc.allLevelSettings.levelItemsBackboardImageSheet, mainFunc.allLevelSettings.levelItemsBackboardSequenceData)
-            shapeArray[z].backBoard:setSequence(shapeArray[z].gemType)
-            if (shapeArray[z].gemType == "purple") then
-                shapeArray[z].backBoard.x = shapeArray[z].x
-            else
-                shapeArray[z].backBoard.x = shapeArray[z].x
-            end
-            if shapeArray[z].wasCollectedPreviously then
-                shapeArray[z].backBoard.alpha = 0.9
-            end
-            shapeArray[z].backBoard.y = shapeArray[z].y
-            mainFunc.allLevelSettings.backgroundObjectsGroup:insert( shapeArray[z].backBoard )
-            shapeArray[z].backBoard:toBack()
         end
 
         if (myGameSettings[currentWorld]["levels"][currentLevel][currentMedal .. "-achievements"]["red_coin"] == 1 and shapeArray[z].gemType == "redCoin")
@@ -1072,9 +1069,7 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
     end
 
     if shapeArrayParameters[z][1] == "item" then
-        if shapeArrayParameters[z][2] == "partialMap"
-        or shapeArrayParameters[z][2] == "fullMap"
-        or shapeArrayParameters[z][2] == "compass" then
+        if hasValue({ "partialMap", "fullMap", "compass" }, shapeArrayParameters[z][2]) then
             shapeArray[z].xScale = 0.6
             shapeArray[z].yScale = 0.6
         else
@@ -1089,10 +1084,11 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
         if (shapeArrayParameters[z][2] == "mystery-block") then
             local mysteryBlockIsTaken = false
             for a = 1, #myGameSettings[currentWorld]["levels"][currentLevel][currentMedal .. "-achievements"]["mystery_shapes_to_add"] do
-                if myGameSettings[currentWorld]["levels"][currentLevel][currentMedal .. "-achievements"]["mystery_shapes_to_add"][a]["location"][1] == shapeArrayParameters[z][3]
-                and myGameSettings[currentWorld]["levels"][currentLevel][currentMedal .. "-achievements"]["mystery_shapes_to_add"][a]["location"][2] == shapeArrayParameters[z][4]
-                and myGameSettings[currentWorld]["levels"][currentLevel][currentMedal .. "-achievements"]["mystery_shapes_to_add"][a]["location"][3] == shapeArrayParameters[z][5]
-                and myGameSettings[currentWorld]["levels"][currentLevel][currentMedal .. "-achievements"]["mystery_shapes_to_add"][a]["location"][4] == shapeArrayParameters[z][6] then
+                local blockLocation = myGameSettings[currentWorld]["levels"][currentLevel][currentMedal .. "-achievements"]["mystery_shapes_to_add"][a]["location"];
+                if blockLocation[1] == shapeArrayParameters[z][3]
+                and blockLocation[2] == shapeArrayParameters[z][4]
+                and blockLocation[3] == shapeArrayParameters[z][5]
+                and blockLocation[4] == shapeArrayParameters[z][6] then
                     mysteryBlockIsTaken = true
                 end
             end
@@ -1112,6 +1108,8 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
             shapeArray[z].backBoard.x = shapeArray[z].x
             shapeArray[z].backBoard.y = shapeArray[z].y
             shapeArray[z].backBoard.alpha = 0.9
+            shapeArray[z].backBoard.xScale = 0.85
+            shapeArray[z].backBoard.yScale = 0.85
             mainFunc.allLevelSettings.backgroundObjectsGroup:insert( shapeArray[z].backBoard )
             shapeArray[z].backBoard:toBack()
         end

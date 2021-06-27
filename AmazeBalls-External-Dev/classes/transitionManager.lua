@@ -166,7 +166,7 @@ function new()
 		self.pausedSince = 0
 	end
 
-	function transitions:cancel(pausing, ignorePaused)
+	function transitions:cancel(id, pausing, ignorePaused)
 		
 		if self.db[id].goingOn <= 0 then
 			return false

@@ -1,0 +1,24 @@
+{
+    "Lua.diagnostics.globals": [
+        "bombArray",
+        "graphics",
+        "saveTable",
+        "display",
+        "system",
+        "loadTable",
+        "xCalc",
+        "yCalc",
+        "myGameSettings",
+        "myTotalToolArray",
+        "musicChannel",
+        "contentCentreX",
+        "contentCentreY",
+        "levelConfigArray",
+        "characterConfigArray",
+        "itemConfigArray",
+        "iapAvail",
+        "myTotalObjectArray",
+        "currentWorld",
+        "IAPOverlay"
+    ]
+}

@@ -1,6 +1,14 @@
-local t = {}
-local widget = require("widget")
-t.widget = widget
+local t = {};
+local widget = require("widget");
+local constants = require("constants.level-creation");
+local ball = require("modules.ball-button-screen-create.ball");
+local levelTimerLabel = require("modules.ball-button-screen-create.level-timer-label");
+local mapShowAndClockLabel = require("modules.ball-button-screen-create.map-show-clock-label.map-show-clock-label");
+local mapShowAndClock_Compass = require("modules.ball-button-screen-create.map-show-clock-label.map-show-clock-label-compass");
+local mapShowAndClockLabel_Map = require("modules.ball-button-screen-create.map-show-clock-label.map-show-clock-label-map");
+local gemCounter_FirstDigit = require("modules.ball-button-screen-create.gem-counter.gem-counter-first-digit");
+local gemCounter_SecondDigit = require("modules.ball-button-screen-create.gem-counter.gem-counter-second-digit");
+t.widget = widget;
 
 --------- MAIN BALL -----------
 
@@ -10,30 +18,7 @@ local createBall = function (mainFunc)
     if ballCharacter ~= "normal" then
         sheetSeqData = mainFunc.allLevelSettings.specialCharacterInLevelSequenceData
     end
-	local instance2 = display.newSprite(mainFunc.allLevelSettings.characterInLevelImageSheet[ballCharacter], sheetSeqData)
-    physics.addBody( instance2, { density = 1, friction = 1, bounce = 0, radius = (mainFunc.allLevelSettings.squareHeight/4) } )
-    mainFunc.allLevelSettings.midScreenObjectsGroup:insert( instance2 )
-    instance2.projectileType = "ball"
-    instance2.direction = mainFunc.allLevelSettings.direction
-    instance2.relevantArrayIndex = 0
-    instance2.transitionId = instance2.relevantArrayIndex
-    instance2.gravityScale = 0
-    -- instance2.xScale = 0.6
-    -- instance2.yScale = 0.6
-    instance2.x = (((mainFunc.allLevelSettings.ballScreenHorzValue - 1) * display.contentWidth) + ((mainFunc.thisLevelSettings.ballFirstHorzSquare - 1) * mainFunc.allLevelSettings.squareWidth) + (mainFunc.allLevelSettings.gutterWidth) + (mainFunc.allLevelSettings.squareWidth/2) )
-    instance2.y = (((mainFunc.allLevelSettings.ballScreenVertValue - 1) * display.contentHeight) + ((mainFunc.thisLevelSettings.ballFirstVertSquare - 1) * mainFunc.allLevelSettings.squareHeight) + (mainFunc.allLevelSettings.gutterHeight) + (mainFunc.allLevelSettings.squareHeight/2))
-    instance2.isFixedRotation = true
-    instance2.character = ballCharacter
-    instance2.autoFanCounter = 0
-    instance2.fanCenteringCounter = 0
-    instance2.movementSpeed = 100
-    instance2.transitioning = false
-    instance2:play()
-    instance2:toFront()
-    instance2:setSequence(instance2.direction)
-    instance2.lastFanIndex = nil
-    instance2.isCollisioningWith = nil
-    instance2.specialConditionsArray = {}
+	local instance2 = ball(ballCharacter, mainFunc, sheetSeqData);
 
     mainFunc.tm["ball"][instance2.relevantArrayIndex] = mainFunc.tManager.new()
 
@@ -59,18 +44,7 @@ local createIntroScreen = function (currentWorld, currentLevel)
         local currentLevelString = tostring(currentLevel)
 
         local levelButtonNumberImageSheet = graphics.newImageSheet("images/level-images/".. currentWorld .."/Numbers/levelSelectNumber.png", {width = 27, height = 34, numFrames = 10, sheetContentWidth = 270, sheetContentHeight = 34})
-        local levelSelectNumberSequenceData = {
-            { name = "0", start=1, count=1, loopCount=1 },
-            { name = "1", start=2, count=1, loopCount=1 },
-            { name = "2", start=3, count=1, loopCount=1 },
-            { name = "3", start=4, count=1, loopCount=1 },
-            { name = "4", start=5, count=1, loopCount=1 },
-            { name = "5", start=6, count=1, loopCount=1 },
-            { name = "6", start=7, count=1, loopCount=1 },
-            { name = "7", start=8, count=1, loopCount=1 },
-            { name = "8", start=9, count=1, loopCount=1 },
-            { name = "9", start=10, count=1, loopCount=1 }
-        }
+        local levelSelectNumberSequenceData = constants.levelSelectNumberSequenceData;
 
         local lastA = 1
         for a = 1, #currentLevelString do
@@ -97,22 +71,10 @@ local createIntroScreen = function (currentWorld, currentLevel)
         end
 
         local levelSelectTitleImageSheet = graphics.newImageSheet( "images/level-images/worldTitleSprite.png", {width = 300, height = 39, numFrames = 5, sheetContentWidth = 300, sheetContentHeight = 195})
-        local levelSelectTitleSequenceData = {
-            { name = "WoodyWalk", start=1, count=1,   loopCount=1 },
-            { name = "FieryFortress", start=2, count=1, loopCount=1 },
-            { name = "HyrollCastle", start=3, count=1, loopCount=1 },
-            { name = "IcyIsland", start=4, count=1, loopCount=1 },
-            { name = "BallTimore", start=5, count=1, loopCount=1 }
-        }
+        local levelSelectTitleSequenceData = constants.levelSelectTitleSequenceData;
 
         local levelSelectLevelTextImageSheet = graphics.newImageSheet( "images/level-images/introScreen-levelSprite.png", {width = 140, height = 39, numFrames = 5, sheetContentWidth = 140, sheetContentHeight = 195})
-        local levelSelectLevelTextSequenceData = {
-            { name = "WoodyWalk", start=1, count=1,   loopCount=1 },
-            { name = "FieryFortress", start=2, count=1, loopCount=1 },
-            { name = "HyrollCastle", start=3, count=1, loopCount=1 },
-            { name = "IcyIsland", start=4, count=1, loopCount=1 },
-            { name = "BallTimore", start=5, count=1, loopCount=1 }
-        }
+        local levelSelectLevelTextSequenceData = constants.levelSelectTitleSequenceData;
 
         introScreen.valueText[lastA + 1] = display.newSprite(levelSelectTitleImageSheet, levelSelectTitleSequenceData)
         introScreen.valueText[lastA + 1]:setSequence(currentWorld)
@@ -230,10 +192,8 @@ local otherScreensAndButtonCreate = function (mainFunc, levelVariables, shapeArr
     itemBagScreen.topSelectedTile.alpha = 0
 
     local toggleImageSheet = graphics.newImageSheet("images/central-images/Layout/itemBagScreen-shapeToolToggleButton.png", {width = 77, height = 43, numFrames = 2, sheetContentWidth = 154, sheetContentHeight = 43})
-    local toggleSequenceData = {
-        { name = "seeShapes", start=1, count=1,   loopCount=1 },
-        { name = "seeTools", start=2, count=1, loopCount=1 }
-    }
+    local toggleSequenceData = constants.toggleSequenceData;
+
     itemBagScreen.toggleShapeOrToolButton = display.newSprite(toggleImageSheet, toggleSequenceData)
     itemBagScreen.toggleShapeOrToolButton:setSequence("seeShapes")
     itemBagScreen.toggleShapeOrToolButton.anchorX = 0
@@ -271,58 +231,23 @@ local otherScreensAndButtonCreate = function (mainFunc, levelVariables, shapeArr
     end
 
     --------- LABELS ---------
-    local levelTimerLabel = display.newImageRect("images/central-images/Layout/levelTimerDisplay.png", 74, 40)
-        --mapShowAndClockLabel:setReferencePoint( display.CenterReferencePoint )
-        levelTimerLabel.anchorX = 0
-        levelTimerLabel.anchorY = 0
-        levelTimerLabel.x = -9
-        levelTimerLabel.y = -7
-        levelTimerLabel.name = "levelTimerLabel"
-        levelTimerLabel.text = display.newText(levelTimeString, 0, 0, nil, 13)
-        levelTimerLabel.text.x = levelTimerLabel.x + 39
-        levelTimerLabel.text.y = levelTimerLabel.y + 20
-        levelTimerLabel.text:setTextColor(150, 30, 120)
-        levelTimerLabel.text.alpha = 1
-            t.levelTimerLabel = levelTimerLabel
-            t.levelTimerLabel.text = levelTimerLabel.text
+    local levelTimerLabel = levelTimerLabel(levelTimeString);
+        t.levelTimerLabel = levelTimerLabel;
+        t.levelTimerLabel.text = levelTimerLabel.text;
 
-    local mapShowAndClockLabel = display.newImageRect("images/central-images/Layout/levelTimerDisplay.png", 74, 40)
-        --mapShowAndClockLabel:setReferencePoint( display.CenterReferencePoint )
-        mapShowAndClockLabel.anchorX = 0
-        mapShowAndClockLabel.anchorY = 0
-        mapShowAndClockLabel.yScale = -1
-        mapShowAndClockLabel.x = -17
-        mapShowAndClockLabel.y = display.contentHeight + 7
-        mapShowAndClockLabel.name = "mapShowAndClockLabel"
-        mapShowAndClockLabel.alpha = 0
+    local mapShowAndClockLabel = mapShowAndClockLabel();
+    
+    local levelItemsImageSheet = graphics.newImageSheet( mainFunc.allLevelSettings.levelItemsImageSheet, mainFunc.allLevelSettings.levelItemsImageSheetSettings);
+    local levelItemsSequenceData = mainFunc.allLevelSettings.levelItemsSequenceData;
 
-    local levelItemsImageSheet = graphics.newImageSheet( mainFunc.allLevelSettings.levelItemsImageSheet, mainFunc.allLevelSettings.levelItemsImageSheetSettings)
-    local levelItemsSequenceData = mainFunc.allLevelSettings.levelItemsSequenceData
+    mapShowAndClockLabel.map = mapShowAndClockLabel_Map(mapShowAndClockLabel, levelItemsImageSheet, levelItemsSequenceData);
 
-    mapShowAndClockLabel.map = display.newSprite(levelItemsImageSheet, levelItemsSequenceData)
-        if currentMedal == "silver" then
-            mapShowAndClockLabel.map:setSequence("partialMap")
-        else
-            mapShowAndClockLabel.map:setSequence("fullMap")
-        end
-        mapShowAndClockLabel.map.xScale = 0.5
-        mapShowAndClockLabel.map.yScale = 0.5
-        mapShowAndClockLabel.map.x = mapShowAndClockLabel.x + 35
-        mapShowAndClockLabel.map.y = mapShowAndClockLabel.y - 21
-        mapShowAndClockLabel.map.alpha = 0
+        t.mapShowAndClockLabel = mapShowAndClockLabel
+        t.mapShowAndClockLabel.text = mapShowAndClockLabel.text
+        t.mapShowAndClockLabel.map = mapShowAndClockLabel.map
 
-            t.mapShowAndClockLabel = mapShowAndClockLabel
-            t.mapShowAndClockLabel.text = mapShowAndClockLabel.text
-            t.mapShowAndClockLabel.map = mapShowAndClockLabel.map
-
-    mapShowAndClockLabel.compass = display.newSprite(levelItemsImageSheet, levelItemsSequenceData)
-        mapShowAndClockLabel.compass:setSequence("fullMap")
-        mapShowAndClockLabel.compass.x = mapShowAndClockLabel.x + 52
-        mapShowAndClockLabel.compass.y = mapShowAndClockLabel.y - 21
-        mapShowAndClockLabel.compass.xScale = 0.5
-        mapShowAndClockLabel.compass.yScale = 0.5
-        mapShowAndClockLabel.compass.alpha = 0
-            t.mapShowAndClockLabel.compass = mapShowAndClockLabel.compass
+    mapShowAndClockLabel.compass = mapShowAndClock_Compass(mapShowAndClockLabel, levelItemsImageSheet, levelItemsSequenceData);
+        t.mapShowAndClockLabel.compass = mapShowAndClockLabel.compass
 
     local livesLeftScreen = display.newSprite(mainFunc.allLevelSettings.lifeLostScreenBgImageSheet, mainFunc.allLevelSettings.lifeLostScreenBgSequenceData)
         livesLeftScreen:setSequence(myGameSettings["current_max_lives"])
@@ -385,27 +310,11 @@ local otherScreensAndButtonCreate = function (mainFunc, levelVariables, shapeArr
         showGemsLabel.gemIcon.alpha = 0
         showGemsLabel.gemIcon:toFront()
 
-    local gemCounterFirstDigit = display.newImage("images/objects/imageNumber1.png")
-        --gemCounterFirstDigit:setReferencePoint(display.BottomLeftReferencePoint);
-        gemCounterFirstDigit.anchorX = 0
-        gemCounterFirstDigit.anchorY = 1
-        gemCounterFirstDigit.x = showGemsLabel.x + 30
-        gemCounterFirstDigit.y = showGemsLabel.y - 4
-        gemCounterFirstDigit.xScale = 0.5
-        gemCounterFirstDigit.yScale = 0.5
-        gemCounterFirstDigit.alpha = 0
-            t.gemCounterFirstDigit = gemCounterFirstDigit
+    local gemCounterFirstDigit = gemCounter_FirstDigit(true, 1, showGemsLabel.x, showGemsLabel.y);
+        t.gemCounterFirstDigit = gemCounterFirstDigit
 
-    local gemCounterSecondDigit = display.newImage("images/objects/imageNumber1.png")
-        --gemCounterSecondDigit:setReferencePoint(display.BottomLeftReferencePoint);
-        gemCounterSecondDigit.anchorX = 0
-        gemCounterSecondDigit.anchorY = 1
-        gemCounterSecondDigit.x = showGemsLabel.x + 40
-        gemCounterSecondDigit.y = showGemsLabel.y - 4
-        gemCounterSecondDigit.xScale = 0.5
-        gemCounterSecondDigit.yScale = 0.5
-        gemCounterSecondDigit.alpha = 0
-            t.gemCounterSecondDigit = gemCounterSecondDigit
+    local gemCounterSecondDigit = gemCounter_SecondDigit(true, 1, showGemsLabel.x, showGemsLabel.y);
+        t.gemCounterSecondDigit = gemCounterSecondDigit
 
     local showCoinsLabel = display.newImage("images/central-images/buttons/coinAndGemLabel.png")
         --showCoinsLabel:setReferencePoint(display.BottomLeftReferencePoint);

@@ -245,7 +245,7 @@ local ballScreenVertValue = 1
 
 local thisSwitch = null
 
-local ballspeed = 13
+local ballspeed = 1
 
 local lifeCounter = 1
 local object1Counter = 0

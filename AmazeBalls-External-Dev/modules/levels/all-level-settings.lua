@@ -61,7 +61,7 @@ t.createLevelSettings = function (mainFunc, creationType)
 		isSomethingTransitioning = false
 		tunnelIsActive = true
 
-		ballspeed = 13
+		ballspeed = 2
 
 		defaultLevelTime = 6000
 
@@ -618,7 +618,7 @@ t.createLevelSettings = function (mainFunc, creationType)
 	    { name = "purpleFloating", start=8, count=1, loopCount=1 }
 	}
 
-	levelItemsBackboardImageSheet = graphics.newImageSheet( "images/objects/level-item-backboards.png", {width = 45, height = 37.5, numFrames = 10, sheetContentWidth = 225, sheetContentHeight = 75})
+	levelItemsBackboardImageSheet = graphics.newImageSheet( "images/objects/level-item-backboards.png", {width = 45, height = 37.5, numFrames = 5, sheetContentWidth = 225, sheetContentHeight = 75})
 	levelItemsBackboardSequenceData = {
         { name = "gem", start=1, count=1,   loopCount=1 },
         { name = "redCoin", start=2, count=1, loopCount=1 },

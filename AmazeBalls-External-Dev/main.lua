@@ -3,81 +3,55 @@ display.setStatusBar(display.HiddenStatusBar);
 
 -- Initialize storyboard
 local composer = require ("composer")
-local widget = require("widget")
-	
- 
-	
--- Function to save a table.&nbsp; Since game settings need to be saved from session to session, we will
-	
--- use the Documents Directory
- 
-	
-local json = require("json")--
+local json = require("json")
 	
 function saveTable(t, filename)
-	
-    local path = system.pathForFile( filename, system.DocumentsDirectory)
-	
+    local path = system.pathForFile(filename, system.DocumentsDirectory)
     local file = io.open(path, "w")
 	
     if file then
-	
         local contents = json.encode(t)
-	
-        file:write( contents )
-	
-        io.close( file )
-	
+        file:write(contents)
+        io.close(file)
+
         return true
-	
-    else
-	
-        return false
-	
     end
 	
+    return false
 end
-	
- 
-	
+
 function loadTable(filename)
-	
-    local path = system.pathForFile( filename, system.DocumentsDirectory)
-	
-    local contents = ""
-	
+    local path = system.pathForFile(filename, system.DocumentsDirectory)
     local myTable = {}
-	
-    local file = io.open( path, "r" )
+    local file = io.open(path, "r")
 	
     if file then
-	
-         -- read all contents of file into a string
-	
-         local contents = file:read( "*a" )
-	
+         local contents = file:read( "*a" );
          myTable = json.decode(contents);
+         io.close(file);
 	
-         io.close( file )
-	
-         return myTable 
-	
+         return myTable;
     end
 	
-    return nil
-	
+    return nil;
 end
 
 function xCalc(val)
-    local newVal = (val/480) * display.contentWidth
-
-    return newVal
+    return (val/480) * display.contentWidth
 end
 
 function yCalc(val)
-    local newVal = (val/320) * display.contentHeight
+    return (val/320) * display.contentHeight
+end
 
-    return newVal
+function hasValue(tab, val)
+    for index, value in ipairs(tab) do
+        if value == val then
+            return true
+        end
+    end
+
+    return false
 end
 
 myGameSettings = loadTable("myGameSettings.json")
@@ -95,7 +69,6 @@ local gameSettingsConfigScript = require("modules.game-settings-config-array")
 
 iapAvail = true
 
-
 if( myGameSettings ) then
 	--[[
 	 myGameSettings  = gameSettingsConfigScript.createFreshGameSettings(levelConfigArray, characterConfigArray, itemConfigArray)
@@ -107,19 +80,13 @@ if( myGameSettings ) then
      saveTable(myTotalObjectArray, "myTotalObjectArray.json")
 ]]
 else
-    
-    --There are no settings. This is the first time the user launches the game
-    --Create the default settings
-
     myGameSettings  = gameSettingsConfigScript.createFreshGameSettings(levelConfigArray, characterConfigArray, itemConfigArray)
     myTotalToolArray  = gameSettingsConfigScript.createFreshToolArray(levelConfigArray)
     myTotalObjectArray  = gameSettingsConfigScript.createFreshObjectArray(levelConfigArray)
-    
+
     saveTable(myGameSettings, "myGameSettings.json")
     saveTable(myTotalToolArray, "myTotalToolArray.json")
     saveTable(myTotalObjectArray, "myTotalObjectArray.json")
-
 end
 
--- Load first scene
 composer.gotoScene("TitleScreen")
