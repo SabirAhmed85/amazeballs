@@ -209,11 +209,11 @@ local changeToRightScreen = function (mainFunc, shapeArray, shapeArrayParameters
 
             for c = 1, #shapeArray do
                 for d = 1, #mainFunc.allLevelSettings.transitionArrayIndex do
-                    if mainFunc.allLevelSettings.transitionArrayIndex[d][1][1] == shapeArrayParameters[c][2]
+                    if mainFunc.allLevelSettings.transitionArrayIndex[d][1][1] == shapeArrayParameters[c]["name"]
                     and (mainFunc.allLevelSettings.transitionArrayIndex[d][2][1] == "autoSlide"
                         or (mainFunc.allLevelSettings.transitionArrayIndex[d][2][1] == "switchSlide" and mainFunc.allLevelSettings.transitionArrayIndex[d][3]["isEnabledByDefault"]) )
-                    and shapeArrayParameters[c][3] == mainFunc.thisLevelSettings.thisScreenHorzValue
-                    and shapeArrayParameters[c][4] == mainFunc.thisLevelSettings.thisScreenVertValue
+                    and shapeArrayParameters[c]["location"]["xScreen"] == mainFunc.thisLevelSettings.thisScreenHorzValue
+                    and shapeArrayParameters[c]["location"]["yScreen"] == mainFunc.thisLevelSettings.thisScreenVertValue
                     and shapeArray[c].mainFuncListenerAdded == false then
                         if shapeArray[c].isAutoSlideObject then
                             if #shapeArray[c].autoSlideTransition > 0 then
@@ -229,11 +229,11 @@ local changeToRightScreen = function (mainFunc, shapeArray, shapeArrayParameters
                         else
                             mainFunc.activateAutoSlideObject(mainFunc, shapeArray, c, d)
                         end
-                    elseif mainFunc.allLevelSettings.transitionArrayIndex[d][1][1] == shapeArrayParameters[c][2]
+                    elseif mainFunc.allLevelSettings.transitionArrayIndex[d][1][1] == shapeArrayParameters[c]["name"]
                     and (mainFunc.allLevelSettings.transitionArrayIndex[d][2][1] == "autoSlide"
                         or (mainFunc.allLevelSettings.transitionArrayIndex[d][2][1] == "switchSlide" and mainFunc.allLevelSettings.transitionArrayIndex[d][3]["isEnabledByDefault"]) )
-                    and shapeArrayParameters[c][3] == lastScreenHorzValue
-                    and shapeArrayParameters[c][4] == lastScreenVertValue then
+                    and shapeArrayParameters[c]["location"]["xScreen"] == lastScreenHorzValue
+                    and shapeArrayParameters[c]["location"]["yScreen"] == lastScreenVertValue then
                         if #shapeArray[c].autoSlideTransition > 0 then
                             for z = 1, #shapeArray[c].autoSlideTransition do
                                 transition.pause(shapeArray[c].autoSlideTransition[z])
@@ -320,33 +320,33 @@ local activateObjectsForPlay = function (mainFunc, shapeArray, shapeArrayParamet
 
     for c=1, #shapeArray do
 
-        if shapeArrayParameters[c][1] == "shape"
-        or shapeArrayParameters[c][1] == "gun" then
+        if shapeArrayParameters[c]["type"] == "shape"
+        or shapeArrayParameters[c]["type"] == "gun" then
             shapeArray[c]:addEventListener("collision", mainFunc.on_Triangle_Collision)
-        elseif shapeArrayParameters[c][1] == "manualFan" 
-        or shapeArrayParameters[c][1] == "spitter" 
-        or shapeArrayParameters[c][1] == "simple"
-        or shapeArrayParameters[c][1] == "backFire"
-        or shapeArrayParameters[c][1] == "characterChangePoint" then
+        elseif shapeArrayParameters[c]["type"] == "manualFan" 
+        or shapeArrayParameters[c]["type"] == "spitter" 
+        or shapeArrayParameters[c]["type"] == "simple"
+        or shapeArrayParameters[c]["type"] == "backFire"
+        or shapeArrayParameters[c]["type"] == "characterChangePoint" then
             mainFunc.activateObjectsForPlay(mainFunc, shapeArray, c)
-            if shapeArrayParameters[c][1] == "characterChangePoint" then
+            if shapeArrayParameters[c]["type"] == "characterChangePoint" then
                 --shapeArray[c].button:addEventListener("touch", mainFunc.listener)
                 --shapeArray[c].button.mainFuncListenerAdded = true
             end
         end
         
         for d=1, #mainFunc.allLevelSettings.transitionArrayIndex do
-            if mainFunc.allLevelSettings.transitionArrayIndex[d][1][1] == shapeArrayParameters[c][2]
+            if mainFunc.allLevelSettings.transitionArrayIndex[d][1][1] == shapeArrayParameters[c]["name"]
             and mainFunc.allLevelSettings.transitionArrayIndex[d][2][1] ~= "autoSlide"
             and mainFunc.allLevelSettings.transitionArrayIndex[d][2][1] ~= "switchSlide"
             and shapeArray[c].mainFuncListenerAdded == false then
                 shapeArray[c]:addEventListener("touch", mainFunc.listener)
                 shapeArray[c].mainFuncListenerAdded = true
-            elseif mainFunc.allLevelSettings.transitionArrayIndex[d][1][1] == shapeArrayParameters[c][2]
+            elseif mainFunc.allLevelSettings.transitionArrayIndex[d][1][1] == shapeArrayParameters[c]["name"]
             and (mainFunc.allLevelSettings.transitionArrayIndex[d][2][1] == "autoSlide"
                 or (mainFunc.allLevelSettings.transitionArrayIndex[d][2][1] == "switchSlide" and mainFunc.allLevelSettings.transitionArrayIndex[d][3]["isEnabledByDefault"]) )
-            and shapeArrayParameters[c][3] == mainFunc.thisLevelSettings.thisScreenHorzValue
-            and shapeArrayParameters[c][4] == mainFunc.thisLevelSettings.thisScreenVertValue
+            and shapeArrayParameters[c]["location"]["xScreen"] == mainFunc.thisLevelSettings.thisScreenHorzValue
+            and shapeArrayParameters[c]["location"]["yScreen"] == mainFunc.thisLevelSettings.thisScreenVertValue
             and shapeArray[c].mainFuncListenerAdded == false then
                 mainFunc.activateAutoSlideObject(mainFunc, shapeArray, c, d)
             end
@@ -408,7 +408,7 @@ local initialReturnToBallScreen = function (mainFunc, returnType, shapeArray, sh
 
                 if (mainFunc.allLevelSettings.bulletHasFired == true) then
                     for a = 1, #shapeArrayParameters do
-                        if shapeArrayParameters[a][1] == "gun" then
+                        if shapeArrayParameters[a]["type"] == "gun" then
                             timer.resume(shapeArray[a].createBulletTimer)
                         end
                     end
@@ -453,14 +453,14 @@ local initialReturnToBallScreen = function (mainFunc, returnType, shapeArray, sh
                 if (mainFunc.thisLevelSettings.compassObtained == false) then
                     --mainFunc.buttonListenerScript.addBackShapeListenersForPause(mainFunc, shapeArray, shapeArrayParameters)
                     for c=1, #shapeArray do
-                        if (shapeArrayParameters[c][1] == "manualFan" or shapeArrayParameters[c][1] == "spitter")
+                        if (shapeArrayParameters[c]["type"] == "manualFan" or shapeArrayParameters[c]["type"] == "spitter")
                         and shapeArray[c].mainFuncListenerAdded == false then
                             shapeArray[c]:addEventListener( "touch", mainFunc.listener )
                             shapeArray[c].mainFuncListenerAdded = true
                         end    
                         
                         -- for d=1, #mainFunc.allLevelSettings.transitionArrayIndex do
-                        --     if mainFunc.allLevelSettings.transitionArrayIndex[d][1][1] == mainFunc.allLevelSettings.shapeArrayParameters[c][2] then
+                        --     if mainFunc.allLevelSettings.transitionArrayIndex[d][1][1] == mainFunc.allLevelSettings.shapeArrayParameters[c]["name"] then
                         --         mainFunc.allLevelSettings.shapeArray[c]:addEventListener("touch", mainFunc.listener)
                         --     end
                         -- end

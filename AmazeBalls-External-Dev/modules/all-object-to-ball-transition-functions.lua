@@ -17,7 +17,7 @@ local mainDoorTransition = function (mainFunc, shapeArray, shapeArrayParameters)
 	local ball = mainFunc.ballAndButtonAndScreenCreateScript.instance2;
 
 	for b = 1, #shapeArray do
-		if shapeArrayParameters[b][1] == "door"
+		if shapeArrayParameters[b]["type"] == "door"
 		and shapeArray[b].enabled then
 			local function doorTransitionSetUp (thisScreenRelevantVal, doorTransitionFactor)
 				transition.to(shapeArray[b], {alpha = 0, time = 150, onComplete = function ()
@@ -25,7 +25,7 @@ local mainDoorTransition = function (mainFunc, shapeArray, shapeArrayParameters)
 				end})
 			    mainFunc.tm[ball.projectileType][ball.relevantArrayIndex]:cancelAll()
 	            screenChangeType = "auto"
-	            thisChangeScreenDirection = shapeArrayParameters[b][7]
+	            thisChangeScreenDirection = shapeArrayParameters[b]["subType"]
 			    if (thisScreenRelevantVal == "Vert") then
 			    	ball.x = (lowerX + xCalc(30))
 			    else
@@ -51,51 +51,51 @@ local mainDoorTransition = function (mainFunc, shapeArray, shapeArrayParameters)
 		    and ball.direction == "right"
 		    and ball.character ~=  "dummyBall" 
 		    and ball.character ~=  "superBall" then
-		    	higherY = (((shapeArrayParameters[b][6] - 1) * yCalc(52) ) + yCalc(30) + ((shapeArrayParameters[b][4] - 1) * display.contentHeight) )
+		    	higherY = (((shapeArrayParameters[b]["location"]["ySquare"] - 1) * yCalc(52) ) + yCalc(30) + ((shapeArrayParameters[b]["location"]["yScreen"] - 1) * display.contentHeight) )
 				if ball.y > higherY
 				and ball.y < (higherY + 52)
-				and mainFunc.allLevelSettings.ballScreenHorzValue == shapeArrayParameters[b][3]
-				and mainFunc.allLevelSettings.ballScreenVertValue == shapeArrayParameters[b][4]
+				and mainFunc.allLevelSettings.ballScreenHorzValue == shapeArrayParameters[b]["location"]["xScreen"]
+				and mainFunc.allLevelSettings.ballScreenVertValue == shapeArrayParameters[b]["location"]["yScreen"]
 				and mainFunc.allLevelSettings.screenTimer == 0
-				and shapeArrayParameters[b][7] == ball.direction then
+				and shapeArrayParameters[b]["subType"] == ball.direction then
 					mainFunc.allLevelSettings.screenTimer = 1
-					doorTransitionSettingsArray[shapeArrayParameters[b][7]]()
+					doorTransitionSettingsArray[shapeArrayParameters[b]["subType"]]()
 				end
 		    elseif (ball.x) < (mainFunc.allLevelSettings.leftScreenEdge + 20)
 		    and ball.direction == "left" then
-				higherY = (((shapeArrayParameters[b][6] - 1) * yCalc(52) ) + yCalc(30) + ((shapeArrayParameters[b][4] - 1) * display.contentHeight) )
+				higherY = (((shapeArrayParameters[b]["location"]["ySquare"] - 1) * yCalc(52) ) + yCalc(30) + ((shapeArrayParameters[b]["location"]["yScreen"] - 1) * display.contentHeight) )
 				if ball.y > higherY
 				and ball.y < (higherY + 52)
-				and mainFunc.allLevelSettings.ballScreenHorzValue == shapeArrayParameters[b][3]
-				and mainFunc.allLevelSettings.ballScreenVertValue == shapeArrayParameters[b][4]
+				and mainFunc.allLevelSettings.ballScreenHorzValue == shapeArrayParameters[b]["location"]["xScreen"]
+				and mainFunc.allLevelSettings.ballScreenVertValue == shapeArrayParameters[b]["location"]["yScreen"]
 				and mainFunc.allLevelSettings.screenTimer == 0
-				and shapeArrayParameters[b][7] == ball.direction then
+				and shapeArrayParameters[b]["subType"] == ball.direction then
 					mainFunc.allLevelSettings.screenTimer = 1
-					doorTransitionSettingsArray[shapeArrayParameters[b][7]]()
+					doorTransitionSettingsArray[shapeArrayParameters[b]["subType"]]()
 				end
 			elseif (ball.y) < (mainFunc.allLevelSettings.topScreenEdge + 20)
 		    and ball.direction == "up" then
-				lowerX = (((shapeArrayParameters[b][5] - 1) * xCalc(60) ) + xCalc(30) ) + ((shapeArrayParameters[b][3] - 1) * display.contentWidth)
+				lowerX = (((shapeArrayParameters[b]["location"]["xSquare"] - 1) * xCalc(60) ) + xCalc(30) ) + ((shapeArrayParameters[b]["location"]["xScreen"] - 1) * display.contentWidth)
 				if ball.x > lowerX
 				and ball.x < (lowerX + 60)
-				and mainFunc.allLevelSettings.ballScreenVertValue == shapeArrayParameters[b][4]
-				and mainFunc.allLevelSettings.ballScreenHorzValue == shapeArrayParameters[b][3]
+				and mainFunc.allLevelSettings.ballScreenVertValue == shapeArrayParameters[b]["location"]["yScreen"]
+				and mainFunc.allLevelSettings.ballScreenHorzValue == shapeArrayParameters[b]["location"]["xScreen"]
 				and mainFunc.allLevelSettings.screenTimer == 0
-				and shapeArrayParameters[b][7] == ball.direction then
+				and shapeArrayParameters[b]["subType"] == ball.direction then
 					mainFunc.allLevelSettings.screenTimer = 1
-					doorTransitionSettingsArray[shapeArrayParameters[b][7]]()
+					doorTransitionSettingsArray[shapeArrayParameters[b]["subType"]]()
 				end
 			elseif (ball.y) > (mainFunc.allLevelSettings.bottomScreenEdge - 20)
 		    and ball.direction == "down" then
-				lowerX = (((shapeArrayParameters[b][5] - 1) * xCalc(60) ) + xCalc(30) ) + ((shapeArrayParameters[b][3] - 1) * display.contentWidth)
+				lowerX = (((shapeArrayParameters[b]["location"]["xSquare"] - 1) * xCalc(60) ) + xCalc(30) ) + ((shapeArrayParameters[b]["location"]["xScreen"] - 1) * display.contentWidth)
 				if ball.x > lowerX
 				and ball.x < (lowerX + 60)
-				and mainFunc.allLevelSettings.ballScreenVertValue == shapeArrayParameters[b][4]
-				and mainFunc.allLevelSettings.ballScreenHorzValue == shapeArrayParameters[b][3]
+				and mainFunc.allLevelSettings.ballScreenVertValue == shapeArrayParameters[b]["location"]["yScreen"]
+				and mainFunc.allLevelSettings.ballScreenHorzValue == shapeArrayParameters[b]["location"]["xScreen"]
 				and mainFunc.allLevelSettings.screenTimer == 0
-				and shapeArrayParameters[b][7] == "down" then
+				and shapeArrayParameters[b]["subType"] == "down" then
 					mainFunc.allLevelSettings.screenTimer = 1
-					doorTransitionSettingsArray[shapeArrayParameters[b][7]]()
+					doorTransitionSettingsArray[shapeArrayParameters[b]["subType"]]()
 				end
 			end
 		end
@@ -206,16 +206,16 @@ local tunnelTransition = function (mainFunc, shapeArray, shapeArrayParameters)
 	            shapeArray[z].endTunnelCircle:setSequence(shapeArray[z].colour .. "CircleOn")
 	            mainFunc.allLevelSettings.tunnelIsActive = false
 				mainFunc.allLevelSettings.tunnelCounter = 0
-				firstHorzScreen = shapeArrayParameters[z][3]
-				firstVertScreen = shapeArrayParameters[z][4]
-	            firstHorzSquare = shapeArrayParameters[z][5]
-	            firstVertSquare = shapeArrayParameters[z][6]
+				firstHorzScreen = shapeArrayParameters[z]["location"]["xScreen"]
+				firstVertScreen = shapeArrayParameters[z]["location"]["yScreen"]
+	            firstHorzSquare = shapeArrayParameters[z]["location"]["xSquare"]
+	            firstVertSquare = shapeArrayParameters[z]["location"]["ySquare"]
 	            firstHorzScreenX = ((firstHorzScreen - 1) * display.contentWidth) + (((firstHorzSquare - 1) * mainFunc.allLevelSettings.squareWidth) + mainFunc.allLevelSettings.gutterWidth + (mainFunc.allLevelSettings.squareWidth/2) )
 	            firstHorzScreenY = ((firstVertScreen - 1) * display.contentHeight) + (((firstVertSquare - 1) * mainFunc.allLevelSettings.squareHeight) + mainFunc.allLevelSettings.gutterHeight + (mainFunc.allLevelSettings.squareHeight/2) )
-				nextHorzScreen = shapeArrayParameters[z][7]
-				nextVertScreen = shapeArrayParameters[z][8]
-				nextHorzSquare = shapeArrayParameters[z][9]
-				nextVertSquare = shapeArrayParameters[z][10]
+				nextHorzScreen = shapeArrayParameters[z]["subType"]
+				nextVertScreen = shapeArrayParameters[z]["props"][1]
+				nextHorzSquare = shapeArrayParameters[z]["props"][2]
+				nextVertSquare = shapeArrayParameters[z]["props"][3]
 				mainFunc.tm[ball.projectileType][ball.relevantArrayIndex]:cancelAll()
 	            firstMoveSlow()
 	    	end
@@ -688,12 +688,12 @@ local fanCentering = function (obj, thisFan, fanCenterTime, mainFunc)
 
             function prepareScreenToHandleObject(objToProcessIndex)
 	            for c = 1, #shapeArrayParameters do
-            		if shapeArrayParameters[c][2] == thisSwitch.objectsToProcess[objToProcessIndex][2] then
-        				if shapeArrayParameters[c][3] == shapeArrayParameters[thisSwitch.lastObjProcessedIndex][3] and shapeArrayParameters[c][4] == shapeArrayParameters[thisSwitch.lastObjProcessedIndex][4] then
+            		if shapeArrayParameters[c]["name"] == thisSwitch.objectsToProcess[objToProcessIndex][2] then
+        				if shapeArrayParameters[c]["location"]["xScreen"] == shapeArrayParameters[thisSwitch.lastObjProcessedIndex][3] and shapeArrayParameters[c]["location"]["yScreen"] == shapeArrayParameters[thisSwitch.lastObjProcessedIndex][4] then
 	                		timer.performWithDelay(150, function () handleObject(c, objToProcessIndex) end)
 	                	else
 	                		lastObjIsOutsideFirstSquare = true
-	                		goToScreen(shapeArrayParameters[thisSwitch.lastObjProcessedIndex][3], shapeArrayParameters[thisSwitch.lastObjProcessedIndex][4], shapeArrayParameters[c][3], shapeArrayParameters[c][4])
+	                		goToScreen(shapeArrayParameters[thisSwitch.lastObjProcessedIndex][3], shapeArrayParameters[thisSwitch.lastObjProcessedIndex][4], shapeArrayParameters[c]["location"]["xScreen"], shapeArrayParameters[c]["location"]["yScreen"])
 					        
 					        timer.performWithDelay(550, function () handleObject(c, objToProcessIndex) end)
 	                	end
@@ -1211,10 +1211,10 @@ local fanCentering = function (obj, thisFan, fanCenterTime, mainFunc)
 
 	        		local totalGems = 0
 	        		for z = 1, #shapeArrayParameters do
-	        			if shapeArrayParameters[z][1] == "gem" and shapeArrayParameters[z][7] == "purple" then
+	        			if shapeArrayParameters[z]["type"] == "gem" and shapeArrayParameters[z]["subType"] == "purple" then
 	        				totalGems = totalGems + 1
 	        			end
-	        			if shapeArrayParameters[z][1] == "gem" and shapeArrayParameters[z][7] == "redCoin" then
+	        			if shapeArrayParameters[z]["type"] == "gem" and shapeArrayParameters[z]["subType"] == "redCoin" then
 	        				coinsNotApplicable = false
 	        			end
 	        		end
@@ -2232,15 +2232,16 @@ local autoFanAndEtcTransition = function (mainFunc, shapeArray, shapeArrayParame
 	local ball = mainFunc.ballAndButtonAndScreenCreateScript.instance2;
 
 	for b = 1, #shapeArray do
-		if (mainFunc.allLevelSettings.ballScreenHorzValue == shapeArrayParameters[b][3]
-		and mainFunc.allLevelSettings.ballScreenVertValue == shapeArrayParameters[b][4])
-		and (shapeArrayParameters[b][1] == "autoFan"
-		    or (shapeArrayParameters[b][1] == "spitter")
-		    or (shapeArrayParameters[b][1] == "endPoint")
-		    or (shapeArrayParameters[b][1] == "characterChangePoint")
-		    or (shapeArrayParameters[b][1] == "manualFan" and shapeArray[b].activeNow == true)
-		    or (shapeArrayParameters[b][1] == "simple")
-		    or (shapeArrayParameters[b][1] == "backFire")
+		print("HEY", shapeArrayParameters[b]["type"]);
+		if (mainFunc.allLevelSettings.ballScreenHorzValue == shapeArrayParameters[b]["location"]["xScreen"]
+		and mainFunc.allLevelSettings.ballScreenVertValue == shapeArrayParameters[b]["location"]["yScreen"])
+		and (shapeArrayParameters[b]["type"] == "autoFan"
+		    or (shapeArrayParameters[b]["type"] == "spitter")
+		    or (shapeArrayParameters[b]["type"] == "endPoint")
+		    or (shapeArrayParameters[b]["type"] == "characterChangePoint")
+		    or (shapeArrayParameters[b]["type"] == "manualFan" and shapeArray[b].activeNow == true)
+		    or (shapeArrayParameters[b]["type"] == "simple")
+		    or (shapeArrayParameters[b]["type"] == "backFire")
 		) then
 
 	    	if  (ball.x) > (shapeArray[b].x  - (mainFunc.allLevelSettings.squareWidth / 2) - 24) and
@@ -2271,11 +2272,11 @@ local autoFanAndEtcTransition = function (mainFunc, shapeArray, shapeArrayParame
 					if (mainFunc.allLevelSettings.isBallMovingState == "true") then
         				shapeArray[b].shouldBallMoveInAutoSlide = true
 
-						if shapeArrayParameters[b][1] == "autoFan"
-						or shapeArrayParameters[b][1] == "manualFan"
-						or shapeArrayParameters[b][1] == "spitter"
-						or shapeArrayParameters[b][1] == "simple"
-						or shapeArrayParameters[b][1] == "backFire" then
+						if shapeArrayParameters[b]["type"] == "autoFan"
+						or shapeArrayParameters[b]["type"] == "manualFan"
+						or shapeArrayParameters[b]["type"] == "spitter"
+						or shapeArrayParameters[b]["type"] == "simple"
+						or shapeArrayParameters[b]["type"] == "backFire" then
 							shapeArray[b].canShapeSlide = false
 						end
 					else
@@ -2288,14 +2289,14 @@ local autoFanAndEtcTransition = function (mainFunc, shapeArray, shapeArrayParame
 				ball.y < (shapeArray[b].y + (mainFunc.allLevelSettings.squareHeight / 2)) then
 					shapeArray[b].enabled = false
 					mainFunc.allLevelSettings.spitterCounter = 1
-					if (shapeArrayParameters[b][1] == "spitter" and
+					if (shapeArrayParameters[b]["type"] == "spitter" and
 					shapeArray[b].isBallPresent == false) or
-					(shapeArrayParameters[b][1] == "characterChangePoint" and
+					(shapeArrayParameters[b]["type"] == "characterChangePoint" and
 					shapeArray[b].isBallPresent == false) or
-					(shapeArrayParameters[b][1] == "manualFan" and
+					(shapeArrayParameters[b]["type"] == "manualFan" and
 					shapeArray[b].activeNow == true) or
-					(shapeArrayParameters[b][1] ~= "spitter" and
-					shapeArrayParameters[b][1] ~= "manualFan") then
+					(shapeArrayParameters[b]["type"] ~= "spitter" and
+					shapeArrayParameters[b]["type"] ~= "manualFan") then
 						mainFunc.allLevelSettings.isBallMovingState = "false"
         				shapeArray[b].isBallPresent = true
 
@@ -2346,8 +2347,8 @@ local autoFanAndEtcTransition = function (mainFunc, shapeArray, shapeArrayParame
 			            	end
 			            end
 
-						if (shapeArrayParameters[b][1] == "backFire") or (shapeArrayParameters[b][1] == "simple") or (shapeArrayParameters[b][1] == "characterChangePoint") then
-							if (shapeArrayParameters[b][1] == "backFire") then
+						if (shapeArrayParameters[b]["type"] == "backFire") or (shapeArrayParameters[b]["type"] == "simple") or (shapeArrayParameters[b]["type"] == "characterChangePoint") then
+							if (shapeArrayParameters[b]["type"] == "backFire") then
 					        	if ball.direction == "up" then
 					        		ball.direction = "down"
 					        	elseif ball.direction == "right" then
@@ -2377,7 +2378,7 @@ local autoFanAndEtcTransition = function (mainFunc, shapeArray, shapeArrayParame
 							shapeArray[b].lastBallReleaseDirection = ball.direction
 
 							secondArrowArray[ball.direction]()
-							if shapeArrayParameters[b][1] == "characterChangePoint" then
+							if shapeArrayParameters[b]["type"] == "characterChangePoint" then
 								shapeArray[b].bigDirectionArrow.rotation = shapeArray[b].bigDirectionArrow.rotation - 90
 							end
 						end
@@ -2414,8 +2415,8 @@ local autoFanAndEtcTransition = function (mainFunc, shapeArray, shapeArrayParame
 				        end
 
 						ball.lastFanIndex = b
-						if shapeArrayParameters[b][1] == "autoFan" or shapeArrayParameters[b][1] == "manualFan" then
-							shapeArray[b].lastBallReleaseDirection = shapeArrayParameters[b][7]
+						if shapeArrayParameters[b]["type"] == "autoFan" or shapeArrayParameters[b]["type"] == "manualFan" then
+							shapeArray[b].lastBallReleaseDirection = shapeArrayParameters[b]["subType"]
 							if shapeArray[b].isAutoSlideObject then
 								if #shapeArray[b].autoSlideTransition > 0 then
 									for a = 1, #shapeArray[b].autoSlideTransition do
@@ -2443,11 +2444,11 @@ local autoFanAndEtcTransition = function (mainFunc, shapeArray, shapeArrayParame
 				mainFunc.allLevelSettings.bullet[a].y < (shapeArray[b].y + (mainFunc.allLevelSettings.squareHeight/2) ) and
 		        shapeArray[b].enabled == true and
 				mainFunc.allLevelSettings.bullet[a].autoFanCounter == 0 and
-		        (shapeArrayParameters[b][1] ~= "characterChangePoint") then
+		        (shapeArrayParameters[b]["type"] ~= "characterChangePoint") then
 		            prepareForFanCentering(mainFunc.allLevelSettings.bullet[a], b, 40, fanCentering, mainFunc, shapeArray, shapeArrayParameters)
 		        end
 		    end
-		elseif shapeArrayParameters[b][1] == "switch" then
+		elseif shapeArrayParameters[b]["type"] == "switch" then
 	        if  (ball.x) > (shapeArray[b].x - (mainFunc.allLevelSettings.squareWidth / 2) - 10 )
 	        and (ball.x) < (shapeArray[b].x + (mainFunc.allLevelSettings.squareWidth / 2) + 10 )
 	        and (ball.y) > (shapeArray[b].y - (mainFunc.allLevelSettings.squareHeight / 2) - 5)
@@ -2487,7 +2488,7 @@ local autoFanAndEtcTransition = function (mainFunc, shapeArray, shapeArrayParame
 		            prepareForFanCentering(ball, b, 40, fanCentering, mainFunc, shapeArray, shapeArrayParameters) 
 				end
 		    end
-	    elseif shapeArrayParameters[b][1] == "item" then
+	    elseif shapeArrayParameters[b]["type"] == "item" then
 	        if  ball.x > shapeArray[b].x - (mainFunc.allLevelSettings.squareWidth / 2) - 5
 			and ball.x < shapeArray[b].x + (mainFunc.allLevelSettings.squareWidth / 2)
 			and ball.y > shapeArray[b].y - (mainFunc.allLevelSettings.squareHeight / 2) - 5
@@ -2499,7 +2500,7 @@ local autoFanAndEtcTransition = function (mainFunc, shapeArray, shapeArrayParame
 					local handleRelatedItemVisuals = function (itemName)
 						if itemName == "map" then
 							for a = 1, #shapeArray do
-								if (shapeArrayParameters[a][2] == "mystery-block") then
+								if (shapeArrayParameters[a]["name"] == "mystery-block") then
 									transition.to(shapeArray[a], {alpha = 1, time = 400})
 									shapeArray[a]:toBack()
 									shapeArray[a]:addEventListener("tap", mainFunc.mysteryBlockTouch)
@@ -2516,7 +2517,7 @@ local autoFanAndEtcTransition = function (mainFunc, shapeArray, shapeArrayParame
 					end
 		        	
 					local function handleItemVisuals()
-						if shapeArrayParameters[b][2] ~= "mystery-block" then
+						if shapeArrayParameters[b]["name"] ~= "mystery-block" then
 							shapeArray[b].alpha = 0
 							shapeArray[b].x = 9000
 							shapeArray[b].y = 9000
@@ -2525,7 +2526,7 @@ local autoFanAndEtcTransition = function (mainFunc, shapeArray, shapeArrayParame
 							shapeArray[b].backBoard.alpha = 0.5
 						end
 
-						if shapeArrayParameters[b][2] == "map" or shapeArrayParameters[b][2] == "compass" then
+						if shapeArrayParameters[b]["name"] == "map" or shapeArrayParameters[b]["name"] == "compass" then
 							handleRelatedItemVisuals();
 						end
 					end
@@ -2624,8 +2625,8 @@ local autoFanAndEtcTransition = function (mainFunc, shapeArray, shapeArrayParame
 							                itemBtnCounterImage.yScale = 0.5
 			            				end
 
-			            				if shapeArrayParameters[b][2] ~= "small-present"
-			            				and shapeArrayParameters[b][2] ~= "big-present" then
+			            				if shapeArrayParameters[b]["name"] ~= "small-present"
+			            				and shapeArrayParameters[b]["name"] ~= "big-present" then
 			            					shapeArray[b].relevantToolArrayCounter = a
 			            				else
 			            					shapeArray[b].relevantToolIndexArrayCounter = 0
@@ -2656,8 +2657,8 @@ local autoFanAndEtcTransition = function (mainFunc, shapeArray, shapeArrayParame
 				            		mainFunc.thisLevelSettings.toolArray[toolArrayCounter + 1] = {name = thisArray[2], properties = {seconds = thisArray[8]}, quantity = thisArray[9], created = "not-created"}
 				            	end
 
-				            	if shapeArrayParameters[b][2] == "small-present"
-				            	or shapeArrayParameters[b][2] == "big-present" then
+				            	if shapeArrayParameters[b]["name"] == "small-present"
+				            	or shapeArrayParameters[b]["name"] == "big-present" then
 				            		shapeArray[b].relevantToolIndexArrayCounter = 0
 				            		for z = 1, #shapeArray[b].relevantToolIndexArray do
 				            			shapeArray[b].relevantToolIndexArrayCounter = shapeArray[b].relevantToolIndexArrayCounter + 1
@@ -2691,8 +2692,8 @@ local autoFanAndEtcTransition = function (mainFunc, shapeArray, shapeArrayParame
 			            				if (mainFunc.thisLevelSettings.objectArray[a]["quantity"] > 9) then
 			            					mainFunc.thisLevelSettings.objectArray[a]["quantity"] = 9
 			            				end
-			            				if shapeArrayParameters[b][2] ~= "small-present"
-			            				and shapeArrayParameters[b][2] ~= "big-present" then
+			            				if shapeArrayParameters[b]["name"] ~= "small-present"
+			            				and shapeArrayParameters[b]["name"] ~= "big-present" then
 			            					shapeArray[b].relevantToolArrayCounter = a
 			            				else
 			            					shapeArray[b].relevantToolIndexArrayCounter = 0
@@ -2730,8 +2731,8 @@ local autoFanAndEtcTransition = function (mainFunc, shapeArray, shapeArrayParame
 				            	elseif thisArray[1] == "spitter" then
 				            		mainFunc.thisLevelSettings.objectArray[objectArrayCounter + 1] = {name = thisArray[1], properties = {directions = thisArray[2] }, quantity = 1, created = "not-created"}
 				            	end
-				            	if shapeArrayParameters[b][2] == "big-present"
-				            	or shapeArrayParameters[b][2] == "small-present" then
+				            	if shapeArrayParameters[b]["name"] == "big-present"
+				            	or shapeArrayParameters[b]["name"] == "small-present" then
 				            		shapeArray[b].relevantToolIndexArrayCounter = 0
 				            		for z = 1, #shapeArray[b].relevantToolIndexArray do
 				            			shapeArray[b].relevantToolIndexArrayCounter = shapeArray[b].relevantToolIndexArrayCounter + 1
@@ -2756,17 +2757,17 @@ local autoFanAndEtcTransition = function (mainFunc, shapeArray, shapeArrayParame
 
 					handleItemVisuals();
 
-		            if shapeArrayParameters[b][2] == "map" then
+		            if shapeArrayParameters[b]["name"] == "map" then
 						saveUpdatedSettings("mapObtained", "map_obtained");
-		            elseif shapeArrayParameters[b][2] == "compass" then
+		            elseif shapeArrayParameters[b]["name"] == "compass" then
 						saveUpdatedSettings("compassObtained", "compass_obtained");
-		            elseif hasValue({ "bomb", "clock", "jet", "hook" }, shapeArrayParameters[b][2]) then
+		            elseif hasValue({ "bomb", "clock", "jet", "hook" }, shapeArrayParameters[b]["name"]) then
 		            	processItem(shapeArrayParameters[b])
-		            elseif hasValue({ "big-present", "small-present" }, shapeArrayParameters[b][2]) then
+		            elseif hasValue({ "big-present", "small-present" }, shapeArrayParameters[b]["name"]) then
 		            	shapeArray[b].relevantToolIndexArray = {}
-						print('SHAPe', shapeArrayParameters[b][8]);
-		            	-- for a = 1, #shapeArrayParameters[b][8] do
-		            	-- 	processItem(shapeArrayParameters[b][8][1])
+						print('SHAPe', shapeArrayParameters[b]["props"][1]);
+		            	-- for a = 1, #shapeArrayParameters[b]["props"][1] do
+		            	-- 	processItem(shapeArrayParameters[b]["props"][1][1])
 		            	-- end
 		            end
 
@@ -2777,18 +2778,18 @@ local autoFanAndEtcTransition = function (mainFunc, shapeArray, shapeArrayParame
 		            	{"jet", mainFunc.thisLevelSettings.jetpackGainedOnce}
 		        	}
 
-		            if hasValue({ "bomb", "clock", "jet", "hook", "big-present", "small-present" }, shapeArrayParameters[b][2]) then
-		            	if shapeArrayParameters[b][2] ~= "big-present"
-		            	and shapeArrayParameters[b][2] ~= "small-present" then
+		            if hasValue({ "bomb", "clock", "jet", "hook", "big-present", "small-present" }, shapeArrayParameters[b]["name"]) then
+		            	if shapeArrayParameters[b]["name"] ~= "big-present"
+		            	and shapeArrayParameters[b]["name"] ~= "small-present" then
 		            		local itemPickedUp = false
 							for c=1, #mainFunc.thisLevelSettings.itemWasDiscoveredInLevel do
 					        	local objectName = mainFunc.thisLevelSettings.itemWasDiscoveredInLevel[c]
-					        	if objectName == shapeArrayParameters[b][2] then
+					        	if objectName == shapeArrayParameters[b]["name"] then
 					        		itemPickedUp = true
 					        	end
 					        end
-	            			if myGameSettings["tutorialDone"][shapeArrayParameters[b][2]] == false and itemPickedUp == false then
-	            				mainFunc.thisLevelSettings.itemWasDiscoveredInLevel[#mainFunc.thisLevelSettings.itemWasDiscoveredInLevel + 1] = shapeArrayParameters[b][2]
+	            			if myGameSettings["tutorialDone"][shapeArrayParameters[b]["name"]] == false and itemPickedUp == false then
+	            				mainFunc.thisLevelSettings.itemWasDiscoveredInLevel[#mainFunc.thisLevelSettings.itemWasDiscoveredInLevel + 1] = shapeArrayParameters[b]["name"]
 	            				mainFunc.thisLevelSettings.itemBagButtonsVisible = true
 	            				itemGainedFunction(mainFunc, shapeArray, shapeArrayParameters, "toolItem", nil,  nil, shapeArray[b].relevantToolArrayCounter)
 	            			else
@@ -2806,7 +2807,7 @@ local autoFanAndEtcTransition = function (mainFunc, shapeArray, shapeArrayParame
             				itemGainedFunction(mainFunc, shapeArray, shapeArrayParameters, "toolItem", nil, b, shapeArray[b].relevantToolIndexArray[a])
 			            end
 		            else
-		            	if shapeArrayParameters[b][2] ~= "mystery-block" then
+		            	if shapeArrayParameters[b]["name"] ~= "mystery-block" then
 		            		itemGainedFunction(mainFunc, shapeArray, shapeArrayParameters, "levelItem", shapeArray[b].itemLabel, nil, shapeArray[b].relevantToolArrayCounter)
 		            	end
 		            end

@@ -7,142 +7,144 @@ local switchSequenceData = {
 }
 
 local function spawn (z, mainFunc)
-    if shapeArrayParameters[z][1] == "autoFan"
-    or shapeArrayParameters[z][1] == "manualFan"
-    or shapeArrayParameters[z][1] == "simple"
-    or shapeArrayParameters[z][1] == "spitter"
-    or shapeArrayParameters[z][1] == "tunnel"
-    or shapeArrayParameters[z][1] == "backFire"
-    or shapeArrayParameters[z][1] == "characterChangePoint" then
+    local shapeParameters = shapeArrayParameters[z];
+
+    if shapeParameters["type"] == "autoFan"
+    or shapeParameters["type"] == "manualFan"
+    or shapeParameters["type"] == "simple"
+    or shapeParameters["type"] == "spitter"
+    or shapeParameters["type"] == "tunnel"
+    or shapeParameters["type"] == "backFire"
+    or shapeParameters["type"] == "characterChangePoint" then
         object = display.newSprite(mainFunc.allLevelSettings.allFansImageSheet, mainFunc.allLevelSettings.allFansSequenceData)
-        object:setSequence(shapeArrayParameters[z][1])
-        if (shapeArrayParameters[z][1] == "tunnel") then
+        object:setSequence(shapeParameters["type"])
+        if (shapeParameters["type"] == "tunnel") then
             mainFunc.thisLevelSettings.tunnelCounter = mainFunc.thisLevelSettings.tunnelCounter + 1
         end
-    elseif shapeArrayParameters[z][1] == "door"
-    or shapeArrayParameters[z][1] == "switch" then
+    elseif shapeParameters["type"] == "door"
+    or shapeParameters["type"] == "switch" then
         local shapeWidth = 60
         local shapeHeight = 52
-        if (shapeArrayParameters[z][1] == "door") then
+        if (shapeParameters["type"] == "door") then
             shapeWidth = 26
             shapeHeight = 54
         end
 
-        if (shapeArrayParameters[z][1] == "switch") then
+        if (shapeParameters["type"] == "switch") then
             object = display.newSprite(switchImageSheet, switchSequenceData)
             object:setSequence("off")
             object.width = xCalc(60)
             object.height = yCalc(52)
         else
-            object = display.newImageRect("images/objects/"..shapeArrayParameters[z][1]..".png", shapeWidth, shapeHeight)
+            object = display.newImageRect("images/objects/"..shapeParameters["type"]..".png", shapeWidth, shapeHeight)
         end
-    elseif shapeArrayParameters[z][1] == "shape" then
-        if shapeArrayParameters[z][10] ~= "breakable" then
-            if shapeArrayParameters[z][7] == "triangleTopRightShape"
-            or shapeArrayParameters[z][7] == "triangleBottomRightShape"
-            or shapeArrayParameters[z][7] == "triangleBottomLeftShape"
-            or shapeArrayParameters[z][7] == "triangleTopLeftShape" then
-                local shapeString = shapeArrayParameters[z][7]
-                if shapeArrayParameters[z][10] and (shapeArrayParameters[z][10] == "icy" or shapeArrayParameters[z][10] == "fire" or shapeArrayParameters[z][10] == "hyroll") then
-                    shapeString = shapeArrayParameters[z][10] .. "-" .. shapeString
+    elseif shapeParameters["type"] == "shape" then
+        if shapeParameters["props"][3] ~= "breakable" then
+            if shapeParameters["subType"] == "triangleTopRightShape"
+            or shapeParameters["subType"] == "triangleBottomRightShape"
+            or shapeParameters["subType"] == "triangleBottomLeftShape"
+            or shapeParameters["subType"] == "triangleTopLeftShape" then
+                local shapeString = shapeParameters["subType"]
+                if shapeParameters["props"][3] and (shapeParameters["props"][3] == "icy" or shapeParameters["props"][3] == "fire" or shapeParameters["props"][3] == "hyroll") then
+                    shapeString = shapeParameters["props"][3] .. "-" .. shapeString
                 end
                 object = display.newSprite(mainFunc.allLevelSettings.triangleImageSheet, mainFunc.allLevelSettings.triangleSequenceData)
                 object:setSequence(shapeString)
-            elseif shapeArrayParameters[z][7] == "triangleLeftAndRightShape" then
+            elseif shapeParameters["subType"] == "triangleLeftAndRightShape" then
                 object = display.newSprite(mainFunc.allLevelSettings.triangleLeftAndRightImageSheet, mainFunc.allLevelSettings.triangleLeftAndRightSequenceData)
-                object:setSequence(shapeArrayParameters[z][7])
-                if shapeArrayParameters[z][8] == 2 then
+                object:setSequence(shapeParameters["subType"])
+                if shapeParameters["props"][1] == 2 then
                     object.rotation = 180
                 end
-            elseif shapeArrayParameters[z][7] == "triangleTopAndBottomShape" then
+            elseif shapeParameters["subType"] == "triangleTopAndBottomShape" then
                 object = display.newSprite(mainFunc.allLevelSettings.triangleTopAndBottomImageSheet, mainFunc.allLevelSettings.triangleTopAndBottomSequenceData)
-                object:setSequence(shapeArrayParameters[z][7])
-                if shapeArrayParameters[z][8] == 1 then
+                object:setSequence(shapeParameters["subType"])
+                if shapeParameters["props"][1] == 1 then
                     object.rotation = 180
                 end
-            elseif shapeArrayParameters[z][7] == "bar" or shapeArrayParameters[z][7] == "doubleBar" then
+            elseif shapeParameters["subType"] == "bar" or shapeParameters["subType"] == "doubleBar" then
                 local barSize = "single"
-                if shapeArrayParameters[z][7] == "doubleBar" then
+                if shapeParameters["subType"] == "doubleBar" then
                     barSize = "double"
                 end
                 local barShape = "horz"
-                if shapeArrayParameters[z][8] then
-                    barShape = shapeArrayParameters[z][8]
+                if shapeParameters["props"][1] then
+                    barShape = shapeParameters["props"][1]
                 end
 
                 object = display.newSprite(mainFunc.allLevelSettings.barImageSheet[barSize][barShape], mainFunc.allLevelSettings.barSequenceData[barSize][barShape])
-                object:setSequence(shapeArrayParameters[z][7])
+                object:setSequence(shapeParameters["subType"])
             end
         else
             object = display.newSprite(mainFunc.allLevelSettings.triangleImageSheet, mainFunc.allLevelSettings.triangleSequenceData)
-            object:setSequence("breakable-" .. shapeArrayParameters[z][7])
+            object:setSequence("breakable-" .. shapeParameters["subType"])
             object.broken = false
         end
-    elseif shapeArrayParameters[z][1] == "gem" then
+    elseif shapeParameters["type"] == "gem" then
         local levelItems2ImageSheet = graphics.newImageSheet(mainFunc.allLevelSettings.levelItems2ImageSheet, mainFunc.allLevelSettings.levelItems2ImageSheetSettings)
         local levelItems2SequenceData = mainFunc.allLevelSettings.levelItems2SequenceData
         object = display.newSprite(levelItems2ImageSheet, levelItems2SequenceData)
         object:play()
-        object:setSequence(shapeArrayParameters[z][7] .. "Floating")
+        object:setSequence(shapeParameters["subType"] .. "Floating")
 
         object.width = xCalc(60)
         object.height = yCalc(52)
-    elseif shapeArrayParameters[z][1] == "item" then
+    elseif shapeParameters["type"] == "item" then
         local itemsImageSheet = mainFunc.allLevelSettings.itemsImageSheet
         local itemsSequenceData = mainFunc.allLevelSettings.itemsSequenceData
 
         local levelItemsImageSheet = graphics.newImageSheet(mainFunc.allLevelSettings.levelItemsImageSheet, mainFunc.allLevelSettings.levelItemsImageSheetSettings)
         local levelItemsSequenceData = mainFunc.allLevelSettings.levelItemsSequenceData
 
-        if shapeArrayParameters[z][2] == "bomb"
-        or shapeArrayParameters[z][2] == "hook"
-        or shapeArrayParameters[z][2] == "jet"
-        or shapeArrayParameters[z][2] == "clock"
-        or shapeArrayParameters[z][2] == "mystery-block"
-        or shapeArrayParameters[z][2] == "big-present"
-        or shapeArrayParameters[z][2] == "small-present"
-        or shapeArrayParameters[z][2] == "coins" then
+        if shapeParameters["name"] == "bomb"
+        or shapeParameters["name"] == "hook"
+        or shapeParameters["name"] == "jet"
+        or shapeParameters["name"] == "clock"
+        or shapeParameters["name"] == "mystery-block"
+        or shapeParameters["name"] == "big-present"
+        or shapeParameters["name"] == "small-present"
+        or shapeParameters["name"] == "coins" then
             object = display.newSprite(itemsImageSheet, itemsSequenceData)
             object.width = xCalc(60)
             object.height = yCalc(52)
-        elseif shapeArrayParameters[z][2] == "map"
-        or shapeArrayParameters[z][2] == "compass" then
+        elseif shapeParameters["name"] == "map"
+        or shapeParameters["name"] == "compass" then
             object = display.newSprite(levelItemsImageSheet, levelItemsSequenceData)
             object.width = xCalc(43)
             object.height = yCalc(34)
         end
 
-        if (shapeArrayParameters[z][2] == "map")
+        if (shapeParameters["name"] == "map")
         and mainFunc.thisLevelSettings.mapObtained == true then
             object.x = -10000
             object.alpha = 0
-        elseif (shapeArrayParameters[z][2] == "compass")
+        elseif (shapeParameters["name"] == "compass")
         and mainFunc.thisLevelSettings.compassObtained == true then
             object.x = -10000
             object.alpha = 0
         else
             object:play()
-            if shapeArrayParameters[z][2] == "map" or shapeArrayParameters[z][2] == "compass" then
+            if shapeParameters["name"] == "map" or shapeParameters["name"] == "compass" then
                 local label = "Map"
-                if shapeArrayParameters[z][2] == "compass" then
+                if shapeParameters["name"] == "compass" then
                     label = "Compass"
                 end
                 object:setSequence(currentMedal .. label)
             else
-                local itemLabel = shapeArrayParameters[z][2]
-                if shapeArrayParameters[z][2] == "coins"
-                and shapeArrayParameters[z][7] > 99 then
+                local itemLabel = shapeParameters["name"]
+                if shapeParameters["name"] == "coins"
+                and shapeParameters["subType"] > 99 then
                     itemLabel = itemLabel .. "-big"
-                elseif shapeArrayParameters[z][2] == "coins"
-                and shapeArrayParameters[z][7] < 99 then
+                elseif shapeParameters["name"] == "coins"
+                and shapeParameters["subType"] < 99 then
                     itemLabel = itemLabel .. "-small"
                 end
                 object:setSequence(itemLabel)
             end
         end
-    elseif shapeArrayParameters[z][1] == "endPoint" then
+    elseif shapeParameters["type"] == "endPoint" then
         object = display.newImageRect("images/objects/" .. currentMedal .. "Medal.png", 63, 55)
-    elseif shapeArrayParameters[z][1] == "gun" then
+    elseif shapeParameters["type"] == "gun" then
         local gunImageSheet = graphics.newImageSheet( "images/objects/gun.png", {width = 60, height = 52, numFrames = 4, sheetContentWidth = 240, sheetContentHeight = 52})
         local gunSequenceData = {
             { name = "up", start=1, count=1,   loopCount=1 },
@@ -152,91 +154,96 @@ local function spawn (z, mainFunc)
         }
         object = display.newSprite(gunImageSheet, gunSequenceData)
         object:play()
-        object:setSequence(shapeArrayParameters[z][7])
+        object:setSequence(shapeParameters["subType"])
     end
     return object
 end
 
 local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
-    shapeArray[z] = spawn(z, mainFunc)
-    shapeArray[z].relevantShapeArrayIndex = z
-    shapeArray[z].relevantHorzScreen = shapeArrayParameters[z][3]
-    shapeArray[z].relevantVertScreen = shapeArrayParameters[z][4]
-    if shapeArrayParameters[z][1] == "shape" then
+    local shapeParameters = shapeArrayParameters[z];
+    shapeArray[z] = spawn(z, mainFunc);
+    shapeArray[z].relevantShapeArrayIndex = z;
+    shapeArray[z].objectType = shapeParameters["type"];
+    shapeArray[z].relevantHorzScreen = shapeParameters["location"]["xScreen"];
+    shapeArray[z].relevantVertScreen = shapeParameters["location"]["yScreen"];
+    shapeArray[z].relevantHorzSquare = shapeParameters["location"]["xSquare"];
+    shapeArray[z].relevantVertSquare = shapeParameters["location"]["ySquare"];
+
+    if shapeParameters["type"] == "shape" then
         shapeArray[z].isCollisioning = false
         shapeArray[z].breakable = false
         shapeArray[z].hyrollBreakable = false
         for a = 1, #mainFunc.shapeRelatedArrays.shapeFormingArray  do
-            if mainFunc.shapeRelatedArrays.shapeFormingArray[a][1] == shapeArrayParameters[z][7] then
+            if mainFunc.shapeRelatedArrays.shapeFormingArray[a][1] == shapeParameters["subType"] then
                 relevantShape = mainFunc.shapeRelatedArrays.shapeFormingArray[a][2]
-                if shapeArrayParameters[z][7] == "triangleTopAndBottomShape" then
+                if shapeParameters["subType"] == "triangleTopAndBottomShape" then
                     relevantShape = mainFunc.shapeRelatedArrays.shapeFormingArray[a][3]
                 end
-                if (shapeArrayParameters[z][9] and shapeArrayParameters[z][9] ~= "_" and (shapeArrayParameters[z][7] ~= "bar" and shapeArrayParameters[z][7] ~= "doubleBar") ) then
-                    shapeArrayParam = (shapeArrayParameters[z][9]) + 11
+                if (shapeParameters["props"][2] and shapeParameters["props"][2] ~= "_" and (shapeParameters["subType"] ~= "bar" and shapeParameters["subType"] ~= "doubleBar") ) then
+                    shapeArrayParam = (shapeParameters["props"][2]) + 11
                     shapeArray[z].directionsArray = mainFunc.allLevelSettings.directionArrayIndex[shapeArrayParam]
                     shapeArray[z].directionsArrayAtIndex = shapeArrayParam
                 else 
-                    if shapeArrayParameters[z][7] ~= "bar" and shapeArrayParameters[z][7] ~= "doubleBar" then
+                    if shapeParameters["subType"] ~= "bar" and shapeParameters["subType"] ~= "doubleBar" then
                         shapeArray[z].directionsArray = mainFunc.allLevelSettings.directionArrayIndex[mainFunc.shapeRelatedArrays.shapeFormingArray[a][5]]
                         shapeArray[z].directionsArrayAtIndex = mainFunc.shapeRelatedArrays.shapeFormingArray[a][5]
-                    elseif shapeArrayParameters[z][7] == "bar" or shapeArrayParameters[z][7] == "doubleBar" then
-                        local shape = shapeArrayParameters[z][8]
+                    elseif shapeParameters["subType"] == "bar" or shapeParameters["subType"] == "doubleBar" then
+                        local shape = shapeParameters["props"][1]
                         local arrayIndex = 2
                         if shape == "vert" then
                             arrayIndex = 4
                         end
                         local indexAddition = 1
-                        if shapeArrayParameters[z][9] and shapeArrayParameters[z][9] ~= "_" then
-                            indexAddition = shapeArrayParameters[z][9]
+                        if shapeParameters["props"][2] and shapeParameters["props"][2] ~= "_" then
+                            indexAddition = shapeParameters["props"][2]
                         end
                         shapeArray[z].directionsArray = mainFunc.allLevelSettings.directionArrayIndex[mainFunc.shapeRelatedArrays.shapeFormingArray[a][3] + indexAddition]
                         shapeArray[z].directionsArrayAtIndex = mainFunc.shapeRelatedArrays.shapeFormingArray[a][3]
                     end
                 end
-                if (shapeArrayParameters[z][10] and (shapeArrayParameters[z][10] == "breakable" or shapeArrayParameters[z][10] == "hyroll") ) then
+                if (shapeParameters["props"][3] and (shapeParameters["props"][3] == "breakable" or shapeParameters["props"][3] == "hyroll") ) then
                     shapeArray[z].breakable = true
                     shapeArray[z].hyrollBeakable = false
-                    if shapeArrayParameters[z][10] == "hyroll" then
+                    if shapeParameters["props"][3] == "hyroll" then
                         shapeArray[z].hyrollBreakable = true
                     end
                 else
                     shapeArray[z].breakable = false
                     shapeArray[z].hyrollBreakable = false
                 end
-                if (shapeArrayParameters[z][10] and (shapeArrayParameters[z][10] == "icy" or shapeArrayParameters[z][10] == "fire") ) then
-                    shapeArray[z].triangleSpecialType = shapeArrayParameters[z][10]
+                if (shapeParameters["props"][3] and (shapeParameters["props"][3] == "icy" or shapeParameters["props"][3] == "fire") ) then
+                    shapeArray[z].triangleSpecialType = shapeParameters["props"][3]
                 end
             end
         end
         physics.addBody( shapeArray[z], "static", { density=10, friction=1, bounce=0, shape=relevantShape } )
         shapeArray[z].relevantPhysicsBodyParams = { density=10, friction=1, bounce=0, shape=relevantShape }
-        shapeArray[z].shape = shapeArrayParameters[z][7]
+        shapeArray[z].shape = shapeParameters["subType"]
         shapeArray[z].effectiveShape = shapeArray[z].shape
         shapeArray[z].state = 1
-        if shapeArrayParameters[z][8] then
-            shapeArray[z].state = shapeArrayParameters[z][8]
+        if shapeParameters["props"][1] then
+            shapeArray[z].state = shapeParameters["props"][1]
         end
-        shapeArray[z].transitionArrayState = shapeArrayParameters[z][8]
+        shapeArray[z].transitionArrayState = shapeParameters["props"][1]
         shapeArray[z].isTransitioning = false
         sceneGroup:insert( shapeArray[z] )
         mainFunc.allLevelSettings.frontScreenObjectsGroup:insert( shapeArray[z] )
-    elseif shapeArrayParameters[z][1] == "autoFan"
-    or shapeArrayParameters[z][1] == "manualFan"
-    or shapeArrayParameters[z][1] == "spitter"
-    or shapeArrayParameters[z][1] == "door"
-    or shapeArrayParameters[z][1] == "tunnel" 
-    or shapeArrayParameters[z][1] == "switch"
-    or shapeArrayParameters[z][1] == "endPoint"
-    or shapeArrayParameters[z][1] == "characterChangePoint"
-    or shapeArrayParameters[z][1] == "simple" 
-    or shapeArrayParameters[z][1] == "backFire" then
+    elseif shapeParameters["type"] == "autoFan"
+    or shapeParameters["type"] == "manualFan"
+    or shapeParameters["type"] == "spitter"
+    or shapeParameters["type"] == "door"
+    or shapeParameters["type"] == "tunnel" 
+    or shapeParameters["type"] == "switch"
+    or shapeParameters["type"] == "endPoint"
+    or shapeParameters["type"] == "characterChangePoint"
+    or shapeParameters["type"] == "simple" 
+    or shapeParameters["type"] == "backFire" then
         --shapeArray[z]:setReferencePoint(display.TopLeftReferencePoint)
         mainFunc.allLevelSettings.screenObjectsGroup:insert( shapeArray[z] )
         shapeArray[z].isTransitioning = false
     end
 
-    if shapeArrayParameters[z][1] == "gun" then
+    if shapeParameters["type"] == "gun" then
         --shapeArray[z]:setReferencePoint(display.TopLeftReferencePoint)
         shapeArray[z].anchorX = 0.5
         shapeArray[z].anchorY = 0.5
@@ -249,92 +256,93 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
         mainFunc.allLevelSettings.frontScreenObjectsGroup:insert(shapeArray[z])
     end
     
-    if shapeArrayParameters[z][1] == "switch" then
+    if shapeParameters["type"] == "switch" then
         shapeArray[z].switchCounter = 0
         shapeArray[z].switchOnOffCounter = 0
-        if shapeArrayParameters[z][7] == "rotate-object" then
+        if shapeParameters["subType"] == "rotate-object" then
             shapeArray[z].rotateSwitch = "first"
         end
     end
     
-    if shapeArrayParameters[z][1] == "autoFan"
-    or shapeArrayParameters[z][1] == "manualFan" then
+    if shapeParameters["type"] == "autoFan"
+    or shapeParameters["type"] == "manualFan" then
         -- shapeArray[z].xScale = 0.6
         -- shapeArray[z].yScale = 0.6
-        shapeArray[z].direction = shapeArrayParameters[z][7]
+        shapeArray[z].direction = shapeParameters["subType"]
     end
     
-    if shapeArrayParameters[z][1] == "autoFan"
-    or shapeArrayParameters[z][1] == "spitter" then
+    if shapeParameters["type"] == "autoFan"
+    or shapeParameters["type"] == "spitter" then
         shapeArray[z].isBallPresent = false
     end
 
-    if shapeArrayParameters[z][1] == "autoFan"
-    or shapeArrayParameters[z][1] == "manualFan"
-    or shapeArrayParameters[z][1] == "spitter"
-    or shapeArrayParameters[z][1] == "shape"
-    or shapeArrayParameters[z][1] == "simple"
-    or shapeArrayParameters[z][1] == "backFire"
-    or shapeArrayParameters[z][1] == "tunnel" then
+    if shapeParameters["type"] == "autoFan"
+    or shapeParameters["type"] == "manualFan"
+    or shapeParameters["type"] == "spitter"
+    or shapeParameters["type"] == "shape"
+    or shapeParameters["type"] == "simple"
+    or shapeParameters["type"] == "backFire"
+    or shapeParameters["type"] == "tunnel" then
         shapeArray[z].canShapeSlide = true
         shapeArray[z].lastBallReleaseDirection = nil
     end
     
-    if shapeArrayParameters[z][1] == "autoFan"
-    or shapeArrayParameters[z][1] == "manualFan"
-    or shapeArrayParameters[z][1] == "spitter"
-    or shapeArrayParameters[z][1] == "characterChangePoint"
-    or shapeArrayParameters[z][1] == "simple"
-    or shapeArrayParameters[z][1] == "backFire"
-    or shapeArrayParameters[z][1] == "tunnel" then
+    if shapeParameters["type"] == "autoFan"
+    or shapeParameters["type"] == "manualFan"
+    or shapeParameters["type"] == "spitter"
+    or shapeParameters["type"] == "characterChangePoint"
+    or shapeParameters["type"] == "simple"
+    or shapeParameters["type"] == "backFire"
+    or shapeParameters["type"] == "tunnel" then
         shapeArray[z].enabled = true
     end
 
-    if shapeArrayParameters[z][1] == "manualFan" then
+    if shapeParameters["type"] == "manualFan" then
         shapeArray[z].activeNow = false
     end
 
-    if shapeArrayParameters[z][1] == "autoFan"
-    or shapeArrayParameters[z][1] == "manualFan"
-    or shapeArrayParameters[z][1] == "spitter"
-    or shapeArrayParameters[z][1] == "shape"
-    or shapeArrayParameters[z][1] == "simple"
-    or shapeArrayParameters[z][1] == "item"
-    or shapeArrayParameters[z][1] == "endPoint"
-    or shapeArrayParameters[z][1] == "backFire"
-    or shapeArrayParameters[z][1] == "tunnel"
-    or shapeArrayParameters[z][1] == "characterChangePoint" then
+    if shapeParameters["type"] == "autoFan"
+    or shapeParameters["type"] == "manualFan"
+    or shapeParameters["type"] == "spitter"
+    or shapeParameters["type"] == "shape"
+    or shapeParameters["type"] == "simple"
+    or shapeParameters["type"] == "item"
+    or shapeParameters["type"] == "endPoint"
+    or shapeParameters["type"] == "backFire"
+    or shapeParameters["type"] == "tunnel"
+    or shapeParameters["type"] == "characterChangePoint" then
 
-        if shapeArrayParameters[z][1] == "shape" and (shapeArrayParameters[z][7] == "bar" or (shapeArrayParameters[z][7] == "doubleBar") ) then
+        if shapeParameters["type"] == "shape" and (shapeParameters["subType"] == "bar" or (shapeParameters["subType"] == "doubleBar") ) then
             shapeArray[z].width = (50/60) * mainFunc.allLevelSettings.squareWidth
-        elseif shapeArrayParameters[z][1] == "shape" and shapeArrayParameters[z][7] == "triangleTopAndBottomShape" then
+        elseif shapeParameters["type"] == "shape" and shapeParameters["subType"] == "triangleTopAndBottomShape" then
             shapeArray[z].width = mainFunc.allLevelSettings.squareWidth * 2
         else
             shapeArray[z].width = mainFunc.allLevelSettings.squareWidth
         end
     end
     
-    if shapeArrayParameters[z][1] == "shape" and shapeArrayParameters[z][7] == "triangleLeftAndRightShape" then
+    if shapeParameters["type"] == "shape" and shapeParameters["subType"] == "triangleLeftAndRightShape" then
         shapeArray[z].height = mainFunc.allLevelSettings.squareHeight * 2
-    elseif shapeArrayParameters[z][1] == "shape" and shapeArrayParameters[z][7] == "doubleBar" and shapeArrayParameters[z][8] == "horz" then
+    elseif shapeParameters["type"] == "shape" and shapeParameters["subType"] == "doubleBar" and shapeParameters["props"][1] == "horz" then
         shapeArray[z].height = mainFunc.allLevelSettings.squareHeight * 1.75
-    elseif shapeArrayParameters[z][1] == "shape" and shapeArrayParameters[z][7] == "doubleBar" and shapeArrayParameters[z][8] == "vert" then
-        print(shapeArrayParameters[z][7], shapeArrayParameters[z][8])
+    elseif shapeParameters["type"] == "shape" and shapeParameters["subType"] == "doubleBar" and shapeParameters["props"][1] == "vert" then
+        print(shapeParameters["subType"], shapeParameters["props"][1])
         shapeArray[z].height = mainFunc.allLevelSettings.squareHeight * 2.75
     else
         shapeArray[z].height = mainFunc.allLevelSettings.squareHeight
     end
     
-    shapeArray[z].anchorX = 0.5
-    shapeArray[z].anchorY = 0.5
-    shapeArray[z].x = ((shapeArrayParameters[z][3] - 1) * display.contentWidth) + (((shapeArrayParameters[z][5] - 1) * mainFunc.allLevelSettings.squareWidth) + mainFunc.allLevelSettings.gutterWidth ) + (mainFunc.allLevelSettings.squareWidth/2)
-    shapeArray[z].y = ((shapeArrayParameters[z][4] - 1) * display.contentHeight) + (((shapeArrayParameters[z][6] - 1) * mainFunc.allLevelSettings.squareHeight) + mainFunc.allLevelSettings.gutterHeight ) + (mainFunc.allLevelSettings.squareHeight/2)
-    shapeArray[z].name = shapeArrayParameters[z][2]
-    shapeArray[z].relevantHorzScreen = shapeArrayParameters[z][3]
-    shapeArray[z].relevantVertScreen = shapeArrayParameters[z][4]
-    shapeArray[z].relevantHorzSquare = shapeArrayParameters[z][5]
-    shapeArray[z].relevantVertSquare = shapeArrayParameters[z][6]
-    shapeArray[z].objectType = shapeArrayParameters[z][1]
+    local location = shapeParameters["location"];
+    shapeArray[z].anchorX = 0.5;
+    shapeArray[z].anchorY = 0.5;
+    shapeArray[z].x = ((location["xScreen"] - 1) * display.contentWidth) + (((location["xSquare"] - 1) * mainFunc.allLevelSettings.squareWidth) + mainFunc.allLevelSettings.gutterWidth ) + (mainFunc.allLevelSettings.squareWidth/2);
+    shapeArray[z].y = ((location["yScreen"] - 1) * display.contentHeight) + (((location["ySquare"] - 1) * mainFunc.allLevelSettings.squareHeight) + mainFunc.allLevelSettings.gutterHeight ) + (mainFunc.allLevelSettings.squareHeight/2);
+    shapeArray[z].name = shapeParameters["name"]
+    shapeArray[z].relevantHorzScreen = location["xScreen"]
+    shapeArray[z].relevantVertScreen = location["yScreen"]
+    shapeArray[z].relevantHorzSquare = location["xSquare"]
+    shapeArray[z].relevantVertSquare = location["ySquare"]
+    shapeArray[z].objectType = shapeParameters["type"]
     shapeArray[z].shapeArrayIndex = z
     shapeArray[z].mainFuncListenerAdded = false
     shapeArray[z].isAutoSliding = false
@@ -342,68 +350,68 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
     shapeArray[z].origWidth = shapeArray[z].width
     shapeArray[z].origHeight = shapeArray[z].height
 
-    if (shapeArrayParameters[z][1] ~= "door") then
+    if (shapeParameters["type"] ~= "door") then
         shapeArray[z].x = shapeArray[z].x + ((mainFunc.allLevelSettings.squareWidth - shapeArray[z].contentWidth) / 2)
         shapeArray[z].y = shapeArray[z].y + ((mainFunc.allLevelSettings.squareHeight - shapeArray[z].contentHeight) / 2)
     end
     
-    if (shapeArrayParameters[z][1] == "shape") then
-        if (shapeArrayParameters[z][7] ~= "triangleLeftAndRightShape")
-        and (shapeArrayParameters[z][7] ~= "triangleTopAndBottomShape") then
+    if (shapeParameters["type"] == "shape") then
+        if (shapeParameters["subType"] ~= "triangleLeftAndRightShape")
+        and (shapeParameters["subType"] ~= "triangleTopAndBottomShape") then
             shapeArray[z].y = shapeArray[z].y
             shapeArray[z].x = shapeArray[z].x
         else
-            if (shapeArrayParameters[z][7] == "triangleLeftAndRightShape") then
+            if (shapeParameters["subType"] == "triangleLeftAndRightShape") then
                 shapeArray[z].y = shapeArray[z].y + (mainFunc.allLevelSettings.squareHeight)
-                if (shapeArrayParameters[z][8] == 2) then
+                if (shapeParameters["props"][1] == 2) then
                     shapeArray[z].x = shapeArray[z].x + xCalc(4)
                     shapeArray[z].y = shapeArray[z].y + yCalc(1)
                 end
             else
                 shapeArray[z].x = shapeArray[z].x + xCalc(60)
                 shapeArray[z].y = shapeArray[z].y
-                if (shapeArrayParameters[z][8] == 2) then
+                if (shapeParameters["props"][1] == 2) then
                     shapeArray[z].y = shapeArray[z].y - yCalc(3)
                 end
             end
         end
-        if (shapeArrayParameters[z][7] == "triangleBottomLeftShape")
-        or (shapeArrayParameters[z][7] == "triangleTopLeftShape") then
+        if (shapeParameters["subType"] == "triangleBottomLeftShape")
+        or (shapeParameters["subType"] == "triangleTopLeftShape") then
             shapeArray[z].x = shapeArray[z].x + xCalc(1)
-        elseif (shapeArrayParameters[z][7] == "triangleBottomRightShape")
-        or (shapeArrayParameters[z][7] == "triangleTopRightShape") then
+        elseif (shapeParameters["subType"] == "triangleBottomRightShape")
+        or (shapeParameters["subType"] == "triangleTopRightShape") then
             shapeArray[z].x = shapeArray[z].x - xCalc(1)
         end
 
-        if (shapeArrayParameters[z][7] == "triangleTopRightShape")
-        or (shapeArrayParameters[z][7] == "triangleTopLeftShape") then
+        if (shapeParameters["subType"] == "triangleTopRightShape")
+        or (shapeParameters["subType"] == "triangleTopLeftShape") then
             shapeArray[z].y = shapeArray[z].y + yCalc(1)
-        elseif (shapeArrayParameters[z][7] == "triangleBottomRightShape")
-        or (shapeArrayParameters[z][7] == "triangleBottomLeftShape") then
+        elseif (shapeParameters["subType"] == "triangleBottomRightShape")
+        or (shapeParameters["subType"] == "triangleBottomLeftShape") then
             shapeArray[z].y = shapeArray[z].y - yCalc(1)
         end
 
-        if (shapeArrayParameters[z][10] and shapeArrayParameters[z][10] == "breakable") then
+        if (shapeParameters["props"][3] and shapeParameters["props"][3] == "breakable") then
             shapeArray[z].y = shapeArray[z].y
             shapeArray[z].x = shapeArray[z].x
-            if shapeArrayParameters[z][7] ~= "triangleTopRightShape" then
+            if shapeParameters["subType"] ~= "triangleTopRightShape" then
                 local shapePosArray = {
                     triangleBottomRightShape = {y = 7, x = -4},
                     triangleBottomLeftShape = {y = 2, x = -1},
                     triangleTopLeftShape = {y = 7, x = -5}
                 }
 
-                --shapeArray[z].y = shapeArray[z].y + yCalc(shapePosArray[shapeArrayParameters[z][7]]["y"])
-                --shapeArray[z].x = shapeArray[z].x + xCalc(shapePosArray[shapeArrayParameters[z][7]]["x"])
+                --shapeArray[z].y = shapeArray[z].y + yCalc(shapePosArray[shapeParameters["subType"]]["y"])
+                --shapeArray[z].x = shapeArray[z].x + xCalc(shapePosArray[shapeParameters["subType"]]["x"])
             end
         end
 
         local relevantDirectionArray
 
-        if (shapeArrayParameters[z][7] == "bar") or (shapeArrayParameters[z][7] == "doubleBar") then
+        if (shapeParameters["subType"] == "bar") or (shapeParameters["subType"] == "doubleBar") then
             if shapeArray[z].state == "horz" then
                 shapeArray[z].x = shapeArray[z].x - (mainFunc.allLevelSettings.squareWidth / 2) - xCalc(5)
-                if (shapeArrayParameters[z][7] == "doubleBar") then
+                if (shapeParameters["subType"] == "doubleBar") then
                     shapeArray[z].y = shapeArray[z].y + (mainFunc.allLevelSettings.squareHeight) - yCalc(7)
                 end
                 relevantDirectionArray = 2
@@ -412,14 +420,14 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
                 shapeArray[z].x = shapeArray[z].x - xCalc(5)
                 shapeArray[z].y = shapeArray[z].y - (mainFunc.allLevelSettings.squareHeight/2)
                 relevantDirectionArray = 4
-                if (shapeArrayParameters[z][7] == "doubleBar") then
+                if (shapeParameters["subType"] == "doubleBar") then
                     shapeArray[z].x = shapeArray[z].x + (mainFunc.allLevelSettings.squareWidth / 2)
                     shapeArray[z].y = shapeArray[z].y + (mainFunc.allLevelSettings.squareHeight) - yCalc(5)
                 end
             end
         end
         
-        if (shapeArrayParameters[z][7] ~= "bar") and (shapeArrayParameters[z][7] ~= "doubleBar") then
+        if (shapeParameters["subType"] ~= "bar") and (shapeParameters["subType"] ~= "doubleBar") then
             relevantDirectionArray = shapeArray[z].state * 2
         end
         
@@ -428,29 +436,29 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
 
                 if shapeArray[z].directionsArray[relevantDirectionArray][a][1] then
                     if (a == 4
-                    and shapeArrayParameters[z][7] == "triangleLeftAndRightShape"
+                    and shapeParameters["subType"] == "triangleLeftAndRightShape"
                     and shapeArray[z].state == 1)
                     or (a == 2
-                    and shapeArrayParameters[z][7] == "triangleLeftAndRightShape"
+                    and shapeParameters["subType"] == "triangleLeftAndRightShape"
                     and shapeArray[z].state == 2)
                     or (a == 3
-                    and shapeArrayParameters[z][7] == "triangleTopAndBottomShape"
+                    and shapeParameters["subType"] == "triangleTopAndBottomShape"
                     and shapeArray[z].state == 1)
                     or (a == 1
-                    and shapeArrayParameters[z][7] == "triangleTopAndBottomShape"
+                    and shapeParameters["subType"] == "triangleTopAndBottomShape"
                     and shapeArray[z].state == 2)
                     or (a == 4
-                    and shapeArrayParameters[z][7] == "triangleTopRightShape")
+                    and shapeParameters["subType"] == "triangleTopRightShape")
                     or (a == 4
-                    and shapeArrayParameters[z][7] == "triangleBottomRightShape")
+                    and shapeParameters["subType"] == "triangleBottomRightShape")
                     or (a == 2
-                    and shapeArrayParameters[z][7] == "triangleTopLeftShape")
+                    and shapeParameters["subType"] == "triangleTopLeftShape")
                     or (a == 2
-                    and shapeArrayParameters[z][7] == "triangleBottomLeftShape")
+                    and shapeParameters["subType"] == "triangleBottomLeftShape")
                     or ( (a == 1 or a == 3)
-                    and (shapeArrayParameters[z][7] == "bar" or shapeArrayParameters[z][7] == "doubleBar") and shapeArrayParameters[z][8] == "horz")
+                    and (shapeParameters["subType"] == "bar" or shapeParameters["subType"] == "doubleBar") and shapeParameters["props"][1] == "horz")
                     or ( (a == 2 or a == 4)
-                    and (shapeArrayParameters[z][7] == "bar" or shapeArrayParameters[z][7] == "doubleBar") and shapeArrayParameters[z][8] == "vert") then
+                    and (shapeParameters["subType"] == "bar" or shapeParameters["subType"] == "doubleBar") and shapeParameters["props"][1] == "vert") then
                     
                     else
                         killBar = display.newImageRect("images/objects/killBar.png", 17, 49)
@@ -460,11 +468,11 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
                         killBar.relatedDirectionArrayIndex = a
                         
                         if (a == 4
-                        and shapeArrayParameters[z][7] == "triangleLeftAndRightShape"
+                        and shapeParameters["subType"] == "triangleLeftAndRightShape"
                         and shapeArray[z].state == 2) then
                             killBar.relatedDirectionArrayIndex = 2
                         elseif (a == 3
-                        and shapeArrayParameters[z][7] == "triangleTopAndBottomShape"
+                        and shapeParameters["subType"] == "triangleTopAndBottomShape"
                         and shapeArray[z].state == 2) then
                             killBar.relatedDirectionArrayIndex = 1
                         end
@@ -472,7 +480,7 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
                         killBar.x = shapeArray[z].x
                         killBar.y = shapeArray[z].y
 
-                        if shapeArrayParameters[z][7] == "bar" or shapeArrayParameters[z][7] == "doubleBar" then
+                        if shapeParameters["subType"] == "bar" or shapeParameters["subType"] == "doubleBar" then
                             if shapeArray[z].state == "horz" then
                                 if (a == 2) then
                                     killBar.x = killBar.x - xCalc(7)
@@ -502,12 +510,12 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
                     
                     for b=1, #killBarPositionArray do
                         if a == b then
-                            if shapeArrayParameters[z][7] == killBarPositionArray[b][1]
-                            or shapeArrayParameters[z][7] == killBarPositionArray[b][2] then
+                            if shapeParameters["subType"] == killBarPositionArray[b][1]
+                            or shapeParameters["subType"] == killBarPositionArray[b][2] then
                                 killBar.x = killBar.x + xCalc(killBarPositionArray[b][3])
                                 killBar.y = killBar.y + yCalc(killBarPositionArray[b][4])
                                 killBar.rotation = killBarPositionArray[b][5]
-                            elseif shapeArrayParameters[z][7] == killBarPositionArray[b][6] then
+                            elseif shapeParameters["subType"] == killBarPositionArray[b][6] then
                                 if a == 4 then
                                     thisRelevantState = 2
                                 else
@@ -538,7 +546,7 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
                                         killBar.rotation = killBarPositionArray[b][12]
                                     end
                                 end
-                            elseif shapeArrayParameters[z][7] == killBarPositionArray[b][13] then
+                            elseif shapeParameters["subType"] == killBarPositionArray[b][13] then
                                 if b % 2 == 0 then
                                     if shapeArray[z].state == 1 then
                                         killBar.x = killBar.x + xCalc(killBarPositionArray[b][14])
@@ -572,11 +580,11 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
                             end
                             
                             if (killBarPositionArray[b][20]) then
-                                if shapeArrayParameters[z][7] == killBarPositionArray[b][20] then
+                                if shapeParameters["subType"] == killBarPositionArray[b][20] then
                                     killBar.x = killBar.x + xCalc(killBarPositionArray[b][21])
                                     killBar.y = killBar.y + yCalc(killBarPositionArray[b][22])
                                     killBar.rotation = killBarPositionArray[b][23]
-                                elseif shapeArrayParameters[z][7] == killBarPositionArray[b][24] then
+                                elseif shapeParameters["subType"] == killBarPositionArray[b][24] then
                                     killBar.x = killBar.x + xCalc(killBarPositionArray[b][25])
                                     killBar.y = killBar.y + yCalc(killBarPositionArray[b][26])
                                     killBar.rotation = killBarPositionArray[b][27]
@@ -587,7 +595,7 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
                     
                 elseif shapeArray[z].directionsArray[relevantDirectionArray][a] == "specialRule" then
                     
-                    if shapeArrayParameters[z][7] == "triangleLeftAndRightShape" then
+                    if shapeParameters["subType"] == "triangleLeftAndRightShape" then
                         if shapeArray[z].state == 1 then
                             if a == 2 then
                                 if shapeArray[z].directionsArray[2][5][1] then
@@ -631,7 +639,7 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
                                 end
                             end
                         end
-                    elseif shapeArrayParameters[z][7] == "triangleTopAndBottomShape" then
+                    elseif shapeParameters["subType"] == "triangleTopAndBottomShape" then
                         if shapeArray[z].state == 1 then
                             if a == 1 then
                                 if shapeArray[z].directionsArray[2][5][1] then
@@ -682,25 +690,25 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
         
     end
     
-    if (shapeArrayParameters[z][1] == "door") then
-        if shapeArrayParameters[z][7] == "up" then
+    if (shapeParameters["type"] == "door") then
+        if shapeParameters["subType"] == "up" then
             shapeArray[z].height = mainFunc.allLevelSettings.squareWidth
             shapeArray[z].width = yCalc(26)
             shapeArray[z].y = shapeArray[z].y - (mainFunc.allLevelSettings.squareHeight) + (shapeArray[z].contentWidth/2) - yCalc(4)
             shapeArray[z].x = shapeArray[z].x
             shapeArray[z].rotation = 270
-        elseif shapeArrayParameters[z][7] == "right" then
+        elseif shapeParameters["subType"] == "right" then
             shapeArray[z].height = mainFunc.allLevelSettings.squareHeight
             shapeArray[z].width = xCalc(26)
             shapeArray[z].x = shapeArray[z].x + mainFunc.allLevelSettings.gutterWidth + xCalc(17)
             shapeArray[z].y = shapeArray[z].y
-        elseif shapeArrayParameters[z][7] == "down" then
+        elseif shapeParameters["subType"] == "down" then
             shapeArray[z].height = mainFunc.allLevelSettings.squareWidth
             shapeArray[z].width = yCalc(26)
             shapeArray[z].y = shapeArray[z].y + (mainFunc.allLevelSettings.gutterHeight * 2) + mainFunc.allLevelSettings.squareHeight - (shapeArray[z].contentWidth * 2) - yCalc(17)
             shapeArray[z].x = shapeArray[z].x
             shapeArray[z].rotation = 90
-        elseif shapeArrayParameters[z][7] == "left" then
+        elseif shapeParameters["subType"] == "left" then
             shapeArray[z].height = mainFunc.allLevelSettings.squareHeight
             shapeArray[z].width = xCalc(26)
             shapeArray[z].xScale = -1
@@ -709,9 +717,9 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
             shapeArray[z].y = shapeArray[z].y
         end
         mainFunc.allLevelSettings.frontScreenObjectsGroup:insert( shapeArray[z] )
-        if shapeArrayParameters[z][8] and shapeArrayParameters[z][8] == "enabled" then
+        if shapeParameters["props"] and shapeParameters["props"][1] == "enabled" then
             shapeArray[z].enabled = true
-        elseif shapeArrayParameters[z][8] and shapeArrayParameters[z][8] == "disabled" then
+        elseif shapeParameters["props"] and shapeParameters["props"][1] == "disabled" then
             shapeArray[z].enabled = false
         else
             shapeArray[z].enabled = true
@@ -721,14 +729,14 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
         end
     end
     
-    if shapeArrayParameters[z][1] == "spitter" then
-        shapeArray[z].type = shapeArrayParameters[z][1]
+    if shapeParameters["type"] == "spitter" then
+        shapeArray[z].type = shapeParameters["type"]
         shapeArray[z].upEnabled = false
         shapeArray[z].rightEnabled = false
         shapeArray[z].downEnabled = false
         shapeArray[z].leftEnabled = false
         
-        if shapeArrayParameters[z][7] == "up" then
+        if shapeParameters["subType"] == "up" then
             shapeArray[z].upEnabled = true
             shapeArray[z].upArrow = display.newImageRect("images/objects/spitter-arrow.png", 15, 10)
             --shapeArray[z].upArrow:setReferencePoint(display.TopLeftReferencePoint);
@@ -738,7 +746,7 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
             shapeArray[z].upArrow.x = shapeArray[z].x
             shapeArray[z].upArrow.y = shapeArray[z].y - yCalc(16.5)
         end
-        if shapeArrayParameters[z][8] == "right" then
+        if shapeParameters["props"][1] == "right" then
             shapeArray[z].rightEnabled = true
             shapeArray[z].rightArrow = display.newImageRect("images/objects/spitter-arrow.png", 15, 10)
             --shapeArray[z].rightArrow:setReferencePoint(display.TopLeftReferencePoint);
@@ -749,7 +757,7 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
             shapeArray[z].rightArrow.x = shapeArray[z].x + xCalc(17.5)
             shapeArray[z].rightArrow.y = shapeArray[z].y
         end
-        if shapeArrayParameters[z][9] == "down" then
+        if shapeParameters["props"][2] == "down" then
             shapeArray[z].downEnabled = true
             shapeArray[z].downArrow = display.newImageRect("images/objects/spitter-arrow.png", 15, 10)
             --shapeArray[z].downArrow:setReferencePoint(display.TopLeftReferencePoint);
@@ -760,7 +768,7 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
             shapeArray[z].downArrow.x = shapeArray[z].x
             shapeArray[z].downArrow.y = shapeArray[z].y + yCalc(16.5)
         end
-        if shapeArrayParameters[z][10] == "left" then
+        if shapeParameters["props"][3] == "left" then
             shapeArray[z].leftEnabled = true
             shapeArray[z].leftArrow = display.newImageRect("images/objects/spitter-arrow.png", 15, 10)
             --shapeArray[z].leftArrow:setReferencePoint(display.TopLeftReferencePoint);
@@ -774,7 +782,7 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
 
     end
     
-    if shapeArrayParameters[z][1] == "tunnel" then
+    if shapeParameters["type"] == "tunnel" then
         local tunnelPiecesImageSheet = graphics.newImageSheet( "images/objects/tunnel-extraPiecesSprite.png", {width = 25, height = 30, numFrames = 21, sheetContentWidth = 175, sheetContentHeight = 90})
         local tunnelPiecesSequenceData = {
             { name = "blueCircleOn", start=1, count=1,   loopCount=1 },
@@ -816,16 +824,16 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
         shapeArray[z].colour = tunnelColoursArray[mainFunc.thisLevelSettings.tunnelCounter - mainFunc.thisLevelSettings.duplicateTunnelItemsProcessed]
 
         for a = 1, #mainFunc.thisLevelSettings.alreadyProcessedTunnels do
-            if shapeArrayParameters[z][7] == mainFunc.thisLevelSettings.alreadyProcessedTunnels[a][2]
-            and shapeArrayParameters[z][8] == mainFunc.thisLevelSettings.alreadyProcessedTunnels[a][3]
-            and shapeArrayParameters[z][9] == mainFunc.thisLevelSettings.alreadyProcessedTunnels[a][4]
-            and shapeArrayParameters[z][10] == mainFunc.thisLevelSettings.alreadyProcessedTunnels[a][5] then
+            if shapeParameters["subType"] == mainFunc.thisLevelSettings.alreadyProcessedTunnels[a][2]
+            and shapeParameters["props"][1] == mainFunc.thisLevelSettings.alreadyProcessedTunnels[a][3]
+            and shapeParameters["props"][2] == mainFunc.thisLevelSettings.alreadyProcessedTunnels[a][4]
+            and shapeParameters["props"][3] == mainFunc.thisLevelSettings.alreadyProcessedTunnels[a][5] then
                 shapeArray[z].colour = mainFunc.thisLevelSettings.alreadyProcessedTunnels[a][1]
                 mainFunc.thisLevelSettings.duplicateTunnelItemsProcessed = mainFunc.thisLevelSettings.duplicateTunnelItemsProcessed + 1
             end
         end
 
-        shapeArray[z].secondDirection = shapeArrayParameters[z][11]
+        shapeArray[z].secondDirection = shapeParameters["props"][4]
         shapeArray[z].relevantLowerX = shapeArray[z].x - (mainFunc.allLevelSettings.squareWidth/2)
         shapeArray[z].relevantHigherX = shapeArray[z].x + (mainFunc.allLevelSettings.squareWidth/2)
         shapeArray[z].relevantLowerY = shapeArray[z].y - (mainFunc.allLevelSettings.squareHeight/2)
@@ -840,8 +848,8 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
         mainFunc.allLevelSettings.screenObjectsGroup:insert( shapeArray[z].tunnelCircle )
         
         shapeArray[z].endTunnelPiece = display.newImageRect("images/objects/tunnel-endPoint.png", 31, 30)
-        shapeArray[z].endTunnelPiece.x = ((shapeArrayParameters[z][7] - 1) * display.contentWidth) + (((shapeArrayParameters[z][9] - 1) * mainFunc.allLevelSettings.squareWidth) + mainFunc.allLevelSettings.gutterWidth ) + (mainFunc.allLevelSettings.squareWidth/2)
-        shapeArray[z].endTunnelPiece.y = ((shapeArrayParameters[z][8] - 1) * display.contentHeight) + (((shapeArrayParameters[z][10] - 1) * mainFunc.allLevelSettings.squareHeight) + mainFunc.allLevelSettings.gutterHeight ) + (mainFunc.allLevelSettings.squareHeight/2)
+        shapeArray[z].endTunnelPiece.x = ((shapeParameters["subType"] - 1) * display.contentWidth) + (((shapeParameters["props"][2] - 1) * mainFunc.allLevelSettings.squareWidth) + mainFunc.allLevelSettings.gutterWidth ) + (mainFunc.allLevelSettings.squareWidth/2)
+        shapeArray[z].endTunnelPiece.y = ((shapeParameters["props"][1] - 1) * display.contentHeight) + (((shapeParameters["props"][3] - 1) * mainFunc.allLevelSettings.squareHeight) + mainFunc.allLevelSettings.gutterHeight ) + (mainFunc.allLevelSettings.squareHeight/2)
         shapeArray[z].endTunnelPiece.alpha = 0.55
         mainFunc.allLevelSettings.screenObjectsGroup:insert( shapeArray[z].endTunnelPiece )
 
@@ -872,19 +880,19 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
         
         mainFunc.allLevelSettings.screenObjectsGroup:insert( shapeArray[z].exitDirectionArrow )
 
-        table.insert(mainFunc.thisLevelSettings.alreadyProcessedTunnels, {shapeArray[z].colour, shapeArrayParameters[z][7], shapeArrayParameters[z][8], shapeArrayParameters[z][9], shapeArrayParameters[z][10]})
+        table.insert(mainFunc.thisLevelSettings.alreadyProcessedTunnels, {shapeArray[z].colour, shapeParameters["subType"], shapeParameters["props"][1], shapeParameters["props"][2], shapeParameters["props"][3]})
     end
     
-    if shapeArrayParameters[z][1] == "switch" then
+    if shapeParameters["type"] == "switch" then
         local switchNumberImageSheet = graphics.newImageSheet( "images/objects/numbers/switchNumber"..mainFunc.thisLevelSettings.numberOfSwitchesCounter..".png", {width = 39, height = 37, numFrames = 2})
         local switchNumberSequenceData = {
             { name = "off", start=1, count=1,   loopCount=1 },
             { name = "on", start=2, count=1, loopCount=1 }
         }
 
-        shapeArray[z].objectsToProcess = shapeArrayParameters[z][7]
+        shapeArray[z].objectsToProcess = shapeParameters["subType"]
         
-        if (shapeArrayParameters[z][9] == nil or shapeArrayParameters[z][9] == "labelled") then
+        if (shapeParameters["props"][2] == nil or shapeParameters["props"][2] == "labelled") then
             shapeArray[z].isLabelled = true
             shapeArray[z].switchValueText = display.newSprite(switchNumberImageSheet, switchNumberSequenceData)
             --shapeArray[z].switchValueText:toBack()
@@ -912,7 +920,7 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
 
                     if shapeArray[z].objectsToProcess[index][1] == "flip-horizontal" then
                         for a = 1, #shapeArrayParameters do
-                            if shapeArrayParameters[a][2] == shapeArray[z].objectsToProcess[index][2] then
+                            if shapeArrayParameters[a]["name"] == shapeArray[z].objectsToProcess[index][2] then
                                 shapeArray[a].switchSlideNextOrPrev = "next"
                             end
                         end
@@ -927,7 +935,7 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
                             }
                             
                             for b =1, #switchValueTextPositioningArray do
-                                if shapeArrayParameters[thisFlippingShapeIndex][7] == switchValueTextPositioningArray[b][1] then
+                                if shapeArrayParameters[thisFlippingShapeIndex]["subType"] == switchValueTextPositioningArray[b][1] then
                                     if thisFlipTransitionDirection == "flip-horizontal" then
                                         shapeArray[thisFlippingShapeIndex].switchValueText.x  = shapeArray[thisFlippingShapeIndex].switchValueText.x + xCalc(switchValueTextPositioningArray[b][2])
                                         shapeArray[thisFlippingShapeIndex].switchValueText.y  = shapeArray[thisFlippingShapeIndex].switchValueText.y + yCalc(switchValueTextPositioningArray[b][3])
@@ -939,7 +947,7 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
                             end
                             
                         end
-                        if shapeArrayParameters[a][2] == shapeArray[z].objectsToProcess[index][2]
+                        if shapeArrayParameters[a]["name"] == shapeArray[z].objectsToProcess[index][2]
                         and shapeArray[z].isLabelled then
                             if shapeArray[z].objectsToProcess[index][1] == "flip-horizontal"
                             or shapeArray[z].objectsToProcess[index][1] == "flip-vertical" then
@@ -952,7 +960,7 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
                             or shapeArray[z].objectsToProcess[index][1] == "flip-vertical" then
                                 addSwitchValueTextForFlip(a)
                             end
-                        elseif shapeArrayParameters[a][2] == shapeArray[z].objectsToProcess[index][2]
+                        elseif shapeArrayParameters[a]["name"] == shapeArray[z].objectsToProcess[index][2]
                         and shapeArray[z].isLabelled == false then
                             shapeArray[a].isLabelled = false
                         end
@@ -967,8 +975,8 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
         end
     end
     
-    if shapeArrayParameters[z][1] == "manualFan"
-    or shapeArrayParameters[z][1] == "autoFan" then
+    if shapeParameters["type"] == "manualFan"
+    or shapeParameters["type"] == "autoFan" then
 
         local fanArrowImageSheet = graphics.newImageSheet( "images/objects/fan-arrow.png", {width = 47, height = 11, numFrames = 2, sheetContentWidth = 47, sheetContentHeight = 22})
         local fanArrowSequenceData = {
@@ -976,7 +984,7 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
             { name = "on", start=1, count=1, loopCount=1 }
         }
         shapeArray[z].directionIndicatorArrow = display.newSprite(fanArrowImageSheet, fanArrowSequenceData)
-        if shapeArrayParameters[z][1] == "manualFan" then
+        if shapeParameters["type"] == "manualFan" then
             shapeArray[z].directionIndicatorArrow:setSequence("off")
         else
             shapeArray[z].directionIndicatorArrow:setSequence("on")
@@ -1004,10 +1012,10 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
         mainFunc.allLevelSettings.midScreenObjectsGroup:insert( shapeArray[z].directionIndicatorArrow )
     end
     
-    if shapeArrayParameters[z][1] == "gem" then
+    if shapeParameters["type"] == "gem" then
         shapeArray[z].width = xCalc(60)
         shapeArray[z].height = yCalc(52)
-        shapeArray[z].gemType = shapeArrayParameters[z][7]
+        shapeArray[z].gemType = shapeParameters["subType"]
         shapeArray[z].wasCollectedPreviously = false
         if (myGameSettings[currentWorld]["levels"][currentLevel][currentMedal .. "-achievements"]["red_coin"] == 1 and shapeArray[z].gemType == "redCoin")
         or (myGameSettings[currentWorld]["levels"][currentLevel][currentMedal .. "-achievements"]["blue_coin"] == 1 and shapeArray[z].gemType == "blueCoin")
@@ -1016,7 +1024,7 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
         else
             if (shapeArray[z].gemType == "purple") then
                 shapeArray[z].x = shapeArray[z].x
-                shapeArray[z].fullName = shapeArray[z].name .. shapeArrayParameters[z][3] .. shapeArrayParameters[z][4] .. shapeArrayParameters[z][5] .. shapeArrayParameters[z][6]
+                shapeArray[z].fullName = shapeArray[z].name .. shapeParameters["location"]["xScreen"] .. shapeParameters["location"]["yScreen"] .. shapeParameters["location"]["xSquare"] .. shapeParameters["location"]["ySquare"]
 
                 for a = 1, #myGameSettings[currentWorld]["levels"][currentLevel][currentMedal .. "-achievements"]["gems_gained_array"] do
                     if myGameSettings[currentWorld]["levels"][currentLevel][currentMedal .. "-achievements"]["gems_gained_array"][a] == shapeArray[z].fullName then
@@ -1068,8 +1076,8 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
 
     end
 
-    if shapeArrayParameters[z][1] == "item" then
-        if hasValue({ "partialMap", "fullMap", "compass" }, shapeArrayParameters[z][2]) then
+    if shapeParameters["type"] == "item" then
+        if hasValue({ "partialMap", "fullMap", "compass" }, shapeParameters["name"]) then
             shapeArray[z].xScale = 0.6
             shapeArray[z].yScale = 0.6
         else
@@ -1081,14 +1089,14 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
         shapeArray[z].hasBeenUsed = false
         mainFunc.allLevelSettings.backgroundObjectsGroup:insert( shapeArray[z] )
         shapeArray[z]:toBack()
-        if (shapeArrayParameters[z][2] == "mystery-block") then
+        if (shapeParameters["name"] == "mystery-block") then
             local mysteryBlockIsTaken = false
             for a = 1, #myGameSettings[currentWorld]["levels"][currentLevel][currentMedal .. "-achievements"]["mystery_shapes_to_add"] do
                 local blockLocation = myGameSettings[currentWorld]["levels"][currentLevel][currentMedal .. "-achievements"]["mystery_shapes_to_add"][a]["location"];
-                if blockLocation[1] == shapeArrayParameters[z][3]
-                and blockLocation[2] == shapeArrayParameters[z][4]
-                and blockLocation[3] == shapeArrayParameters[z][5]
-                and blockLocation[4] == shapeArrayParameters[z][6] then
+                if blockLocation[1] == shapeParameters["location"]["xScreen"]
+                and blockLocation[2] == shapeParameters["location"]["yScreen"]
+                and blockLocation[3] == shapeParameters["location"]["xSquare"]
+                and blockLocation[4] == shapeParameters["location"]["ySquare"] then
                     mysteryBlockIsTaken = true
                 end
             end
@@ -1098,11 +1106,11 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
                 shapeArray[z]:toBack()
                 shapeArray[z]:addEventListener("tap", mainFunc.mysteryBlockTouch)
             end
-            shapeArray[z].allowedShapesArray = shapeArrayParameters[z][7]
+            shapeArray[z].allowedShapesArray = shapeParameters["subType"]
         end
-        shapeArray[z].itemLabel = shapeArrayParameters[z][2]
+        shapeArray[z].itemLabel = shapeParameters["name"]
 
-        if (shapeArrayParameters[z][2] ~= "mystery-block") then
+        if (shapeParameters["name"] ~= "mystery-block") then
             shapeArray[z].backBoard = display.newSprite(mainFunc.allLevelSettings.levelItemsBackboardImageSheet, mainFunc.allLevelSettings.levelItemsBackboardSequenceData)
             shapeArray[z].backBoard:setSequence("item")
             shapeArray[z].backBoard.x = shapeArray[z].x
@@ -1115,15 +1123,15 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
         end
     end
     
-    if shapeArrayParameters[z][1] == "laser" then
-        shapeArray[z].laserDirection = shapeArrayParameters[z][7]
+    if shapeParameters["type"] == "laser" then
+        shapeArray[z].laserDirection = shapeParameters["subType"]
         shapeArray[z].laserCounter = 0
         shapeArray[z].x = shapeArray[z].x + xCalc(30)
         shapeArray[z].y = shapeArray[z].y + yCalc(26)
         mainFunc.allLevelSettings.frontScreenObjectsGroup:insert( shapeArray[z] )
     end
     
-    if shapeArrayParameters[z][1] == "endPoint" then
+    if shapeParameters["type"] == "endPoint" then
         shapeArray[z].enabled = true
         shapeArray[z].medalPiece = display.newImageRect("images/objects/" .. currentMedal .. "Medal-medalPiece.png", 60, 52)
         shapeArray[z].medalPiece.x = shapeArray[z].x
@@ -1131,52 +1139,52 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
         mainFunc.allLevelSettings.midScreenObjectsGroup:insert( shapeArray[z].medalPiece )
     end
 
-    if shapeArrayParameters[z][1] == "gun" then
+    if shapeParameters["type"] == "gun" then
         local gunbase = display.newSprite(mainFunc.allLevelSettings.allFansImageSheet, mainFunc.allLevelSettings.allFansSequenceData)
         gunbase:setSequence("gunBase")
         --gunbase:setReferencePoint(display.TopLeftReferencePoint)
         gunbase.anchorX = 0
         gunbase.anchorY = 0
         mainFunc.allLevelSettings.screenObjectsGroup:insert(gunbase)
-        gunbase.x = ((shapeArrayParameters[z][3] - 1) * display.contentWidth) + (((shapeArrayParameters[z][5] - 1) * mainFunc.allLevelSettings.squareWidth) + mainFunc.allLevelSettings.gutterWidth)
-        gunbase.y = ((shapeArrayParameters[z][4] - 1) * display.contentHeight) + (((shapeArrayParameters[z][6] - 1) * mainFunc.allLevelSettings.squareHeight) + mainFunc.allLevelSettings.gutterHeight)
+        gunbase.x = ((shapeParameters["location"]["xScreen"] - 1) * display.contentWidth) + (((shapeParameters["location"]["xSquare"] - 1) * mainFunc.allLevelSettings.squareWidth) + mainFunc.allLevelSettings.gutterWidth)
+        gunbase.y = ((shapeParameters["location"]["yScreen"] - 1) * display.contentHeight) + (((shapeParameters["location"]["ySquare"] - 1) * mainFunc.allLevelSettings.squareHeight) + mainFunc.allLevelSettings.gutterHeight)
     end
 
-    if shapeArrayParameters[z][1] == "door" then
+    if shapeParameters["type"] == "door" then
         shapeArray[z]:toBack()     
     end
 
-    if (shapeArrayParameters[z][2] == "map")
+    if (shapeParameters["name"] == "map")
     and mainFunc.thisLevelSettings.mapObtained == true then
         object.x = -10000
         object.alpha = 0
-    elseif (shapeArrayParameters[z][2] == "compass")
+    elseif (shapeParameters["name"] == "compass")
     and mainFunc.thisLevelSettings.compassObtained == true then
         object.x = -10000
         object.alpha = 0
     end
 
-    if shapeArrayParameters[z][1] == "shape"
-    or shapeArrayParameters[z][1] == "autoFan"
-    or shapeArrayParameters[z][1] == "manualFan"
-    or shapeArrayParameters[z][1] == "spitter"
-    or shapeArrayParameters[z][1] == "simple"
-    or shapeArrayParameters[z][1] == "backFire" then
+    if shapeParameters["type"] == "shape"
+    or shapeParameters["type"] == "autoFan"
+    or shapeParameters["type"] == "manualFan"
+    or shapeParameters["type"] == "spitter"
+    or shapeParameters["type"] == "simple"
+    or shapeParameters["type"] == "backFire" then
         for a = 1, #myGameSettings[currentWorld]["levels"][currentLevel][currentMedal .. "-achievements"]["mystery_shapes_to_add"] do
             local thisShape = myGameSettings[currentWorld]["levels"][currentLevel][currentMedal .. "-achievements"]["mystery_shapes_to_add"][a]
-            if thisShape["location"][1] == shapeArrayParameters[z][3]
-            and thisShape["location"][2] == shapeArrayParameters[z][4]
-            and thisShape["location"][3] == shapeArrayParameters[z][5]
-            and thisShape["location"][4] == shapeArrayParameters[z][6] then
+            if thisShape["location"]["xScreen"] == shapeParameters["location"]["xScreen"]
+            and thisShape["location"]["yScreen"] == shapeParameters["location"]["yScreen"]
+            and thisShape["location"]["xSquare"] == shapeParameters["location"]["xSquare"]
+            and thisShape["location"]["ySquare"] == shapeParameters["location"]["ySquare"] then
                 shapeArray[z]:addEventListener("touch", mainFunc.mysteryBlockRemove)
             end
         end
     end
 
-    if shapeArrayParameters[z][1] == "characterChangePoint" then
+    if shapeParameters["type"] == "characterChangePoint" then
         shapeArray[z].specificCharacter = nil
-        if shapeArrayParameters[z][7] then
-            shapeArray[z].specificCharacter = shapeArrayParameters[z][7]
+        if shapeParameters["subType"] then
+            shapeArray[z].specificCharacter = shapeParameters["subType"]
             shapeArray[z].specificCharacterCircle = display.newImageRect("images/objects/Layout/ballChangerCircle.png", 60, 52)
             shapeArray[z].specificCharacterCircle.x = shapeArray[z].x
             shapeArray[z].specificCharacterCircle.y = shapeArray[z].y
@@ -1201,14 +1209,14 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
         local xValAdd = mainFunc.allLevelSettings.squareWidth * 0.8
         local yValAdd = mainFunc.allLevelSettings.squareHeight/1.5
         local rotate = -25
-        if shapeArrayParameters[z][5] > 4 then
+        if shapeParameters["location"]["xSquare"] > 4 then
             xValAdd = xValAdd * -1
             xScaleAdjust = 1
         else
             xScaleAdjust = -1
         end
 
-        if shapeArrayParameters[z][6] > 1 then
+        if shapeParameters["location"]["ySquare"] > 1 then
             yValAdd = yValAdd * -1
         end
 

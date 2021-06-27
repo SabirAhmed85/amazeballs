@@ -6,7 +6,12 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
         return {
             type = type,
             name = name,
-            location = location,
+            location = {
+                xScreen = location[1],
+                yScreen = location[2],
+                xSquare = location[3],
+                ySquare = location[4]
+            },
             subType = subType,
             props = props
         };

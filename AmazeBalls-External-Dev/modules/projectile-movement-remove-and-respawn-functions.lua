@@ -136,9 +136,9 @@ local startBallAgain = function (mainFunc, automaticallyRestartLevel, timeIsUp, 
         
     -- end
     for a = 1, #shapeArray do
-    	if shapeArrayParameters[a][1] == "spitter"
-        or shapeArrayParameters[a][1] == "simple"
-        or shapeArrayParameters[a][1] == "backFire" then
+    	if shapeArrayParameters[a]["type"] == "spitter"
+        or shapeArrayParameters[a]["type"] == "simple"
+        or shapeArrayParameters[a]["type"] == "backFire" then
     		shapeArray[a].isBallPresent = false
     		--shapeArray[a]:setSequence("normal")
     		shapeArray[a].canShapeSlide = true
@@ -342,7 +342,7 @@ end
 
 local function bulletFire (mainFunc, shapeArray, shapeArrayParameters)
     for a = 1, #shapeArray do
-        if shapeArrayParameters[a][1] == "gun" then
+        if shapeArrayParameters[a]["type"] == "gun" then
             
             function createBullet ()
 
@@ -352,14 +352,14 @@ local function bulletFire (mainFunc, shapeArray, shapeArrayParameters)
                     mainFunc.allLevelSettings.bullet[bulletIndex].readyToCollide = false
                     mainFunc.allLevelSettings.bullet[bulletIndex].x = shapeArray[a].x
                     mainFunc.allLevelSettings.bullet[bulletIndex].y = shapeArray[a].y
-                    mainFunc.allLevelSettings.bullet[bulletIndex].direction = shapeArrayParameters[a][7]
+                    mainFunc.allLevelSettings.bullet[bulletIndex].direction = shapeArrayParameters[a]["subType"]
                     local bulletRotateArray = {
                         up = 0,
                         right = 90,
                         down = 180,
                         left = 270
                     }
-                    mainFunc.allLevelSettings.bullet[bulletIndex].rotation = bulletRotateArray[shapeArrayParameters[a][7]]
+                    mainFunc.allLevelSettings.bullet[bulletIndex].rotation = bulletRotateArray[shapeArrayParameters[a]["subType"]]
 
                     mainFunc.allLevelSettings.bullet[bulletIndex].removed = false
                     mainFunc.allLevelSettings.bullet[bulletIndex].transitioning = false

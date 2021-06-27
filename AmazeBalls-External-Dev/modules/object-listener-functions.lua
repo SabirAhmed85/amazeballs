@@ -1009,10 +1009,10 @@ local mysteryBlockRemoveComplete = function (event, mainFunc, shapeArrayParamete
                         for a = 1, #myGameSettings[currentWorld]["levels"][currentLevel][currentMedal .. "-achievements"]["mystery_shapes_to_add"] do
                             local locationObject = myGameSettings[currentWorld]["levels"][currentLevel][currentMedal .. "-achievements"]["mystery_shapes_to_add"][a]["location"]
 
-                            if locationObject[1] == shapeArrayParameters[mainFunc.mysteryBagScreen.mysteryBlockToRemove.shapeArrayIndex][3]
-                            and locationObject[2] == shapeArrayParameters[mainFunc.mysteryBagScreen.mysteryBlockToRemove.shapeArrayIndex][4]
-                            and locationObject[3] == shapeArrayParameters[mainFunc.mysteryBagScreen.mysteryBlockToRemove.shapeArrayIndex][5]
-                            and locationObject[4] == shapeArrayParameters[mainFunc.mysteryBagScreen.mysteryBlockToRemove.shapeArrayIndex][6] then
+                            if locationObject[1] == shapeArrayParameters[mainFunc.mysteryBagScreen.mysteryBlockToRemove.shapeArrayIndex]["location"]["xScreen"]
+                            and locationObject[2] == shapeArrayParameters[mainFunc.mysteryBagScreen.mysteryBlockToRemove.shapeArrayIndex]["location"]["yScreen"]
+                            and locationObject[3] == shapeArrayParameters[mainFunc.mysteryBagScreen.mysteryBlockToRemove.shapeArrayIndex]["location"]["xSquare"]
+                            and locationObject[4] == shapeArrayParameters[mainFunc.mysteryBagScreen.mysteryBlockToRemove.shapeArrayIndex]["location"]["ySquare"] then
                                 indexOfItemToRemoveFromArray = a
                             end
                         end
@@ -1021,11 +1021,11 @@ local mysteryBlockRemoveComplete = function (event, mainFunc, shapeArrayParamete
                         saveTable(myGameSettings, "myGameSettings.json")
 
                         for a = 1, #shapeArrayParameters do
-                            if shapeArrayParameters[a][1] == "item" and shapeArrayParameters[a][2] == "mystery-block"
-                            and shapeArrayParameters[a][3] == shapeArrayParameters[mainFunc.mysteryBagScreen.mysteryBlockToRemove.shapeArrayIndex][3]
-                            and shapeArrayParameters[a][4] == shapeArrayParameters[mainFunc.mysteryBagScreen.mysteryBlockToRemove.shapeArrayIndex][4]
-                            and shapeArrayParameters[a][5] == shapeArrayParameters[mainFunc.mysteryBagScreen.mysteryBlockToRemove.shapeArrayIndex][5]
-                            and shapeArrayParameters[a][6] == shapeArrayParameters[mainFunc.mysteryBagScreen.mysteryBlockToRemove.shapeArrayIndex][6] then
+                            if shapeArrayParameters[a]["type"] == "item" and shapeArrayParameters[a]["name"] == "mystery-block"
+                            and shapeArrayParameters[a]["location"]["xScreen"] == shapeArrayParameters[mainFunc.mysteryBagScreen.mysteryBlockToRemove.shapeArrayIndex]["location"]["xScreen"]
+                            and shapeArrayParameters[a]["location"]["yScreen"] == shapeArrayParameters[mainFunc.mysteryBagScreen.mysteryBlockToRemove.shapeArrayIndex]["location"]["yScreen"]
+                            and shapeArrayParameters[a]["location"]["xSquare"] == shapeArrayParameters[mainFunc.mysteryBagScreen.mysteryBlockToRemove.shapeArrayIndex]["location"]["xSquare"]
+                            and shapeArrayParameters[a]["location"]["ySquare"] == shapeArrayParameters[mainFunc.mysteryBagScreen.mysteryBlockToRemove.shapeArrayIndex]["location"]["ySquare"] then
                                 transition.to(shapeArray[a], {alpha = 1, time = 250, onComplete = function ()
                                     shapeArray[a]:addEventListener("tap", mainFunc.mysteryBlockTouch)
                                 end})

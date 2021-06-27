@@ -117,7 +117,7 @@ local squarePopulator = function (thisBomb, dir, dirFactor, relevantSquareStartN
             shapeArray[z].triangleDummy.y = shapeArray[z].y
             shapeArray[z].triangleDummy.xScale = 7/6
             shapeArray[z].triangleDummy.yScale = 7/6
-            shapeArray[z].triangleDummy:setSequence(shapeArrayParameters[z][7])
+            shapeArray[z].triangleDummy:setSequence(shapeArrayParameters[z]["subType"])
             shapeArray[z].triangleDummy:play()
             shapeArray[z].triangleDummy.fadeTransition = transition.to(shapeArray[z].triangleDummy, {alpha = 0, time = 2000, onComplete = function ()
                 shapeArray[z].triangleDummy.fadeTransition = nil

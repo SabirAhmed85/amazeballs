@@ -75,18 +75,18 @@ local removeShapeListenersForPause = function (mainFunc, shapeArray, shapeArrayP
     --[[
     if mainFunc.allLevelSettings.shouldBallMoveCounter == 0 then
         for c=1, #shapeArray do
-            if shapeArrayParameters[c][1] == "manualFan" 
-            or shapeArrayParameters[c][1] == "spitter" 
-            or shapeArrayParameters[c][1] == "simple"
-            or shapeArrayParameters[c][1] == "characterChangePoint" then
+            if shapeArrayParameters[c]["type"] == "manualFan" 
+            or shapeArrayParameters[c]["type"] == "spitter" 
+            or shapeArrayParameters[c]["type"] == "simple"
+            or shapeArrayParameters[c]["type"] == "characterChangePoint" then
                 shapeArray[c]:removeEventListener( "touch", mainFunc.listener )
                 mainFunc.deactivateObjectsForPlay(mainFunc, shapeArray, c)
-                if shapeArrayParameters[c][1] == "characterChangePoint" then
+                if shapeArrayParameters[c]["type"] == "characterChangePoint" then
                     shapeArray[c]:removeEventListener("touch", mainFunc.listener)
                 end
             end  
             for d=1, #mainFunc.allLevelSettings.transitionArrayIndex do
-                if mainFunc.allLevelSettings.transitionArrayIndex[d][1][1] == shapeArrayParameters[c][2] then
+                if mainFunc.allLevelSettings.transitionArrayIndex[d][1][1] == shapeArrayParameters[c]["name"] then
                     shapeArray[c]:removeEventListener("touch", mainFunc.listener)
                 end
             end
@@ -133,7 +133,7 @@ local removeEventListenersForPause = function (mainFunc, shapeArray, shapeArrayP
         end
         if (mainFunc.allLevelSettings.bulletHasFired == true) then
             for a = 1, #shapeArrayParameters do
-                if shapeArrayParameters[a][1] == "gun" then
+                if shapeArrayParameters[a]["type"] == "gun" then
                     timer.pause(shapeArray[a].createBulletTimer)
                 end
             end
@@ -242,23 +242,23 @@ local addBackShapeListenersForPause = function (mainFunc, shapeArray, shapeArray
 --[[
     if (mainFunc.allLevelSettings.shouldBallMoveCounter == 0) then
         for c=1, #shapeArray do
-            if shapeArrayParameters[c][1] == "manualFan" 
-            or shapeArrayParameters[c][1] == "spitter" 
-            or shapeArrayParameters[c][1] == "simple"
-            or shapeArrayParameters[c][1] == "characterChangePoint" then
+            if shapeArrayParameters[c]["type"] == "manualFan" 
+            or shapeArrayParameters[c]["type"] == "spitter" 
+            or shapeArrayParameters[c]["type"] == "simple"
+            or shapeArrayParameters[c]["type"] == "characterChangePoint" then
                 mainFunc.activateObjectsForPlay(mainFunc, shapeArray, c)
-                if shapeArrayParameters[c][1] == "characterChangePoint" then
+                if shapeArrayParameters[c]["type"] == "characterChangePoint" then
                     shapeArray[c]:addEventListener("touch", mainFunc.listener)
                 end
             end
             
             for d=1, #mainFunc.allLevelSettings.transitionArrayIndex do
-                if mainFunc.allLevelSettings.transitionArrayIndex[d][1][1] == shapeArrayParameters[c][2] then
+                if mainFunc.allLevelSettings.transitionArrayIndex[d][1][1] == shapeArrayParameters[c]["name"] then
                     shapeArray[c]:addEventListener("touch", mainFunc.listener)
                 end
             end
             if mainFunc.thisLevelSettings.fullMapObtained == true then
-                if (shapeArrayParameters[c][2] == "mystery-block") then
+                if (shapeArrayParameters[c]["name"] == "mystery-block") then
                     shapeArray[c]:addEventListener("tap", mainFunc.mysteryBlockTouch)
                 end
             end
@@ -313,7 +313,7 @@ local addBackEventListenersForPause = function (mainFunc, shapeArray, shapeArray
         if (mainFunc.allLevelSettings.bulletHasFired == true) then
             -- STILL HAVE TO ADD CLAUSE TO CHECK WHETHER IT WAS IN THIS BALL SCREEN
             for a = 1, #shapeArrayParameters do
-                if shapeArrayParameters[a][1] == "gun" then
+                if shapeArrayParameters[a]["type"] == "gun" then
                     timer.resume(shapeArray[a].createBulletTimer)
                 end
             end
@@ -1264,7 +1264,7 @@ local itemBtnFunction = function (mainFunc, shapeArray, shapeArrayParameters, le
             mainFunc.ballAndButtonAndScreenCreateScript.instance2.relevantVertSquare = yFig + 1
 
             for a = 1, #shapeArray do
-                if shapeArrayParameters[a][1] == "shape" then
+                if shapeArrayParameters[a]["type"] == "shape" then
                     if shapeArray[a].relevantHorzScreen == mainFunc.ballAndButtonAndScreenCreateScript.instance2.relevantHorzScreen
                     and shapeArray[a].relevantVertScreen == mainFunc.ballAndButtonAndScreenCreateScript.instance2.relevantVertScreen
                     and shapeArray[a].relevantHorzSquare == mainFunc.ballAndButtonAndScreenCreateScript.instance2.relevantHorzSquare
@@ -1462,8 +1462,8 @@ local itemBtnFunction = function (mainFunc, shapeArray, shapeArrayParameters, le
                     item.relevantHorzSquare = xFig + 1
                     item.relevantVertSquare = yFig + 1
                     for a = 1, #shapeArray do
-                        if shapeArrayParameters[a][1] ~= "item"
-                        and shapeArrayParameters[a][1] ~= "gem"
+                        if shapeArrayParameters[a]["type"] ~= "item"
+                        and shapeArrayParameters[a]["type"] ~= "gem"
                         and shapeArray[a].relevantHorzScreen == item.relevantHorzScreen
                         and shapeArray[a].relevantVertScreen == item.relevantVertScreen
                         and shapeArray[a].relevantHorzSquare == item.relevantHorzSquare

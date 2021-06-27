@@ -873,8 +873,8 @@ function scene:show( event )
 	        end
 	    end
 	    for a = 1, #shapeArray do
-	        if shapeArrayParameters[a][1] == "laser" then
-	            if shapeArrayParameters[a][7] == "down" then
+	        if shapeArrayParameters[a]["type"] == "laser" then
+	            if shapeArrayParameters[a]["subType"] == "down" then
 	                if shapeArray[a].laserCounter == 0 then
 	                    thisLaserX = shapeArray[a].x
 	                    thisLaserY = shapeArray[a].y
@@ -983,7 +983,7 @@ function scene:show( event )
         for index = 1, #shapeArrayParameters do
             createLevelObject(shapeArrayParameters, shapeArray, index, mainFunc)
 
-            local shapeName = shapeArrayParameters[index][1]
+            local shapeName = shapeArrayParameters[index]["name"]
             if myGameSettings["tutorialDone"][shapeName] == false then
                 local alreadyAddedToTutArray = false
                 for a = 1, #tutorialItemsToDoProcessed do
@@ -1298,11 +1298,11 @@ function scene:show( event )
 	    -- Runtime:addEventListener("enterFrame", createAndControlLaser)
 	    
 	    for c=1, #shapeArray do
-	        if shapeArrayParameters[c][1] == "shape"
-            or shapeArrayParameters[c][1] == "gun" then
+	        if shapeArrayParameters[c]["type"] == "shape"
+            or shapeArrayParameters[c]["type"] == "gun" then
 	            shapeArray[c].collision = mainFunc.on_Triangle_Collision
 	            shapeArray[c]:toFront()
-                if shapeArrayParameters[c][1] == "shape" then
+                if shapeArrayParameters[c]["type"] == "shape" then
     	            if shapeArray[c].flipTriangle then
     	                shapeArray[c].flipTriangle:toFront()
     	            end
@@ -1472,24 +1472,24 @@ function scene:hide( event )
 		    
 		    for c=1, #shapeArray do
                 shapeArray[c].mainFuncListenerAdded = false
-		        if shapeArrayParameters[c][1] == "shape"
-                or shapeArrayParameters[c][1] == "gun" then
+		        if shapeArrayParameters[c]["type"] == "shape"
+                or shapeArrayParameters[c]["type"] == "gun" then
 		            shapeArray[c]:removeEventListener("collision", mainFunc.on_Triangle_Collision)
-		        elseif shapeArrayParameters[c][1] == "manualFan"
-		        or shapeArrayParameters[c][1] == "spitter"
-		        or shapeArrayParameters[c][1] == "simple"
-                or shapeArrayParameters[c][1] == "backFire" then
+		        elseif shapeArrayParameters[c]["type"] == "manualFan"
+		        or shapeArrayParameters[c]["type"] == "spitter"
+		        or shapeArrayParameters[c]["type"] == "simple"
+                or shapeArrayParameters[c]["type"] == "backFire" then
 		            shapeArray[c]:removeEventListener( "tap", mainFunc.listener )
                     shapeArray[c].mainFuncListenerAdded = false
 		        end
 
-                if shapeArrayParameters[c][1] == "gun"
+                if shapeArrayParameters[c]["type"] == "gun"
                 and (mainFunc.allLevelSettings.bulletHasFired == true) then
                     timer.cancel(shapeArray[c].createBulletTimer)
                 end
 		        
 		        for d=1, #mainFunc.allLevelSettings.transitionArrayIndex do
-		            if mainFunc.allLevelSettings.transitionArrayIndex[d][1][1] == shapeArrayParameters[c][2]
+		            if mainFunc.allLevelSettings.transitionArrayIndex[d][1][1] == shapeArrayParameters[c]["name"]
                     and shapeArray[c].mainFuncListenerAdded == true then
 		                shapeArray[c]:removeEventListener("tap", mainFunc.listener)
 		            end
@@ -1516,7 +1516,7 @@ function scene:hide( event )
 		    --print('firsttotal: ', firstTotalCounter, firstTotalNilledCounter)
 		    
 		    for z=1, #shapeArray do
-		    	if (shapeArrayParameters[z][1] == "spitter") then
+		    	if (shapeArrayParameters[z]["type"] == "spitter") then
                     if shapeArray[z].upArrow then
     		    		shapeArray[z].upArrow:removeSelf()
     					shapeArray[z].upArrow = nil
@@ -1533,11 +1533,11 @@ function scene:hide( event )
     					shapeArray[z].leftArrow:removeSelf()
     					shapeArray[z].leftArrow = nil
                     end
-		        elseif (shapeArrayParameters[z][1] == "manualFan"
-		        or shapeArrayParameters[z][1] == "autoFan") then
+		        elseif (shapeArrayParameters[z]["type"] == "manualFan"
+		        or shapeArrayParameters[z]["type"] == "autoFan") then
 		        	shapeArray[z].directionIndicatorArrow:removeSelf()
 		        	shapeArray[z].directionIndicatorArrow = nil
-                elseif shapeArrayParameters[z][1] == "endPoint" then
+                elseif shapeArrayParameters[z]["type"] == "endPoint" then
                     shapeArray[z].medalPiece:removeSelf()
                     shapeArray[z].medalPiece = nil
 		        end

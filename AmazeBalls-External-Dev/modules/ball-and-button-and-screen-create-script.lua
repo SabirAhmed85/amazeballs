@@ -911,7 +911,7 @@ local otherScreensAndButtonCreate = function (mainFunc, levelVariables, shapeArr
     gemIcon.alpha = 0
     gemIcon.yValue = 0
     for a = 1, #shapeArrayParameters do
-        if (shapeArrayParameters[a][1] == "gem" and shapeArrayParameters[a][7] == "purple") then
+        if (shapeArrayParameters[a]["type"] == "gem" and shapeArrayParameters[a]["subType"] == "purple") then
             totalGems = totalGems + 1
         end
     end

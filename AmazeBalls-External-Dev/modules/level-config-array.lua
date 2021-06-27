@@ -228,7 +228,7 @@ local levelConfigArray = {
 					onLevelStart = function (mainFunc, shapeArray)
 						for c = 1, #shapeArray do
 							for d=1, #mainFunc.allLevelSettings.transitionArrayIndex do
-					            if mainFunc.allLevelSettings.transitionArrayIndex[d][1][1] == shapeArrayParameters[c][2] then
+					            if mainFunc.allLevelSettings.transitionArrayIndex[d][1][1] == shapeArrayParameters[c]["name"] then
 					                shapeArray[c]:removeEventListener("touch", mainFunc.listener)
 					        		shapeArray[c].mainFuncListenerAdded = false
 					            end
@@ -380,7 +380,7 @@ local levelConfigArray = {
 
 											    	for c = 1, #shapeArray do
 											        	for d=1, #mainFunc.allLevelSettings.transitionArrayIndex do
-												            if mainFunc.allLevelSettings.transitionArrayIndex[d][1][1] == shapeArrayParameters[c][2]
+												            if mainFunc.allLevelSettings.transitionArrayIndex[d][1][1] == shapeArrayParameters[c]["name"]
 												            and shapeArray[c].mainFuncListenerAdded == false then
 												                shapeArray[c]:addEventListener("touch", mainFunc.listener)
 												                shapeArray[c].mainFuncListenerAdded = true

@@ -269,13 +269,13 @@ local transitionArrayStateCheckNew = function (thisTransitionObject, mainFunc, s
     mainFunc.allLevelSettings.transitionMoveCounter = 0
     mainFunc.allLevelSettings.secondTransitionMoveCounter = 0
     for z = 1, #shapeArray do
-		if shapeArrayParameters[z][2] == thisTransitionObject.name
-		and shapeArrayParameters[z][1] == "shape" then
+		if shapeArrayParameters[z]["name"] == thisTransitionObject.name
+		and shapeArrayParameters[z]["type"] == "shape" then
 		    local function addPhysicsBodyToShape ()
 		    	shapeFormingArray = mainFunc.shapeRelatedArrays.shapeFormingArray
 		    	instance2 = mainFunc.ballAndButtonAndScreenCreateScript.instance2
 				for a = 1, #shapeFormingArray do
-				    if shapeFormingArray[a][1] == shapeArrayParameters[z][7] then
+				    if shapeFormingArray[a][1] == shapeArrayParameters[z]["subType"] then
 						if instance2.x > (thisTransitionObject.x - 41)
 						and instance2.x < (thisTransitionObject.x + 38) 
 						and instance2.y > (thisTransitionObject.y - 38) 
@@ -306,8 +306,8 @@ local transitionArrayStateCheckNew = function (thisTransitionObject, mainFunc, s
 				    mainFunc.allLevelSettings.connectorArray[a].alpha = 0
 				end
 		    end
-		elseif shapeArrayParameters[z][2] == thisTransitionObject.name
-		and shapeArrayParameters[z][1] ~= "shape" then
+		elseif shapeArrayParameters[z]["name"] == thisTransitionObject.name
+		and shapeArrayParameters[z]["type"] ~= "shape" then
 		    thisTransitionObject.alpha = 1
 		    thisTransitionObject.isTransitioning = false
 		    thisTransitionObject.isEnabled = true
@@ -644,14 +644,14 @@ local prepareTransitioningObjects = function (mainFunc)
 	    if mainFunc.allLevelSettings.transitionArrayIndex[y][2][1] == "flip-horizontal" then
 	        for z = 1, #shapeArray do
 	            if shapeArray[z].name == mainFunc.allLevelSettings.transitionArrayIndex[y][1][1] then
-	                if shapeArrayParameters[z][8] == 2 then
+	                if shapeArrayParameters[z]["props"][1] == 2 then
 	                    shapeArray[z].transitionArrayState = 2
 	                    shapeArray[z].originalState = 2
-	                    shapeArrayParameters[z][8] = 1
+	                    shapeArrayParameters[z]["props"][1] = 1
 	                else
 	                    shapeArray[z].transitionArrayState = 1
 	                    shapeArray[z].originalState = 1
-	                    shapeArrayParameters[z][8] = 2
+	                    shapeArrayParameters[z]["props"][1] = 2
 	                end
 	                shapeArray[z].flipped = false
 	                shapeArray[z].flipDisabled = false
@@ -664,7 +664,7 @@ local prepareTransitioningObjects = function (mainFunc)
 	    elseif mainFunc.allLevelSettings.transitionArrayIndex[y][2][1] == "flip-vertical" then
 	        for z = 1, #shapeArray do
 	            if shapeArray[z].name == mainFunc.allLevelSettings.transitionArrayIndex[y][1][1] then
-	                if shapeArrayParameters[z][8] == 2 then
+	                if shapeArrayParameters[z]["props"][1] == 2 then
 	                    shapeArray[z].transitionArrayState = 2
 	                    shapeArray[z].originalState = 2
 	                else
@@ -683,8 +683,8 @@ local prepareTransitioningObjects = function (mainFunc)
 	        local connector, shapeType
 	        for z = 1, #shapeArray do
 	            if shapeArray[z].name == mainFunc.allLevelSettings.transitionArrayIndex[y][1][1] then
-	                shapeType = shapeArrayParameters[z][1]
-	        		if shapeType == "shape" and (shapeArrayParameters[z][7] == "bar" or shapeArrayParameters[z][7] == "doubleBar") then
+	                shapeType = shapeArrayParameters[z]["type"]
+	        		if shapeType == "shape" and (shapeArrayParameters[z]["subType"] == "bar" or shapeArrayParameters[z]["subType"] == "doubleBar") then
 	        			shapeType = "bar"
 	        		end
 	            end
@@ -721,13 +721,13 @@ local prepareTransitioningObjects = function (mainFunc)
 
 			                for z = 1, #shapeArray do
 					            if shapeArray[z].name == mainFunc.allLevelSettings.transitionArrayIndex[y][1][1]
-					            and (shapeArrayParameters[z][7] == "bar" or shapeArrayParameters[z][7] == "doubleBar") then
+					            and (shapeArrayParameters[z]["subType"] == "bar" or shapeArrayParameters[z]["subType"] == "doubleBar") then
 					            	if shapeArray[z].state == "horz" then
 					                	connector.x = connector.x - (mainFunc.allLevelSettings.squareWidth / 2)
 					                else
 					                	connector.y = connector.y - (mainFunc.allLevelSettings.squareHeight / 2)
 					                end
-					                if shapeArrayParameters[z][7] == "doubleBar" then
+					                if shapeArrayParameters[z]["subType"] == "doubleBar" then
 				                		if shapeArray[z].state == "vert" then
 						                	connector.x = connector.x - (mainFunc.allLevelSettings.squareWidth / 2)
 						                else
@@ -735,10 +735,10 @@ local prepareTransitioningObjects = function (mainFunc)
 						                end
 					                end
 					            elseif shapeArray[z].name == mainFunc.allLevelSettings.transitionArrayIndex[y][1][1]
-					            and shapeArrayParameters[z][7] == "triangleTopAndBottomShape" then
+					            and shapeArrayParameters[z]["subType"] == "triangleTopAndBottomShape" then
 					            	connector.x = connector.x + (mainFunc.allLevelSettings.squareWidth / 2)
 					            elseif shapeArray[z].name == mainFunc.allLevelSettings.transitionArrayIndex[y][1][1]
-					            and shapeArrayParameters[z][7] == "triangleLeftAndRightShape" then
+					            and shapeArrayParameters[z]["subType"] == "triangleLeftAndRightShape" then
 					            	connector.y = connector.y + (mainFunc.allLevelSettings.squareHeight / 2)
 					            end
 					        end
@@ -777,9 +777,9 @@ local prepareTransitioningObjects = function (mainFunc)
 
 		                        for z = 1, #shapeArray do
 						            if shapeArray[z].name == mainFunc.allLevelSettings.transitionArrayIndex[y][1][1] then
-						            	if shapeArrayParameters[z][7] == "triangleTopLeftShape" or shapeArrayParameters[z][7] == "triangleBottomLeftShape" then
+						            	if shapeArrayParameters[z]["subType"] == "triangleTopLeftShape" or shapeArrayParameters[z]["subType"] == "triangleBottomLeftShape" then
 						                	connectorTubeHorizontal.x = connectorTubeHorizontal.x + 4
-						                elseif shapeArrayParameters[z][7] == "triangleBottomRightShape" or shapeArrayParameters[z][7] == "triangleTopRightShape" then
+						                elseif shapeArrayParameters[z]["subType"] == "triangleBottomRightShape" or shapeArrayParameters[z]["subType"] == "triangleTopRightShape" then
 						                	connectorTubeHorizontal.x = connectorTubeHorizontal.x - 4
 						                end
 						            end
@@ -988,11 +988,11 @@ local prepareTransitioningObjects = function (mainFunc)
 
 			                    for z = 1, #shapeArray do
 						            if shapeArray[z].name == mainFunc.allLevelSettings.transitionArrayIndex[y][1][1] then
-						            	if shapeArrayParameters[z][7] == "triangleTopLeftShape" or shapeArrayParameters[z][7] == "triangleTopRightShape" then
+						            	if shapeArrayParameters[z]["subType"] == "triangleTopLeftShape" or shapeArrayParameters[z]["subType"] == "triangleTopRightShape" then
 						            		if (originalConnectorYDistance > 0) then
 						                		connectorTubeVertical.y = connectorTubeVertical.y
 						                	end
-						                elseif shapeArrayParameters[z][7] == "triangleBottomLeftShape" or shapeArrayParameters[z][7] == "triangleBottomRightShape" then
+						                elseif shapeArrayParameters[z]["subType"] == "triangleBottomLeftShape" or shapeArrayParameters[z]["subType"] == "triangleBottomRightShape" then
 						                	connectorTubeVertical.y = connectorTubeVertical.y
 						                end
 						            end
@@ -1019,10 +1019,10 @@ local prepareTransitioningObjects = function (mainFunc)
 		                    and mainFunc.allLevelSettings.connectorArray[a].x < (shapeArray[b].x + (mainFunc.allLevelSettings.squareWidth/2))
 		                    and mainFunc.allLevelSettings.connectorArray[a].y > (shapeArray[b].y - (mainFunc.allLevelSettings.squareHeight/2) )
 		                    and mainFunc.allLevelSettings.connectorArray[a].y < (shapeArray[b].y + (mainFunc.allLevelSettings.squareHeight/2) ) then
-		                    	if shapeArrayParameters[b][1] == "shape" then
+		                    	if shapeArrayParameters[b]["type"] == "shape" then
 		                        	mainFunc.allLevelSettings.connectorArray[a].alpha = 0
-		                        elseif shapeArrayParameters[b][1] == "item"
-		                    	or shapeArrayParameters[b][1] == "gem" then
+		                        elseif shapeArrayParameters[b]["type"] == "item"
+		                    	or shapeArrayParameters[b]["type"] == "gem" then
 		                    		shapeArray[b]:toFront()
 		                    	end
 		                    end

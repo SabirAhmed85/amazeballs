@@ -387,19 +387,19 @@ table.insert(transitionArrayIndex,{{"spitter1"},{"slide"},{"blue"},{2},{1},{2,1,
 
 for z = 1, #shapeArray do
 	
-    if shapeArrayParameters[z][1] == "shape" then
+    if shapeArrayParameters[z]["type"] == "shape" then
 	for a = 1, #shapeFormingArray do
-	    if shapeFormingArray[a][1]	== shapeArrayParameters[z][7] then
+	    if shapeFormingArray[a][1]	== shapeArrayParameters[z]["subType"] then
 		relevantShape = shapeFormingArray[a][2]
-		if shapeArrayParameters[z][7] == "triangleTopAndBottomShape"
-		and shapeArrayParameters[z][8] == 2 then
+		if shapeArrayParameters[z]["subType"] == "triangleTopAndBottomShape"
+		and shapeArrayParameters[z]["props"][1] == 2 then
 		    relevantShape = shapeFormingArray[a][4]
-		elseif shapeArrayParameters[z][7] == "triangleLeftAndRightShape"
-		and shapeArrayParameters[z][8] == 2 then
+		elseif shapeArrayParameters[z]["subType"] == "triangleLeftAndRightShape"
+		and shapeArrayParameters[z]["props"][1] == 2 then
 		    relevantShape = shapeFormingArray[a][3]
 		end
-		if (shapeArrayParameters[z][9]) then
-		    shapeArrayParam = (shapeArrayParameters[z][9]) + 6
+		if (shapeArrayParameters[z]["props"][2]) then
+		    shapeArrayParam = (shapeArrayParameters[z]["props"][2]) + 6
 		    shapeArray[z].directionsArray = directionArrayIndex[shapeArrayParam]
 		    shapeArray[z].directionsArrayAtIndex = shapeArrayParam
 		else
@@ -409,63 +409,63 @@ for z = 1, #shapeArray do
 	    end
 	end
 	physics.addBody( shapeArray[z], "static", { density=10, friction=1, bounce=0, shape=relevantShape } )
-	shapeArray[z].shape = shapeArrayParameters[z][7]
-	shapeArray[z].state = shapeArrayParameters[z][8]
-	shapeArray[z].transitionArrayState = shapeArrayParameters[z][8]
+	shapeArray[z].shape = shapeArrayParameters[z]["subType"]
+	shapeArray[z].state = shapeArrayParameters[z]["props"][1]
+	shapeArray[z].transitionArrayState = shapeArrayParameters[z]["props"][1]
 	frontScreenObjectsGroup:insert( shapeArray[z] )
-    elseif shapeArrayParameters[z][1] == "autoFan"
-    or shapeArrayParameters[z][1] == "manualFan"
-    or shapeArrayParameters[z][1] == "spitter"
-    or shapeArrayParameters[z][1] == "door"
-    or shapeArrayParameters[z][1] == "tunnel" 
-    or shapeArrayParameters[z][1] == "switch" then
+    elseif shapeArrayParameters[z]["type"] == "autoFan"
+    or shapeArrayParameters[z]["type"] == "manualFan"
+    or shapeArrayParameters[z]["type"] == "spitter"
+    or shapeArrayParameters[z]["type"] == "door"
+    or shapeArrayParameters[z]["type"] == "tunnel" 
+    or shapeArrayParameters[z]["type"] == "switch" then
 	--shapeArray[z]:setReferencePoint(display.TopLeftReferencePoint);
 	screenObjectsGroup:insert( shapeArray[z] )
     end
     
-    if shapeArrayParameters[z][1] == "switch" then
+    if shapeArrayParameters[z]["type"] == "switch" then
 	shapeArray[z].switchCounter = 0
 	shapeArray[z].switchOnOffCounter = 0
-	if shapeArrayParameters[z][7] == "rotate-object" then
+	if shapeArrayParameters[z]["subType"] == "rotate-object" then
 	    shapeArray[z].rotateSwitch = "first"
 	end
     end
     
-    if shapeArrayParameters[z][1] == "autoFan"
-    or shapeArrayParameters[z][1] == "manualFan" then
-	shapeArray[z].direction = shapeArrayParameters[z][7]
+    if shapeArrayParameters[z]["type"] == "autoFan"
+    or shapeArrayParameters[z]["type"] == "manualFan" then
+	shapeArray[z].direction = shapeArrayParameters[z]["subType"]
     end
     
-    shapeArray[z].x = ((shapeArrayParameters[z][3] - 1) * display.contentWidth) + (((shapeArrayParameters[z][5] - 1) * 60) + 30)
-    shapeArray[z].y = ((shapeArrayParameters[z][4] - 1) * display.contentHeight) + (((shapeArrayParameters[z][6] - 1) * 52) + 30)
-    shapeArray[z].name = shapeArrayParameters[z][2]
-    shapeArray[z].objectType = shapeArrayParameters[z][1]
+    shapeArray[z].x = ((shapeArrayParameters[z]["location"]["xScreen"] - 1) * display.contentWidth) + (((shapeArrayParameters[z]["location"]["xSquare"] - 1) * 60) + 30)
+    shapeArray[z].y = ((shapeArrayParameters[z]["location"]["yScreen"] - 1) * display.contentHeight) + (((shapeArrayParameters[z]["location"]["ySquare"] - 1) * 52) + 30)
+    shapeArray[z].name = shapeArrayParameters[z]["name"]
+    shapeArray[z].objectType = shapeArrayParameters[z]["type"]
     
-    if (shapeArrayParameters[z][1] == "shape") then
+    if (shapeArrayParameters[z]["type"] == "shape") then
 	shapeArray[z].x = shapeArray[z].x + 24
-	if (shapeArrayParameters[z][7] ~= "triangleLeftAndRightShape")
-	and (shapeArrayParameters[z][7] ~= "triangleTopAndBottomShape") then
+	if (shapeArrayParameters[z]["subType"] ~= "triangleLeftAndRightShape")
+	and (shapeArrayParameters[z]["subType"] ~= "triangleTopAndBottomShape") then
 	    shapeArray[z].y = shapeArray[z].y + 27
 	    shapeArray[z].x = shapeArray[z].x + 6
 	else
-	    if (shapeArrayParameters[z][7] == "triangleLeftAndRightShape") then
+	    if (shapeArrayParameters[z]["subType"] == "triangleLeftAndRightShape") then
 		shapeArray[z].y = shapeArray[z].y + 52
-		if (shapeArrayParameters[z][8] == 2) then
+		if (shapeArrayParameters[z]["props"][1] == 2) then
 		    shapeArray[z].x = shapeArray[z].x + 11
 		end
 	    else
 		shapeArray[z].x = shapeArray[z].x + 36
 		shapeArray[z].y = shapeArray[z].y + 28
-		if (shapeArrayParameters[z][8] == 2) then
+		if (shapeArrayParameters[z]["props"][1] == 2) then
 		    shapeArray[z].y = shapeArray[z].y - 3
 		end
 	    end
 	end
-	if (shapeArrayParameters[z][7] == "triangleBottomLeftShape")
-	or (shapeArrayParameters[z][7] == "triangleTopLeftShape") then
+	if (shapeArrayParameters[z]["subType"] == "triangleBottomLeftShape")
+	or (shapeArrayParameters[z]["subType"] == "triangleTopLeftShape") then
 	    shapeArray[z].x = shapeArray[z].x + 3
-	elseif (shapeArrayParameters[z][7] == "triangleBottomRightShape")
-	or (shapeArrayParameters[z][7] == "triangleTopRightShape") then
+	elseif (shapeArrayParameters[z]["subType"] == "triangleBottomRightShape")
+	or (shapeArrayParameters[z]["subType"] == "triangleTopRightShape") then
 	    shapeArray[z].x = shapeArray[z].x - 1
 	end
 	
@@ -475,25 +475,25 @@ for z = 1, #shapeArray do
 	    if a < 5 then
 		if shapeArray[z].directionsArray[relevantDirectionArray][a] == "kill" then
 		    if (a == 4
-		    and shapeArrayParameters[z][7] == "triangleLeftAndRightShape"
+		    and shapeArrayParameters[z]["subType"] == "triangleLeftAndRightShape"
 		    and shapeArray[z].state == 1)
 		    or (a == 2
-		    and shapeArrayParameters[z][7] == "triangleLeftAndRightShape"
+		    and shapeArrayParameters[z]["subType"] == "triangleLeftAndRightShape"
 		    and shapeArray[z].state == 2)
 		    or (a == 3
-		    and shapeArrayParameters[z][7] == "triangleTopAndBottomShape"
+		    and shapeArrayParameters[z]["subType"] == "triangleTopAndBottomShape"
 		    and shapeArray[z].state == 1)
 		    or (a == 1
-		    and shapeArrayParameters[z][7] == "triangleTopAndBottomShape"
+		    and shapeArrayParameters[z]["subType"] == "triangleTopAndBottomShape"
 		    and shapeArray[z].state == 2)
 		    or (a == 4
-		    and shapeArrayParameters[z][7] == "triangleTopRightShape")
+		    and shapeArrayParameters[z]["subType"] == "triangleTopRightShape")
 		    or (a == 4
-		    and shapeArrayParameters[z][7] == "triangleBottomRightShape")
+		    and shapeArrayParameters[z]["subType"] == "triangleBottomRightShape")
 		    or (a == 2
-		    and shapeArrayParameters[z][7] == "triangleTopLeftShape")
+		    and shapeArrayParameters[z]["subType"] == "triangleTopLeftShape")
 		    or (a == 2
-		    and shapeArrayParameters[z][7] == "triangleBottomLeftShape")then
+		    and shapeArrayParameters[z]["subType"] == "triangleBottomLeftShape")then
 		    
 		    else
 			killBar = display.newImage("images/objects/killBar.png")
@@ -502,11 +502,11 @@ for z = 1, #shapeArray do
 			killBar.relatedDirectionArrayIndex = a
 			
 			if (a == 4
-			and shapeArrayParameters[z][7] == "triangleLeftAndRightShape"
+			and shapeArrayParameters[z]["subType"] == "triangleLeftAndRightShape"
 			and shapeArray[z].state == 2) then
 			    killBar.relatedDirectionArrayIndex = 2
 			elseif (a == 3
-			and shapeArrayParameters[z][7] == "triangleTopAndBottomShape"
+			and shapeArrayParameters[z]["subType"] == "triangleTopAndBottomShape"
 			and shapeArray[z].state == 2) then
 			    killBar.relatedDirectionArrayIndex = 1
 			end
@@ -524,12 +524,12 @@ for z = 1, #shapeArray do
 		    
 		    for b=1, #killBarPositionArray do
 			if a == b then
-			    if shapeArrayParameters[z][7] == killBarPositionArray[b][1]
-			    or shapeArrayParameters[z][7] == killBarPositionArray[b][2] then
+			    if shapeArrayParameters[z]["subType"] == killBarPositionArray[b][1]
+			    or shapeArrayParameters[z]["subType"] == killBarPositionArray[b][2] then
 				killBar.x = killBar.x + killBarPositionArray[b][3]
 				killBar.y = killBar.y + killBarPositionArray[b][4]
 				killBar.rotation = killBarPositionArray[b][5]
-			    elseif shapeArrayParameters[z][7] == killBarPositionArray[b][6] then
+			    elseif shapeArrayParameters[z]["subType"] == killBarPositionArray[b][6] then
 				if a == 4 then
 				    thisRelevantState = 2
 				else
@@ -560,7 +560,7 @@ for z = 1, #shapeArray do
 					killBar.rotation = killBarPositionArray[b][12]
 				    end
 				end
-			    elseif shapeArrayParameters[z][7] == killBarPositionArray[b][13] then
+			    elseif shapeArrayParameters[z]["subType"] == killBarPositionArray[b][13] then
 				if b % 2 == 0 then
 				    if shapeArray[z].state == 1 then
 					killBar.x = killBar.x + killBarPositionArray[b][14]
@@ -594,11 +594,11 @@ for z = 1, #shapeArray do
 			    end
 			    
 			    if (killBarPositionArray[b][20]) then
-				if shapeArrayParameters[z][7] == killBarPositionArray[b][20] then
+				if shapeArrayParameters[z]["subType"] == killBarPositionArray[b][20] then
 				    killBar.x = killBar.x + killBarPositionArray[b][21]
 				    killBar.y = killBar.y + killBarPositionArray[b][22]
 				    killBar.rotation = killBarPositionArray[b][23]
-				elseif shapeArrayParameters[z][7] == killBarPositionArray[b][24] then
+				elseif shapeArrayParameters[z]["subType"] == killBarPositionArray[b][24] then
 				    killBar.x = killBar.x + killBarPositionArray[b][25]
 				    killBar.y = killBar.y + killBarPositionArray[b][26]
 				    killBar.rotation = killBarPositionArray[b][27]
@@ -609,7 +609,7 @@ for z = 1, #shapeArray do
 		    
 		elseif shapeArray[z].directionsArray[relevantDirectionArray][a] == "specialRule" then
 		    
-		    if shapeArrayParameters[z][7] == "triangleLeftAndRightShape" then
+		    if shapeArrayParameters[z]["subType"] == "triangleLeftAndRightShape" then
 			if shapeArray[z].state == 1 then
 			    if a == 2 then
 				if shapeArray[z].directionsArray[2][5] == "kill" then
@@ -653,7 +653,7 @@ for z = 1, #shapeArray do
 				end
 			    end
 			end
-		    elseif shapeArrayParameters[z][7] == "triangleTopAndBottomShape" then
+		    elseif shapeArrayParameters[z]["subType"] == "triangleTopAndBottomShape" then
 			if shapeArray[z].state == 1 then
 			    if a == 1 then
 				if shapeArray[z].directionsArray[2][5] == "kill" then
@@ -704,37 +704,37 @@ for z = 1, #shapeArray do
 	
     end
     
-    if (shapeArrayParameters[z][1] == "door") then
-	if shapeArrayParameters[z][7] == "up" then
+    if (shapeArrayParameters[z]["type"] == "door") then
+	if shapeArrayParameters[z]["subType"] == "up" then
 	    shapeArray[z].y = shapeArray[z].y - 30 + 10
 	    shapeArray[z].x = shapeArray[z].x + 3
 	    shapeArray[z].rotation = 270
-	elseif shapeArrayParameters[z][7] == "right" then
+	elseif shapeArrayParameters[z]["subType"] == "right" then
 	    shapeArray[z].x = shapeArray[z].x + 30 + 60 - 10
 	    shapeArray[z].y = shapeArray[z].y - 1
-	elseif shapeArrayParameters[z][7] == "down" then
+	elseif shapeArrayParameters[z]["subType"] == "down" then
 	    shapeArray[z].y = shapeArray[z].y + 30 + 52 - 9
 	    shapeArray[z].x = shapeArray[z].x + 60 - 2
 	    shapeArray[z].rotation = 90
-	elseif shapeArrayParameters[z][7] == "left" then
+	elseif shapeArrayParameters[z]["subType"] == "left" then
 	    shapeArray[z].rotation = 180
 	    shapeArray[z].x = shapeArray[z].x - 30 + 10
 	    shapeArray[z].y = shapeArray[z].y + 52
 	end
 	frontScreenObjectsGroup:insert( shapeArray[z] )
-	shapeArray[z].enabled = shapeArrayParameters[z][8]
+	shapeArray[z].enabled = shapeArrayParameters[z]["props"][1]
 	if shapeArray[z].enabled == "disabled" then
 	    shapeArray[z].alpha = 0 
 	end
     end
     
-    if shapeArrayParameters[z][1] == "spitter" then
+    if shapeArrayParameters[z]["type"] == "spitter" then
 	shapeArray[z].upEnabled = false
 	shapeArray[z].rightEnabled = false
 	shapeArray[z].downEnabled = false
 	shapeArray[z].leftEnabled = false
 	    
-	if shapeArrayParameters[z][7] == "up" then
+	if shapeArrayParameters[z]["subType"] == "up" then
 	    shapeArray[z].upEnabled = true
 	    shapeArray[z].upArrow = display.newImage("images/objects/spitter-arrow.png")
 	    --shapeArray[z].upArrow:setReferencePoint(display.TopLeftReferencePoint);
@@ -742,7 +742,7 @@ for z = 1, #shapeArray do
 	    shapeArray[z].upArrow.x = (shapeArray[z].x + 23)
 	    shapeArray[z].upArrow.y = (shapeArray[z].y + 5)
 	end
-	if shapeArrayParameters[z][8] == "right" then
+	if shapeArrayParameters[z]["props"][1] == "right" then
 	    shapeArray[z].rightEnabled = true
 	    shapeArray[z].rightArrow = display.newImage("images/objects/spitter-arrow.png")
 	    --shapeArray[z].rightArrow:setReferencePoint(display.TopLeftReferencePoint);
@@ -751,7 +751,7 @@ for z = 1, #shapeArray do
 	    shapeArray[z].rightArrow.x = (shapeArray[z].x + 54)
 	    shapeArray[z].rightArrow.y = (shapeArray[z].y + 20)
 	end
-	if shapeArrayParameters[z][9] == "down" then
+	if shapeArrayParameters[z]["props"][2] == "down" then
 	    shapeArray[z].downEnabled = true
 	    shapeArray[z].downArrow = display.newImage("images/objects/spitter-arrow.png")
 	    --shapeArray[z].downArrow:setReferencePoint(display.TopLeftReferencePoint);
@@ -760,7 +760,7 @@ for z = 1, #shapeArray do
 	    shapeArray[z].downArrow.x = (shapeArray[z].x + 38)
 	    shapeArray[z].downArrow.y = (shapeArray[z].y + 49)
 	end
-	if shapeArrayParameters[z][10] == "left" then
+	if shapeArrayParameters[z]["props"][3] == "left" then
 	    shapeArray[z].leftEnabled = true
 	    shapeArray[z].leftArrow = display.newImage("images/objects/spitter-arrow.png")
 	    --shapeArray[z].leftArrow:setReferencePoint(display.TopLeftReferencePoint);
@@ -772,8 +772,8 @@ for z = 1, #shapeArray do
 	
     end
     
-    if shapeArrayParameters[z][1] == "tunnel" then
-	shapeArray[z].firstDirection = shapeArrayParameters[z][9]
+    if shapeArrayParameters[z]["type"] == "tunnel" then
+	shapeArray[z].firstDirection = shapeArrayParameters[z]["props"][2]
 	shapeArray[z].relevantLowerX = shapeArray[z].x + 15
 	shapeArray[z].relevantHigherX = shapeArray[z].x + 60
         shapeArray[z].relevantLowerY = shapeArray[z].y + 13
@@ -797,7 +797,7 @@ for y = 1, #transitionArrayIndex do
     if transitionArrayIndex[y][2][1] == "flip-horizontal" then
 	for z = 1, #shapeArray do
 	    if shapeArray[z].name == transitionArrayIndex[y][1][1] then
-		if shapeArrayParameters[z][8] == 2 then
+		if shapeArrayParameters[z]["props"][1] == 2 then
 		    shapeArray[z].transitionArrayState = 2
 		    shapeArray[z].originalState = 2
 		else
@@ -811,7 +811,7 @@ for y = 1, #transitionArrayIndex do
     elseif transitionArrayIndex[y][2][1] == "flip-vertical" then
 	for z = 1, #shapeArray do
 	    if shapeArray[z].name == transitionArrayIndex[y][1][1] then
-		if shapeArrayParameters[z][8] == 2 then
+		if shapeArrayParameters[z]["props"][1] == 2 then
 		    shapeArray[z].transitionArrayState = 2
 		    shapeArray[z].originalState = 2
 		else
@@ -1444,7 +1444,7 @@ local function autoFanTransition(event)
     
     for b = 1, #shapeArray do
 	
-	if shapeArrayParameters[b][1] == "autoFan" or shapeArrayParameters[b][1] == "spitter" then
+	if shapeArrayParameters[b]["type"] == "autoFan" or shapeArrayParameters[b]["type"] == "spitter" then
 	    if  (instance2.x) > shapeArray[b].x and
 		(instance2.x) < (shapeArray[b].x + 60) and
 		instance2.y > shapeArray[b].y and
@@ -1455,15 +1455,15 @@ local function autoFanTransition(event)
 		    fanYCenteringComplete = false
 		    fanCenteringCounter = 0
 		    thisFan = shapeArray[b]
-		    thisFan.type = shapeArrayParameters[b][1]
+		    thisFan.type = shapeArrayParameters[b]["type"]
 		    Runtime:addEventListener( "enterFrame", fanCentering )
 		    direction = shapeArray[b].direction
 		    
-		    if shapeArrayParameters[b][1] == "spitter" then
+		    if shapeArrayParameters[b]["type"] == "spitter" then
 			spitterCounter = 0
 		    end
 	    end
-	elseif shapeArrayParameters[b][1] == "switch" then
+	elseif shapeArrayParameters[b]["type"] == "switch" then
 	    if shapeArray[b].switchCounter == 0 then
 		if  (instance2.x) > shapeArray[b].x
 		and (instance2.x) < (shapeArray[b].x + 60)
@@ -1473,28 +1473,28 @@ local function autoFanTransition(event)
 		    thisSwitch = shapeArray[b]
 		    thisSwitch.switchOnOffCounter = 1
 			for a = 1, #shapeArray do
-			    if shapeArrayParameters[a][2] == shapeArrayParameters[b][8] then
+			    if shapeArrayParameters[a]["name"] == shapeArrayParameters[b]["props"][1] then
 				thisSwitchingObject = shapeArray[a]
-				if shapeArrayParameters[b][7] == "flip-horizontal"
-				or shapeArrayParameters[b][7] == "flip-vertical" then
+				if shapeArrayParameters[b]["subType"] == "flip-horizontal"
+				or shapeArrayParameters[b]["subType"] == "flip-vertical" then
 				    thisActualFlippedObject = shapeArray[a]
 				    thisActualFlippedObjectName = thisActualFlippedObject.name
 				    thisActualFlippedObjectShape = thisActualFlippedObject.shape
 				    thisActualFlippedObjectTransitionArrayState = thisActualFlippedObject.transitionArrayState
-				    thisActualFlippedObjectDirection = shapeArrayParameters[b][7]
+				    thisActualFlippedObjectDirection = shapeArrayParameters[b]["subType"]
 				    positionNewFlippedObject()
-				    if shapeArrayParameters[b][10] then
+				    if shapeArrayParameters[b]["props"][3] then
 					for c = 1, #shapeArray do
-					    if shapeArrayParameters[c][2] == shapeArrayParameters[b][10] then
+					    if shapeArrayParameters[c]["name"] == shapeArrayParameters[b]["props"][3] then
 						thisSwitchingObject = shapeArray[c]
 						thisActualFlippedObject = shapeArray[c]
 						thisActualFlippedObjectName = thisActualFlippedObject.name
 						thisActualFlippedObjectShape = thisActualFlippedObject.shape
 						thisActualFlippedObjectTransitionArrayState = thisActualFlippedObject.transitionArrayState
-						if shapeArrayParameters[b][11] then
-						    thisActualFlippedObjectDirection = shapeArrayParameters[b][11]
+						if shapeArrayParameters[b]["props"][4] then
+						    thisActualFlippedObjectDirection = shapeArrayParameters[b]["props"][4]
 						else
-						    thisActualFlippedObjectDirection = shapeArrayParameters[b][7]
+						    thisActualFlippedObjectDirection = shapeArrayParameters[b]["subType"]
 						end
 						positionNewFlippedObject()
 					    end
@@ -1504,14 +1504,14 @@ local function autoFanTransition(event)
 			    end
 		        end
 			
-			if shapeArrayParameters[b][9] == "one-way" then
+			if shapeArrayParameters[b]["props"][2] == "one-way" then
 			    shapeArray[b].switchCounter = 1
 			end
-			if shapeArrayParameters[b][7] == "door-open" then
+			if shapeArrayParameters[b]["subType"] == "door-open" then
 			    alphaCounter = 0
 			    Runtime:addEventListener( "enterFrame", switchAlphaTransparency )
 			end
-			if shapeArrayParameters[b][9] ~= "one-way" then
+			if shapeArrayParameters[b]["props"][2] ~= "one-way" then
 			    timer.performWithDelay(300, addBackThisSwitchOnOffCounter)
 			end
 		end
@@ -1532,11 +1532,11 @@ local function tunnelTransition(event)
 	    and direction == shapeArray[z].firstDirection then
 		tunnelCounter = 0
 		instance2.alpha = 0
-		nextDirection = shapeArrayParameters[z][10]
-		nextHorzScreen = shapeArrayParameters[z][3]
-		nextVertScreen = shapeArrayParameters[z][4]
-		nextHorzSquare = shapeArrayParameters[z][7]
-		nextVertSquare = shapeArrayParameters[z][8]
+		nextDirection = shapeArrayParameters[z]["props"][3]
+		nextHorzScreen = shapeArrayParameters[z]["location"]["xScreen"]
+		nextVertScreen = shapeArrayParameters[z]["location"]["yScreen"]
+		nextHorzSquare = shapeArrayParameters[z]["subType"]
+		nextVertSquare = shapeArrayParameters[z]["props"][1]
 		Runtime:removeEventListener( "enterFrame", moveSomething )
 		timer.performWithDelay( 750, moveSlow, 1 )
 	    end
@@ -1575,18 +1575,18 @@ end
 
 local function doorTransition (event)
     for b = 1, #shapeArray do
-	if shapeArrayParameters[b][1] == "door" then
-	    thisChangeScreenDirection = shapeArrayParameters[b][7]
+	if shapeArrayParameters[b]["type"] == "door" then
+	    thisChangeScreenDirection = shapeArrayParameters[b]["subType"]
 	    if shapeArray[b].enabled == "enabled" then
-		if shapeArrayParameters[b][7] == "right" then
-		    if (instance2.x + instance2.contentWidth) > (((shapeArrayParameters[b][3] - 1) * display.contentWidth) + 490)
-		    and (instance2.x + instance2.contentWidth) < (((shapeArrayParameters[b][3] - 1) * display.contentWidth) + 510)
+		if shapeArrayParameters[b]["subType"] == "right" then
+		    if (instance2.x + instance2.contentWidth) > (((shapeArrayParameters[b]["location"]["xScreen"] - 1) * display.contentWidth) + 490)
+		    and (instance2.x + instance2.contentWidth) < (((shapeArrayParameters[b]["location"]["xScreen"] - 1) * display.contentWidth) + 510)
 		    and direction == "right" then
-			higherY = ((shapeArrayParameters[b][6] - 1) * 52) + 30
+			higherY = ((shapeArrayParameters[b]["location"]["ySquare"] - 1) * 52) + 30
 			if instance2.y > higherY
 			and instance2.y < (higherY + 52)
-			and ballScreenHorzValue == shapeArrayParameters[b][3]
-			and ballScreenVertValue == shapeArrayParameters[b][4]
+			and ballScreenHorzValue == shapeArrayParameters[b]["location"]["xScreen"]
+			and ballScreenVertValue == shapeArrayParameters[b]["location"]["yScreen"]
 			and screenTimer == 0 then
 			    ballScreenHorzValue = ballScreenHorzValue + 1
 			    thisScreenHorzValue = thisScreenHorzValue + 1
@@ -1599,15 +1599,15 @@ local function doorTransition (event)
 			    instance2.y = (higherY + 26)
 			end
 		    end
-		elseif shapeArrayParameters[b][7] == "left" then
-		    if (instance2.x + instance2.contentWidth) < (((shapeArrayParameters[b][3] - 1) * display.contentWidth) + 10)
-		    and (instance2.x + instance2.contentWidth) > (((shapeArrayParameters[b][3] - 1) * display.contentWidth))
+		elseif shapeArrayParameters[b]["subType"] == "left" then
+		    if (instance2.x + instance2.contentWidth) < (((shapeArrayParameters[b]["location"]["xScreen"] - 1) * display.contentWidth) + 10)
+		    and (instance2.x + instance2.contentWidth) > (((shapeArrayParameters[b]["location"]["xScreen"] - 1) * display.contentWidth))
 		    and direction == "left" then
-			higherY = ((shapeArrayParameters[b][6] - 1) * 52) + 30
+			higherY = ((shapeArrayParameters[b]["location"]["ySquare"] - 1) * 52) + 30
 			if instance2.y > higherY
 			and instance2.y < (higherY + 52)
-			and ballScreenHorzValue == shapeArrayParameters[b][3]
-			and ballScreenVertValue == shapeArrayParameters[b][4]
+			and ballScreenHorzValue == shapeArrayParameters[b]["location"]["xScreen"]
+			and ballScreenVertValue == shapeArrayParameters[b]["location"]["yScreen"]
 			and screenTimer == 0 then
 			    ballScreenHorzValue = ballScreenHorzValue - 1
 			    thisScreenHorzValue = thisScreenHorzValue - 1
@@ -1620,15 +1620,15 @@ local function doorTransition (event)
 			    instance2.y = (higherY + 26)
 			end
 		    end
-		elseif shapeArrayParameters[b][7] == "up" then
-		    if (instance2.y + instance2.contentHeight) < (((shapeArrayParameters[b][4] - 1) * display.contentHeight) + 10)
-		    and (instance2.y + instance2.contentHeight) > (((shapeArrayParameters[b][4] - 1) * display.contentHeight) - 20)
+		elseif shapeArrayParameters[b]["subType"] == "up" then
+		    if (instance2.y + instance2.contentHeight) < (((shapeArrayParameters[b]["location"]["yScreen"] - 1) * display.contentHeight) + 10)
+		    and (instance2.y + instance2.contentHeight) > (((shapeArrayParameters[b]["location"]["yScreen"] - 1) * display.contentHeight) - 20)
 		    and direction == "up" then
-			lowerX = ((shapeArrayParameters[b][5] - 1) * 60) + 30
+			lowerX = ((shapeArrayParameters[b]["location"]["xSquare"] - 1) * 60) + 30
 			if instance2.x > lowerX
 			and instance2.x < (lowerX + 60)
-			and ballScreenVertValue == shapeArrayParameters[b][4]
-			and ballScreenHorzValue == shapeArrayParameters[b][3]
+			and ballScreenVertValue == shapeArrayParameters[b]["location"]["yScreen"]
+			and ballScreenHorzValue == shapeArrayParameters[b]["location"]["xScreen"]
 			and screenTimer == 0 then
 			    ballScreenHorzValue = ballScreenVertValue - 1
 			    thisScreenHorzValue = thisScreenVertValue - 1
@@ -1641,15 +1641,15 @@ local function doorTransition (event)
 			    instance2.x = (lowerX + 30)
 			end
 		    end
-		elseif shapeArrayParameters[b][7] == "down" then
-		    if (instance2.y + instance2.contentHeight) > (((shapeArrayParameters[b][4] - 1) * display.contentHeight) + 327)
-		    and (instance2.y + instance2.contentHeight) < (((shapeArrayParameters[b][4] - 1) * display.contentHeight) + 335)
+		elseif shapeArrayParameters[b]["subType"] == "down" then
+		    if (instance2.y + instance2.contentHeight) > (((shapeArrayParameters[b]["location"]["yScreen"] - 1) * display.contentHeight) + 327)
+		    and (instance2.y + instance2.contentHeight) < (((shapeArrayParameters[b]["location"]["yScreen"] - 1) * display.contentHeight) + 335)
 		    and direction == "down" then
-			lowerX = ((shapeArrayParameters[b][5] - 1) * 60) + 30
+			lowerX = ((shapeArrayParameters[b]["location"]["xSquare"] - 1) * 60) + 30
 			if instance2.x > lowerX
 			and instance2.x < (lowerX + 60)
-			and ballScreenVertValue == shapeArrayParameters[b][4]
-			and ballScreenHorzValue == shapeArrayParameters[b][3]
+			and ballScreenVertValue == shapeArrayParameters[b]["location"]["yScreen"]
+			and ballScreenHorzValue == shapeArrayParameters[b]["location"]["xScreen"]
 			and screenTimer == 0 then
 			    ballScreenVertValue = ballScreenVertValue + 1
 			    thisScreenVertValue = thisScreenVertValue + 1
@@ -1755,11 +1755,11 @@ local function transitionArrayStateChecknew ()
     transitionMoveCounter = 0
     secondTransitionMoveCounter = 0
     for z = 1, #shapeArray do
-	if shapeArrayParameters[z][2] == thisTransitionObject.name
-	and shapeArrayParameters[z][1] == "shape" then
+	if shapeArrayParameters[z]["name"] == thisTransitionObject.name
+	and shapeArrayParameters[z]["type"] == "shape" then
 	    local function addPhysicsBodyToShape ()
 		for a = 1, #shapeFormingArray do
-		    if shapeFormingArray[a][1] == shapeArrayParameters[z][7] then
+		    if shapeFormingArray[a][1] == shapeArrayParameters[z]["subType"] then
 			if instance2.x > (thisTransitionObject.x - 41)
 			and instance2.x < (thisTransitionObject.x + 38) 
 			and instance2.y > (thisTransitionObject.y - 38) 
@@ -1789,8 +1789,8 @@ local function transitionArrayStateChecknew ()
 		    connectorArray[a].alpha = 0
 		end
 	    end
-	elseif shapeArrayParameters[z][2] == thisTransitionObject.name
-	and shapeArrayParameters[z][1] ~= "shape" then
+	elseif shapeArrayParameters[z]["name"] == thisTransitionObject.name
+	and shapeArrayParameters[z]["type"] ~= "shape" then
 	    thisTransitionObject.alpha = 1
 	end
     end
@@ -2522,14 +2522,14 @@ pauseScreenObjectsGroup:toFront()
 
 
 for c=1, #shapeArray do
-    if shapeArrayParameters[c][1] == "shape" then
+    if shapeArrayParameters[c]["type"] == "shape" then
 	shapeArray[c]:addEventListener("collision", on_Triangle_Collision)
-    elseif shapeArrayParameters[c][1] == "manualFan" or shapeArrayParameters[c][1] == "spitter" then
+    elseif shapeArrayParameters[c]["type"] == "manualFan" or shapeArrayParameters[c]["type"] == "spitter" then
 	shapeArray[c]:addEventListener( "touch", listener )
     end
     
     for d=1, #transitionArrayIndex do
-	if transitionArrayIndex[d][1][1] == shapeArrayParameters[c][2] then
+	if transitionArrayIndex[d][1][1] == shapeArrayParameters[c]["name"] then
 	    shapeArray[c]:addEventListener("touch", listener)
 	end
     end

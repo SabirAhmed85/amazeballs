@@ -18,7 +18,7 @@ local addFlipIndicatorTriangles = function (mainFunc, shapeArray, shapeArrayPara
     }
     
     for a =1, #flipIndicatorTrianglePositioningArray do
-        if shapeArrayParameters[thisFlippingShapeIndex][7] == flipIndicatorTrianglePositioningArray[a][1] then
+        if shapeArrayParameters[thisFlippingShapeIndex]["subType"] == flipIndicatorTrianglePositioningArray[a][1] then
             if thisFlipTransitionDirection == "flip-horizontal" then
                 shapeArray[thisFlippingShapeIndex].flipTriangle.x  = shapeArray[thisFlippingShapeIndex].flipTriangle.x + flipIndicatorTrianglePositioningArray[a][2]
                 shapeArray[thisFlippingShapeIndex].flipTriangle.y  = shapeArray[thisFlippingShapeIndex].flipTriangle.y + flipIndicatorTrianglePositioningArray[a][3]
