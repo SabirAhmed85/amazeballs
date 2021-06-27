@@ -9,8 +9,8 @@ local switchSequenceData = {
 local function spawn (z, mainFunc)
     local shapeParameters = shapeArrayParameters[z];
     local shapeType = shapeParameters["type"];
-    local shapeName = shapeArrayParameters["name"];
-    local shapeSubType = shapeArrayParameters["subType"];
+    local shapeName = shapeParameters["name"];
+    local shapeSubType = shapeParameters["subType"];
     
     if hasValue({ "autoFan", "manualFan", "simple", "spitter", "tunnel", "backFire", "characterChangePoint" }, shapeType) then
         object = display.newSprite(mainFunc.allLevelSettings.allFansImageSheet, mainFunc.allLevelSettings.allFansSequenceData)
@@ -201,6 +201,7 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
                 end
             end
         end
+        print("SHPE", shapeArray[z], relevantShape);
         physics.addBody( shapeArray[z], "static", { density=10, friction=1, bounce=0, shape=relevantShape } )
         shapeArray[z].relevantPhysicsBodyParams = { density=10, friction=1, bounce=0, shape=relevantShape }
         shapeArray[z].shape = shapeParameters["subType"]
