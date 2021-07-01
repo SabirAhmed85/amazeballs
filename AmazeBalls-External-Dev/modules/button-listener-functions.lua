@@ -7,7 +7,7 @@ t.hookshotTransition = {}
 --------- MAP DIRECTION BUTTONS-----------
 
 -- local addBackButtonFunctionality = function (event)
---     mainFunc.ballAndButtonAndScreenCreateScript.randomBtn.alpha = 1
+--     mainFunc.ballBtnScreenCreate.randomBtn.alpha = 1
 
 --     mainFunc.allLevelSettings.pauseButtonsEnabled = true
 -- end
@@ -15,16 +15,16 @@ t.hookshotTransition = {}
 
 local removeItemBagScreenEventListeners = function (mainFunc, levelVariables)
     --[[
-    mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.buyMoreButton:removeEventListener("tap", levelVariables.openIAP)
+    mainFunc.ballBtnScreenCreate.itemBagScreen.buyMoreButton:removeEventListener("tap", levelVariables.openIAP)
     for a = 1, #mainFunc.allLevelSettings.showingToolsArray do
         mainFunc.allLevelSettings.showingToolsArray[a]:removeEventListener("tap", mainFunc.listener)
     end
-    for key, val in pairs(mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.tile) do
+    for key, val in pairs(mainFunc.ballBtnScreenCreate.itemBagScreen.tile) do
         if key == "dummyBall"
         or key == "superBall" then
-            mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.tile[key]:removeEventListener("tap", mainFunc.listener)
+            mainFunc.ballBtnScreenCreate.itemBagScreen.tile[key]:removeEventListener("tap", mainFunc.listener)
         else
-            mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.tile[key]:removeEventListener("tap", mainFunc.changeToolInnerScreen)
+            mainFunc.ballBtnScreenCreate.itemBagScreen.tile[key]:removeEventListener("tap", mainFunc.changeToolInnerScreen)
         end
     end
     ]]
@@ -33,16 +33,16 @@ end
 
 local addBackItemBagScreenEventListeners = function (mainFunc, levelVariables)
     --[[
-    mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.buyMoreButton:addEventListener("tap", levelVariables.openIAP)
+    mainFunc.ballBtnScreenCreate.itemBagScreen.buyMoreButton:addEventListener("tap", levelVariables.openIAP)
     for a = 1, #mainFunc.allLevelSettings.showingToolsArray do
         mainFunc.allLevelSettings.showingToolsArray[a]:addEventListener("tap", mainFunc.listener)
     end
-    for key, val in pairs(mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.tile) do
+    for key, val in pairs(mainFunc.ballBtnScreenCreate.itemBagScreen.tile) do
         if key == "dummyBall"
         or key == "superBall" then
-            mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.tile[key]:addEventListener("tap", mainFunc.listener)
+            mainFunc.ballBtnScreenCreate.itemBagScreen.tile[key]:addEventListener("tap", mainFunc.listener)
         else
-            mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.tile[key]:addEventListener("tap", mainFunc.changeToolInnerScreen)
+            mainFunc.ballBtnScreenCreate.itemBagScreen.tile[key]:addEventListener("tap", mainFunc.changeToolInnerScreen)
         end
     end
     ]]
@@ -51,22 +51,22 @@ end
 
 local removePauseScreenEventListeners = function (mainFunc, levelVariables)
 --[[
-    mainFunc.ballAndButtonAndScreenCreateScript.backToPlayBtn:removeEventListener("touch", mainFunc.buttonListener)
-    mainFunc.ballAndButtonAndScreenCreateScript.resetBtn:removeEventListener("touch", mainFunc.buttonListener)
-    mainFunc.ballAndButtonAndScreenCreateScript.backToMainBtn:removeEventListener("touch", mainFunc.buttonListener)
-    mainFunc.ballAndButtonAndScreenCreateScript.livesPlusButton:removeEventListener("tap", levelVariables.openIAP)
-    mainFunc.ballAndButtonAndScreenCreateScript.coinPlusButton:removeEventListener("tap", levelVariables.openIAP)
+    mainFunc.ballBtnScreenCreate.backToPlayBtn:removeEventListener("touch", mainFunc.buttonListener)
+    mainFunc.ballBtnScreenCreate.resetBtn:removeEventListener("touch", mainFunc.buttonListener)
+    mainFunc.ballBtnScreenCreate.backToMainBtn:removeEventListener("touch", mainFunc.buttonListener)
+    mainFunc.ballBtnScreenCreate.livesPlusButton:removeEventListener("tap", levelVariables.openIAP)
+    mainFunc.ballBtnScreenCreate.coinPlusButton:removeEventListener("tap", levelVariables.openIAP)
     ]]
 end
     t.removePauseScreenEventListeners = removePauseScreenEventListeners
 
 local addBackPauseScreenEventListeners = function (mainFunc, levelVariables)
 --[[
-    mainFunc.ballAndButtonAndScreenCreateScript.backToPlayBtn:addEventListener("touch", mainFunc.buttonListener)
-    mainFunc.ballAndButtonAndScreenCreateScript.resetBtn:addEventListener("touch", mainFunc.buttonListener)
-    mainFunc.ballAndButtonAndScreenCreateScript.backToMainBtn:addEventListener("touch", mainFunc.buttonListener)
-    mainFunc.ballAndButtonAndScreenCreateScript.livesPlusButton:addEventListener("tap", levelVariables.openIAP)
-    mainFunc.ballAndButtonAndScreenCreateScript.coinPlusButton:addEventListener("tap", levelVariables.openIAP)
+    mainFunc.ballBtnScreenCreate.backToPlayBtn:addEventListener("touch", mainFunc.buttonListener)
+    mainFunc.ballBtnScreenCreate.resetBtn:addEventListener("touch", mainFunc.buttonListener)
+    mainFunc.ballBtnScreenCreate.backToMainBtn:addEventListener("touch", mainFunc.buttonListener)
+    mainFunc.ballBtnScreenCreate.livesPlusButton:addEventListener("tap", levelVariables.openIAP)
+    mainFunc.ballBtnScreenCreate.coinPlusButton:addEventListener("tap", levelVariables.openIAP)
     ]]
 end
     t.addBackPauseScreenEventListeners = addBackPauseScreenEventListeners
@@ -129,7 +129,7 @@ local removeEventListenersForPause = function (mainFunc, shapeArray, shapeArrayP
         mainFunc.thisLevelSettings.bombsCanExplode = false
 
         if (mainFunc.allLevelSettings.isBallMovingState == "true") then
-            mainFunc.tm["ball"][mainFunc.ballAndButtonAndScreenCreateScript.instance2.relevantArrayIndex]:pauseAll()
+            mainFunc.tm["ball"][mainFunc.ballBtnScreenCreate.ball.relevantArrayIndex]:pauseAll()
         end
         if (mainFunc.allLevelSettings.bulletHasFired == true) then
             for a = 1, #shapeArrayParameters do
@@ -196,9 +196,9 @@ local removeEventListenersForPause = function (mainFunc, shapeArray, shapeArrayP
             end
         end
 
-        for key, val in pairs(mainFunc.ballAndButtonAndScreenCreateScript.instance2.specialConditionsArray) do
-            if (mainFunc.ballAndButtonAndScreenCreateScript.instance2.specialConditionsArray[key].active == true) then
-                timer.pause(mainFunc.ballAndButtonAndScreenCreateScript.instance2.specialConditionsArray[key].timer)
+        for key, val in pairs(mainFunc.ballBtnScreenCreate.ball.specialConditionsArray) do
+            if (mainFunc.ballBtnScreenCreate.ball.specialConditionsArray[key].active == true) then
+                timer.pause(mainFunc.ballBtnScreenCreate.ball.specialConditionsArray[key].timer)
             end
         end
 
@@ -214,7 +214,7 @@ end
     t.removeEventListenersForPause = removeEventListenersForPause
 
 local removeItemButtonListenersForItemGained = function (mainFunc)
-    script = mainFunc.ballAndButtonAndScreenCreateScript
+    script = mainFunc.ballBtnScreenCreate
 
     if mainFunc.thisLevelSettings.itemBagButtonsVisible then
         script.itemBtn.alpha = 0.3
@@ -226,7 +226,7 @@ end
     t.removeItemButtonListenersForItemGained = removeItemButtonListenersForItemGained
 
 local removeButtonListenersForItemGained = function (mainFunc)
-    script = mainFunc.ballAndButtonAndScreenCreateScript
+    script = mainFunc.ballBtnScreenCreate
 
     script.randomBtn.alpha = 0.3
     if mainFunc.thisLevelSettings.mapObtained == true then
@@ -301,12 +301,12 @@ local addBackEventListenersForPause = function (mainFunc, shapeArray, shapeArray
         mainFunc.thisLevelSettings.bombsCanExplode = true
 
         if (mainFunc.allLevelSettings.isBallMovingState == "true") then
-            if (mainFunc.ballAndButtonAndScreenCreateScript.instance2.isWaitingForMovement
-            and mainFunc.ballAndButtonAndScreenCreateScript.instance2.isWaitingForMovement == true) then
-                mainFunc.projectileMovementRemoveAndRespawnScript.moveProjectile(mainFunc.ballAndButtonAndScreenCreateScript.instance2, mainFunc)
-                mainFunc.ballAndButtonAndScreenCreateScript.instance2.isWaitingForMovement = false
+            if (mainFunc.ballBtnScreenCreate.ball.isWaitingForMovement
+            and mainFunc.ballBtnScreenCreate.ball.isWaitingForMovement == true) then
+                mainFunc.projectileMovementRemoveAndRespawnScript.moveProjectile(mainFunc.ballBtnScreenCreate.ball, mainFunc)
+                mainFunc.ballBtnScreenCreate.ball.isWaitingForMovement = false
             else 
-                mainFunc.tm["ball"][mainFunc.ballAndButtonAndScreenCreateScript.instance2.relevantArrayIndex]:resumeAll()
+                mainFunc.tm["ball"][mainFunc.ballBtnScreenCreate.ball.relevantArrayIndex]:resumeAll()
             end
         end
 
@@ -404,9 +404,9 @@ local addBackEventListenersForPause = function (mainFunc, shapeArray, shapeArray
             end
         end
 
-        for key, val in pairs(mainFunc.ballAndButtonAndScreenCreateScript.instance2.specialConditionsArray) do
-            if (mainFunc.ballAndButtonAndScreenCreateScript.instance2.specialConditionsArray[key].active == true) then
-                timer.resume(mainFunc.ballAndButtonAndScreenCreateScript.instance2.specialConditionsArray[key].timer)
+        for key, val in pairs(mainFunc.ballBtnScreenCreate.ball.specialConditionsArray) do
+            if (mainFunc.ballBtnScreenCreate.ball.specialConditionsArray[key].active == true) then
+                timer.resume(mainFunc.ballBtnScreenCreate.ball.specialConditionsArray[key].timer)
             end
         end
 
@@ -424,7 +424,7 @@ end
     t.addBackEventListenersForPause = addBackEventListenersForPause
 
 local addBackItemButtonListenersForItemGained = function (mainFunc)
-    script = mainFunc.ballAndButtonAndScreenCreateScript
+    script = mainFunc.ballBtnScreenCreate
     if mainFunc.thisLevelSettings.itemBagButtonsVisible then
         script.itemBtn.alpha = 1
         script.itemBagBtn.alpha = 1
@@ -435,7 +435,7 @@ end
     t.addBackItemButtonListenersForItemGained = addBackItemButtonListenersForItemGained
 
 local addBackButtonListenersForItemGained = function (mainFunc)
-    script = mainFunc.ballAndButtonAndScreenCreateScript
+    script = mainFunc.ballBtnScreenCreate
 
     script.randomBtn.alpha = 1
     if mainFunc.thisLevelSettings.mapObtained == true then
@@ -451,7 +451,6 @@ local prepareMapButtonResponse = function (thisScreenRelevantValue, otherScreenR
     if thisScreenRelevantValue < lessThanThreshold
     and thisScreenRelevantValue > moreThanThreshold then
         mainFunc.screenChangingScript.changeToRightScreen(mainFunc, shapeArray, shapeArrayParameters, "manual", screenChangeDirection)
-
     end
 end
 	t.prepareMapButtonResponse = prepareMapButtonResponse
@@ -473,21 +472,20 @@ local buttonListenerBeganFunctionArray = {
     reset = function (mainFunc, shapeArray, shapeArrayParameters, composer, levelVariables) mainFunc.buttonListenerScript.resetButtonPressedFunction(mainFunc) end,
     backToMain = function (mainFunc, shapeArray, shapeArrayParameters, composer, levelVariables) mainFunc.buttonListenerScript.backToMainButtonPressedFunction(composer, mainFunc) end,
     item = function (mainFunc, shapeArray, shapeArrayParameters, composer, levelVariables) mainFunc.buttonListenerScript.itemBtnFunction(mainFunc, shapeArray, shapeArrayParameters) end,
-    itemBag = function (mainFunc, shapeArray, shapeArrayParameters, composer, levelVariables) mainFunc.globalFunctions.globalOpenItemBagFunction(mainFunc, shapeArray, shapeArrayParameters, levelVariables, "inGame", mainFunc.ballAndButtonAndScreenCreateScript) end
+    itemBag = function (mainFunc, shapeArray, shapeArrayParameters, composer, levelVariables) mainFunc.globalFunctions.globalOpenItemBagFunction(mainFunc, shapeArray, shapeArrayParameters, levelVariables, "inGame", mainFunc.ballBtnScreenCreate) end
 }
     t.buttonListenerBeganFunctionArray = buttonListenerBeganFunctionArray
 
 local beganPlayPressedFunction = function (mainFunc, shapeArray, shapeArrayParameters)
-
     if mainFunc.thisLevelSettings.thisScreenHorzValue == mainFunc.allLevelSettings.ballScreenHorzValue and mainFunc.thisLevelSettings.thisScreenVertValue == mainFunc.allLevelSettings.ballScreenVertValue then
 		if mainFunc.allLevelSettings.pressCount == 0 then
 
 		    mainFunc.allLevelSettings.pressCount = 1
 		    if mainFunc.allLevelSettings.moveSomethingCounter == 0 then
 			--Runtime:addEventListener( "enterFrame", moveSomething )
-                mainFunc.projectileMovementRemoveAndRespawnScript.moveProjectile(mainFunc.ballAndButtonAndScreenCreateScript.instance2, mainFunc)
+                mainFunc.projectileMovementRemoveAndRespawnScript.moveProjectile(mainFunc.ballBtnScreenCreate.ball, mainFunc)
                 --Runtime:addEventListener( "enterFrame", edgesTransitions )
-                transition.to(mainFunc.ballAndButtonAndScreenCreateScript.backBtn, {alpha = 0, time = 200})
+                transition.to(mainFunc.ballBtnScreenCreate.backBtn, {alpha = 0, time = 200})
 
             end
                     
@@ -564,29 +562,29 @@ end
 
 local mapButtonPressedFunction = function (mainFunc, shapeArray, shapeArrayParameters)
 
-	if mainFunc.ballAndButtonAndScreenCreateScript.mapScreen.state == "mapHidden"
+	if mainFunc.ballBtnScreenCreate.mapScreen.state == "mapHidden"
     and mainFunc.allLevelSettings.mapShowCounter == 0
     and mainFunc.allLevelSettings.pauseButtonsEnabled == true then
-        mainFunc.ballAndButtonAndScreenCreateScript.mapScreen.alpha = 0.05
-        mainFunc.ballAndButtonAndScreenCreateScript.mapScreen:addEventListener("tap", mainFunc.dummyListener)
-        mainFunc.ballAndButtonAndScreenCreateScript.mapScreen:addEventListener("touch", mainFunc.dummyListener)
+        mainFunc.ballBtnScreenCreate.mapScreen.alpha = 0.05
+        mainFunc.ballBtnScreenCreate.mapScreen:addEventListener("tap", mainFunc.dummyListener)
+        mainFunc.ballBtnScreenCreate.mapScreen:addEventListener("touch", mainFunc.dummyListener)
         mainFunc.allLevelSettings.ballActivateButtonSet = false
         mainFunc.allLevelSettings.isScreenPausedState = true
         display.getCurrentStage():setFocus( nil )
         mainFunc.allLevelSettings.mapShowCounter = 1
-        mainFunc.ballAndButtonAndScreenCreateScript.mapScreen.state = "mapShowing"
-        transition.to (mainFunc.ballAndButtonAndScreenCreateScript.mapScreen, {alpha=0.11, time=150})
+        mainFunc.ballBtnScreenCreate.mapScreen.state = "mapShowing"
+        transition.to (mainFunc.ballBtnScreenCreate.mapScreen, {alpha=0.11, time=150})
         --something to show maps and compass
 
-        mainFunc.ballAndButtonAndScreenCreateScript.playBtn:toFront()
-        transition.to (mainFunc.ballAndButtonAndScreenCreateScript.mapShowAndClockLabel, {alpha=1, time=150})
-        transition.to (mainFunc.ballAndButtonAndScreenCreateScript.mapShowAndClockLabel.map, {alpha=1, time=150})
-        transition.to (mainFunc.ballAndButtonAndScreenCreateScript.mapShowAndClockLabel.compass, {alpha=1, time=150})
+        mainFunc.ballBtnScreenCreate.playBtn:toFront()
+        transition.to (mainFunc.ballBtnScreenCreate.mapShowAndClockLabel, {alpha=1, time=150})
+        transition.to (mainFunc.ballBtnScreenCreate.mapShowAndClockLabel.map, {alpha=1, time=150})
+        transition.to (mainFunc.ballBtnScreenCreate.mapShowAndClockLabel.compass, {alpha=1, time=150})
 
         removeEventListenersForPause(mainFunc, shapeArray, shapeArrayParameters)
         mainFunc.allLevelSettings.shouldBallMoveCounter = mainFunc.allLevelSettings.shouldBallMoveCounter + 1
         
-        mainFunc.ballAndButtonAndScreenCreateScript.playBtn:setSequence("over")
+        mainFunc.ballBtnScreenCreate.playBtn:setSequence("over")
         
         if mainFunc.thisLevelSettings.compassObtained == false then
             removeShapeListenersForPause(mainFunc, shapeArray, shapeArrayParameters)
@@ -595,50 +593,50 @@ local mapButtonPressedFunction = function (mainFunc, shapeArray, shapeArrayParam
         mainFunc.screenChangingScript.mapButtonStateCheck(mainFunc)
 
         if mainFunc.thisLevelSettings.itemBagButtonsVisible then
-            mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.alpha = 0.3
-            if (mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.img
-            and mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.img ~= nil) then
-                mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.img.alpha = 0.3
+            mainFunc.ballBtnScreenCreate.itemBtn.alpha = 0.3
+            if (mainFunc.ballBtnScreenCreate.itemBtn.img
+            and mainFunc.ballBtnScreenCreate.itemBtn.img ~= nil) then
+                mainFunc.ballBtnScreenCreate.itemBtn.img.alpha = 0.3
             end
-            mainFunc.ballAndButtonAndScreenCreateScript.itemBtn:removeEventListener("tap", mainFunc.buttonListener)
+            mainFunc.ballBtnScreenCreate.itemBtn:removeEventListener("tap", mainFunc.buttonListener)
 
-            mainFunc.ballAndButtonAndScreenCreateScript.itemBagBtn.alpha = 0.3
-            mainFunc.ballAndButtonAndScreenCreateScript.itemBagBtn:removeEventListener("tap", mainFunc.buttonListener)
+            mainFunc.ballBtnScreenCreate.itemBagBtn.alpha = 0.3
+            mainFunc.ballBtnScreenCreate.itemBagBtn:removeEventListener("tap", mainFunc.buttonListener)
         end
         
-        mainFunc.ballAndButtonAndScreenCreateScript.rightBtn:addEventListener("tap", mainFunc.mapButtonListener)
-        mainFunc.ballAndButtonAndScreenCreateScript.leftBtn:addEventListener("tap", mainFunc.mapButtonListener)
-        mainFunc.ballAndButtonAndScreenCreateScript.downBtn:addEventListener("tap", mainFunc.mapButtonListener)
-        mainFunc.ballAndButtonAndScreenCreateScript.upBtn:addEventListener("tap", mainFunc.mapButtonListener)
+        mainFunc.ballBtnScreenCreate.rightBtn:addEventListener("tap", mainFunc.mapButtonListener)
+        mainFunc.ballBtnScreenCreate.leftBtn:addEventListener("tap", mainFunc.mapButtonListener)
+        mainFunc.ballBtnScreenCreate.downBtn:addEventListener("tap", mainFunc.mapButtonListener)
+        mainFunc.ballBtnScreenCreate.upBtn:addEventListener("tap", mainFunc.mapButtonListener)
         mainFunc.allLevelSettings.mapShowCounter = 1
-    elseif mainFunc.ballAndButtonAndScreenCreateScript.mapScreen.state == "mapShowing"
+    elseif mainFunc.ballBtnScreenCreate.mapScreen.state == "mapShowing"
     and mainFunc.allLevelSettings.mapShowCounter == 1 then
         
-        mainFunc.ballAndButtonAndScreenCreateScript.rightBtn:removeEventListener("tap", mainFunc.mapButtonListener )
-        mainFunc.ballAndButtonAndScreenCreateScript.leftBtn:removeEventListener("tap", mainFunc.mapButtonListener )
-        mainFunc.ballAndButtonAndScreenCreateScript.upBtn:removeEventListener("tap", mainFunc.mapButtonListener )
-        mainFunc.ballAndButtonAndScreenCreateScript.downBtn:removeEventListener("tap", mainFunc.mapButtonListener )
+        mainFunc.ballBtnScreenCreate.rightBtn:removeEventListener("tap", mainFunc.mapButtonListener )
+        mainFunc.ballBtnScreenCreate.leftBtn:removeEventListener("tap", mainFunc.mapButtonListener )
+        mainFunc.ballBtnScreenCreate.upBtn:removeEventListener("tap", mainFunc.mapButtonListener )
+        mainFunc.ballBtnScreenCreate.downBtn:removeEventListener("tap", mainFunc.mapButtonListener )
         
-        transition.to (mainFunc.ballAndButtonAndScreenCreateScript.rightBtn, {alpha=0, time=200})
-        transition.to (mainFunc.ballAndButtonAndScreenCreateScript.leftBtn, {alpha=0, time=200})
-        transition.to (mainFunc.ballAndButtonAndScreenCreateScript.upBtn, {alpha=0, time=200})
-        transition.to (mainFunc.ballAndButtonAndScreenCreateScript.downBtn, {alpha=0, time=200})
+        transition.to (mainFunc.ballBtnScreenCreate.rightBtn, {alpha=0, time=200})
+        transition.to (mainFunc.ballBtnScreenCreate.leftBtn, {alpha=0, time=200})
+        transition.to (mainFunc.ballBtnScreenCreate.upBtn, {alpha=0, time=200})
+        transition.to (mainFunc.ballBtnScreenCreate.downBtn, {alpha=0, time=200})
 
 
-        transition.to (mainFunc.ballAndButtonAndScreenCreateScript.mapShowAndClockLabel.map, {alpha=0, time=150})
-        transition.to (mainFunc.ballAndButtonAndScreenCreateScript.mapShowAndClockLabel.compass, {alpha=0, time=150})
-        transition.to (mainFunc.ballAndButtonAndScreenCreateScript.mapShowAndClockLabel, {alpha=0, time=150})
+        transition.to (mainFunc.ballBtnScreenCreate.mapShowAndClockLabel.map, {alpha=0, time=150})
+        transition.to (mainFunc.ballBtnScreenCreate.mapShowAndClockLabel.compass, {alpha=0, time=150})
+        transition.to (mainFunc.ballBtnScreenCreate.mapShowAndClockLabel, {alpha=0, time=150})
 
         if mainFunc.thisLevelSettings.itemBagButtonsVisible then
-            mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.alpha = 1
-            if (mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.img
-            and mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.img ~= nil) then
-                mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.img.alpha = 1
+            mainFunc.ballBtnScreenCreate.itemBtn.alpha = 1
+            if (mainFunc.ballBtnScreenCreate.itemBtn.img
+            and mainFunc.ballBtnScreenCreate.itemBtn.img ~= nil) then
+                mainFunc.ballBtnScreenCreate.itemBtn.img.alpha = 1
             end
-            mainFunc.ballAndButtonAndScreenCreateScript.itemBtn:addEventListener("tap", mainFunc.buttonListener)
+            mainFunc.ballBtnScreenCreate.itemBtn:addEventListener("tap", mainFunc.buttonListener)
 
-            mainFunc.ballAndButtonAndScreenCreateScript.itemBagBtn.alpha = 1
-            mainFunc.ballAndButtonAndScreenCreateScript.itemBagBtn:addEventListener("tap", mainFunc.buttonListener)
+            mainFunc.ballBtnScreenCreate.itemBagBtn.alpha = 1
+            mainFunc.ballBtnScreenCreate.itemBagBtn:addEventListener("tap", mainFunc.buttonListener)
         end
 
         mainFunc.allLevelSettings.shouldBallMoveCounter = mainFunc.allLevelSettings.shouldBallMoveCounter - 1
@@ -647,15 +645,15 @@ local mapButtonPressedFunction = function (mainFunc, shapeArray, shapeArrayParam
             mainFunc.screenChangingScript.initialReturnToBallScreen(mainFunc, "returnFromMap", shapeArray, shapeArrayParameters)
         end
         
-        mainFunc.ballAndButtonAndScreenCreateScript.mapScreen.state = "mapHidden"
-        mainFunc.ballAndButtonAndScreenCreateScript.mapScreen:removeEventListener("tap", mainFunc.dummyListener)
-        mainFunc.ballAndButtonAndScreenCreateScript.mapScreen:removeEventListener("touch", mainFunc.dummyListener)
+        mainFunc.ballBtnScreenCreate.mapScreen.state = "mapHidden"
+        mainFunc.ballBtnScreenCreate.mapScreen:removeEventListener("tap", mainFunc.dummyListener)
+        mainFunc.ballBtnScreenCreate.mapScreen:removeEventListener("touch", mainFunc.dummyListener)
 
         mainFunc.allLevelSettings.mapShowCounter = 0
         
     end
 
-    timer.performWithDelay(300, function () mainFunc.ballAndButtonAndScreenCreateScript.playBtn:addEventListener("tap", mainFunc.buttonListener) end)
+    timer.performWithDelay(300, function () mainFunc.ballBtnScreenCreate.playBtn:addEventListener("tap", mainFunc.buttonListener) end)
 
 end
 	t.mapButtonPressedFunction = mapButtonPressedFunction
@@ -672,10 +670,10 @@ local pauseButtonPressedFunction = function (mainFunc, shapeArray, shapeArrayPar
     
 	mainFunc.screenShowingScript.showPauseScreen(mainFunc)
     
-    mainFunc.ballAndButtonAndScreenCreateScript.playBtn:removeEventListener( "tap", mainFunc.buttonListener )
-    mainFunc.ballAndButtonAndScreenCreateScript.backToPlayBtn:addEventListener( "tap", mainFunc.buttonListener )
-    mainFunc.ballAndButtonAndScreenCreateScript.resetBtn:addEventListener( "tap", mainFunc.buttonListener )
-    mainFunc.ballAndButtonAndScreenCreateScript.backToMainBtn:addEventListener( "tap", mainFunc.buttonListener )
+    mainFunc.ballBtnScreenCreate.playBtn:removeEventListener( "tap", mainFunc.buttonListener )
+    mainFunc.ballBtnScreenCreate.backToPlayBtn:addEventListener( "tap", mainFunc.buttonListener )
+    mainFunc.ballBtnScreenCreate.resetBtn:addEventListener( "tap", mainFunc.buttonListener )
+    mainFunc.ballBtnScreenCreate.backToMainBtn:addEventListener( "tap", mainFunc.buttonListener )
 
     if mainFunc.allLevelSettings.mysteryBlockBagIsOpen then
         for a = 1, #mainFunc.allLevelSettings.showingObjectsArray do
@@ -692,16 +690,16 @@ end
 
 local backToPlayButtonPressedFunction = function (mainFunc, shapeArray, shapeArrayParameters, levelVariables)
 
-	if mainFunc.ballAndButtonAndScreenCreateScript.pauseScreen.state == "paused" then
+	if mainFunc.ballBtnScreenCreate.pauseScreen.state == "paused" then
     	mainFunc.screenShowingScript.showPauseScreen(mainFunc)
-        mainFunc.ballAndButtonAndScreenCreateScript.randomBtn:addEventListener( "tap", mainFunc.buttonListener )
+        mainFunc.ballBtnScreenCreate.randomBtn:addEventListener( "tap", mainFunc.buttonListener )
         if mainFunc.allLevelSettings.itemBagIsOpen == false then
-            mainFunc.ballAndButtonAndScreenCreateScript.playBtn:addEventListener( "tap", mainFunc.buttonListener )
+            mainFunc.ballBtnScreenCreate.playBtn:addEventListener( "tap", mainFunc.buttonListener )
         end
 
-        mainFunc.ballAndButtonAndScreenCreateScript.backToPlayBtn:removeEventListener( "tap", mainFunc.buttonListener )
-        mainFunc.ballAndButtonAndScreenCreateScript.resetBtn:removeEventListener( "tap", mainFunc.buttonListener )
-        mainFunc.ballAndButtonAndScreenCreateScript.backToMainBtn:removeEventListener( "tap", mainFunc.buttonListener )
+        mainFunc.ballBtnScreenCreate.backToPlayBtn:removeEventListener( "tap", mainFunc.buttonListener )
+        mainFunc.ballBtnScreenCreate.resetBtn:removeEventListener( "tap", mainFunc.buttonListener )
+        mainFunc.ballBtnScreenCreate.backToMainBtn:removeEventListener( "tap", mainFunc.buttonListener )
 
         if mainFunc.allLevelSettings.itemBagIsOpen then
             if mainFunc.allLevelSettings.itemBagIsOpen == true then
@@ -866,7 +864,7 @@ local createObjectImage = function (toolIndex, bombIndex, mainFunc, itemTransact
             elseif itemTransactionType == "itemUsed" then
                 mainFunc.allLevelSettings.midScreenObjectsGroup:insert( object )
 
-                mainFunc.ballAndButtonAndScreenCreateScript.instance2:toFront()
+                mainFunc.ballBtnScreenCreate.ball:toFront()
                 for a = 1, #mainFunc.allLevelSettings.bullet do
                     mainFunc.allLevelSettings.bullet[a]:toFront()
                 end
@@ -875,11 +873,11 @@ local createObjectImage = function (toolIndex, bombIndex, mainFunc, itemTransact
 
             if (itemTransactionType == "itemGained") then
                 itemBagScreenArrayCounter = 0
-                for a = 1, #mainFunc.ballAndButtonAndScreenCreateScript.itemGainedScreen.itemArray do
+                for a = 1, #mainFunc.ballBtnScreenCreate.itemGainedScreen.itemArray do
                     itemBagScreenArrayCounter = itemBagScreenArrayCounter + 1
                 end
 
-                mainFunc.ballAndButtonAndScreenCreateScript.itemGainedScreen.itemArray[itemBagScreenArrayCounter + 1] = object
+                mainFunc.ballBtnScreenCreate.itemGainedScreen.itemArray[itemBagScreenArrayCounter + 1] = object
             end
 
             if itemTransactionType == "itemGained" then
@@ -1003,12 +1001,12 @@ local createToolImage = function (thisBombProps, toolIndex, bombIndex, mainFunc,
         end
 
         -- if itemTransactionType == "itemUsed" then
-        --     mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen:toBack()
+        --     mainFunc.ballBtnScreenCreate.itemBagScreen:toBack()
         -- end
 
         mainFunc.allLevelSettings.midScreenObjectsGroup:insert( item )
 
-        mainFunc.ballAndButtonAndScreenCreateScript.instance2:toFront()
+        mainFunc.ballBtnScreenCreate.ball:toFront()
         for a = 1, #mainFunc.allLevelSettings.bullet do
             mainFunc.allLevelSettings.bullet[a]:toFront()
         end
@@ -1172,11 +1170,11 @@ local createToolImage = function (thisBombProps, toolIndex, bombIndex, mainFunc,
         item.itemType = "levelItem"
 
         itemBagScreenArrayCounter = 0
-        for a = 1, #mainFunc.ballAndButtonAndScreenCreateScript.itemGainedScreen.itemArray do
+        for a = 1, #mainFunc.ballBtnScreenCreate.itemGainedScreen.itemArray do
             itemBagScreenArrayCounter = itemBagScreenArrayCounter + 1
         end
 
-        mainFunc.ballAndButtonAndScreenCreateScript.itemGainedScreen.itemArray[itemBagScreenArrayCounter + 1] = item
+        mainFunc.ballBtnScreenCreate.itemGainedScreen.itemArray[itemBagScreenArrayCounter + 1] = item
 
         item:setSequence(itemLabel)
 
@@ -1195,19 +1193,25 @@ end
     t.createToolImage = createToolImage
 
 local itemBtnFunction = function (mainFunc, shapeArray, shapeArrayParameters, levelVariables)
-    if mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.relevantShapeArrayCounterForItem ~= nil
-    and mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.isActive == true then
+    local ball = mainFunc.ballBtnScreenCreate.ball;
+    local topScreenEdge = mainFunc.allLevelSettings.topScreenEdge;
+    local rightScreenEdge = mainFunc.allLevelSettings.rightScreenEdge;
+    local bottomScreenEdge = mainFunc.allLevelSettings.bottomScreenEdge;
+    local leftScreenEdge = mainFunc.allLevelSettings.leftScreenEdge;
+
+    if mainFunc.ballBtnScreenCreate.itemBtn.relevantShapeArrayCounterForItem ~= nil
+    and mainFunc.ballBtnScreenCreate.itemBtn.isActive == true then
         showingToolsArray = mainFunc.allLevelSettings.showingToolsArray
         toolArray = mainFunc.thisLevelSettings.toolArray
-        toolArrayCounter = mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.relevantShapeArrayCounterForItem
+        toolArrayCounter = mainFunc.ballBtnScreenCreate.itemBtn.relevantShapeArrayCounterForItem
         local removeItemImg = function (mainFunc)
-            if mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.img
-            and mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.img ~= nil then
-                mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.img:removeSelf()
-                mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.img = nil          
-                mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.counterImg:removeSelf()
-                mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.counterImg = nil
-                mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.relevantShapeArrayCounterForItem = nil
+            if mainFunc.ballBtnScreenCreate.itemBtn.img
+            and mainFunc.ballBtnScreenCreate.itemBtn.img ~= nil then
+                mainFunc.ballBtnScreenCreate.itemBtn.img:removeSelf()
+                mainFunc.ballBtnScreenCreate.itemBtn.img = nil          
+                mainFunc.ballBtnScreenCreate.itemBtn.counterImg:removeSelf()
+                mainFunc.ballBtnScreenCreate.itemBtn.counterImg = nil
+                mainFunc.ballBtnScreenCreate.itemBtn.relevantShapeArrayCounterForItem = nil
             end
 
         end
@@ -1224,14 +1228,14 @@ local itemBtnFunction = function (mainFunc, shapeArray, shapeArrayParameters, le
                 table.remove(thisToolArray, counter)
 
             else
-                mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.counterImg:removeSelf()
-                mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.counterImg = nil
+                mainFunc.ballBtnScreenCreate.itemBtn.counterImg:removeSelf()
+                mainFunc.ballBtnScreenCreate.itemBtn.counterImg = nil
 
-                mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.counterImg = display.newImage("images/objects/imageNumber" .. thisToolArray[counter]["quantity"] .. ".png")
-                mainFunc.allLevelSettings.itemScreenObjectsGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.counterImg)
-                itemBtnCounterImage = mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.counterImg
-                itemBtnCounterImage.x = mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.x
-                itemBtnCounterImage.y = mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.y - 10
+                mainFunc.ballBtnScreenCreate.itemBtn.counterImg = display.newImage("images/objects/imageNumber" .. thisToolArray[counter]["quantity"] .. ".png")
+                mainFunc.allLevelSettings.itemScreenObjectsGroup:insert(mainFunc.ballBtnScreenCreate.itemBtn.counterImg)
+                itemBtnCounterImage = mainFunc.ballBtnScreenCreate.itemBtn.counterImg
+                itemBtnCounterImage.x = mainFunc.ballBtnScreenCreate.itemBtn.x
+                itemBtnCounterImage.y = mainFunc.ballBtnScreenCreate.itemBtn.y - 10
                 itemBtnCounterImage.xScale = 0.5
                 itemBtnCounterImage.yScale = 0.5   
 
@@ -1242,8 +1246,8 @@ local itemBtnFunction = function (mainFunc, shapeArray, shapeArrayParameters, le
             if (thisToolName == "hook") then
                 itemBtnDelay = (250 * thisToolProps["squares"])
             end
-            timer.performWithDelay(itemBtnDelay, function () mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.isActive = true 
-                                                                mainFunc.ballAndButtonAndScreenCreateScript.itemBtn:addEventListener( "tap", mainFunc.buttonListener ) end)
+            timer.performWithDelay(itemBtnDelay, function () mainFunc.ballBtnScreenCreate.itemBtn.isActive = true 
+                                                                mainFunc.ballBtnScreenCreate.itemBtn:addEventListener( "tap", mainFunc.buttonListener ) end)
 
             saveTable(thisToolArray, "myTotalToolArray.json")
         end
@@ -1251,25 +1255,25 @@ local itemBtnFunction = function (mainFunc, shapeArray, shapeArrayParameters, le
         -- so they cannot use certain items when they're too close to an a physical shape
         local function checkForShapeSquare (mainFunc, shapeArray)
             local centreOfSquareCords = {}
-            xFig = mainFunc.ballAndButtonAndScreenCreateScript.instance2.x - ( (mainFunc.allLevelSettings.ballScreenHorzValue - 1) * display.contentWidth)
+            xFig = ball.x - ( (mainFunc.allLevelSettings.ballScreenHorzValue - 1) * display.contentWidth)
             xFig = (xFig - mainFunc.allLevelSettings.gutterWidth) / mainFunc.allLevelSettings.squareWidth
-            yFig = mainFunc.ballAndButtonAndScreenCreateScript.instance2.y - ( (mainFunc.allLevelSettings.ballScreenVertValue - 1) * display.contentHeight)
+            yFig = ball.y - ( (mainFunc.allLevelSettings.ballScreenVertValue - 1) * display.contentHeight)
             yFig = (yFig - mainFunc.allLevelSettings.gutterHeight) / mainFunc.allLevelSettings.squareHeight
             xFig = math.floor(xFig)
             yFig = math.floor(yFig)
 
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2.relevantHorzScreen = mainFunc.allLevelSettings.ballScreenHorzValue
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2.relevantVertScreen = mainFunc.allLevelSettings.ballScreenVertValue
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2.relevantHorzSquare = xFig + 1
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2.relevantVertSquare = yFig + 1
+            mainFunc.ballBtnScreenCreate.ball.relevantHorzScreen = mainFunc.allLevelSettings.ballScreenHorzValue
+            mainFunc.ballBtnScreenCreate.ball.relevantVertScreen = mainFunc.allLevelSettings.ballScreenVertValue
+            mainFunc.ballBtnScreenCreate.ball.relevantHorzSquare = xFig + 1
+            mainFunc.ballBtnScreenCreate.ball.relevantVertSquare = yFig + 1
 
             for a = 1, #shapeArray do
                 if shapeArrayParameters[a]["type"] == "shape" then
-                    if shapeArray[a].relevantHorzScreen == mainFunc.ballAndButtonAndScreenCreateScript.instance2.relevantHorzScreen
-                    and shapeArray[a].relevantVertScreen == mainFunc.ballAndButtonAndScreenCreateScript.instance2.relevantVertScreen
-                    and shapeArray[a].relevantHorzSquare == mainFunc.ballAndButtonAndScreenCreateScript.instance2.relevantHorzSquare
-                    and shapeArray[a].relevantVertSquare == mainFunc.ballAndButtonAndScreenCreateScript.instance2.relevantVertSquare then
-                        mainFunc.ballAndButtonAndScreenCreateScript.instance2.isInShapeSquare = true
+                    if shapeArray[a].relevantHorzScreen == ball.relevantHorzScreen
+                    and shapeArray[a].relevantVertScreen == ball.relevantVertScreen
+                    and shapeArray[a].relevantHorzSquare == ball.relevantHorzSquare
+                    and shapeArray[a].relevantVertSquare == ball.relevantVertSquare then
+                        mainFunc.ballBtnScreenCreate.ball.isInShapeSquare = true
                     end
                 end
             end
@@ -1281,74 +1285,75 @@ local itemBtnFunction = function (mainFunc, shapeArray, shapeArrayParameters, le
         end
 
         local followBall = function (event)
-            if (mainFunc.ballAndButtonAndScreenCreateScript.instance2.direction == "right") then
-                mainFunc.ballAndButtonAndScreenCreateScript.instance2.suit.x = mainFunc.ballAndButtonAndScreenCreateScript.instance2.x + ( (6/480) * display.contentWidth)
-            elseif (mainFunc.ballAndButtonAndScreenCreateScript.instance2.direction == "left") then
-                mainFunc.ballAndButtonAndScreenCreateScript.instance2.suit.x = mainFunc.ballAndButtonAndScreenCreateScript.instance2.x - ( (6/480) * display.contentWidth)
+            if (ball.direction == "right") then
+                ball.suit.x = ball.x + ( (6/480) * display.contentWidth)
+            elseif (ball.direction == "left") then
+                ball.suit.x = ball.x - ( (6/480) * display.contentWidth)
             else
-                mainFunc.ballAndButtonAndScreenCreateScript.instance2.suit.x = mainFunc.ballAndButtonAndScreenCreateScript.instance2.x
+                ball.suit.x = ball.x
             end
 
-            if (mainFunc.ballAndButtonAndScreenCreateScript.instance2.direction == "up") then
-                mainFunc.ballAndButtonAndScreenCreateScript.instance2.suit.y = mainFunc.ballAndButtonAndScreenCreateScript.instance2.y - ( (4/320) * display.contentHeight)
-            elseif (mainFunc.ballAndButtonAndScreenCreateScript.instance2.direction == "down") then
-                mainFunc.ballAndButtonAndScreenCreateScript.instance2.suit.y = mainFunc.ballAndButtonAndScreenCreateScript.instance2.y + ( (4/320) * display.contentHeight)
+            if (ball.direction == "up") then
+                ball.suit.y = ball.y - ( (4/320) * display.contentHeight)
+            elseif (ball.direction == "down") then
+                ball.suit.y = ball.y + ( (4/320) * display.contentHeight)
             else
-                mainFunc.ballAndButtonAndScreenCreateScript.instance2.suit.y = mainFunc.ballAndButtonAndScreenCreateScript.instance2.y
+                ball.suit.y = ball.y
             end
         end
 
         local addBackListenerForItemBtn = function ()
             timer.performWithDelay(100, function ()
-                mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.isActive = true
-                mainFunc.ballAndButtonAndScreenCreateScript.itemBtn:addEventListener("tap", mainFunc.buttonListener)
+                mainFunc.ballBtnScreenCreate.itemBtn.isActive = true
+                mainFunc.ballBtnScreenCreate.itemBtn:addEventListener("tap", mainFunc.buttonListener)
             end)
         end
 
         if mainFunc.allLevelSettings.specialBallActive == true then
-            mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.isActive = false
+            mainFunc.ballBtnScreenCreate.itemBtn.isActive = false
 
-            local prevImageSheet = graphics.newImageSheet( mainFunc.allLevelSettings.characterInLevelImageSheet[mainFunc.ballAndButtonAndScreenCreateScript.instance2Dummy.character], mainFunc.allLevelSettings.normalCharacterInLevelSequenceData)
+            local prevImageSheet = graphics.newImageSheet( mainFunc.allLevelSettings.characterInLevelImageSheet[mainFunc.ballBtnScreenCreate.ballDummy.character], mainFunc.allLevelSettings.normalCharacterInLevelSequenceData)
 
-            --mainFunc.ballAndButtonAndScreenCreateScript.instance2:removeSelf()
-            --mainFunc.ballAndButtonAndScreenCreateScript.instance2 = nil
+            --mainFunc.ballBtnScreenCreate.ball:removeSelf()
+            --mainFunc.ballBtnScreenCreate.ball = nil
 
-            mainFunc.oldInstance2 = mainFunc.ballAndButtonAndScreenCreateScript.instance2
+            mainFunc.oldball = ball
 
-            transition.to(mainFunc.ballAndButtonAndScreenCreateScript.instance2Dummy, {alpha = 1, x = mainFunc.ballAndButtonAndScreenCreateScript.instance2Dummy.x + ( (10/480) * display.contentWidth), time = 80, onComplete = function ()
-                mainFunc.ballAndButtonAndScreenCreateScript.instance2 = display.newSprite(prevImageSheet, prevSequenceData)
-                physics.addBody( mainFunc.ballAndButtonAndScreenCreateScript.instance2, { density = 1, friction = 1, bounce = 0, radius = (mainFunc.allLevelSettings.squareHeight/4) } )
-                mainFunc.allLevelSettings.midScreenObjectsGroup:insert( mainFunc.ballAndButtonAndScreenCreateScript.instance2 )
-                mainFunc.ballAndButtonAndScreenCreateScript.instance2.projectileType = "ball"
-                mainFunc.ballAndButtonAndScreenCreateScript.instance2.direction = mainFunc.ballAndButtonAndScreenCreateScript.instance2Dummy.direction
-                mainFunc.ballAndButtonAndScreenCreateScript.instance2.relevantArrayIndex = 0
-                mainFunc.ballAndButtonAndScreenCreateScript.instance2.transitionId = mainFunc.ballAndButtonAndScreenCreateScript.instance2.relevantArrayIndex
-                mainFunc.ballAndButtonAndScreenCreateScript.instance2.gravityScale = 0
-                -- instance2.xScale = 0.6
-                -- instance2.yScale = 0.6
-                mainFunc.ballAndButtonAndScreenCreateScript.instance2.x = mainFunc.ballAndButtonAndScreenCreateScript.instance2Dummy.x
-                mainFunc.ballAndButtonAndScreenCreateScript.instance2.y = mainFunc.ballAndButtonAndScreenCreateScript.instance2Dummy.y
-                mainFunc.ballAndButtonAndScreenCreateScript.instance2.isFixedRotation = true
-                mainFunc.ballAndButtonAndScreenCreateScript.instance2.autoFanCounter = 0
-                mainFunc.ballAndButtonAndScreenCreateScript.instance2.fanCenteringCounter = 0
-                mainFunc.ballAndButtonAndScreenCreateScript.instance2.movementSpeed = 100
-                mainFunc.ballAndButtonAndScreenCreateScript.instance2.transitioning = false
-                mainFunc.ballAndButtonAndScreenCreateScript.instance2:play()
-                mainFunc.ballAndButtonAndScreenCreateScript.instance2:toFront()
-                mainFunc.ballAndButtonAndScreenCreateScript.instance2:setSequence(mainFunc.ballAndButtonAndScreenCreateScript.instance2Dummy.direction)
-                mainFunc.ballAndButtonAndScreenCreateScript.instance2.specialConditionsArray = {}
+            transition.to(mainFunc.ballBtnScreenCreate.ballDummy, {alpha = 1, x = mainFunc.ballBtnScreenCreate.ballDummy.x + ( (10/480) * display.contentWidth), time = 80, onComplete = function ()
+                mainFunc.ballBtnScreenCreate.ball = display.newSprite(prevImageSheet, prevSequenceData);
+                ball = mainFunc.ballBtnScreenCreate.ball;
+                physics.addBody( ball, { density = 1, friction = 1, bounce = 0, radius = (mainFunc.allLevelSettings.squareHeight/4) } )
+                mainFunc.allLevelSettings.midScreenObjectsGroup:insert( mainFunc.ballBtnScreenCreate.ball )
+                ball.projectileType = "ball"
+                ball.direction = mainFunc.ballBtnScreenCreate.ballDummy.direction
+                ball.relevantArrayIndex = 0
+                ball.transitionId = mainFunc.ballBtnScreenCreate.ball.relevantArrayIndex
+                ball.gravityScale = 0
+                -- ball.xScale = 0.6
+                -- ball.yScale = 0.6
+                ball.x = mainFunc.ballBtnScreenCreate.ballDummy.x
+                ball.y = mainFunc.ballBtnScreenCreate.ballDummy.y
+                ball.isFixedRotation = true
+                ball.autoFanCounter = 0
+                ball.fanCenteringCounter = 0
+                ball.movementSpeed = 100
+                ball.transitioning = false
+                mainFunc.ballBtnScreenCreate.ball:play()
+                mainFunc.ballBtnScreenCreate.ball:toFront()
+                mainFunc.ballBtnScreenCreate.ball:setSequence(mainFunc.ballBtnScreenCreate.ballDummy.direction)
+                ball.specialConditionsArray = {}
 
-                mainFunc.ballAndButtonAndScreenCreateScript.instance2.character = mainFunc.ballAndButtonAndScreenCreateScript.instance2Dummy.character
+                ball.character = mainFunc.ballBtnScreenCreate.ballDummy.character
 
-                mainFunc.ballAndButtonAndScreenCreateScript.instance2Dummy:removeSelf()
-                mainFunc.ballAndButtonAndScreenCreateScript.instance2Dummy = nil
+                mainFunc.ballBtnScreenCreate.ballDummy:removeSelf()
+                mainFunc.ballBtnScreenCreate.ballDummy = nil
 
-                mainFunc.oldInstance2:removeSelf()
-                mainFunc.oldInstance2 = nil
+                mainFunc.oldball:removeSelf()
+                mainFunc.oldball = nil
 
                 timer.performWithDelay(200, function ()
                     mainFunc.allLevelSettings.specialBallActive = false
-                    mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.isActive = true
+                    mainFunc.ballBtnScreenCreate.itemBtn.isActive = true
                 end)
             end})
 
@@ -1366,10 +1371,10 @@ local itemBtnFunction = function (mainFunc, shapeArray, shapeArrayParameters, le
             or toolArray[toolArrayCounter]["name"] == "iceCape" 
             or toolArray[toolArrayCounter]["name"] == "bulletVest" then
                 local toolName = toolArray[toolArrayCounter]["name"]
-                mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.isActive = false
+                mainFunc.ballBtnScreenCreate.itemBtn.isActive = false
 
                 local addSuit = function (suitName, suitTime, index)
-                    mainFunc.ballAndButtonAndScreenCreateScript.instance2.specialConditionsArray[suitName].active = true
+                    mainFunc.ballBtnScreenCreate.ball.specialConditionsArray[suitName].active = true
 
 
                     if suitName ~= "characterSpecial" and suitName ~= "bulletVest" then
@@ -1381,14 +1386,14 @@ local itemBtnFunction = function (mainFunc, shapeArray, shapeArrayParameters, le
                             { name = "left", start=4, count=1, loopCount=1 }
                         }
                     
-                        mainFunc.ballAndButtonAndScreenCreateScript.instance2.suit = display.newSprite(suitImageSheet, suitSequenceData)
-                        mainFunc.ballAndButtonAndScreenCreateScript.instance2.suit.anchorX = 0.5
-                        mainFunc.ballAndButtonAndScreenCreateScript.instance2.suit.anchorY = 0.5
-                        mainFunc.ballAndButtonAndScreenCreateScript.instance2.suit:setSequence(mainFunc.ballAndButtonAndScreenCreateScript.instance2.direction)
+                        ball.suit = display.newSprite(suitImageSheet, suitSequenceData)
+                        ball.suit.anchorX = 0.5
+                        ball.suit.anchorY = 0.5
+                        ball.suit:setSequence(ball.direction)
 
                         Runtime:addEventListener("enterFrame", followBall)
 
-                        mainFunc.allLevelSettings.midScreenObjectsGroup:insert( mainFunc.ballAndButtonAndScreenCreateScript.instance2.suit )
+                        mainFunc.allLevelSettings.midScreenObjectsGroup:insert( ball.suit )
                     else
                         local label
                         if suitName == "characterSpecial" then
@@ -1397,19 +1402,19 @@ local itemBtnFunction = function (mainFunc, shapeArray, shapeArrayParameters, le
                             label = "-bullet"
                         end
 
-                        mainFunc.ballAndButtonAndScreenCreateScript.instance2:setSequence(mainFunc.ballAndButtonAndScreenCreateScript.instance2.direction .. label)
+                        mainFunc.ballBtnScreenCreate.ball:setSequence(ball.direction .. label)
                     end
 
 
-                    mainFunc.ballAndButtonAndScreenCreateScript.instance2.specialConditionsArray[suitName].timer = timer.performWithDelay(
+                    mainFunc.ballBtnScreenCreate.ball.specialConditionsArray[suitName].timer = timer.performWithDelay(
                         1000 * suitTime,
                         function ()
-                            mainFunc.ballAndButtonAndScreenCreateScript.instance2.specialConditionsArray[suitName].active = false
-                            mainFunc.ballAndButtonAndScreenCreateScript.instance2:setSequence(mainFunc.ballAndButtonAndScreenCreateScript.instance2.direction)
-                            if mainFunc.ballAndButtonAndScreenCreateScript.instance2.suit then
+                            mainFunc.ballBtnScreenCreate.ball.specialConditionsArray[suitName].active = false
+                            mainFunc.ballBtnScreenCreate.ball:setSequence(mainFunc.ballBtnScreenCreate.ball.direction)
+                            if mainFunc.ballBtnScreenCreate.ball.suit then
                                 Runtime:removeEventListener("enterFrame", followBall)
-                                mainFunc.ballAndButtonAndScreenCreateScript.instance2.suit:removeSelf()
-                                mainFunc.ballAndButtonAndScreenCreateScript.instance2.suit = nil
+                                mainFunc.ballBtnScreenCreate.ball.suit:removeSelf()
+                                mainFunc.ballBtnScreenCreate.ball.suit = nil
                             end
                         end
                     )
@@ -1417,30 +1422,30 @@ local itemBtnFunction = function (mainFunc, shapeArray, shapeArrayParameters, le
                     removeItemFromToolArray(index, mainFunc)
                 end
 
-                if mainFunc.ballAndButtonAndScreenCreateScript.instance2.specialConditionsArray[toolName]
-                and mainFunc.ballAndButtonAndScreenCreateScript.instance2.specialConditionsArray[toolName].active == true then
+                if mainFunc.ballBtnScreenCreate.ball.specialConditionsArray[toolName]
+                and mainFunc.ballBtnScreenCreate.ball.specialConditionsArray[toolName].active == true then
                     --nothing happens, they can´t apply the same thing twice at same time
                     addBackListenerForItemBtn()
-                    mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.isActive = true
-                elseif mainFunc.ballAndButtonAndScreenCreateScript.instance2.specialConditionsArray[toolName]
-                and mainFunc.ballAndButtonAndScreenCreateScript.instance2.specialConditionsArray[toolName].active == false then
+                    mainFunc.ballBtnScreenCreate.itemBtn.isActive = true
+                elseif mainFunc.ballBtnScreenCreate.ball.specialConditionsArray[toolName]
+                and mainFunc.ballBtnScreenCreate.ball.specialConditionsArray[toolName].active == false then
                     --nothing happens, they can´t apply the same thing twice at same time
                     addSuit(toolArray[toolArrayCounter]["name"], toolArray[toolArrayCounter]["properties"]["seconds"], toolArrayCounter)
                 else
-                    mainFunc.ballAndButtonAndScreenCreateScript.instance2.specialConditionsArray[toolName] = {}
+                    mainFunc.ballBtnScreenCreate.ball.specialConditionsArray[toolName] = {}
                     addSuit(toolArray[toolArrayCounter]["name"], toolArray[toolArrayCounter]["properties"]["seconds"], toolArrayCounter)
                 end
             elseif toolArray[toolArrayCounter]["name"] == "bomb" then
                 if mainFunc.allLevelSettings.isBallMovingState == "true"
-                and mainFunc.ballAndButtonAndScreenCreateScript.instance2.x > (mainFunc.allLevelSettings.leftScreenEdge + 30)
-                and mainFunc.ballAndButtonAndScreenCreateScript.instance2.x < (mainFunc.allLevelSettings.rightScreenEdge - 60)
-                and mainFunc.ballAndButtonAndScreenCreateScript.instance2.y > (mainFunc.allLevelSettings.topScreenEdge + 30)
-                and mainFunc.ballAndButtonAndScreenCreateScript.instance2.y < (mainFunc.allLevelSettings.bottomScreenEdge - 60) then
+                and mainFunc.ballBtnScreenCreate.ball.x > (mainFunc.allLevelSettings.leftScreenEdge + 30)
+                and mainFunc.ballBtnScreenCreate.ball.x < (mainFunc.allLevelSettings.rightScreenEdge - 60)
+                and mainFunc.ballBtnScreenCreate.ball.y > (mainFunc.allLevelSettings.topScreenEdge + 30)
+                and mainFunc.ballBtnScreenCreate.ball.y < (mainFunc.allLevelSettings.bottomScreenEdge - 60) then
                     local thisBombProps = toolArray[toolArrayCounter]
 
                     removeItemFromToolArray(toolArrayCounter, mainFunc)
 
-                    mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.isActive = false
+                    mainFunc.ballBtnScreenCreate.itemBtn.isActive = false
                     mainFunc.thisLevelSettings.bombIsInUse = true
                     mainFunc.thisLevelSettings.bombInUseCounter = mainFunc.thisLevelSettings.bombInUseCounter + 1
 
@@ -1489,9 +1494,9 @@ local itemBtnFunction = function (mainFunc, shapeArray, shapeArrayParameters, le
                     end
                     item.xScale = 0.7
                     item.yScale = 0.7
-                    item.x = mainFunc.ballAndButtonAndScreenCreateScript.instance2.x
+                    item.x = mainFunc.ballBtnScreenCreate.ball.x
                     transition.to(item, {x = centreOfSquareCords.xVal, time = 60})
-                    item.y = mainFunc.ballAndButtonAndScreenCreateScript.instance2.y
+                    item.y = mainFunc.ballBtnScreenCreate.ball.y
                
                     transition.to(item, {y = centreOfSquareCords.yVal, time = 60, onComplete = function ()
                         local scaleBombUp = function ()
@@ -1530,82 +1535,82 @@ local itemBtnFunction = function (mainFunc, shapeArray, shapeArrayParameters, le
             elseif toolArray[toolArrayCounter]["name"] == "jet" then
 
                 if (mainFunc.allLevelSettings.isBallMovingState == "true")
-                and mainFunc.ballAndButtonAndScreenCreateScript.instance2.x > (mainFunc.allLevelSettings.leftScreenEdge + 30)
-                and mainFunc.ballAndButtonAndScreenCreateScript.instance2.x < (mainFunc.allLevelSettings.rightScreenEdge - 60)
-                and mainFunc.ballAndButtonAndScreenCreateScript.instance2.y > (mainFunc.allLevelSettings.topScreenEdge + 30)
-                and mainFunc.ballAndButtonAndScreenCreateScript.instance2.y < (mainFunc.allLevelSettings.bottomScreenEdge - 60) then
+                and mainFunc.ballBtnScreenCreate.ball.x > (mainFunc.allLevelSettings.leftScreenEdge + 30)
+                and mainFunc.ballBtnScreenCreate.ball.x < (mainFunc.allLevelSettings.rightScreenEdge - 60)
+                and mainFunc.ballBtnScreenCreate.ball.y > (mainFunc.allLevelSettings.topScreenEdge + 30)
+                and mainFunc.ballBtnScreenCreate.ball.y < (mainFunc.allLevelSettings.bottomScreenEdge - 60) then
 
                     local jetFollowBall = function (event)
-                        if (mainFunc.ballAndButtonAndScreenCreateScript.instance2.direction == "right") then
-                            mainFunc.ballAndButtonAndScreenCreateScript.instance2.jetSuit.x = mainFunc.ballAndButtonAndScreenCreateScript.instance2.x - ( (14/480) * display.contentWidth)
-                        elseif (mainFunc.ballAndButtonAndScreenCreateScript.instance2.direction == "left") then
-                            mainFunc.ballAndButtonAndScreenCreateScript.instance2.jetSuit.x = mainFunc.ballAndButtonAndScreenCreateScript.instance2.x + ( (14/480) * display.contentWidth)
+                        if (mainFunc.ballBtnScreenCreate.ball.direction == "right") then
+                            mainFunc.ballBtnScreenCreate.ball.jetSuit.x = mainFunc.ballBtnScreenCreate.ball.x - ( (14/480) * display.contentWidth)
+                        elseif (mainFunc.ballBtnScreenCreate.ball.direction == "left") then
+                            mainFunc.ballBtnScreenCreate.ball.jetSuit.x = mainFunc.ballBtnScreenCreate.ball.x + ( (14/480) * display.contentWidth)
                         else
-                            mainFunc.ballAndButtonAndScreenCreateScript.instance2.jetSuit.x = mainFunc.ballAndButtonAndScreenCreateScript.instance2.x
+                            mainFunc.ballBtnScreenCreate.ball.jetSuit.x = mainFunc.ballBtnScreenCreate.ball.x
                         end
 
-                        if (mainFunc.ballAndButtonAndScreenCreateScript.instance2.direction == "up") then
-                            mainFunc.ballAndButtonAndScreenCreateScript.instance2.jetSuit.y = mainFunc.ballAndButtonAndScreenCreateScript.instance2.y + ( (10/320) * display.contentHeight)
-                        elseif (mainFunc.ballAndButtonAndScreenCreateScript.instance2.direction == "down") then
-                            mainFunc.ballAndButtonAndScreenCreateScript.instance2.jetSuit.y = mainFunc.ballAndButtonAndScreenCreateScript.instance2.y - ( (10/320) * display.contentHeight)
+                        if (mainFunc.ballBtnScreenCreate.ball.direction == "up") then
+                            mainFunc.ballBtnScreenCreate.ball.jetSuit.y = mainFunc.ballBtnScreenCreate.ball.y + ( (10/320) * display.contentHeight)
+                        elseif (mainFunc.ballBtnScreenCreate.ball.direction == "down") then
+                            mainFunc.ballBtnScreenCreate.ball.jetSuit.y = mainFunc.ballBtnScreenCreate.ball.y - ( (10/320) * display.contentHeight)
                         else
-                            mainFunc.ballAndButtonAndScreenCreateScript.instance2.jetSuit.y = mainFunc.ballAndButtonAndScreenCreateScript.instance2.y
+                            mainFunc.ballBtnScreenCreate.ball.jetSuit.y = mainFunc.ballBtnScreenCreate.ball.y
                         end
                     end
 
-                    mainFunc.ballAndButtonAndScreenCreateScript.instance2.isInShapeSquare = false
+                    mainFunc.ballBtnScreenCreate.ball.isInShapeSquare = false
                     local centreOfSquareCords = checkForShapeSquare(mainFunc, shapeArray, ballIsInShapeSquare)
 
-                    if mainFunc.ballAndButtonAndScreenCreateScript.instance2.isInShapeSquare == false then
-                        mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.isActive = false
+                    if mainFunc.ballBtnScreenCreate.ball.isInShapeSquare == false then
+                        mainFunc.ballBtnScreenCreate.itemBtn.isActive = false
 
-                        mainFunc.tm[mainFunc.ballAndButtonAndScreenCreateScript.instance2.projectileType][mainFunc.ballAndButtonAndScreenCreateScript.instance2.relevantArrayIndex]:cancelAll()
+                        mainFunc.tm[mainFunc.ballBtnScreenCreate.ball.projectileType][mainFunc.ballBtnScreenCreate.ball.relevantArrayIndex]:cancelAll()
 
-                        transition.to(mainFunc.ballAndButtonAndScreenCreateScript.instance2, {
+                        transition.to(mainFunc.ballBtnScreenCreate.ball, {
                             x = centreOfSquareCords.xVal,
                             y = centreOfSquareCords.yVal, 
                             time = 300, 
                             onComplete = function ()
-                                mainFunc.ballAndButtonAndScreenCreateScript.instance2.direction = toolArray[toolArrayCounter]["properties"]["directions"][1]
-                                mainFunc.ballAndButtonAndScreenCreateScript.instance2:setSequence(mainFunc.ballAndButtonAndScreenCreateScript.instance2.direction)
-                                mainFunc.projectileMovementRemoveAndRespawnScript.moveProjectile(mainFunc.ballAndButtonAndScreenCreateScript.instance2, mainFunc)
+                                mainFunc.ballBtnScreenCreate.ball.direction = toolArray[toolArrayCounter]["properties"]["directions"][1]
+                                mainFunc.ballBtnScreenCreate.ball:setSequence(mainFunc.ballBtnScreenCreate.ball.direction)
+                                mainFunc.projectileMovementRemoveAndRespawnScript.moveProjectile(mainFunc.ballBtnScreenCreate.ball, mainFunc)
 
                                 local jetSuitImageSheet = graphics.newImageSheet( "images/objects/jetSprite.png", {width = 44, height = 44, numFrames = 4, sheetContentWidth = 176, sheetContentHeight = 44})
                                 local jetSuitSequenceData = {
                                     { name = "main", start=1, count=4,   loopCount=0 }
                                 }
                             
-                                mainFunc.ballAndButtonAndScreenCreateScript.instance2.jetSuit = display.newSprite(jetSuitImageSheet, jetSuitSequenceData)
-                                mainFunc.ballAndButtonAndScreenCreateScript.instance2.jetSuit.anchorX = 0.5
-                                mainFunc.ballAndButtonAndScreenCreateScript.instance2.jetSuit.anchorY = 0.5
+                                mainFunc.ballBtnScreenCreate.ball.jetSuit = display.newSprite(jetSuitImageSheet, jetSuitSequenceData)
+                                mainFunc.ballBtnScreenCreate.ball.jetSuit.anchorX = 0.5
+                                mainFunc.ballBtnScreenCreate.ball.jetSuit.anchorY = 0.5
                                 local direction = {
                                                 up = 0, right = 90, down = 180, left = 270
                                             }
 
-                                mainFunc.ballAndButtonAndScreenCreateScript.instance2.jetSuit.rotation = direction[mainFunc.ballAndButtonAndScreenCreateScript.instance2.direction]
-                                mainFunc.ballAndButtonAndScreenCreateScript.instance2.jetSuit:setSequence("main")
-                                mainFunc.ballAndButtonAndScreenCreateScript.instance2.jetSuit.timeScale = 0.05
-                                mainFunc.ballAndButtonAndScreenCreateScript.instance2.jetSuit:play()
+                                mainFunc.ballBtnScreenCreate.ball.jetSuit.rotation = direction[mainFunc.ballBtnScreenCreate.ball.direction]
+                                mainFunc.ballBtnScreenCreate.ball.jetSuit:setSequence("main")
+                                mainFunc.ballBtnScreenCreate.ball.jetSuit.timeScale = 0.05
+                                mainFunc.ballBtnScreenCreate.ball.jetSuit:play()
 
-                                mainFunc.ballAndButtonAndScreenCreateScript.instance2.specialConditionsArray["jetSuit"] = {}
+                                mainFunc.ballBtnScreenCreate.ball.specialConditionsArray["jetSuit"] = {}
 
-                                mainFunc.ballAndButtonAndScreenCreateScript.instance2.specialConditionsArray["jetSuit"].active = true
+                                mainFunc.ballBtnScreenCreate.ball.specialConditionsArray["jetSuit"].active = true
 
-                                mainFunc.ballAndButtonAndScreenCreateScript.instance2.specialConditionsArray["jetSuit"].timer = timer.performWithDelay(
+                                mainFunc.ballBtnScreenCreate.ball.specialConditionsArray["jetSuit"].timer = timer.performWithDelay(
                                     1000 * 5,
                                     function ()
-                                        mainFunc.ballAndButtonAndScreenCreateScript.instance2.specialConditionsArray["jetSuit"].active = false
-                                        if mainFunc.ballAndButtonAndScreenCreateScript.instance2.jetSuit then
+                                        mainFunc.ballBtnScreenCreate.ball.specialConditionsArray["jetSuit"].active = false
+                                        if mainFunc.ballBtnScreenCreate.ball.jetSuit then
                                             Runtime:removeEventListener("enterFrame", jetFollowBall)
-                                            mainFunc.ballAndButtonAndScreenCreateScript.instance2.jetSuit:removeSelf()
-                                            mainFunc.ballAndButtonAndScreenCreateScript.instance2.jetSuit = nil
+                                            mainFunc.ballBtnScreenCreate.ball.jetSuit:removeSelf()
+                                            mainFunc.ballBtnScreenCreate.ball.jetSuit = nil
                                         end
                                     end
                                 )
 
                                 Runtime:addEventListener("enterFrame", jetFollowBall)
 
-                                mainFunc.allLevelSettings.midScreenObjectsGroup:insert( mainFunc.ballAndButtonAndScreenCreateScript.instance2.jetSuit )
+                                mainFunc.allLevelSettings.midScreenObjectsGroup:insert( mainFunc.ballBtnScreenCreate.ball.jetSuit )
 
                                 removeItemFromToolArray(toolArrayCounter, mainFunc)
                             end })
@@ -1617,26 +1622,27 @@ local itemBtnFunction = function (mainFunc, shapeArray, shapeArrayParameters, le
                 end
             elseif toolArray[toolArrayCounter]["name"] == "hook" then
                 if (mainFunc.allLevelSettings.isBallMovingState == "true")
-                and mainFunc.ballAndButtonAndScreenCreateScript.instance2.x > (mainFunc.allLevelSettings.leftScreenEdge + 30)
-                and mainFunc.ballAndButtonAndScreenCreateScript.instance2.x < (mainFunc.allLevelSettings.rightScreenEdge - 60)
-                and mainFunc.ballAndButtonAndScreenCreateScript.instance2.y > (mainFunc.allLevelSettings.topScreenEdge + 30)
-                and mainFunc.ballAndButtonAndScreenCreateScript.instance2.y < (mainFunc.allLevelSettings.bottomScreenEdge - 60) then
+                and objectInArea(mainFunc.ballBtnScreenCreate.ball,
+                    mainFunc.allLevelSettings.topScreenEdge + 30,
+                    mainFunc.allLevelSettings.rightScreenEdge - 60,
+                    mainFunc.allLevelSettings.bottomScreenEdge - 60,
+                    mainFunc.allLevelSettings.leftScreenEdge + 30) then
                     local toolDirection = toolArray[toolArrayCounter]["properties"]["directions"][1]
                     local toolCounter = toolArray[toolArrayCounter]["quantity"]
                     local toolSquares = toolArray[toolArrayCounter]["properties"]["squares"]
-                    mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.isActive = false
+                    mainFunc.ballBtnScreenCreate.itemBtn.isActive = false
 
-                    mainFunc.ballAndButtonAndScreenCreateScript.instance2.isInShapeSquare = false
+                    mainFunc.ballBtnScreenCreate.ball.isInShapeSquare = false
                     local centreOfSquareCords = checkForShapeSquare(mainFunc, shapeArray, ballIsInShapeSquare)
 
-                    if mainFunc.ballAndButtonAndScreenCreateScript.instance2.isInShapeSquare == false then
+                    if mainFunc.ballBtnScreenCreate.ball.isInShapeSquare == false then
 
-                        mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.isActive = false
-                        mainFunc.ballAndButtonAndScreenCreateScript.instance2.prevDirection = mainFunc.ballAndButtonAndScreenCreateScript.instance2.direction 
-                        mainFunc.ballAndButtonAndScreenCreateScript.instance2.direction = nil
+                        mainFunc.ballBtnScreenCreate.itemBtn.isActive = false
+                        mainFunc.ballBtnScreenCreate.ball.prevDirection = mainFunc.ballBtnScreenCreate.ball.direction 
+                        mainFunc.ballBtnScreenCreate.ball.direction = nil
 
-                        transition.to(mainFunc.ballAndButtonAndScreenCreateScript.instance2, {x = centreOfSquareCords.xVal, y = centreOfSquareCords.yVal, time = 70, onComplete = function ()
-                            mainFunc.tm[mainFunc.ballAndButtonAndScreenCreateScript.instance2.projectileType][mainFunc.ballAndButtonAndScreenCreateScript.instance2.relevantArrayIndex]:pauseAll()
+                        transition.to(mainFunc.ballBtnScreenCreate.ball, {x = centreOfSquareCords.xVal, y = centreOfSquareCords.yVal, time = 70, onComplete = function ()
+                            mainFunc.tm[mainFunc.ballBtnScreenCreate.ball.projectileType][mainFunc.ballBtnScreenCreate.ball.relevantArrayIndex]:pauseAll()
                             
                             local mask = graphics.newMask("images/objects/hookshot-mask.png" )
                             local tG = display.newGroup()
@@ -1654,23 +1660,23 @@ local itemBtnFunction = function (mainFunc, shapeArray, shapeArrayParameters, le
                             hookshot.projectileType = "hookshot"
                             hookshot.relevantArrayIndex = 1
                             hookshot.moevementSpeed = 100
-                            hookshot.x = mainFunc.ballAndButtonAndScreenCreateScript.instance2.x
-                            hookshot.y = mainFunc.ballAndButtonAndScreenCreateScript.instance2.y
+                            hookshot.x = mainFunc.ballBtnScreenCreate.ball.x
+                            hookshot.y = mainFunc.ballBtnScreenCreate.ball.y
                             hookshot.direction = toolDirection
                             hookshot.counter = toolCounter
 
                             if hookshot.direction == "up" then
                                 hookshot.anchorY = 0
-                                hookshot.y = mainFunc.ballAndButtonAndScreenCreateScript.instance2.y
+                                hookshot.y = mainFunc.ballBtnScreenCreate.ball.y
                             elseif hookshot.direction == "right" then
                                 hookshot.anchorX = 1
-                                hookshot.x = mainFunc.ballAndButtonAndScreenCreateScript.instance2.x
+                                hookshot.x = mainFunc.ballBtnScreenCreate.ball.x
                             elseif hookshot.direction == "down" then
                                 hookshot.anchorY = 1
-                                hookshot.y = mainFunc.ballAndButtonAndScreenCreateScript.instance2.y
+                                hookshot.y = mainFunc.ballBtnScreenCreate.ball.y
                             elseif hookshot.direction == "left" then
                                 hookshot.anchorX = 0
-                                hookshot.x = mainFunc.ballAndButtonAndScreenCreateScript.instance2.x
+                                hookshot.x = mainFunc.ballBtnScreenCreate.ball.x
                             end
                             if hookshot.direction == "left" or hookshot.direction == "right" then
                                 --hookshot.maskRotation = 90
@@ -1704,13 +1710,13 @@ local itemBtnFunction = function (mainFunc, shapeArray, shapeArrayParameters, le
             elseif toolArray[toolArrayCounter]["name"] == "dummyBall"
             or toolArray[toolArrayCounter]["name"] == "superBall" then
                 if (mainFunc.allLevelSettings.isBallMovingState == "false")
-                and mainFunc.ballAndButtonAndScreenCreateScript.instance2.x > (mainFunc.allLevelSettings.leftScreenEdge + 30)
-                and mainFunc.ballAndButtonAndScreenCreateScript.instance2.x < (mainFunc.allLevelSettings.rightScreenEdge - 60)
-                and mainFunc.ballAndButtonAndScreenCreateScript.instance2.y > (mainFunc.allLevelSettings.topScreenEdge + 30)
-                and mainFunc.ballAndButtonAndScreenCreateScript.instance2.y < (mainFunc.allLevelSettings.bottomScreenEdge - 60) then
-                    if mainFunc.ballAndButtonAndScreenCreateScript.instance2.character ~= "dummyBall"
-                    and mainFunc.ballAndButtonAndScreenCreateScript.instance2.character ~= "superBall" then
-                        mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.isActive = false
+                and mainFunc.ballBtnScreenCreate.ball.x > (mainFunc.allLevelSettings.leftScreenEdge + 30)
+                and mainFunc.ballBtnScreenCreate.ball.x < (mainFunc.allLevelSettings.rightScreenEdge - 60)
+                and mainFunc.ballBtnScreenCreate.ball.y > (mainFunc.allLevelSettings.topScreenEdge + 30)
+                and mainFunc.ballBtnScreenCreate.ball.y < (mainFunc.allLevelSettings.bottomScreenEdge - 60) then
+                    if mainFunc.ballBtnScreenCreate.ball.character ~= "dummyBall"
+                    and mainFunc.ballBtnScreenCreate.ball.character ~= "superBall" then
+                        mainFunc.ballBtnScreenCreate.itemBtn.isActive = false
                         local ballImageSheet, ballSequenceData
                         local oldBallImageSheet = graphics.newImageSheet( "images/objects/ballSprite.png", {width = 31, height = 34, numFrames = 8, sheetContentWidth = 124, sheetContentHeight = 68})
                         ballSequenceData = {
@@ -1727,65 +1733,65 @@ local itemBtnFunction = function (mainFunc, shapeArray, shapeArrayParameters, le
 
                         --if theres a jetpack or some kind of suit active, get rid of it
 
-                        local currentBall = mainFunc.ballAndButtonAndScreenCreateScript.instance2
+                        local currentBall = mainFunc.ballBtnScreenCreate.ball
                         local prevX = currentBall.x
                         
                         local prevY = currentBall.y
                         local prevDirection = currentBall.direction
                         local prevCharacter = currentBall.character
-                        mainFunc.ballAndButtonAndScreenCreateScript.instance2:removeSelf()
-                        mainFunc.ballAndButtonAndScreenCreateScript.instance2 = nil
+                        mainFunc.ballBtnScreenCreate.ball:removeSelf()
+                        mainFunc.ballBtnScreenCreate.ball = nil
 
-                        mainFunc.ballAndButtonAndScreenCreateScript.instance2Dummy = display.newSprite(oldBallImageSheet, ballSequenceData)
-                        mainFunc.ballAndButtonAndScreenCreateScript.instance2Dummy:setSequence(prevDirection)
-                        mainFunc.ballAndButtonAndScreenCreateScript.instance2Dummy.alpha = 0.5
-                        mainFunc.ballAndButtonAndScreenCreateScript.instance2Dummy.x = currentBall.x
-                        mainFunc.ballAndButtonAndScreenCreateScript.instance2Dummy.y = prevY
-                        mainFunc.ballAndButtonAndScreenCreateScript.instance2Dummy.character = prevCharacter
-                        mainFunc.ballAndButtonAndScreenCreateScript.instance2Dummy.direction = prevDirection
+                        mainFunc.ballBtnScreenCreate.ballDummy = display.newSprite(oldBallImageSheet, ballSequenceData)
+                        mainFunc.ballBtnScreenCreate.ballDummy:setSequence(prevDirection)
+                        mainFunc.ballBtnScreenCreate.ballDummy.alpha = 0.5
+                        mainFunc.ballBtnScreenCreate.ballDummy.x = currentBall.x
+                        mainFunc.ballBtnScreenCreate.ballDummy.y = prevY
+                        mainFunc.ballBtnScreenCreate.ballDummy.character = prevCharacter
+                        mainFunc.ballBtnScreenCreate.ballDummy.direction = prevDirection
                         for a = 1, #shapeArray do
                             if shapeArray[a].isBallPresent == true then
-                                 mainFunc.ballAndButtonAndScreenCreateScript.instance2Dummy.fanIndex = a
+                                 mainFunc.ballBtnScreenCreate.ballDummy.fanIndex = a
                             end
                         end
                        
-                        mainFunc.allLevelSettings.midScreenObjectsGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.instance2Dummy)
-                        mainFunc.ballAndButtonAndScreenCreateScript.instance2Dummy:toFront()
-                        if mainFunc.ballAndButtonAndScreenCreateScript.instance2Dummy.direction == "left" then
-                            transition.to(mainFunc.ballAndButtonAndScreenCreateScript.instance2Dummy, {alpha = 0.5, x = mainFunc.ballAndButtonAndScreenCreateScript.instance2Dummy.x + ( (10/480) * display.contentWidth), time = 80})
+                        mainFunc.allLevelSettings.midScreenObjectsGroup:insert(mainFunc.ballBtnScreenCreate.ballDummy)
+                        mainFunc.ballBtnScreenCreate.ballDummy:toFront()
+                        if mainFunc.ballBtnScreenCreate.ballDummy.direction == "left" then
+                            transition.to(mainFunc.ballBtnScreenCreate.ballDummy, {alpha = 0.5, x = mainFunc.ballBtnScreenCreate.ballDummy.x + ( (10/480) * display.contentWidth), time = 80})
                         else
-                            transition.to(mainFunc.ballAndButtonAndScreenCreateScript.instance2Dummy, {alpha = 0.5, x = mainFunc.ballAndButtonAndScreenCreateScript.instance2Dummy.x - ( (10/480) * display.contentWidth), time = 80})
+                            transition.to(mainFunc.ballBtnScreenCreate.ballDummy, {alpha = 0.5, x = mainFunc.ballBtnScreenCreate.ballDummy.x - ( (10/480) * display.contentWidth), time = 80})
                         end
 
-                        mainFunc.ballAndButtonAndScreenCreateScript.instance2 = display.newSprite(ballImageSheet, ballSequenceData)
-                        physics.addBody( mainFunc.ballAndButtonAndScreenCreateScript.instance2, { density = 1, friction = 1, bounce = 0, radius = (mainFunc.allLevelSettings.squareHeight/4) } )
-                        mainFunc.allLevelSettings.midScreenObjectsGroup:insert( mainFunc.ballAndButtonAndScreenCreateScript.instance2 )
-                        mainFunc.ballAndButtonAndScreenCreateScript.instance2.projectileType = "ball"
-                        mainFunc.ballAndButtonAndScreenCreateScript.instance2.direction = prevDirection
-                        mainFunc.ballAndButtonAndScreenCreateScript.instance2.relevantArrayIndex = 0
-                        mainFunc.ballAndButtonAndScreenCreateScript.instance2.transitionId = mainFunc.ballAndButtonAndScreenCreateScript.instance2.relevantArrayIndex
-                        mainFunc.ballAndButtonAndScreenCreateScript.instance2.gravityScale = 0
-                        -- instance2.xScale = 0.6
-                        -- instance2.yScale = 0.6
-                        mainFunc.ballAndButtonAndScreenCreateScript.instance2.x = prevX
-                        mainFunc.ballAndButtonAndScreenCreateScript.instance2.y = prevY
-                        mainFunc.ballAndButtonAndScreenCreateScript.instance2.isFixedRotation = true
-                        mainFunc.ballAndButtonAndScreenCreateScript.instance2.autoFanCounter = 0
-                        mainFunc.ballAndButtonAndScreenCreateScript.instance2.fanCenteringCounter = 0
-                        mainFunc.ballAndButtonAndScreenCreateScript.instance2.movementSpeed = 100
-                        mainFunc.ballAndButtonAndScreenCreateScript.instance2.transitioning = false
-                        mainFunc.ballAndButtonAndScreenCreateScript.instance2:play()
-                        mainFunc.ballAndButtonAndScreenCreateScript.instance2:toFront()
-                        mainFunc.ballAndButtonAndScreenCreateScript.instance2:setSequence(prevDirection)
-                        mainFunc.ballAndButtonAndScreenCreateScript.instance2.specialConditionsArray = {}
+                        mainFunc.ballBtnScreenCreate.ball = display.newSprite(ballImageSheet, ballSequenceData)
+                        physics.addBody( mainFunc.ballBtnScreenCreate.ball, { density = 1, friction = 1, bounce = 0, radius = (mainFunc.allLevelSettings.squareHeight/4) } )
+                        mainFunc.allLevelSettings.midScreenObjectsGroup:insert( mainFunc.ballBtnScreenCreate.ball )
+                        mainFunc.ballBtnScreenCreate.ball.projectileType = "ball"
+                        mainFunc.ballBtnScreenCreate.ball.direction = prevDirection
+                        mainFunc.ballBtnScreenCreate.ball.relevantArrayIndex = 0
+                        mainFunc.ballBtnScreenCreate.ball.transitionId = mainFunc.ballBtnScreenCreate.ball.relevantArrayIndex
+                        mainFunc.ballBtnScreenCreate.ball.gravityScale = 0
+                        -- ball.xScale = 0.6
+                        -- ball.yScale = 0.6
+                        mainFunc.ballBtnScreenCreate.ball.x = prevX
+                        mainFunc.ballBtnScreenCreate.ball.y = prevY
+                        mainFunc.ballBtnScreenCreate.ball.isFixedRotation = true
+                        mainFunc.ballBtnScreenCreate.ball.autoFanCounter = 0
+                        mainFunc.ballBtnScreenCreate.ball.fanCenteringCounter = 0
+                        mainFunc.ballBtnScreenCreate.ball.movementSpeed = 100
+                        mainFunc.ballBtnScreenCreate.ball.transitioning = false
+                        mainFunc.ballBtnScreenCreate.ball:play()
+                        mainFunc.ballBtnScreenCreate.ball:toFront()
+                        mainFunc.ballBtnScreenCreate.ball:setSequence(prevDirection)
+                        mainFunc.ballBtnScreenCreate.ball.specialConditionsArray = {}
 
-                        mainFunc.ballAndButtonAndScreenCreateScript.instance2.character = toolArray[toolArrayCounter][1]
+                        mainFunc.ballBtnScreenCreate.ball.character = toolArray[toolArrayCounter][1]
 
                         mainFunc.allLevelSettings.specialBallActive = true
 
                         removeItemFromToolArray(toolArrayCounter, mainFunc)
                         timer.performWithDelay(200, function ()
-                            mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.isActive = true
+                            mainFunc.ballBtnScreenCreate.itemBtn.isActive = true
                         end)
                     end
                 else
@@ -1795,7 +1801,7 @@ local itemBtnFunction = function (mainFunc, shapeArray, shapeArrayParameters, le
         end
     else
         timer.performWithDelay(100, function ()
-            mainFunc.ballAndButtonAndScreenCreateScript.itemBtn:addEventListener("tap", mainFunc.buttonListener)
+            mainFunc.ballBtnScreenCreate.itemBtn:addEventListener("tap", mainFunc.buttonListener)
         end)
     end
 end

@@ -1,5 +1,5 @@
 -- A text object is created and is aligned left at point x=20
-local textObj = display.newText(instance2.y, 0,0, nil, 14);
+local textObj = display.newText(ball.y, 0,0, nil, 14);
 textObj:setReferencePoint(display.CenterLeftReferencePoint);
 textObj.x = 20;
 

@@ -100,7 +100,7 @@ local actionAutoSlideTimer = function (mainFunc, shape, isFirstTime)
         end
 
         if shape.shouldBallMoveInAutoSlide and (shape.objectType == "simple" or shape.objectType == "backFire" or shape.objectType == "spitter") then
-        	slideObj(shape, mainFunc.ballAndButtonAndScreenCreateScript.instance2, true)
+        	slideObj(shape, mainFunc.ballBtnScreenCreate.ball, true)
         end
         if shape.tunnelCircle then
         	slideObj(shape, shape.tunnelCircle, false)
@@ -195,13 +195,13 @@ local actionAutoSlideTimer = function (mainFunc, shape, isFirstTime)
             shape.isAutoSliding = false
 
             if mainFunc.allLevelSettings.followShapeWithBallApplied and
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2.x == mainFunc.allLevelSettings.currentShapeBallShouldFollow.x and
-			mainFunc.ballAndButtonAndScreenCreateScript.instance2.y == mainFunc.allLevelSettings.currentShapeBallShouldFollow.y then
+            mainFunc.ballBtnScreenCreate.ball.x == mainFunc.allLevelSettings.currentShapeBallShouldFollow.x and
+			mainFunc.ballBtnScreenCreate.ball.y == mainFunc.allLevelSettings.currentShapeBallShouldFollow.y then
 				print("kol")
 	            Runtime:removeEventListener("enterFrame", mainFunc.objectToBallTransitionScript.listener)
 	            mainFunc.allLevelSettings.followShapeWithBallApplied = false
-	            mainFunc.ballAndButtonAndScreenCreateScript.instance2.x = mainFunc.allLevelSettings.currentShapeBallShouldFollow.x
-				mainFunc.ballAndButtonAndScreenCreateScript.instance2.y = mainFunc.allLevelSettings.currentShapeBallShouldFollow.y
+	            mainFunc.ballBtnScreenCreate.ball.x = mainFunc.allLevelSettings.currentShapeBallShouldFollow.x
+				mainFunc.ballBtnScreenCreate.ball.y = mainFunc.allLevelSettings.currentShapeBallShouldFollow.y
 	        end
 
             shape.autoSlideTimer[#shape.autoSlideTimer + 1] = timer.performWithDelay(shape.pauseTime, function ()
@@ -273,13 +273,13 @@ local transitionArrayStateCheckNew = function (thisTransitionObject, mainFunc, s
 		and shapeArrayParameters[z]["type"] == "shape" then
 		    local function addPhysicsBodyToShape ()
 		    	shapeFormingArray = mainFunc.shapeRelatedArrays.shapeFormingArray
-		    	instance2 = mainFunc.ballAndButtonAndScreenCreateScript.instance2
+		    	ball = mainFunc.ballBtnScreenCreate.ball
 				for a = 1, #shapeFormingArray do
 				    if shapeFormingArray[a][1] == shapeArrayParameters[z]["subType"] then
-						if instance2.x > (thisTransitionObject.x - 41)
-						and instance2.x < (thisTransitionObject.x + 38) 
-						and instance2.y > (thisTransitionObject.y - 38) 
-						and instance2.y < (thisTransitionObject.y + 40) then
+						if ball.x > (thisTransitionObject.x - 41)
+						and ball.x < (thisTransitionObject.x + 38) 
+						and ball.y > (thisTransitionObject.y - 38) 
+						and ball.y < (thisTransitionObject.y + 40) then
 						    timer.performWithDelay(50, addPhysicsBodyToShape, 1)
 						else
 						    physics.addBody( thisTransitionObject, "static", { density=10, friction=1, bounce=0, shape=shapeFormingArray[a][2] } )
@@ -330,18 +330,18 @@ local mainTransitionMoveSomething = function (thisTransitionObject, mainFunc, sh
 	moveBallWithObjectTransition = function (thisTransitionObject, direction, distance, slideTime)
 		if thisTransitionObject.isBallPresent == true then
 			if direction == "horz" then
-				transition.to(mainFunc.ballAndButtonAndScreenCreateScript.instance2, {x = mainFunc.ballAndButtonAndScreenCreateScript.instance2.x + distance, time = slideTime})
+				transition.to(mainFunc.ballBtnScreenCreate.ball, {x = mainFunc.ballBtnScreenCreate.ball.x + distance, time = slideTime})
 			else
-				transition.to(mainFunc.ballAndButtonAndScreenCreateScript.instance2, {y = mainFunc.ballAndButtonAndScreenCreateScript.instance2.y + distance, time = slideTime})
+				transition.to(mainFunc.ballBtnScreenCreate.ball, {y = mainFunc.ballBtnScreenCreate.ball.y + distance, time = slideTime})
 			end
 		end
 		if direction == "horz" then
-			if mainFunc.ballAndButtonAndScreenCreateScript.instance2Dummy and thisTransitionObject.shapeArrayIndex == mainFunc.ballAndButtonAndScreenCreateScript.instance2Dummy.fanIndex then
-				transition.to(mainFunc.ballAndButtonAndScreenCreateScript.instance2Dummy, {x = mainFunc.ballAndButtonAndScreenCreateScript.instance2Dummy.x + distance, time = slideTime})
+			if mainFunc.ballBtnScreenCreate.ballDummy and thisTransitionObject.shapeArrayIndex == mainFunc.ballBtnScreenCreate.ballDummy.fanIndex then
+				transition.to(mainFunc.ballBtnScreenCreate.ballDummy, {x = mainFunc.ballBtnScreenCreate.ballDummy.x + distance, time = slideTime})
 			end
 		else
-			if mainFunc.ballAndButtonAndScreenCreateScript.instance2Dummy and thisTransitionObject.shapeArrayIndex == mainFunc.ballAndButtonAndScreenCreateScript.instance2Dummy.fanIndex then
-				transition.to(mainFunc.ballAndButtonAndScreenCreateScript.instance2Dummy, {y = mainFunc.ballAndButtonAndScreenCreateScript.instance2Dummy.y + distance, time = slideTime})
+			if mainFunc.ballBtnScreenCreate.ballDummy and thisTransitionObject.shapeArrayIndex == mainFunc.ballBtnScreenCreate.ballDummy.fanIndex then
+				transition.to(mainFunc.ballBtnScreenCreate.ballDummy, {y = mainFunc.ballBtnScreenCreate.ballDummy.y + distance, time = slideTime})
 			end
 		end
 	end

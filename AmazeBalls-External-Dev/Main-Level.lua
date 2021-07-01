@@ -28,15 +28,15 @@ end
 local livesPurchasedFunction, coinsUpdatedFunction
 
 function livesPurchasedFunction ()
-    IAPScript.IAPFunctionsScript.updateLivesDisplay(mainFunc.ballAndButtonAndScreenCreateScript.livesCounter)
-    IAPScript.IAPFunctionsScript.updateScreensOtherCoinsDisplay(mainFunc.ballAndButtonAndScreenCreateScript.dollarCounter)
-    IAPScript.IAPFunctionsScript.updateLivesPlusButton(mainFunc.ballAndButtonAndScreenCreateScript.livesPlusButton, levelVariables.openIAP)
-    IAPScript.IAPFunctionsScript.updateCoinsPlusButton(mainFunc.ballAndButtonAndScreenCreateScript.coinPlusButton, levelVariables.openIAP)
+    IAPScript.IAPFunctionsScript.updateLivesDisplay(mainFunc.ballBtnScreenCreate.livesCounter)
+    IAPScript.IAPFunctionsScript.updateScreensOtherCoinsDisplay(mainFunc.ballBtnScreenCreate.dollarCounter)
+    IAPScript.IAPFunctionsScript.updateLivesPlusButton(mainFunc.ballBtnScreenCreate.livesPlusButton, levelVariables.openIAP)
+    IAPScript.IAPFunctionsScript.updateCoinsPlusButton(mainFunc.ballBtnScreenCreate.coinPlusButton, levelVariables.openIAP)
 end
 
 function coinsUpdatedFunction ()
-    IAPScript.IAPFunctionsScript.updateScreensOtherCoinsDisplay(mainFunc.ballAndButtonAndScreenCreateScript.dollarCounter)
-    IAPScript.IAPFunctionsScript.updateCoinsPlusButton(mainFunc.ballAndButtonAndScreenCreateScript.coinPlusButton, levelVariables.openIAP)
+    IAPScript.IAPFunctionsScript.updateScreensOtherCoinsDisplay(mainFunc.ballBtnScreenCreate.dollarCounter)
+    IAPScript.IAPFunctionsScript.updateCoinsPlusButton(mainFunc.ballBtnScreenCreate.coinPlusButton, levelVariables.openIAP)
 end
 
 checkAvailabilityOfBuyButtonToShow = function (button, levelVariables)
@@ -279,7 +279,7 @@ function closeIAP (event)
 
 	--recreate tool display if we´ve come back to item bag screen
 	if mainFunc.allLevelSettings.itemBagIsOpen == true then
-		mainFunc.globalFunctions.createItemBagToolScreenAndScroll(mainFunc, mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.currentScreen, mainFunc.buttonListenerScript.itemsImageSheet, mainFunc.buttonListenerScript.itemsSequenceData, mainFunc.ballAndButtonAndScreenCreateScript, mainFunc.allLevelSettings, mainFunc.buttonListenerScript, mainFunc.listener, "inGame")
+		mainFunc.globalFunctions.createItemBagToolScreenAndScroll(mainFunc, mainFunc.ballBtnScreenCreate.itemBagScreen.currentScreen, mainFunc.buttonListenerScript.itemsImageSheet, mainFunc.buttonListenerScript.itemsSequenceData, mainFunc.ballBtnScreenCreate, mainFunc.allLevelSettings, mainFunc.buttonListenerScript, mainFunc.listener, "inGame")
 	end
 	--recreate lives counter display
     if levelVariables.currentIAPScreen == "Lives" then
@@ -323,15 +323,15 @@ end
     ----IAP RELATED ENDS
 
 function toggleShapeOrToolView(event)
-    mainFunc.globalFunctions.toggleShapeOrToolView(mainFunc, mainFunc.allLevelSettings, mainFunc.ballAndButtonAndScreenCreateScript, "inGame")
+    mainFunc.globalFunctions.toggleShapeOrToolView(mainFunc, mainFunc.allLevelSettings, mainFunc.ballBtnScreenCreate, "inGame")
 end
 
 local changeToolInnerScreen = function (event)
     if (event.target.isMysteryBlockBagTab) then
         mainFunc.globalFunctions.changeMysteryBlockBagSelectedTile(mainFunc, event.target.value, event.target.index)
     else
-        mainFunc.globalFunctions.changeToolSelectedTile(mainFunc.ballAndButtonAndScreenCreateScript, mainFunc.allLevelSettings, event.target.value)
-        mainFunc.globalFunctions.createToolInnerScreen(mainFunc, mainFunc.ballAndButtonAndScreenCreateScript, mainFunc.allLevelSettings, mainFunc.buttonListenerScript, event.target.value, "inGame")
+        mainFunc.globalFunctions.changeToolSelectedTile(mainFunc.ballBtnScreenCreate, mainFunc.allLevelSettings, event.target.value)
+        mainFunc.globalFunctions.createToolInnerScreen(mainFunc, mainFunc.ballBtnScreenCreate, mainFunc.allLevelSettings, mainFunc.buttonListenerScript, event.target.value, "inGame")
     end
 end
 
@@ -386,7 +386,7 @@ end
 
 local function mysteryBlockRemove(event)
     if event.phase == "began" then
-        if event.target.shapeArrayIndex == mainFunc.ballAndButtonAndScreenCreateScript.instance2.lastFanIndex
+        if event.target.shapeArrayIndex == mainFunc.ballBtnScreenCreate.ball.lastFanIndex
         and mainFunc.allLevelSettings.isBallMovingState == "false" then
 
         else
@@ -429,53 +429,53 @@ local function updateMainLevelTimer(mainFunc, shapeArray, shapeArrayParameters)
     end
     local minuteStringLength = 2
     local secondStringLength = 1
-    mainFunc.ballAndButtonAndScreenCreateScript.levelTimeSeconds = mainFunc.ballAndButtonAndScreenCreateScript.levelTimeSeconds - 0.1
-    if mainFunc.ballAndButtonAndScreenCreateScript.levelTimeSeconds == 0 then
-        if mainFunc.ballAndButtonAndScreenCreateScript.levelTimeMinutes > 0 then
-            mainFunc.ballAndButtonAndScreenCreateScript.levelTimeSeconds = 59.9
-            mainFunc.ballAndButtonAndScreenCreateScript.levelTimeMinutes = mainFunc.ballAndButtonAndScreenCreateScript.levelTimeMinutes - 1
+    mainFunc.ballBtnScreenCreate.levelTimeSeconds = mainFunc.ballBtnScreenCreate.levelTimeSeconds - 0.1
+    if mainFunc.ballBtnScreenCreate.levelTimeSeconds == 0 then
+        if mainFunc.ballBtnScreenCreate.levelTimeMinutes > 0 then
+            mainFunc.ballBtnScreenCreate.levelTimeSeconds = 59.9
+            mainFunc.ballBtnScreenCreate.levelTimeMinutes = mainFunc.ballBtnScreenCreate.levelTimeMinutes - 1
         end
-    elseif mainFunc.ballAndButtonAndScreenCreateScript.levelTimeSeconds == -0.1 then
-        mainFunc.ballAndButtonAndScreenCreateScript.levelTimeSeconds = 59.8
-        mainFunc.ballAndButtonAndScreenCreateScript.levelTimeMinutes = mainFunc.ballAndButtonAndScreenCreateScript.levelTimeMinutes - 1
+    elseif mainFunc.ballBtnScreenCreate.levelTimeSeconds == -0.1 then
+        mainFunc.ballBtnScreenCreate.levelTimeSeconds = 59.8
+        mainFunc.ballBtnScreenCreate.levelTimeMinutes = mainFunc.ballBtnScreenCreate.levelTimeMinutes - 1
     end
-    mainFunc.ballAndButtonAndScreenCreateScript.levelTimeSeconds = roundToFirstDecimal(mainFunc.ballAndButtonAndScreenCreateScript.levelTimeSeconds)
+    mainFunc.ballBtnScreenCreate.levelTimeSeconds = roundToFirstDecimal(mainFunc.ballBtnScreenCreate.levelTimeSeconds)
 
-    if mainFunc.ballAndButtonAndScreenCreateScript.levelTimeMinutes > 9 then
+    if mainFunc.ballBtnScreenCreate.levelTimeMinutes > 9 then
         minuteStringLength = 3
-    elseif mainFunc.ballAndButtonAndScreenCreateScript.levelTimeMinutes == 0 then
+    elseif mainFunc.ballBtnScreenCreate.levelTimeMinutes == 0 then
         minuteStringLength = 0
     end
-    if mainFunc.ballAndButtonAndScreenCreateScript.levelTimeSeconds > 9 then
+    if mainFunc.ballBtnScreenCreate.levelTimeSeconds > 9 then
         secondStringLength = 2
     end
 
-    local levelTimeString = tostring(mainFunc.ballAndButtonAndScreenCreateScript.levelTimeSeconds)
-    if mainFunc.ballAndButtonAndScreenCreateScript.levelTimeMinutes > 0 then
-        levelTimeString = tostring(mainFunc.ballAndButtonAndScreenCreateScript.levelTimeMinutes) .. "m" .. levelTimeString
+    local levelTimeString = tostring(mainFunc.ballBtnScreenCreate.levelTimeSeconds)
+    if mainFunc.ballBtnScreenCreate.levelTimeMinutes > 0 then
+        levelTimeString = tostring(mainFunc.ballBtnScreenCreate.levelTimeMinutes) .. "m" .. levelTimeString
     end
 
     if #levelTimeString == (minuteStringLength + secondStringLength) then
         levelTimeString = levelTimeString .. ".0"
     end
 
-    mainFunc.ballAndButtonAndScreenCreateScript.levelTimerLabel.text.text = levelTimeString
-    if mainFunc.ballAndButtonAndScreenCreateScript.levelTimeSeconds == 0 and mainFunc.ballAndButtonAndScreenCreateScript.levelTimeMinutes == 0 then
+    mainFunc.ballBtnScreenCreate.levelTimerLabel.text.text = levelTimeString
+    if mainFunc.ballBtnScreenCreate.levelTimeSeconds == 0 and mainFunc.ballBtnScreenCreate.levelTimeMinutes == 0 then
         timer.cancel(mainFunc.levelTimerUpdateTimer)
         mainFunc.projectileMovementRemoveAndRespawnScript.startBallAgain(mainFunc, true, true, shapeArray, shapeArrayParameters)
     end
 end
 
 local followShapeWithBall = function (mainFunc)
-    if mainFunc.ballAndButtonAndScreenCreateScript.instance2.y > mainFunc.allLevelSettings.currentShapeBallShouldFollow.y then
-        mainFunc.ballAndButtonAndScreenCreateScript.instance2.y = mainFunc.ballAndButtonAndScreenCreateScript.instance2.y - 8
-    elseif mainFunc.ballAndButtonAndScreenCreateScript.instance2.y < mainFunc.allLevelSettings.currentShapeBallShouldFollow.y then
-        mainFunc.ballAndButtonAndScreenCreateScript.instance2.y = mainFunc.ballAndButtonAndScreenCreateScript.instance2.y + 8
+    if mainFunc.ballBtnScreenCreate.ball.y > mainFunc.allLevelSettings.currentShapeBallShouldFollow.y then
+        mainFunc.ballBtnScreenCreate.ball.y = mainFunc.ballBtnScreenCreate.ball.y - 8
+    elseif mainFunc.ballBtnScreenCreate.ball.y < mainFunc.allLevelSettings.currentShapeBallShouldFollow.y then
+        mainFunc.ballBtnScreenCreate.ball.y = mainFunc.ballBtnScreenCreate.ball.y + 8
     end
-    if mainFunc.ballAndButtonAndScreenCreateScript.instance2.x > mainFunc.allLevelSettings.currentShapeBallShouldFollow.x then
-        mainFunc.ballAndButtonAndScreenCreateScript.instance2.x = mainFunc.ballAndButtonAndScreenCreateScript.instance2.x - 8
-    elseif mainFunc.ballAndButtonAndScreenCreateScript.instance2.x < mainFunc.ballAndButtonAndScreenCreateScript.instance2.x then
-        mainFunc.ballAndButtonAndScreenCreateScript.instance2.x = mainFunc.ballAndButtonAndScreenCreateScript.instance2.x + 8
+    if mainFunc.ballBtnScreenCreate.ball.x > mainFunc.allLevelSettings.currentShapeBallShouldFollow.x then
+        mainFunc.ballBtnScreenCreate.ball.x = mainFunc.ballBtnScreenCreate.ball.x - 8
+    elseif mainFunc.ballBtnScreenCreate.ball.x < mainFunc.ballBtnScreenCreate.ball.x then
+        mainFunc.ballBtnScreenCreate.ball.x = mainFunc.ballBtnScreenCreate.ball.x + 8
     end
 end
 
@@ -785,7 +785,7 @@ function scene:show( event )
     mainFunc.globalImageCreateFunctions = require("modules.global-image-creation-functions")
     levelVariables.globalImageCreateFunctions = mainFunc.globalImageCreateFunctions
 
-	mainFunc.ballAndButtonAndScreenCreateScript = require("modules.ball-and-button-and-screen-create-script")
+	mainFunc.ballBtnScreenCreate = require("modules.ball-and-button-and-screen-create-script")
 	
 	levelConfigScript = require("modules.level-config-array")
     mainFunc.popUpIntroTutorial = levelConfigScript.popUpIntroTutorial
@@ -1082,12 +1082,12 @@ function scene:show( event )
         --EXT: Create Transition Settings
         mainFunc.transitionFunctionScript.prepareTransitioningObjects(mainFunc)
        
-        mainFunc.ballAndButtonAndScreenCreateScript.createBall(mainFunc)
+        mainFunc.ballBtnScreenCreate.createBall(mainFunc)
 
-    	-- mainFunc.ballAndButtonAndScreenCreateScript.instance2.x = 240
-    	-- mainFunc.ballAndButtonAndScreenCreateScript.instance2.y = 275
+    	-- mainFunc.ballBtnScreenCreate.ball.x = 240
+    	-- mainFunc.ballBtnScreenCreate.ball.y = 275
 
-        mainFunc.ballAndButtonAndScreenCreateScript.otherScreensAndButtonCreate(mainFunc, levelVariables, shapeArrayParameters)
+        mainFunc.ballBtnScreenCreate.otherScreensAndButtonCreate(mainFunc, levelVariables, shapeArrayParameters)
         
         mainFunc.backgroundGrids = display.newGroup()
 
@@ -1106,153 +1106,153 @@ function scene:show( event )
 
         --sceneGroup:insert(mainFunc.backgroundGrid)
 
-        sceneGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.mapScreen) 
+        sceneGroup:insert(mainFunc.ballBtnScreenCreate.mapScreen) 
 
-        sceneGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.levelTimerLabel) 
+        sceneGroup:insert(mainFunc.ballBtnScreenCreate.levelTimerLabel) 
 
-        sceneGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.levelTimerLabel.text) 
+        sceneGroup:insert(mainFunc.ballBtnScreenCreate.levelTimerLabel.text) 
 
-        sceneGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.mapShowAndClockLabel) 
+        sceneGroup:insert(mainFunc.ballBtnScreenCreate.mapShowAndClockLabel) 
 
-        sceneGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.mapShowAndClockLabel.map) 
+        sceneGroup:insert(mainFunc.ballBtnScreenCreate.mapShowAndClockLabel.map) 
 
-        sceneGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.mapShowAndClockLabel.compass)
+        sceneGroup:insert(mainFunc.ballBtnScreenCreate.mapShowAndClockLabel.compass)
 
-        sceneGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.pauseScreen)
+        sceneGroup:insert(mainFunc.ballBtnScreenCreate.pauseScreen)
             
-    	sceneGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.playBtn)
+    	sceneGroup:insert(mainFunc.ballBtnScreenCreate.playBtn)
     
-        sceneGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.backBtn)
+        sceneGroup:insert(mainFunc.ballBtnScreenCreate.backBtn)
         
-        sceneGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.rightBtn)
+        sceneGroup:insert(mainFunc.ballBtnScreenCreate.rightBtn)
         
-        sceneGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.leftBtn)
+        sceneGroup:insert(mainFunc.ballBtnScreenCreate.leftBtn)
         
-        sceneGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.upBtn)
+        sceneGroup:insert(mainFunc.ballBtnScreenCreate.upBtn)
         
-        sceneGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.downBtn)
+        sceneGroup:insert(mainFunc.ballBtnScreenCreate.downBtn)
         
-        sceneGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.randomBtn)
+        sceneGroup:insert(mainFunc.ballBtnScreenCreate.randomBtn)
 
-        sceneGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.gemIcon)
+        sceneGroup:insert(mainFunc.ballBtnScreenCreate.gemIcon)
 
         -- was it a mistake to put these into itemScreenObjectsGroup?
-        mainFunc.allLevelSettings.itemScreenObjectsGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen)
-        mainFunc.allLevelSettings.itemScreenObjectsGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.itemBagScreenOverlay)
-        mainFunc.allLevelSettings.itemScreenObjectsGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.bottomSelectedTile)
-        mainFunc.allLevelSettings.itemScreenObjectsGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.bottomSelectedTileForShape)
-        mainFunc.allLevelSettings.itemScreenObjectsGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.topSelectedTile)
-        mainFunc.allLevelSettings.itemScreenObjectsGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.toolBg)
-        mainFunc.allLevelSettings.itemScreenObjectsGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.shapeBg)
-        mainFunc.allLevelSettings.itemScreenObjectsGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.toggleShapeOrToolButton)
+        mainFunc.allLevelSettings.itemScreenObjectsGroup:insert(mainFunc.ballBtnScreenCreate.itemBagScreen)
+        mainFunc.allLevelSettings.itemScreenObjectsGroup:insert(mainFunc.ballBtnScreenCreate.itemBagScreen.itemBagScreenOverlay)
+        mainFunc.allLevelSettings.itemScreenObjectsGroup:insert(mainFunc.ballBtnScreenCreate.itemBagScreen.bottomSelectedTile)
+        mainFunc.allLevelSettings.itemScreenObjectsGroup:insert(mainFunc.ballBtnScreenCreate.itemBagScreen.bottomSelectedTileForShape)
+        mainFunc.allLevelSettings.itemScreenObjectsGroup:insert(mainFunc.ballBtnScreenCreate.itemBagScreen.topSelectedTile)
+        mainFunc.allLevelSettings.itemScreenObjectsGroup:insert(mainFunc.ballBtnScreenCreate.itemBagScreen.toolBg)
+        mainFunc.allLevelSettings.itemScreenObjectsGroup:insert(mainFunc.ballBtnScreenCreate.itemBagScreen.shapeBg)
+        mainFunc.allLevelSettings.itemScreenObjectsGroup:insert(mainFunc.ballBtnScreenCreate.itemBagScreen.toggleShapeOrToolButton)
 
-        --sceneGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.shapeBg)
+        --sceneGroup:insert(mainFunc.ballBtnScreenCreate.itemBagScreen.shapeBg)
 
-        sceneGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.itemBtn)
+        sceneGroup:insert(mainFunc.ballBtnScreenCreate.itemBtn)
 
-        sceneGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.itemBagBtn)
+        sceneGroup:insert(mainFunc.ballBtnScreenCreate.itemBagBtn)
 
-        mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.pauseScreenOverlay)
+        mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballBtnScreenCreate.pauseScreenOverlay)
 
-        mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.pauseScreen)
+        mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballBtnScreenCreate.pauseScreen)
             
-        mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.backToPlayBtn)
+        mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballBtnScreenCreate.backToPlayBtn)
                 
-        mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.resetBtn)
+        mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballBtnScreenCreate.resetBtn)
             
-        mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.backToMainBtn)
+        mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballBtnScreenCreate.backToMainBtn)
 
-        mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.dollarIcon)
+        mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballBtnScreenCreate.dollarIcon)
 
-        mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.coinPlusButton)
+        mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballBtnScreenCreate.coinPlusButton)
 
-        mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.livesIcon)
+        mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballBtnScreenCreate.livesIcon)
 
-        mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.livesPlusButton)
+        mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballBtnScreenCreate.livesPlusButton)
 
-        mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.livesLeftScreen)
-        for a = 1, #mainFunc.ballAndButtonAndScreenCreateScript.lifeIcon do
-            mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.lifeIcon[a])
+        mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballBtnScreenCreate.livesLeftScreen)
+        for a = 1, #mainFunc.ballBtnScreenCreate.lifeIcon do
+            mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballBtnScreenCreate.lifeIcon[a])
         end
-        mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.timesUpNotice)
-        -- mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.dollarCounter)
+        mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballBtnScreenCreate.timesUpNotice)
+        -- mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballBtnScreenCreate.dollarCounter)
 
-        for a = 1, #mainFunc.ballAndButtonAndScreenCreateScript.dollarCounter do
-        	mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.dollarCounter[a])
+        for a = 1, #mainFunc.ballBtnScreenCreate.dollarCounter do
+        	mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballBtnScreenCreate.dollarCounter[a])
         end
-        for a = 1, #mainFunc.ballAndButtonAndScreenCreateScript.livesCounter do
-        	mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.livesCounter[a])
-        end
-
-        for a = 1, #mainFunc.ballAndButtonAndScreenCreateScript.levelDisplay do
-            mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.levelDisplay[a])
+        for a = 1, #mainFunc.ballBtnScreenCreate.livesCounter do
+        	mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballBtnScreenCreate.livesCounter[a])
         end
 
-        mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.timeIcon)
+        for a = 1, #mainFunc.ballBtnScreenCreate.levelDisplay do
+            mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballBtnScreenCreate.levelDisplay[a])
+        end
+
+        mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballBtnScreenCreate.timeIcon)
         
-        for a = 1, #mainFunc.ballAndButtonAndScreenCreateScript.timeCounter do
-            mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.timeCounter[a])
+        for a = 1, #mainFunc.ballBtnScreenCreate.timeCounter do
+            mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballBtnScreenCreate.timeCounter[a])
         end
 
-        mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.showGemsLabel)
-        mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.showCoinsLabel)
-        mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.showGemsLabel.gemIcon)
-        mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.gemIcon)
-        mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.gemCounterFirstDigit)
-        mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.gemCounterSecondDigit)
+        mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballBtnScreenCreate.showGemsLabel)
+        mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballBtnScreenCreate.showCoinsLabel)
+        mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballBtnScreenCreate.showGemsLabel.gemIcon)
+        mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballBtnScreenCreate.gemIcon)
+        mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballBtnScreenCreate.gemCounterFirstDigit)
+        mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballBtnScreenCreate.gemCounterSecondDigit)
         
         if (mainFunc.thisLevelSettings.totalGems > 0) then
-        	for a = 1, #mainFunc.ballAndButtonAndScreenCreateScript.gemIconCounterLabel do
-	        	mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.gemIconCounterLabel[a])
+        	for a = 1, #mainFunc.ballBtnScreenCreate.gemIconCounterLabel do
+	        	mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballBtnScreenCreate.gemIconCounterLabel[a])
 	        end
-            for key, val in pairs(mainFunc.ballAndButtonAndScreenCreateScript.pauseScreenCoins) do
-                mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.pauseScreenCoins[key])
+            for key, val in pairs(mainFunc.ballBtnScreenCreate.pauseScreenCoins) do
+                mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(mainFunc.ballBtnScreenCreate.pauseScreenCoins[key])
             end
-            mainFunc.ballAndButtonAndScreenCreateScript.pauseScreenCoins["redCoin"]:toFront()
-            mainFunc.ballAndButtonAndScreenCreateScript.pauseScreenCoins["blueCoin"]:toFront()
-            mainFunc.ballAndButtonAndScreenCreateScript.pauseScreenCoins["purpleCoin"]:toFront()
+            mainFunc.ballBtnScreenCreate.pauseScreenCoins["redCoin"]:toFront()
+            mainFunc.ballBtnScreenCreate.pauseScreenCoins["blueCoin"]:toFront()
+            mainFunc.ballBtnScreenCreate.pauseScreenCoins["purpleCoin"]:toFront()
             if myGameSettings[currentWorld]["levels"][currentLevel][currentMedal .. "-achievements"]["red_coin"] == 1 then
-                mainFunc.ballAndButtonAndScreenCreateScript.pauseScreenCoins["redCoin"].alpha = 1
+                mainFunc.ballBtnScreenCreate.pauseScreenCoins["redCoin"].alpha = 1
             end
             if myGameSettings[currentWorld]["levels"][currentLevel][currentMedal .. "-achievements"]["blue_coin"] == 1 then
-                mainFunc.ballAndButtonAndScreenCreateScript.pauseScreenCoins["blueCoin"].alpha = 1
+                mainFunc.ballBtnScreenCreate.pauseScreenCoins["blueCoin"].alpha = 1
             end
             if myGameSettings[currentWorld]["levels"][currentLevel][currentMedal .. "-achievements"]["purple_coin"] == 1 then
-                mainFunc.ballAndButtonAndScreenCreateScript.pauseScreenCoins["purpleCoin"].alpha = 1
+                mainFunc.ballBtnScreenCreate.pauseScreenCoins["purpleCoin"].alpha = 1
             end
         end
         
-        mainFunc.ballAndButtonAndScreenCreateScript.pauseScreen.y = display.contentHeight
+        mainFunc.ballBtnScreenCreate.pauseScreen.y = display.contentHeight
     
     
         sceneGroup:insert(mainFunc.allLevelSettings.pauseScreenObjectsGroup)
-        mainFunc.ballAndButtonAndScreenCreateScript.introScreen:toFront()
+        mainFunc.ballBtnScreenCreate.introScreen:toFront()
         
         sceneGroup:insert(mainFunc.backgroundGrids)
-        mainFunc.ballAndButtonAndScreenCreateScript.introScreen:toFront()
-        for a = 1, #mainFunc.ballAndButtonAndScreenCreateScript.introScreen.valueText do
-        	mainFunc.ballAndButtonAndScreenCreateScript.introScreen.valueText[a]:toFront()
+        mainFunc.ballBtnScreenCreate.introScreen:toFront()
+        for a = 1, #mainFunc.ballBtnScreenCreate.introScreen.valueText do
+        	mainFunc.ballBtnScreenCreate.introScreen.valueText[a]:toFront()
         end
         
         sceneGroup:insert(mainFunc.allLevelSettings.backgroundObjectsGroup)
-        mainFunc.ballAndButtonAndScreenCreateScript.introScreen:toFront()
+        mainFunc.ballBtnScreenCreate.introScreen:toFront()
         
         sceneGroup:insert(mainFunc.allLevelSettings.screenObjectsGroup)
-        mainFunc.ballAndButtonAndScreenCreateScript.introScreen:toFront()
+        mainFunc.ballBtnScreenCreate.introScreen:toFront()
         
         sceneGroup:insert(mainFunc.allLevelSettings.midScreenObjectsGroup)
-        mainFunc.ballAndButtonAndScreenCreateScript.introScreen:toFront()
+        mainFunc.ballBtnScreenCreate.introScreen:toFront()
         
         sceneGroup:insert(mainFunc.allLevelSettings.frontScreenObjectsGroup)
 
         sceneGroup:insert(mainFunc.allLevelSettings.itemScreenObjectsGroup)
 
 
-    	mainFunc.ballAndButtonAndScreenCreateScript.playBtn:toFront()
+    	mainFunc.ballBtnScreenCreate.playBtn:toFront()
 
-        mainFunc.ballAndButtonAndScreenCreateScript.introScreen:toFront()
-        for a = 1, #mainFunc.ballAndButtonAndScreenCreateScript.introScreen.valueText do
-        	mainFunc.ballAndButtonAndScreenCreateScript.introScreen.valueText[a]:toFront()
+        mainFunc.ballBtnScreenCreate.introScreen:toFront()
+        for a = 1, #mainFunc.ballBtnScreenCreate.introScreen.valueText do
+        	mainFunc.ballBtnScreenCreate.introScreen.valueText[a]:toFront()
         end
         
     end
@@ -1264,14 +1264,14 @@ function scene:show( event )
     
     timer.performWithDelay(300, prepareInsertGroupsIntoMain, 1)
     
-    mainFunc.ballAndButtonAndScreenCreateScript = require ("modules.ball-and-button-and-screen-create-script")
+    mainFunc.ballBtnScreenCreate = require ("modules.ball-and-button-and-screen-create-script")
     ---------  INTRO SCREEN
-    mainFunc.ballAndButtonAndScreenCreateScript.createIntroScreen(currentWorld, currentLevel)
+    mainFunc.ballBtnScreenCreate.createIntroScreen(currentWorld, currentLevel)
     
-    sceneGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.introScreen)
+    sceneGroup:insert(mainFunc.ballBtnScreenCreate.introScreen)
 
-    for a = 1, #mainFunc.ballAndButtonAndScreenCreateScript.introScreen.valueText do
-		sceneGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.introScreen.valueText[a])
+    for a = 1, #mainFunc.ballBtnScreenCreate.introScreen.valueText do
+		sceneGroup:insert(mainFunc.ballBtnScreenCreate.introScreen.valueText[a])
 	end
 
 	--Runtime:addEventListener( "enterFrame", composer.printMemUsage )
@@ -1280,19 +1280,19 @@ function scene:show( event )
 
     local function delayedEnterScene ()
         
-        mainFunc.ballAndButtonAndScreenCreateScript.introScreen:toFront()
-	    for a = 1, #mainFunc.ballAndButtonAndScreenCreateScript.introScreen.valueText do
-        	mainFunc.ballAndButtonAndScreenCreateScript.introScreen.valueText[a]:toFront()
+        mainFunc.ballBtnScreenCreate.introScreen:toFront()
+	    for a = 1, #mainFunc.ballBtnScreenCreate.introScreen.valueText do
+        	mainFunc.ballBtnScreenCreate.introScreen.valueText[a]:toFront()
         end
 	    --purge level
 	    --composer.purgeScene( "LevelSelectScene" )
 	    --composer.removeScene( "LevelSelectScene" )
 
-        if (mainFunc.ballAndButtonAndScreenCreateScript.livesPlusButton.shouldBeActive) then
-            mainFunc.ballAndButtonAndScreenCreateScript.livesPlusButton:addEventListener("tap", levelVariables.openIAP)
+        if (mainFunc.ballBtnScreenCreate.livesPlusButton.shouldBeActive) then
+            mainFunc.ballBtnScreenCreate.livesPlusButton:addEventListener("tap", levelVariables.openIAP)
         end
-        if (mainFunc.ballAndButtonAndScreenCreateScript.coinPlusButton.shouldBeActive) then
-            mainFunc.ballAndButtonAndScreenCreateScript.coinPlusButton:addEventListener("tap", levelVariables.openIAP)
+        if (mainFunc.ballBtnScreenCreate.coinPlusButton.shouldBeActive) then
+            mainFunc.ballBtnScreenCreate.coinPlusButton:addEventListener("tap", levelVariables.openIAP)
         end
 	    
 	    -- Runtime:addEventListener("enterFrame", createAndControlLaser)
@@ -1313,43 +1313,43 @@ function scene:show( event )
 	        end
 	    end
 	    
-	    mainFunc.ballAndButtonAndScreenCreateScript.mapScreen:toFront()
-        mainFunc.ballAndButtonAndScreenCreateScript.levelTimerLabel:toFront()
-        mainFunc.ballAndButtonAndScreenCreateScript.levelTimerLabel.text:toFront()
-	    mainFunc.ballAndButtonAndScreenCreateScript.mapShowAndClockLabel:toFront()
-	    mainFunc.ballAndButtonAndScreenCreateScript.mapShowAndClockLabel.map:toFront()
-	    mainFunc.ballAndButtonAndScreenCreateScript.mapShowAndClockLabel.compass:toFront()
-	    mainFunc.ballAndButtonAndScreenCreateScript.randomBtn:toFront()
-	    mainFunc.ballAndButtonAndScreenCreateScript.backBtn:toFront()
-	    mainFunc.ballAndButtonAndScreenCreateScript.randomBtn:toFront()
-	    mainFunc.ballAndButtonAndScreenCreateScript.rightBtn:toFront()
-	    mainFunc.ballAndButtonAndScreenCreateScript.leftBtn:toFront()
-	    mainFunc.ballAndButtonAndScreenCreateScript.upBtn:toFront()
-	    mainFunc.ballAndButtonAndScreenCreateScript.downBtn:toFront()
+	    mainFunc.ballBtnScreenCreate.mapScreen:toFront()
+        mainFunc.ballBtnScreenCreate.levelTimerLabel:toFront()
+        mainFunc.ballBtnScreenCreate.levelTimerLabel.text:toFront()
+	    mainFunc.ballBtnScreenCreate.mapShowAndClockLabel:toFront()
+	    mainFunc.ballBtnScreenCreate.mapShowAndClockLabel.map:toFront()
+	    mainFunc.ballBtnScreenCreate.mapShowAndClockLabel.compass:toFront()
+	    mainFunc.ballBtnScreenCreate.randomBtn:toFront()
+	    mainFunc.ballBtnScreenCreate.backBtn:toFront()
+	    mainFunc.ballBtnScreenCreate.randomBtn:toFront()
+	    mainFunc.ballBtnScreenCreate.rightBtn:toFront()
+	    mainFunc.ballBtnScreenCreate.leftBtn:toFront()
+	    mainFunc.ballBtnScreenCreate.upBtn:toFront()
+	    mainFunc.ballBtnScreenCreate.downBtn:toFront()
 	    mainFunc.allLevelSettings.itemScreenObjectsGroup:toFront()
-	    mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen:toFront()
-        mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.bottomSelectedTile:toFront()
-        mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.topSelectedTile:toFront()
-	    mainFunc.ballAndButtonAndScreenCreateScript.itemBtn:toFront()
-	    mainFunc.ballAndButtonAndScreenCreateScript.itemBagBtn:toFront()
-        mainFunc.ballAndButtonAndScreenCreateScript.gemIcon:toFront()
+	    mainFunc.ballBtnScreenCreate.itemBagScreen:toFront()
+        mainFunc.ballBtnScreenCreate.itemBagScreen.bottomSelectedTile:toFront()
+        mainFunc.ballBtnScreenCreate.itemBagScreen.topSelectedTile:toFront()
+	    mainFunc.ballBtnScreenCreate.itemBtn:toFront()
+	    mainFunc.ballBtnScreenCreate.itemBagBtn:toFront()
+        mainFunc.ballBtnScreenCreate.gemIcon:toFront()
 	    mainFunc.allLevelSettings.pauseScreenObjectsGroup:toFront()
-	    mainFunc.ballAndButtonAndScreenCreateScript.introScreen:toFront()
-	    for a = 1, #mainFunc.ballAndButtonAndScreenCreateScript.introScreen.valueText do
-        	mainFunc.ballAndButtonAndScreenCreateScript.introScreen.valueText[a]:toFront()
+	    mainFunc.ballBtnScreenCreate.introScreen:toFront()
+	    for a = 1, #mainFunc.ballBtnScreenCreate.introScreen.valueText do
+        	mainFunc.ballBtnScreenCreate.introScreen.valueText[a]:toFront()
         end
 
 	    -- if myGameSettings[currentWorld]["levels"][currentLevel]["intro_complete"] == false then
-	    --     mainFunc.ballAndButtonAndScreenCreateScript.randomBtn.alpha = 1
-	    --     mainFunc.ballAndButtonAndScreenCreateScript.backBtn.alpha = 1
-	    --     mainFunc.ballAndButtonAndScreenCreateScript.randomBtn.alpha = 1
-	    --     mainFunc.ballAndButtonAndScreenCreateScript.mapShowAndClockLabel.alpha = 1
+	    --     mainFunc.ballBtnScreenCreate.randomBtn.alpha = 1
+	    --     mainFunc.ballBtnScreenCreate.backBtn.alpha = 1
+	    --     mainFunc.ballBtnScreenCreate.randomBtn.alpha = 1
+	    --     mainFunc.ballBtnScreenCreate.mapShowAndClockLabel.alpha = 1
 	    --     mainFunc.screenChangingScript.removeIntroScreen(mainFunc, myGameSettings[currentWorld]["levels"][currentLevel]["intro_complete"], shapeArray, shapeArrayParameters)
 	    -- elseif myGameSettings[currentWorld]["levels"][currentLevel]["intro_complete"] == true then
 	    
-	        mainFunc.ballAndButtonAndScreenCreateScript.randomBtn.alpha = 1
-	        mainFunc.ballAndButtonAndScreenCreateScript.backBtn.alpha = 1
-	        mainFunc.ballAndButtonAndScreenCreateScript.randomBtn.alpha = 1
+	        mainFunc.ballBtnScreenCreate.randomBtn.alpha = 1
+	        mainFunc.ballBtnScreenCreate.backBtn.alpha = 1
+	        mainFunc.ballBtnScreenCreate.randomBtn.alpha = 1
 	        mainFunc.screenChangingScript.shortScreenInitialiser(mainFunc, true, shapeArray, shapeArrayParameters)
 	    
 	    --end
@@ -1438,35 +1438,35 @@ function scene:hide( event )
 
 	        --Runtime:removeEventListener( "enterFrame", composer.printMemUsage )
 
-		    mainFunc.ballAndButtonAndScreenCreateScript.pauseScreen:removeSelf()
-		    mainFunc.ballAndButtonAndScreenCreateScript.pauseScreen = nil
+		    mainFunc.ballBtnScreenCreate.pauseScreen:removeSelf()
+		    mainFunc.ballBtnScreenCreate.pauseScreen = nil
 		    
 		    --Buttons
-		    mainFunc.ballAndButtonAndScreenCreateScript.backBtn:removeEventListener( "tap", mainFunc.buttonListener )
-		    mainFunc.ballAndButtonAndScreenCreateScript.playBtn:removeEventListener( "tap", mainFunc.buttonListener )
-		    mainFunc.ballAndButtonAndScreenCreateScript.backToPlayBtn:removeEventListener( "tap", mainFunc.buttonListener )
-		    mainFunc.ballAndButtonAndScreenCreateScript.resetBtn:removeEventListener( "tap", mainFunc.buttonListener )
-		    mainFunc.ballAndButtonAndScreenCreateScript.backToMainBtn:removeEventListener( "tap", mainFunc.buttonListener )
-		    mainFunc.ballAndButtonAndScreenCreateScript.randomBtn:removeEventListener( "tap", mainFunc.buttonListener )
+		    mainFunc.ballBtnScreenCreate.backBtn:removeEventListener( "tap", mainFunc.buttonListener )
+		    mainFunc.ballBtnScreenCreate.playBtn:removeEventListener( "tap", mainFunc.buttonListener )
+		    mainFunc.ballBtnScreenCreate.backToPlayBtn:removeEventListener( "tap", mainFunc.buttonListener )
+		    mainFunc.ballBtnScreenCreate.resetBtn:removeEventListener( "tap", mainFunc.buttonListener )
+		    mainFunc.ballBtnScreenCreate.backToMainBtn:removeEventListener( "tap", mainFunc.buttonListener )
+		    mainFunc.ballBtnScreenCreate.randomBtn:removeEventListener( "tap", mainFunc.buttonListener )
 
 		    if (mainFunc.thisLevelSettings.hasToolArray == true
-		    or mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.alpha > 0) then
-		    	mainFunc.ballAndButtonAndScreenCreateScript.itemBagBtn:removeEventListener( "tap", mainFunc.buttonListener )
-		    	mainFunc.ballAndButtonAndScreenCreateScript.itemBtn:removeEventListener( "tap", mainFunc.buttonListener )
+		    or mainFunc.ballBtnScreenCreate.itemBtn.alpha > 0) then
+		    	mainFunc.ballBtnScreenCreate.itemBagBtn:removeEventListener( "tap", mainFunc.buttonListener )
+		    	mainFunc.ballBtnScreenCreate.itemBtn:removeEventListener( "tap", mainFunc.buttonListener )
 		    end
 
-		    mainFunc.ballAndButtonAndScreenCreateScript.backBtn:removeSelf()
-		    mainFunc.ballAndButtonAndScreenCreateScript.backBtn = nil
-		    mainFunc.ballAndButtonAndScreenCreateScript.playBtn:removeSelf()
-		    mainFunc.ballAndButtonAndScreenCreateScript.playBtn = nil
-		    mainFunc.ballAndButtonAndScreenCreateScript.randomBtn:removeSelf()
-		    mainFunc.ballAndButtonAndScreenCreateScript.randomBtn = nil
-		    mainFunc.ballAndButtonAndScreenCreateScript.backToMainBtn:removeSelf()
-		    mainFunc.ballAndButtonAndScreenCreateScript.backToMainBtn = nil
-		    mainFunc.ballAndButtonAndScreenCreateScript.backToPlayBtn:removeSelf()
-		    mainFunc.ballAndButtonAndScreenCreateScript.backToPlayBtn = nil
-		    mainFunc.ballAndButtonAndScreenCreateScript.resetBtn:removeSelf()
-		    mainFunc.ballAndButtonAndScreenCreateScript.resetBtn = nil
+		    mainFunc.ballBtnScreenCreate.backBtn:removeSelf()
+		    mainFunc.ballBtnScreenCreate.backBtn = nil
+		    mainFunc.ballBtnScreenCreate.playBtn:removeSelf()
+		    mainFunc.ballBtnScreenCreate.playBtn = nil
+		    mainFunc.ballBtnScreenCreate.randomBtn:removeSelf()
+		    mainFunc.ballBtnScreenCreate.randomBtn = nil
+		    mainFunc.ballBtnScreenCreate.backToMainBtn:removeSelf()
+		    mainFunc.ballBtnScreenCreate.backToMainBtn = nil
+		    mainFunc.ballBtnScreenCreate.backToPlayBtn:removeSelf()
+		    mainFunc.ballBtnScreenCreate.backToPlayBtn = nil
+		    mainFunc.ballBtnScreenCreate.resetBtn:removeSelf()
+		    mainFunc.ballBtnScreenCreate.resetBtn = nil
 		    
 		    --Runtime:removeEventListener("enterFrame", moveSomething)
 		    
@@ -1682,24 +1682,24 @@ function scene:hide( event )
 		        end
 		    end
 
-            mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.itemBagScreenOverlay:removeSelf()
-            mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.itemBagScreenOverlay = nil
+            mainFunc.ballBtnScreenCreate.itemBagScreen.itemBagScreenOverlay:removeSelf()
+            mainFunc.ballBtnScreenCreate.itemBagScreen.itemBagScreenOverlay = nil
 
-            mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.toolBg:removeSelf()
-            mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.toolBg = nil
+            mainFunc.ballBtnScreenCreate.itemBagScreen.toolBg:removeSelf()
+            mainFunc.ballBtnScreenCreate.itemBagScreen.toolBg = nil
 
-            mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.shapeBg:removeSelf()
-            mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.shapeBg = nil
+            mainFunc.ballBtnScreenCreate.itemBagScreen.shapeBg:removeSelf()
+            mainFunc.ballBtnScreenCreate.itemBagScreen.shapeBg = nil
 
-            mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.bottomSelectedTile:removeSelf()
-            mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.bottomSelectedTile = nil
+            mainFunc.ballBtnScreenCreate.itemBagScreen.bottomSelectedTile:removeSelf()
+            mainFunc.ballBtnScreenCreate.itemBagScreen.bottomSelectedTile = nil
 
-            mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.bottomSelectedTileForShape:removeSelf()
-            mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.bottomSelectedTileForShape = nil
-            mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.topSelectedTile:removeSelf()
-            mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.topSelectedTile = nil
-            mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.toggleShapeOrToolButton:removeSelf()
-            mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.toggleShapeOrToolButton = nil 
+            mainFunc.ballBtnScreenCreate.itemBagScreen.bottomSelectedTileForShape:removeSelf()
+            mainFunc.ballBtnScreenCreate.itemBagScreen.bottomSelectedTileForShape = nil
+            mainFunc.ballBtnScreenCreate.itemBagScreen.topSelectedTile:removeSelf()
+            mainFunc.ballBtnScreenCreate.itemBagScreen.topSelectedTile = nil
+            mainFunc.ballBtnScreenCreate.itemBagScreen.toggleShapeOrToolButton:removeSelf()
+            mainFunc.ballBtnScreenCreate.itemBagScreen.toggleShapeOrToolButton = nil 
 		end
 	    
     elseif ( phase == "did" ) then

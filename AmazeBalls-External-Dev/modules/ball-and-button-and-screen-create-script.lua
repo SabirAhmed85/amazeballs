@@ -18,12 +18,12 @@ local createBall = function (mainFunc)
     if ballCharacter ~= "normal" then
         sheetSeqData = mainFunc.allLevelSettings.specialCharacterInLevelSequenceData
     end
-	local instance2 = ball(ballCharacter, mainFunc, sheetSeqData);
+	local ball = ball(ballCharacter, mainFunc, sheetSeqData);
 
-    mainFunc.tm["ball"][instance2.relevantArrayIndex] = mainFunc.tManager.new()
+    mainFunc.tm["ball"][ball.relevantArrayIndex] = mainFunc.tManager.new()
 
-		t.instance2 = instance2
-    return instance2
+		t.ball = ball
+    return ball
 end
 	t.createBall = createBall
 
@@ -225,9 +225,9 @@ local otherScreensAndButtonCreate = function (mainFunc, levelVariables, shapeArr
     t.levelTimeMinutes = levelTimeMinutes
     local levelTimeSeconds = levelTimeAmount - (60 * levelTimeMinutes)
     t.levelTimeSeconds = levelTimeSeconds
-    local levelTimeString = tostring(mainFunc.ballAndButtonAndScreenCreateScript.levelTimeSeconds)
-    if mainFunc.ballAndButtonAndScreenCreateScript.levelTimeMinutes > 0 then
-        levelTimeString = tostring(mainFunc.ballAndButtonAndScreenCreateScript.levelTimeMinutes) .. "m" .. levelTimeString
+    local levelTimeString = tostring(mainFunc.ballBtnScreenCreate.levelTimeSeconds)
+    if mainFunc.ballBtnScreenCreate.levelTimeMinutes > 0 then
+        levelTimeString = tostring(mainFunc.ballBtnScreenCreate.levelTimeMinutes) .. "m" .. levelTimeString
     end
 
     --------- LABELS ---------
@@ -714,14 +714,14 @@ local otherScreensAndButtonCreate = function (mainFunc, levelVariables, shapeArr
         coinPlusButton.relBool = levelVariables.CoinsOpened
             t.coinPlusButton = coinPlusButton
 
-    if mainFunc.ballAndButtonAndScreenCreateScript.dollarCounter
-    and mainFunc.ballAndButtonAndScreenCreateScript.dollarCounter ~= nil then
-        for a = 1, #mainFunc.ballAndButtonAndScreenCreateScript.dollarCounter do
-            mainFunc.ballAndButtonAndScreenCreateScript.dollarCounter[a] = nil
+    if mainFunc.ballBtnScreenCreate.dollarCounter
+    and mainFunc.ballBtnScreenCreate.dollarCounter ~= nil then
+        for a = 1, #mainFunc.ballBtnScreenCreate.dollarCounter do
+            mainFunc.ballBtnScreenCreate.dollarCounter[a] = nil
         end
     end
 
-    mainFunc.ballAndButtonAndScreenCreateScript.dollarCounter = {}
+    mainFunc.ballBtnScreenCreate.dollarCounter = {}
 
     local dollarCounter = mainFunc.globalFunctions.createCoinDisplay(mainFunc, dollarIcon.x - 16, dollarIcon.y + 15, pauseScreen.y, "inGame")
 

@@ -3,28 +3,28 @@ local t = {}
 
 --------- MAP SCREEN FUNCTIONS -----------
 local mapButtonTransparencyCheck = function (mainFunc)
-    if mainFunc.ballAndButtonAndScreenCreateScript.rightBtn.isVisibleState == true then
-        transition.to (mainFunc.ballAndButtonAndScreenCreateScript.rightBtn, {alpha=1, time=150})
+    if mainFunc.ballBtnScreenCreate.rightBtn.isVisibleState == true then
+        transition.to (mainFunc.ballBtnScreenCreate.rightBtn, {alpha=1, time=150})
     else
-        transition.to (mainFunc.ballAndButtonAndScreenCreateScript.rightBtn, {alpha=0, time=150})
+        transition.to (mainFunc.ballBtnScreenCreate.rightBtn, {alpha=0, time=150})
     end
     
-    if mainFunc.ballAndButtonAndScreenCreateScript.leftBtn.isVisibleState == true then
-        transition.to (mainFunc.ballAndButtonAndScreenCreateScript.leftBtn, {alpha=1, time=150})
+    if mainFunc.ballBtnScreenCreate.leftBtn.isVisibleState == true then
+        transition.to (mainFunc.ballBtnScreenCreate.leftBtn, {alpha=1, time=150})
     else
-        transition.to (mainFunc.ballAndButtonAndScreenCreateScript.leftBtn, {alpha=0, time=150})
+        transition.to (mainFunc.ballBtnScreenCreate.leftBtn, {alpha=0, time=150})
     end
     
-    if mainFunc.ballAndButtonAndScreenCreateScript.upBtn.isVisibleState == true then
-        transition.to (mainFunc.ballAndButtonAndScreenCreateScript.upBtn, {alpha=1, time=150})
+    if mainFunc.ballBtnScreenCreate.upBtn.isVisibleState == true then
+        transition.to (mainFunc.ballBtnScreenCreate.upBtn, {alpha=1, time=150})
     else
-        transition.to (mainFunc.ballAndButtonAndScreenCreateScript.upBtn, {alpha=0, time=150})
+        transition.to (mainFunc.ballBtnScreenCreate.upBtn, {alpha=0, time=150})
     end
 
-    if mainFunc.ballAndButtonAndScreenCreateScript.downBtn.isVisibleState == true then
-        transition.to (mainFunc.ballAndButtonAndScreenCreateScript.downBtn, {alpha=1, time=150})
+    if mainFunc.ballBtnScreenCreate.downBtn.isVisibleState == true then
+        transition.to (mainFunc.ballBtnScreenCreate.downBtn, {alpha=1, time=150})
     else
-        transition.to (mainFunc.ballAndButtonAndScreenCreateScript.downBtn, {alpha=0, time=150})
+        transition.to (mainFunc.ballBtnScreenCreate.downBtn, {alpha=0, time=150})
     end
 end
 	t.mapButtonTransparencyCheck = mapButtonTransparencyCheck
@@ -114,10 +114,10 @@ local mapButtonStateCheck = function (mainFunc)
         sortThroughMapsArray(mainFunc.thisLevelSettings.fullMapScreensArray)
     end
 
-    mainFunc.ballAndButtonAndScreenCreateScript.leftBtn.isVisibleState = false
-    mainFunc.ballAndButtonAndScreenCreateScript.rightBtn.isVisibleState = false
-    mainFunc.ballAndButtonAndScreenCreateScript.upBtn.isVisibleState = false
-    mainFunc.ballAndButtonAndScreenCreateScript.downBtn.isVisibleState = false
+    mainFunc.ballBtnScreenCreate.leftBtn.isVisibleState = false
+    mainFunc.ballBtnScreenCreate.rightBtn.isVisibleState = false
+    mainFunc.ballBtnScreenCreate.upBtn.isVisibleState = false
+    mainFunc.ballBtnScreenCreate.downBtn.isVisibleState = false
 
     local prepareVisibility = function (button, dir, dir2)
         button.isVisibleState = false
@@ -158,26 +158,26 @@ local mapButtonStateCheck = function (mainFunc)
     end
 
     if mainFunc.thisLevelSettings.thisScreenHorzValue > 1 then
-        visibility = prepareVisibility(mainFunc.ballAndButtonAndScreenCreateScript.leftBtn, "prev", "horz")
-        mainFunc.ballAndButtonAndScreenCreateScript.leftBtn.isVisibleState = true
+        visibility = prepareVisibility(mainFunc.ballBtnScreenCreate.leftBtn, "prev", "horz")
+        mainFunc.ballBtnScreenCreate.leftBtn.isVisibleState = true
     end
     
     if mainFunc.thisLevelSettings.thisScreenHorzValue < mainFunc.thisLevelSettings.screenHorzTotal then
-        visibility = prepareVisibility(mainFunc.ballAndButtonAndScreenCreateScript.rightBtn, "next", "horz")
-        mainFunc.ballAndButtonAndScreenCreateScript.rightBtn.isVisibleState = true
+        visibility = prepareVisibility(mainFunc.ballBtnScreenCreate.rightBtn, "next", "horz")
+        mainFunc.ballBtnScreenCreate.rightBtn.isVisibleState = true
     end
     
     if mainFunc.thisLevelSettings.thisScreenVertValue > 1 then
-        visibility = prepareVisibility(mainFunc.ballAndButtonAndScreenCreateScript.upBtn, "prev", "vert")
-        mainFunc.ballAndButtonAndScreenCreateScript.upBtn.isVisibleState = true
+        visibility = prepareVisibility(mainFunc.ballBtnScreenCreate.upBtn, "prev", "vert")
+        mainFunc.ballBtnScreenCreate.upBtn.isVisibleState = true
     end
     
     if mainFunc.thisLevelSettings.thisScreenVertValue < mainFunc.thisLevelSettings.screenVertTotal then
-        visibility = prepareVisibility(mainFunc.ballAndButtonAndScreenCreateScript.downBtn, "next", "vert")
-        mainFunc.ballAndButtonAndScreenCreateScript.downBtn.isVisibleState = true
+        visibility = prepareVisibility(mainFunc.ballBtnScreenCreate.downBtn, "next", "vert")
+        mainFunc.ballBtnScreenCreate.downBtn.isVisibleState = true
     end
     
-    if mainFunc.ballAndButtonAndScreenCreateScript.mapScreen.state == "mapShowing" then
+    if mainFunc.ballBtnScreenCreate.mapScreen.state == "mapShowing" then
         mainFunc.screenChangingScript.mapButtonTransparencyCheck(mainFunc)
     end
 
@@ -204,8 +204,8 @@ local changeToRightScreen = function (mainFunc, shapeArray, shapeArrayParameters
     local function finishScreenChange ()
         if screenChangeType == "auto" then
             timer.performWithDelay(400, function () t.resettingScreenTimer(mainFunc) end, 1)
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2.x = mainFunc.ballAndButtonAndScreenCreateScript.instance2.x
-            mainFunc.projectileMovementRemoveAndRespawnScript.moveProjectile(mainFunc.ballAndButtonAndScreenCreateScript.instance2, mainFunc)
+            mainFunc.ballBtnScreenCreate.ball.x = mainFunc.ballBtnScreenCreate.ball.x
+            mainFunc.projectileMovementRemoveAndRespawnScript.moveProjectile(mainFunc.ballBtnScreenCreate.ball, mainFunc)
 
             for c = 1, #shapeArray do
                 for d = 1, #mainFunc.allLevelSettings.transitionArrayIndex do
@@ -375,34 +375,34 @@ local initialReturnToBallScreen = function (mainFunc, returnType, shapeArray, sh
         mainFunc.thisLevelSettings.thisScreenHorzValue = mainFunc.allLevelSettings.ballScreenHorzValue
         mainFunc.thisLevelSettings.thisScreenVertValue = mainFunc.allLevelSettings.ballScreenVertValue
         
-        mainFunc.ballAndButtonAndScreenCreateScript.backBtn:addEventListener( "tap", mainFunc.buttonListener )
+        mainFunc.ballBtnScreenCreate.backBtn:addEventListener( "tap", mainFunc.buttonListener )
 
         if (returnType == "initialReturn") then
-            transition.to(mainFunc.ballAndButtonAndScreenCreateScript.randomBtn, {alpha=1, time=400})
-            transition.to(mainFunc.ballAndButtonAndScreenCreateScript.backBtn, {alpha=1, time=400})
-            transition.to(mainFunc.ballAndButtonAndScreenCreateScript.playBtn, {alpha=1, time=400})
-            transition.to(mainFunc.ballAndButtonAndScreenCreateScript.mapShowAndClockLabel, {alpha=1, time=400})
+            transition.to(mainFunc.ballBtnScreenCreate.randomBtn, {alpha=1, time=400})
+            transition.to(mainFunc.ballBtnScreenCreate.backBtn, {alpha=1, time=400})
+            transition.to(mainFunc.ballBtnScreenCreate.playBtn, {alpha=1, time=400})
+            transition.to(mainFunc.ballBtnScreenCreate.mapShowAndClockLabel, {alpha=1, time=400})
 
-            mainFunc.ballAndButtonAndScreenCreateScript.randomBtn:addEventListener( "tap", mainFunc.buttonListener )
-            mainFunc.ballAndButtonAndScreenCreateScript.playBtn:addEventListener( "tap", mainFunc.buttonListener )
+            mainFunc.ballBtnScreenCreate.randomBtn:addEventListener( "tap", mainFunc.buttonListener )
+            mainFunc.ballBtnScreenCreate.playBtn:addEventListener( "tap", mainFunc.buttonListener )
 
             activateObjectsForPlay(mainFunc, shapeArray, shapeArrayParameters)
         elseif (returnType == "returnFromMap") then
 
             local function addButtonsBack ()
-                transition.to (mainFunc.ballAndButtonAndScreenCreateScript.mapScreen, {alpha=0, time=100, onComplete= function ()
-                    mainFunc.ballAndButtonAndScreenCreateScript.playBtn:setSequence("default")
+                transition.to (mainFunc.ballBtnScreenCreate.mapScreen, {alpha=0, time=100, onComplete= function ()
+                    mainFunc.ballBtnScreenCreate.playBtn:setSequence("default")
                     end
                 })
                 
                 if mainFunc.allLevelSettings.isBallMovingState == "true" then
                     -- mainFunc.allLevelSettings.shouldBallMoveState = "true"
-                    if (mainFunc.ballAndButtonAndScreenCreateScript.instance2.isWaitingForMovement
-                    and mainFunc.ballAndButtonAndScreenCreateScript.instance2.isWaitingForMovement == true) then
-                        mainFunc.projectileMovementRemoveAndRespawnScript.moveProjectile(mainFunc.ballAndButtonAndScreenCreateScript.instance2, mainFunc)
-                        mainFunc.ballAndButtonAndScreenCreateScript.instance2.isWaitingForMovement = false
+                    if (mainFunc.ballBtnScreenCreate.ball.isWaitingForMovement
+                    and mainFunc.ballBtnScreenCreate.ball.isWaitingForMovement == true) then
+                        mainFunc.projectileMovementRemoveAndRespawnScript.moveProjectile(mainFunc.ballBtnScreenCreate.ball, mainFunc)
+                        mainFunc.ballBtnScreenCreate.ball.isWaitingForMovement = false
                     else 
-                        mainFunc.tm["ball"][mainFunc.ballAndButtonAndScreenCreateScript.instance2.relevantArrayIndex]:resumeAll()
+                        mainFunc.tm["ball"][mainFunc.ballBtnScreenCreate.ball.relevantArrayIndex]:resumeAll()
                     end
                 end
 
@@ -505,7 +505,7 @@ local toolArrayCounterCheck = function (mainFunc)
         toolArrayCounter = toolArrayCounter + 1
     end
     if toolArrayCounter > 0 then
-        --mainFunc.ballAndButtonAndScreenCreateScript.itemBtn:addEventListener( "touch", mainFunc.buttonListener )
+        --mainFunc.ballBtnScreenCreate.itemBtn:addEventListener( "touch", mainFunc.buttonListener )
         mainFunc.thisLevelSettings.hasToolArray = true
     else
         mainFunc.thisLevelSettings.hasToolArray = false
@@ -612,9 +612,9 @@ local shortScreenInitialiser = function (mainFunc, gameSetting, shapeArray, shap
     mainFunc.thisLevelSettings.thisScreenHorzValue = mainFunc.allLevelSettings.ballScreenHorzValue
     mainFunc.thisLevelSettings.thisScreenVertValue = mainFunc.allLevelSettings.ballScreenVertValue
     
-    mainFunc.ballAndButtonAndScreenCreateScript.playBtn:addEventListener( "tap", mainFunc.buttonListener )
-    mainFunc.ballAndButtonAndScreenCreateScript.backBtn:addEventListener( "tap", mainFunc.buttonListener )
-    mainFunc.ballAndButtonAndScreenCreateScript.randomBtn:addEventListener( "tap", mainFunc.buttonListener )
+    mainFunc.ballBtnScreenCreate.playBtn:addEventListener( "tap", mainFunc.buttonListener )
+    mainFunc.ballBtnScreenCreate.backBtn:addEventListener( "tap", mainFunc.buttonListener )
+    mainFunc.ballBtnScreenCreate.randomBtn:addEventListener( "tap", mainFunc.buttonListener )
 
     toolArrayCounter = 0
 
@@ -622,20 +622,20 @@ local shortScreenInitialiser = function (mainFunc, gameSetting, shapeArray, shap
         toolArrayCounter = toolArrayCounter + 1
     end
     if mainFunc.thisLevelSettings.itemBagButtonsVisible then
-        mainFunc.ballAndButtonAndScreenCreateScript.itemBtn:addEventListener( "tap", mainFunc.buttonListener )
-        transition.to(mainFunc.ballAndButtonAndScreenCreateScript.itemBtn, {alpha=1, time=400})
-        if (mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.img
-        and mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.img ~= nil) then
-            transition.to(mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.img, {alpha=1, time=400})
+        mainFunc.ballBtnScreenCreate.itemBtn:addEventListener( "tap", mainFunc.buttonListener )
+        transition.to(mainFunc.ballBtnScreenCreate.itemBtn, {alpha=1, time=400})
+        if (mainFunc.ballBtnScreenCreate.itemBtn.img
+        and mainFunc.ballBtnScreenCreate.itemBtn.img ~= nil) then
+            transition.to(mainFunc.ballBtnScreenCreate.itemBtn.img, {alpha=1, time=400})
         end
         
-        transition.to(mainFunc.ballAndButtonAndScreenCreateScript.itemBagBtn, {alpha=1, time=400})
-        mainFunc.ballAndButtonAndScreenCreateScript.itemBagBtn:addEventListener( "tap", mainFunc.buttonListener )
+        transition.to(mainFunc.ballBtnScreenCreate.itemBagBtn, {alpha=1, time=400})
+        mainFunc.ballBtnScreenCreate.itemBagBtn:addEventListener( "tap", mainFunc.buttonListener )
         mainFunc.thisLevelSettings.hasToolArray = true
     end
 
     if mainFunc.thisLevelSettings.mapObtained then
-        mainFunc.ballAndButtonAndScreenCreateScript.playBtn.alpha = 1
+        mainFunc.ballBtnScreenCreate.playBtn.alpha = 1
     end
 
     toolArrayCounterCheck(mainFunc)
@@ -652,7 +652,7 @@ end
 
 
 local removeIntroScreen = function (mainFunc, gameSetting, shapeArray, shapeArrayParameters)
-    transition.to(mainFunc.ballAndButtonAndScreenCreateScript.introScreen, {y = mainFunc.ballAndButtonAndScreenCreateScript.introScreen.y + display.contentHeight, time = 150, onComplete = function ()
+    transition.to(mainFunc.ballBtnScreenCreate.introScreen, {y = mainFunc.ballBtnScreenCreate.introScreen.y + display.contentHeight, time = 150, onComplete = function ()
         mainFunc.levelTimerUpdateTimer = timer.performWithDelay(100, function ()
             mainFunc.updateMainLevelTimer(mainFunc, shapeArray, shapeArrayParameters)
         end, 1000)
@@ -666,13 +666,13 @@ local removeIntroScreen = function (mainFunc, gameSetting, shapeArray, shapeArra
             saveTable(myGameSettings, "myGameSettings.json")
         end
 
-        for a = 1, #mainFunc.ballAndButtonAndScreenCreateScript.introScreen.valueText do
-            transition.to(mainFunc.ballAndButtonAndScreenCreateScript.introScreen.valueText[a], {y = mainFunc.ballAndButtonAndScreenCreateScript.introScreen.valueText[a].y + display.contentHeight, time = 150})
+        for a = 1, #mainFunc.ballBtnScreenCreate.introScreen.valueText do
+            transition.to(mainFunc.ballBtnScreenCreate.introScreen.valueText[a], {y = mainFunc.ballBtnScreenCreate.introScreen.valueText[a].y + display.contentHeight, time = 150})
         end
 
         activateObjectsForPlay(mainFunc, shapeArray, shapeArrayParameters)
     else
-        --transition.to(mainFunc.ballAndButtonAndScreenCreateScript.introScreen.valueText, {alpha = 0, time = 750, onComplete = function () t.screenInitialiser(mainFunc, shapeArray, shapeArrayParameters) end})
+        --transition.to(mainFunc.ballBtnScreenCreate.introScreen.valueText, {alpha = 0, time = 750, onComplete = function () t.screenInitialiser(mainFunc, shapeArray, shapeArrayParameters) end})
     end
 end
     t.removeIntroScreen = removeIntroScreen

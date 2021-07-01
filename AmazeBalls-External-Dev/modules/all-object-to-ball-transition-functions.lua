@@ -14,7 +14,7 @@ end
 	t.resetFanCounter = resetFanCounter
 
 local mainDoorTransition = function (mainFunc, shapeArray, shapeArrayParameters)
-	local ball = mainFunc.ballAndButtonAndScreenCreateScript.instance2;
+	local ball = mainFunc.ballBtnScreenCreate.ball;
 
 	for b = 1, #shapeArray do
 		if shapeArrayParameters[b]["type"] == "door"
@@ -104,7 +104,7 @@ end
 	t.mainDoorTransition = mainDoorTransition
 
 local tunnelTransition = function (mainFunc, shapeArray, shapeArrayParameters)
-	local ball = mainFunc.ballAndButtonAndScreenCreateScript.instance2;
+	local ball = mainFunc.ballBtnScreenCreate.ball;
 
 	for z = 1, #shapeArray do
 		if shapeArray[z].objectType == "tunnel" then
@@ -602,13 +602,13 @@ function showObjectsPickedUp (relevantArray, mainFunc)
 end
 
 local followShapeWithBall = function (mainFunc)
-	mainFunc.ballAndButtonAndScreenCreateScript.instance2.x = mainFunc.allLevelSettings.currentShapeBallShouldFollow.x
-	mainFunc.ballAndButtonAndScreenCreateScript.instance2.y = mainFunc.allLevelSettings.currentShapeBallShouldFollow.y
+	mainFunc.ballBtnScreenCreate.ball.x = mainFunc.allLevelSettings.currentShapeBallShouldFollow.x
+	mainFunc.ballBtnScreenCreate.ball.y = mainFunc.allLevelSettings.currentShapeBallShouldFollow.y
 end
 	t.followShapeWithBall = followShapeWithBall
 
 local fanCentering = function (obj, thisFan, fanCenterTime, mainFunc)
-	local ball = mainFunc.ballAndButtonAndScreenCreateScript.instance2;
+	local ball = mainFunc.ballBtnScreenCreate.ball;
 
     local fanCenteringComplete  = function (obj)
         obj.fanCenteringCounter = 1
@@ -891,7 +891,7 @@ local fanCentering = function (obj, thisFan, fanCenterTime, mainFunc)
 
 	    	if ball.character ==  "dummyBall"
 	    	or ball.character ==  "superBall" then
-	    		mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.isActive = false
+	    		mainFunc.ballBtnScreenCreate.itemBtn.isActive = false
 	            local prevImageSheet = graphics.newImageSheet( mainFunc.fullCharacterConfigArray[ballDummy.character], {width = 31, height = 34, numFrames = 4, sheetContentWidth = 124, sheetContentHeight = 34})
 	            local prevSequenceData = {
 	                { name = "up", start=1, count=1,   loopCount=1 },
@@ -900,7 +900,7 @@ local fanCentering = function (obj, thisFan, fanCenterTime, mainFunc)
 	                { name = "left", start=4, count=1, loopCount=1 }
 	            }
 
-	            mainFunc.oldInstance2 = ball
+	            mainFunc.oldball = ball
 
 	            transition.to(ballDummy, {alpha = 1, x = ballDummy.x + xCalc(10), time = 80, onComplete = function ()
 	                ball = display.newSprite(prevImageSheet, prevSequenceData)
@@ -928,12 +928,12 @@ local fanCentering = function (obj, thisFan, fanCenterTime, mainFunc)
 	                ballDummy:removeSelf()
 	                ballDummy = nil
 
-	                mainFunc.oldInstance2:removeSelf()
-	                mainFunc.oldInstance2 = nil
+	                mainFunc.oldball:removeSelf()
+	                mainFunc.oldball = nil
 
 	                timer.performWithDelay(200, function ()
 	                    mainFunc.allLevelSettings.specialBallActive = false
-	                    mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.isActive = true
+	                    mainFunc.ballBtnScreenCreate.itemBtn.isActive = true
 	                end)
 	            end})
 	    	else
@@ -941,9 +941,9 @@ local fanCentering = function (obj, thisFan, fanCenterTime, mainFunc)
 		            timer.pause(mainFunc.levelTimerUpdateTimer)
 		        end
 
-		        mainFunc.ballAndButtonAndScreenCreateScript.pauseScreenOverlay.alpha = 0.25
-		        mainFunc.ballAndButtonAndScreenCreateScript.pauseScreenOverlay:addEventListener("tap", mainFunc.dummyListener)
-		        mainFunc.ballAndButtonAndScreenCreateScript.pauseScreenOverlay:addEventListener("touch", mainFunc.dummyListener)
+		        mainFunc.ballBtnScreenCreate.pauseScreenOverlay.alpha = 0.25
+		        mainFunc.ballBtnScreenCreate.pauseScreenOverlay:addEventListener("tap", mainFunc.dummyListener)
+		        mainFunc.ballBtnScreenCreate.pauseScreenOverlay:addEventListener("touch", mainFunc.dummyListener)
 
 	    		-- not sure why this is neccessary but as soon as you put the medalPiece into the itemScreenObjGroup, it changes position and doesn't account for screen changes
 	    		local oldX = thisFan.medalPiece.x
@@ -960,15 +960,15 @@ local fanCentering = function (obj, thisFan, fanCenterTime, mainFunc)
 		    	thisFan.medalPiece:toFront()
 
 		    	local transitionOptions = {alpha = 0, time = 300}
-		    	transition.to(mainFunc.ballAndButtonAndScreenCreateScript.playBtn, transitionOptions)
-		    	transition.to(mainFunc.ballAndButtonAndScreenCreateScript.randomBtn, transitionOptions)
-		    	transition.to(mainFunc.ballAndButtonAndScreenCreateScript.backBtn, transitionOptions)
+		    	transition.to(mainFunc.ballBtnScreenCreate.playBtn, transitionOptions)
+		    	transition.to(mainFunc.ballBtnScreenCreate.randomBtn, transitionOptions)
+		    	transition.to(mainFunc.ballBtnScreenCreate.backBtn, transitionOptions)
 
 		    	mainFunc.buttonListenerScript.removeEventListenersForPause(mainFunc, shapeArray, shapeArrayParameters)
 
 			    --save all collected Coins and gems, maps etc
 
-		    	local totalTime = (mainFunc.ballAndButtonAndScreenCreateScript.levelTimeMinutes * 60) + mainFunc.ballAndButtonAndScreenCreateScript.levelTimeSeconds
+		    	local totalTime = (mainFunc.ballBtnScreenCreate.levelTimeMinutes * 60) + mainFunc.ballBtnScreenCreate.levelTimeSeconds
 		    	if myGameSettings[currentWorld]["levels"][currentLevel][currentMedal .. "-achievements"]["best_time_seconds_left"] < totalTime then
 		    		myGameSettings[currentWorld]["levels"][currentLevel][currentMedal .. "-achievements"]["best_time_seconds_left"] = totalTime
 		    	end
@@ -1350,7 +1350,7 @@ local fanCentering = function (obj, thisFan, fanCenterTime, mainFunc)
 								mainFunc.medalGainedScreen.TimeCounter[a].y = mainFunc.medalGainedScreen.TimeCounter[a].y + yCalc(3)
 					        end
 			    	end
-			    	mainFunc.globalImageCreateFunctions.createLevelTimeString(mainFunc.ballAndButtonAndScreenCreateScript.levelTimeSeconds, mainFunc.ballAndButtonAndScreenCreateScript.levelTimeMinutes, mainFunc.medalGainedScreen.TimeCounter, true)
+			    	mainFunc.globalImageCreateFunctions.createLevelTimeString(mainFunc.ballBtnScreenCreate.levelTimeSeconds, mainFunc.ballBtnScreenCreate.levelTimeMinutes, mainFunc.medalGainedScreen.TimeCounter, true)
 
 			    	--if this is first time, show first time icon
 
@@ -1761,7 +1761,7 @@ local prepareForFanCentering = function (obj, shapeIndex, fanCenterTime, fanCent
     	obj.direction = shapeArray[shapeIndex].direction
     end
     
-    if (obj == mainFunc.ballAndButtonAndScreenCreateScript.instance2) then
+    if (obj == mainFunc.ballBtnScreenCreate.ball) then
         mainFunc.allLevelSettings.isBallMovingState = "false"
         mainFunc.allLevelSettings.shouldBallMoveState = "false"
         shapeArray[shapeIndex].isBallPresent = true
@@ -1778,7 +1778,7 @@ end
 local gemCollision = function (event, mainFunc)
 	local target = event.target;
 
-	if event.other == mainFunc.ballAndButtonAndScreenCreateScript.instance2
+	if event.other == mainFunc.ballBtnScreenCreate.ball
     and mainFunc.allLevelSettings.gemCounter == 0 then
         local function addBackGemCounter ()
             mainFunc.allLevelSettings.gemCounter = 0 
@@ -1805,31 +1805,31 @@ local gemCollision = function (event, mainFunc)
 
         local hideGemsLabels = function ()
 			if (event.target.gemType == "purple") then
-        		mainFunc.ballAndButtonAndScreenCreateScript.hideGemsLabelTransition = transition.to(mainFunc.ballAndButtonAndScreenCreateScript.showGemsLabel, {y = mainFunc.ballAndButtonAndScreenCreateScript.showGemsLabel.contentHeight, time = 150, onComplete = function ()
-	        		mainFunc.ballAndButtonAndScreenCreateScript.hideGemsLabelTransition = nil
-	        		mainFunc.ballAndButtonAndScreenCreateScript.gemsLabelCounterTimer = timer.performWithDelay(1000, function ()
-	        			mainFunc.ballAndButtonAndScreenCreateScript.gemsLabelCounterTimer = nil
+        		mainFunc.ballBtnScreenCreate.hideGemsLabelTransition = transition.to(mainFunc.ballBtnScreenCreate.showGemsLabel, {y = mainFunc.ballBtnScreenCreate.showGemsLabel.contentHeight, time = 150, onComplete = function ()
+	        		mainFunc.ballBtnScreenCreate.hideGemsLabelTransition = nil
+	        		mainFunc.ballBtnScreenCreate.gemsLabelCounterTimer = timer.performWithDelay(1000, function ()
+	        			mainFunc.ballBtnScreenCreate.gemsLabelCounterTimer = nil
 
-	        			transition.to(mainFunc.ballAndButtonAndScreenCreateScript.showGemsLabel, {y = mainFunc.ballAndButtonAndScreenCreateScript.showGemsLabel.y - mainFunc.ballAndButtonAndScreenCreateScript.showGemsLabel.contentHeight, time = 150})
-	    				transition.to(mainFunc.ballAndButtonAndScreenCreateScript.showGemsLabel.gemIcon, {y = mainFunc.ballAndButtonAndScreenCreateScript.showGemsLabel.gemIcon.y - mainFunc.ballAndButtonAndScreenCreateScript.showGemsLabel.contentHeight, time = 150})
-			        	transition.to(mainFunc.ballAndButtonAndScreenCreateScript.gemCounterFirstDigit, {y = mainFunc.ballAndButtonAndScreenCreateScript.gemCounterFirstDigit.y - mainFunc.ballAndButtonAndScreenCreateScript.showGemsLabel.contentHeight, time = 150})
-	        			transition.to(mainFunc.ballAndButtonAndScreenCreateScript.gemCounterSecondDigit, {y = mainFunc.ballAndButtonAndScreenCreateScript.gemCounterSecondDigit.y - mainFunc.ballAndButtonAndScreenCreateScript.showGemsLabel.contentHeight, time = 150})
+	        			transition.to(mainFunc.ballBtnScreenCreate.showGemsLabel, {y = mainFunc.ballBtnScreenCreate.showGemsLabel.y - mainFunc.ballBtnScreenCreate.showGemsLabel.contentHeight, time = 150})
+	    				transition.to(mainFunc.ballBtnScreenCreate.showGemsLabel.gemIcon, {y = mainFunc.ballBtnScreenCreate.showGemsLabel.gemIcon.y - mainFunc.ballBtnScreenCreate.showGemsLabel.contentHeight, time = 150})
+			        	transition.to(mainFunc.ballBtnScreenCreate.gemCounterFirstDigit, {y = mainFunc.ballBtnScreenCreate.gemCounterFirstDigit.y - mainFunc.ballBtnScreenCreate.showGemsLabel.contentHeight, time = 150})
+	        			transition.to(mainFunc.ballBtnScreenCreate.gemCounterSecondDigit, {y = mainFunc.ballBtnScreenCreate.gemCounterSecondDigit.y - mainFunc.ballBtnScreenCreate.showGemsLabel.contentHeight, time = 150})
 	        			
-        				mainFunc.ballAndButtonAndScreenCreateScript.showGemsLabel.state = "hidden"
+        				mainFunc.ballBtnScreenCreate.showGemsLabel.state = "hidden"
 	        		end)
 	        	end})
 			else
-				mainFunc.ballAndButtonAndScreenCreateScript.hideCoinsLabelTransition = transition.to(mainFunc.ballAndButtonAndScreenCreateScript.showCoinsLabel, {y = mainFunc.ballAndButtonAndScreenCreateScript.showGemsLabel.contentHeight, time = 150, onComplete = function ()
-	        		mainFunc.ballAndButtonAndScreenCreateScript.hideCoinsLabelTransition = nil
-	        		mainFunc.ballAndButtonAndScreenCreateScript.coinsLabelCounterTimer = timer.performWithDelay(1000, function ()
-	        			mainFunc.ballAndButtonAndScreenCreateScript.coinsLabelCounterTimer = nil
+				mainFunc.ballBtnScreenCreate.hideCoinsLabelTransition = transition.to(mainFunc.ballBtnScreenCreate.showCoinsLabel, {y = mainFunc.ballBtnScreenCreate.showGemsLabel.contentHeight, time = 150, onComplete = function ()
+	        		mainFunc.ballBtnScreenCreate.hideCoinsLabelTransition = nil
+	        		mainFunc.ballBtnScreenCreate.coinsLabelCounterTimer = timer.performWithDelay(1000, function ()
+	        			mainFunc.ballBtnScreenCreate.coinsLabelCounterTimer = nil
 
-			        	for key,val in pairs(mainFunc.ballAndButtonAndScreenCreateScript.coinIcons) do
-			        		transition.to(mainFunc.ballAndButtonAndScreenCreateScript.coinIcons[key], {y = mainFunc.ballAndButtonAndScreenCreateScript.coinIcons[key].y - mainFunc.ballAndButtonAndScreenCreateScript.showCoinsLabel.contentHeight, time = 150})
+			        	for key,val in pairs(mainFunc.ballBtnScreenCreate.coinIcons) do
+			        		transition.to(mainFunc.ballBtnScreenCreate.coinIcons[key], {y = mainFunc.ballBtnScreenCreate.coinIcons[key].y - mainFunc.ballBtnScreenCreate.showCoinsLabel.contentHeight, time = 150})
 			       		end
-	        			transition.to(mainFunc.ballAndButtonAndScreenCreateScript.showCoinsLabel, {y = mainFunc.ballAndButtonAndScreenCreateScript.showCoinsLabel.y - mainFunc.ballAndButtonAndScreenCreateScript.showCoinsLabel.contentHeight, time = 150})
+	        			transition.to(mainFunc.ballBtnScreenCreate.showCoinsLabel, {y = mainFunc.ballBtnScreenCreate.showCoinsLabel.y - mainFunc.ballBtnScreenCreate.showCoinsLabel.contentHeight, time = 150})
 	        			
-        				mainFunc.ballAndButtonAndScreenCreateScript.showCoinsLabel.state = "hidden"
+        				mainFunc.ballBtnScreenCreate.showCoinsLabel.state = "hidden"
 	        		end)
 	        	end})
 			end
@@ -1838,16 +1838,16 @@ local gemCollision = function (event, mainFunc)
         local showGemsLabels = function ()
 
         	if (event.target.gemType == "purple") then
-        		if mainFunc.ballAndButtonAndScreenCreateScript.hideGemsLabelTransition ~= nil then
-	        		transition.cancel(mainFunc.ballAndButtonAndScreenCreateScript.hideGemsLabelTransition)
+        		if mainFunc.ballBtnScreenCreate.hideGemsLabelTransition ~= nil then
+	        		transition.cancel(mainFunc.ballBtnScreenCreate.hideGemsLabelTransition)
 	        	end
-	        	if mainFunc.ballAndButtonAndScreenCreateScript.gemsLabelCounterTimer ~= nil then
-	        		timer.cancel(mainFunc.ballAndButtonAndScreenCreateScript.gemsLabelCounterTimer)
+	        	if mainFunc.ballBtnScreenCreate.gemsLabelCounterTimer ~= nil then
+	        		timer.cancel(mainFunc.ballBtnScreenCreate.gemsLabelCounterTimer)
 	        	end
         	
-        		mainFunc.ballAndButtonAndScreenCreateScript.showGemsLabel.alpha = 1
-        		mainFunc.ballAndButtonAndScreenCreateScript.showGemsLabel.state = "showing"
-        		mainFunc.labelToRemove = mainFunc.ballAndButtonAndScreenCreateScript.showGemsLabel
+        		mainFunc.ballBtnScreenCreate.showGemsLabel.alpha = 1
+        		mainFunc.ballBtnScreenCreate.showGemsLabel.state = "showing"
+        		mainFunc.labelToRemove = mainFunc.ballBtnScreenCreate.showGemsLabel
         		
         		mainFunc.allLevelSettings.gem_counter["coins"] = mainFunc.allLevelSettings.gem_counter["coins"] + mainFunc.allLevelSettings.coinsGainedPerGem
         		if (mainFunc.thisLevelSettings.gemsGainedNamesArray) then
@@ -1869,52 +1869,52 @@ local gemCollision = function (event, mainFunc)
 
         		local gemCounterString = tostring(mainFunc.allLevelSettings.gem_counter["purple"])
         		if mainFunc.allLevelSettings.gem_counter["purple"] > 9 then
-        			mainFunc.ballAndButtonAndScreenCreateScript.gemIconCounterLabel[1]:setSequence(string.sub(gemCounterString, 1, 1) )
-        			mainFunc.ballAndButtonAndScreenCreateScript.gemIconCounterLabel[2]:setSequence(string.sub(gemCounterString, 2, 2)  )
+        			mainFunc.ballBtnScreenCreate.gemIconCounterLabel[1]:setSequence(string.sub(gemCounterString, 1, 1) )
+        			mainFunc.ballBtnScreenCreate.gemIconCounterLabel[2]:setSequence(string.sub(gemCounterString, 2, 2)  )
         		else
-        			mainFunc.ballAndButtonAndScreenCreateScript.gemIconCounterLabel[2]:setSequence(gemCounterString)
+        			mainFunc.ballBtnScreenCreate.gemIconCounterLabel[2]:setSequence(gemCounterString)
         		end
 
         		local secondDigit = (mainFunc.allLevelSettings.gem_counter["purple"] % 10);
         		local firstDigit = (mainFunc.allLevelSettings.gem_counter["purple"] - secondDigit) / 10;
 
-    			mainFunc.ballAndButtonAndScreenCreateScript.gemCounterSecondDigit:removeSelf()
-    			mainFunc.ballAndButtonAndScreenCreateScript.gemCounterSecondDigit = nil
-    			mainFunc.ballAndButtonAndScreenCreateScript.gemCounterSecondDigit = gemCounter_SecondDigit(false, secondDigit, mainFunc.ballAndButtonAndScreenCreateScript.showGemsLabel.x);
+    			mainFunc.ballBtnScreenCreate.gemCounterSecondDigit:removeSelf()
+    			mainFunc.ballBtnScreenCreate.gemCounterSecondDigit = nil
+    			mainFunc.ballBtnScreenCreate.gemCounterSecondDigit = gemCounter_SecondDigit(false, secondDigit, mainFunc.ballBtnScreenCreate.showGemsLabel.x);
 
         		if mainFunc.allLevelSettings.gem_counter["purple"] > 9 then
         			if (secondDigit == 0) then
-        				mainFunc.ballAndButtonAndScreenCreateScript.gemCounterFirstDigit:removeSelf()
-	        			mainFunc.ballAndButtonAndScreenCreateScript.gemCounterFirstDigit = nil
-	        			mainFunc.ballAndButtonAndScreenCreateScript.gemCounterFirstDigit = gemCounter_FirstDigit(false, firstDigit,  mainFunc.ballAndButtonAndScreenCreateScript.showGemsLabel.x);
+        				mainFunc.ballBtnScreenCreate.gemCounterFirstDigit:removeSelf()
+	        			mainFunc.ballBtnScreenCreate.gemCounterFirstDigit = nil
+	        			mainFunc.ballBtnScreenCreate.gemCounterFirstDigit = gemCounter_FirstDigit(false, firstDigit,  mainFunc.ballBtnScreenCreate.showGemsLabel.x);
         			end
-        			mainFunc.ballAndButtonAndScreenCreateScript.gemCounterFirstDigit.alpha = 1
+        			mainFunc.ballBtnScreenCreate.gemCounterFirstDigit.alpha = 1
         		end
 
-        		mainFunc.ballAndButtonAndScreenCreateScript.gemIcon:toFront()
+        		mainFunc.ballBtnScreenCreate.gemIcon:toFront()
 
-        		for a = 1, #mainFunc.ballAndButtonAndScreenCreateScript.gemIconCounterLabel do
-        			mainFunc.ballAndButtonAndScreenCreateScript.gemIconCounterLabel[a].alpha = 1
+        		for a = 1, #mainFunc.ballBtnScreenCreate.gemIconCounterLabel do
+        			mainFunc.ballBtnScreenCreate.gemIconCounterLabel[a].alpha = 1
         		end
-        		mainFunc.ballAndButtonAndScreenCreateScript.showGemsLabel.gemIcon.alpha = 1
-        		mainFunc.ballAndButtonAndScreenCreateScript.gemCounterSecondDigit.alpha = 1
+        		mainFunc.ballBtnScreenCreate.showGemsLabel.gemIcon.alpha = 1
+        		mainFunc.ballBtnScreenCreate.gemCounterSecondDigit.alpha = 1
 
-        		transition.to(mainFunc.ballAndButtonAndScreenCreateScript.showGemsLabel.gemIcon, {y = 30, time = 150})
+        		transition.to(mainFunc.ballBtnScreenCreate.showGemsLabel.gemIcon, {y = 30, time = 150})
 
-        		transition.to(mainFunc.ballAndButtonAndScreenCreateScript.gemCounterFirstDigit, {y = 20, time = 150})
-        		transition.to(mainFunc.ballAndButtonAndScreenCreateScript.gemCounterSecondDigit, {y = 20, time = 150})
+        		transition.to(mainFunc.ballBtnScreenCreate.gemCounterFirstDigit, {y = 20, time = 150})
+        		transition.to(mainFunc.ballBtnScreenCreate.gemCounterSecondDigit, {y = 20, time = 150})
         	elseif (event.target.gemType ~= "purple") then
 
-	        	if mainFunc.ballAndButtonAndScreenCreateScript.hideCoinsLabelTransition ~= nil then
-	        		transition.cancel(mainFunc.ballAndButtonAndScreenCreateScript.hideCoinsLabelTransition)
+	        	if mainFunc.ballBtnScreenCreate.hideCoinsLabelTransition ~= nil then
+	        		transition.cancel(mainFunc.ballBtnScreenCreate.hideCoinsLabelTransition)
 	        	end
-	        	if mainFunc.ballAndButtonAndScreenCreateScript.coinsLabelCounterTimer ~= nil then
-	        		timer.cancel(mainFunc.ballAndButtonAndScreenCreateScript.coinsLabelCounterTimer)
+	        	if mainFunc.ballBtnScreenCreate.coinsLabelCounterTimer ~= nil then
+	        		timer.cancel(mainFunc.ballBtnScreenCreate.coinsLabelCounterTimer)
 	        	end
 
-        		mainFunc.ballAndButtonAndScreenCreateScript.showCoinsLabel.alpha = 1
-        		mainFunc.ballAndButtonAndScreenCreateScript.showCoinsLabel.state = "showing"
-        		mainFunc.labelToRemove = mainFunc.ballAndButtonAndScreenCreateScript.showCoinsLabel
+        		mainFunc.ballBtnScreenCreate.showCoinsLabel.alpha = 1
+        		mainFunc.ballBtnScreenCreate.showCoinsLabel.state = "showing"
+        		mainFunc.labelToRemove = mainFunc.ballBtnScreenCreate.showCoinsLabel
 				
         		if event.target.gemType == "redCoin" then
         			mainFunc.allLevelSettings.gem_counter["coins"] = mainFunc.allLevelSettings.gem_counter["coins"] + mainFunc.allLevelSettings.coinsGainedForRedCoin
@@ -1923,23 +1923,23 @@ local gemCollision = function (event, mainFunc)
         		elseif event.target.gemType == "purpleCoin" then
         			mainFunc.allLevelSettings.gem_counter["coins"] = mainFunc.allLevelSettings.gem_counter["coins"] + mainFunc.allLevelSettings.coinsGainedForPurpleCoin
         		end
-        		mainFunc.ballAndButtonAndScreenCreateScript.pauseScreenCoins[event.target.gemType].alpha = 1
+        		mainFunc.ballBtnScreenCreate.pauseScreenCoins[event.target.gemType].alpha = 1
 
-        		for a = 1, #mainFunc.ballAndButtonAndScreenCreateScript.coinIcons do
-        			if (mainFunc.ballAndButtonAndScreenCreateScript.coinIcons[a].state == "shown") then
-        				mainFunc.ballAndButtonAndScreenCreateScript.coinIcons[a].alpha = 1
+        		for a = 1, #mainFunc.ballBtnScreenCreate.coinIcons do
+        			if (mainFunc.ballBtnScreenCreate.coinIcons[a].state == "shown") then
+        				mainFunc.ballBtnScreenCreate.coinIcons[a].alpha = 1
         			end
         		end
-        		for key,val in pairs(mainFunc.ballAndButtonAndScreenCreateScript.coinIcons) do
-        			if (mainFunc.ballAndButtonAndScreenCreateScript.coinIcons[key].state == "shown") then
-        				mainFunc.ballAndButtonAndScreenCreateScript.coinIcons[key].alpha = 1
+        		for key,val in pairs(mainFunc.ballBtnScreenCreate.coinIcons) do
+        			if (mainFunc.ballBtnScreenCreate.coinIcons[key].state == "shown") then
+        				mainFunc.ballBtnScreenCreate.coinIcons[key].alpha = 1
         			end
         		end
 
-        		mainFunc.ballAndButtonAndScreenCreateScript.coinIcons[event.target.gemType].alpha = 1
-        		mainFunc.ballAndButtonAndScreenCreateScript.coinIcons[event.target.gemType].state = "shown"
-        		for key,val in pairs(mainFunc.ballAndButtonAndScreenCreateScript.coinIcons) do
-			        transition.to(mainFunc.ballAndButtonAndScreenCreateScript.coinIcons[key], {y = 23, time = 150})
+        		mainFunc.ballBtnScreenCreate.coinIcons[event.target.gemType].alpha = 1
+        		mainFunc.ballBtnScreenCreate.coinIcons[event.target.gemType].state = "shown"
+        		for key,val in pairs(mainFunc.ballBtnScreenCreate.coinIcons) do
+			        transition.to(mainFunc.ballBtnScreenCreate.coinIcons[key], {y = 23, time = 150})
     			end
         		
     		end
@@ -1964,7 +1964,7 @@ local closeItemGainedScreenFunction = function (mainFunc, shapeArray, shapeArray
 	if (mainFunc.allLevelSettings.itemBagIsOpen == true) then
 		local isSingleItem = false
 		mainFunc.allLevelSettings.itemBagIsOpen = false
-		screen = mainFunc.ballAndButtonAndScreenCreateScript.itemGainedScreen
+		screen = mainFunc.ballBtnScreenCreate.itemGainedScreen
 		if #screen.itemArray == 1 then
 			isSingleItem = true
 		end
@@ -2022,29 +2022,29 @@ local closeItemGainedScreenFunction = function (mainFunc, shapeArray, shapeArray
 
 			    mainFunc.buttonListenerScript.addBackButtonListenersForItemGained(mainFunc)
 
-			    mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.itemBagScreenOverlay.alpha = 0
-	        	mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.itemBagScreenOverlay:removeEventListener("tap", mainFunc.dummyListener)
-	        	mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.itemBagScreenOverlay:removeEventListener("touch", mainFunc.dummyListener)
+			    mainFunc.ballBtnScreenCreate.itemBagScreen.itemBagScreenOverlay.alpha = 0
+	        	mainFunc.ballBtnScreenCreate.itemBagScreen.itemBagScreenOverlay:removeEventListener("tap", mainFunc.dummyListener)
+	        	mainFunc.ballBtnScreenCreate.itemBagScreen.itemBagScreenOverlay:removeEventListener("touch", mainFunc.dummyListener)
 
 			end
 
 			timer.performWithDelay(300, delayedAddBackListeners)
 
 	    	if mainFunc.thisLevelSettings.itemBagButtonsVisible then
-		        mainFunc.ballAndButtonAndScreenCreateScript.itemBtn:addEventListener( "tap", mainFunc.buttonListener )
-	    		transition.to(mainFunc.ballAndButtonAndScreenCreateScript.itemBtn, {alpha=1, time=400})
-	    		if (mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.img
-	    		and mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.img ~= nil) then
-	    			transition.to(mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.img, {alpha=1, time=400})
+		        mainFunc.ballBtnScreenCreate.itemBtn:addEventListener( "tap", mainFunc.buttonListener )
+	    		transition.to(mainFunc.ballBtnScreenCreate.itemBtn, {alpha=1, time=400})
+	    		if (mainFunc.ballBtnScreenCreate.itemBtn.img
+	    		and mainFunc.ballBtnScreenCreate.itemBtn.img ~= nil) then
+	    			transition.to(mainFunc.ballBtnScreenCreate.itemBtn.img, {alpha=1, time=400})
 	    		end
 	    		
-	    		transition.to(mainFunc.ballAndButtonAndScreenCreateScript.itemBagBtn, {alpha=1, time=400})
-				mainFunc.ballAndButtonAndScreenCreateScript.itemBagBtn:addEventListener( "tap", mainFunc.buttonListener )
+	    		transition.to(mainFunc.ballBtnScreenCreate.itemBagBtn, {alpha=1, time=400})
+				mainFunc.ballBtnScreenCreate.itemBagBtn:addEventListener( "tap", mainFunc.buttonListener )
 		        mainFunc.thisLevelSettings.hasToolArray = true
 		    end
 
 		    if mainFunc.thisLevelSettings.mapObtained == true then
-	    		--transition.to(mainFunc.ballAndButtonAndScreenCreateScript.playBtn, {alpha=1, time=400})
+	    		--transition.to(mainFunc.ballBtnScreenCreate.playBtn, {alpha=1, time=400})
 		    end
 		end
 	end
@@ -2056,11 +2056,11 @@ local itemGainedFunction = function (mainFunc, shapeArray, shapeArrayParameters,
     	display.getCurrentStage():setFocus( nil )
         mainFunc.allLevelSettings.itemBagIsOpen = true
 
-    	mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.itemBagScreenOverlay.alpha = 0.05
-        mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.itemBagScreenOverlay:addEventListener("tap", mainFunc.dummyListener)
-        mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.itemBagScreenOverlay:addEventListener("touch", mainFunc.dummyListener)
+    	mainFunc.ballBtnScreenCreate.itemBagScreen.itemBagScreenOverlay.alpha = 0.05
+        mainFunc.ballBtnScreenCreate.itemBagScreen.itemBagScreenOverlay:addEventListener("tap", mainFunc.dummyListener)
+        mainFunc.ballBtnScreenCreate.itemBagScreen.itemBagScreenOverlay:addEventListener("touch", mainFunc.dummyListener)
 
-    	local screen = mainFunc.ballAndButtonAndScreenCreateScript.itemGainedScreen
+    	local screen = mainFunc.ballBtnScreenCreate.itemGainedScreen
     	mainFunc.allLevelSettings.itemScreenObjectsGroup:insert(screen)
 
 		screen.closeButton = display.newImageRect("images/central-images/Layout/somethingGainedScreen/medalGainedScreen-closeButton.png", 81, 44)
@@ -2089,15 +2089,15 @@ local itemGainedFunction = function (mainFunc, shapeArray, shapeArrayParameters,
     	end
 
     	if mainFunc.thisLevelSettings.itemBagButtonsVisible then
-	        mainFunc.ballAndButtonAndScreenCreateScript.itemBtn:removeEventListener( "touch", mainFunc.buttonListener )
-    		transition.to(mainFunc.ballAndButtonAndScreenCreateScript.itemBtn, {alpha=0, time=200})
-    		if (mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.img
-    		and mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.img ~= nil) then
-    			transition.to(mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.img, {alpha=0, time=400})
+	        mainFunc.ballBtnScreenCreate.itemBtn:removeEventListener( "touch", mainFunc.buttonListener )
+    		transition.to(mainFunc.ballBtnScreenCreate.itemBtn, {alpha=0, time=200})
+    		if (mainFunc.ballBtnScreenCreate.itemBtn.img
+    		and mainFunc.ballBtnScreenCreate.itemBtn.img ~= nil) then
+    			transition.to(mainFunc.ballBtnScreenCreate.itemBtn.img, {alpha=0, time=400})
     		end
-			mainFunc.ballAndButtonAndScreenCreateScript.itemBtn:removeEventListener( "touch", mainFunc.buttonListener )
-    		transition.to(mainFunc.ballAndButtonAndScreenCreateScript.itemBagBtn, {alpha=0, time=200})
-			mainFunc.ballAndButtonAndScreenCreateScript.itemBagBtn:removeEventListener( "tap", mainFunc.buttonListener )
+			mainFunc.ballBtnScreenCreate.itemBtn:removeEventListener( "touch", mainFunc.buttonListener )
+    		transition.to(mainFunc.ballBtnScreenCreate.itemBagBtn, {alpha=0, time=200})
+			mainFunc.ballBtnScreenCreate.itemBagBtn:removeEventListener( "tap", mainFunc.buttonListener )
 	        mainFunc.thisLevelSettings.hasToolArray = true
 	    end
 
@@ -2231,7 +2231,7 @@ end
 
 
 local autoFanAndEtcTransition = function (mainFunc, shapeArray, shapeArrayParameters)
-	local ball = mainFunc.ballAndButtonAndScreenCreateScript.instance2;
+	local ball = mainFunc.ballBtnScreenCreate.ball;
 
 	for b = 1, #shapeArray do
 		if (mainFunc.allLevelSettings.ballScreenHorzValue == shapeArrayParameters[b]["location"]["xScreen"]
@@ -2456,9 +2456,9 @@ local autoFanAndEtcTransition = function (mainFunc, shapeArray, shapeArrayParame
 	        and (ball.y) < (shapeArray[b].y + (mainFunc.allLevelSettings.squareHeight / 2) + 5)
 		    and ball.character ~=  "dummyBall" then
 		    	if mainFunc.thisLevelSettings.mapObtained == true then
-	            	mainFunc.ballAndButtonAndScreenCreateScript.playBtn.alpha = 0.4
+	            	mainFunc.ballBtnScreenCreate.playBtn.alpha = 0.4
 	            end
-	            mainFunc.ballAndButtonAndScreenCreateScript.randomBtn.alpha = 0.4
+	            mainFunc.ballBtnScreenCreate.randomBtn.alpha = 0.4
 	            mainFunc.allLevelSettings.pauseButtonsEnabled = false
 	        end
 		    if shapeArray[b].switchCounter == 0 then
@@ -2508,12 +2508,12 @@ local autoFanAndEtcTransition = function (mainFunc, shapeArray, shapeArrayParame
 								end
 							end
 							if currentMedal == "silver" then
-								mainFunc.ballAndButtonAndScreenCreateScript.mapShowAndClockLabel.map:setSequence("partialMap")
+								mainFunc.ballBtnScreenCreate.mapShowAndClockLabel.map:setSequence("partialMap")
 							else
-								mainFunc.ballAndButtonAndScreenCreateScript.mapShowAndClockLabel.map:setSequence("fullMap")
+								mainFunc.ballBtnScreenCreate.mapShowAndClockLabel.map:setSequence("fullMap")
 							end
 						elseif itemName == "compass" then
-							mainFunc.ballAndButtonAndScreenCreateScript.mapShowAndClockLabel.compass:setSequence("compass")
+							mainFunc.ballBtnScreenCreate.mapShowAndClockLabel.compass:setSequence("compass")
 						end
 					end
 		        	
@@ -2613,15 +2613,15 @@ local autoFanAndEtcTransition = function (mainFunc, shapeArray, shapeArrayParame
 			            					mainFunc.thisLevelSettings.toolArray[a]["quantity"] = 9
 			            				end
 
-			            				if (mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.relevantShapeArrayCounterForItem == a) then
-			            					mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.counterImg:removeSelf()
-							                mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.counterImg = nil
+			            				if (mainFunc.ballBtnScreenCreate.itemBtn.relevantShapeArrayCounterForItem == a) then
+			            					mainFunc.ballBtnScreenCreate.itemBtn.counterImg:removeSelf()
+							                mainFunc.ballBtnScreenCreate.itemBtn.counterImg = nil
 
-							                mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.counterImg = display.newImage("images/objects/imageNumber" .. mainFunc.thisLevelSettings.toolArray[a][3] .. ".png")
-							                mainFunc.allLevelSettings.itemScreenObjectsGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.counterImg)
-							                itemBtnCounterImage = mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.counterImg
-							                itemBtnCounterImage.x = mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.x
-							                itemBtnCounterImage.y = mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.y - 10
+							                mainFunc.ballBtnScreenCreate.itemBtn.counterImg = display.newImage("images/objects/imageNumber" .. mainFunc.thisLevelSettings.toolArray[a][3] .. ".png")
+							                mainFunc.allLevelSettings.itemScreenObjectsGroup:insert(mainFunc.ballBtnScreenCreate.itemBtn.counterImg)
+							                itemBtnCounterImage = mainFunc.ballBtnScreenCreate.itemBtn.counterImg
+							                itemBtnCounterImage.x = mainFunc.ballBtnScreenCreate.itemBtn.x
+							                itemBtnCounterImage.y = mainFunc.ballBtnScreenCreate.itemBtn.y - 10
 							                itemBtnCounterImage.xScale = 0.5
 							                itemBtnCounterImage.yScale = 0.5
 			            				end
@@ -2670,11 +2670,11 @@ local autoFanAndEtcTransition = function (mainFunc, shapeArray, shapeArrayParame
 				            	end
 			            	end
 
-			            	if (mainFunc.ballAndButtonAndScreenCreateScript.itemBagBtn.alpha < 1) then
+			            	if (mainFunc.ballBtnScreenCreate.itemBagBtn.alpha < 1) then
 				            	--
-					    		if (mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.img
-					    		and mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.img ~= nil) then
-					    			transition.to(mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.img, {alpha=0, time=400})
+					    		if (mainFunc.ballBtnScreenCreate.itemBtn.img
+					    		and mainFunc.ballBtnScreenCreate.itemBtn.img ~= nil) then
+					    			transition.to(mainFunc.ballBtnScreenCreate.itemBtn.img, {alpha=0, time=400})
 					    		end
 
 						        mainFunc.thisLevelSettings.hasToolArray = true
@@ -2797,10 +2797,10 @@ local autoFanAndEtcTransition = function (mainFunc, shapeArray, shapeArrayParame
 	            				-- JUST DO ANIMATION TO SHOW ITEM HAS BEEN GAINED
 	            				if mainFunc.thisLevelSettings.itemBagButtonsVisible == false then
 	            					mainFunc.thisLevelSettings.itemBagButtonsVisible = true
-	            					transition.to(mainFunc.ballAndButtonAndScreenCreateScript.itemBtn, {alpha = 1, time = 200})
-		            				transition.to(mainFunc.ballAndButtonAndScreenCreateScript.itemBagBtn, {alpha = 1, time = 200, onComplete = function ()
-		            					mainFunc.ballAndButtonAndScreenCreateScript.itemBagBtn:addEventListener("tap", mainFunc.buttonListener)
-		            					mainFunc.ballAndButtonAndScreenCreateScript.itemBtn:addEventListener("tap", mainFunc.buttonListener)
+	            					transition.to(mainFunc.ballBtnScreenCreate.itemBtn, {alpha = 1, time = 200})
+		            				transition.to(mainFunc.ballBtnScreenCreate.itemBagBtn, {alpha = 1, time = 200, onComplete = function ()
+		            					mainFunc.ballBtnScreenCreate.itemBagBtn:addEventListener("tap", mainFunc.buttonListener)
+		            					mainFunc.ballBtnScreenCreate.itemBtn:addEventListener("tap", mainFunc.buttonListener)
 		            				end})
 		            			end
 	            			end

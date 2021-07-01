@@ -24,8 +24,8 @@ moveHookshotArray = {
 	t.moveHookshotArray = moveHookshotArray
 
 removeHookshot = function (obj, mainFunc)
-	mainFunc.ballAndButtonAndScreenCreateScript.instance2.direction = mainFunc.ballAndButtonAndScreenCreateScript.instance2.prevDirection
-    mainFunc.tm[mainFunc.ballAndButtonAndScreenCreateScript.instance2.projectileType][mainFunc.ballAndButtonAndScreenCreateScript.instance2.relevantArrayIndex]:resumeAll()
+	mainFunc.ballBtnScreenCreate.ball.direction = mainFunc.ballBtnScreenCreate.ball.prevDirection
+    mainFunc.tm[mainFunc.ballBtnScreenCreate.ball.projectileType][mainFunc.ballBtnScreenCreate.ball.relevantArrayIndex]:resumeAll()
     transition.to(obj, {alpha = 0.5, time = 200, onComplete = function () 
         physics.removeBody(obj)
         obj:removeSelf()
@@ -46,8 +46,8 @@ moveProjectile = function (obj, mainFunc)
         obj.direction = "right"
     end
 
-    if mainFunc.ballAndButtonAndScreenCreateScript.itemBtn then
-    	timer.performWithDelay(150, function () mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.canHookshot = true end)
+    if mainFunc.ballBtnScreenCreate.itemBtn then
+    	timer.performWithDelay(150, function () mainFunc.ballBtnScreenCreate.itemBtn.canHookshot = true end)
     end
 
     moveProjectileArray[obj.direction](obj, mainFunc)
@@ -87,20 +87,20 @@ local startBallAgain = function (mainFunc, automaticallyRestartLevel, timeIsUp, 
 
     end
     function startAgain ()
-        mainFunc.ballAndButtonAndScreenCreateScript.backBtn.alpha = 1
-        mainFunc.ballAndButtonAndScreenCreateScript.backBtn:setSequence("go")
-        mainFunc.ballAndButtonAndScreenCreateScript.backBtn:play()
-        mainFunc.ballAndButtonAndScreenCreateScript.backBtn:addEventListener("tap", mainFunc.buttonListener)
+        mainFunc.ballBtnScreenCreate.backBtn.alpha = 1
+        mainFunc.ballBtnScreenCreate.backBtn:setSequence("go")
+        mainFunc.ballBtnScreenCreate.backBtn:play()
+        mainFunc.ballBtnScreenCreate.backBtn:addEventListener("tap", mainFunc.buttonListener)
 
-        mainFunc.ballAndButtonAndScreenCreateScript.instance2.alpha = 1
-        mainFunc.ballAndButtonAndScreenCreateScript.instance2.direction = mainFunc.thisLevelSettings.initialDirection
-        mainFunc.ballAndButtonAndScreenCreateScript.instance2:setSequence(mainFunc.ballAndButtonAndScreenCreateScript.instance2.direction)
-        mainFunc.ballAndButtonAndScreenCreateScript.instance2.x = (((mainFunc.thisLevelSettings.ballFirstScreenHorzValue - 1) * display.contentWidth) + ((mainFunc.thisLevelSettings.ballFirstHorzSquare - 1) * 60) + 60)
-        mainFunc.ballAndButtonAndScreenCreateScript.instance2.y = (((mainFunc.thisLevelSettings.ballFirstScreenVertValue - 1) * display.contentHeight) + ((mainFunc.thisLevelSettings.ballFirstVertSquare - 1) * 52) + 60)
-        mainFunc.ballAndButtonAndScreenCreateScript.instance2.lastFanIndex = nil
-        mainFunc.ballAndButtonAndScreenCreateScript.instance2.autoFanCounter = 0
+        mainFunc.ballBtnScreenCreate.ball.alpha = 1
+        mainFunc.ballBtnScreenCreate.ball.direction = mainFunc.thisLevelSettings.initialDirection
+        mainFunc.ballBtnScreenCreate.ball:setSequence(mainFunc.ballBtnScreenCreate.ball.direction)
+        mainFunc.ballBtnScreenCreate.ball.x = (((mainFunc.thisLevelSettings.ballFirstScreenHorzValue - 1) * display.contentWidth) + ((mainFunc.thisLevelSettings.ballFirstHorzSquare - 1) * 60) + 60)
+        mainFunc.ballBtnScreenCreate.ball.y = (((mainFunc.thisLevelSettings.ballFirstScreenVertValue - 1) * display.contentHeight) + ((mainFunc.thisLevelSettings.ballFirstVertSquare - 1) * 52) + 60)
+        mainFunc.ballBtnScreenCreate.ball.lastFanIndex = nil
+        mainFunc.ballBtnScreenCreate.ball.autoFanCounter = 0
         mainFunc.allLevelSettings.pressCount = 0
-        mainFunc.ballAndButtonAndScreenCreateScript.instance2.transitioning = false
+        mainFunc.ballBtnScreenCreate.ball.transitioning = false
         
         Runtime:addEventListener( "enterFrame", mainFunc.doorTransition )
 	    --Runtime:addEventListener( "enterFrame", mainFunc.tunnelTransition )
@@ -128,9 +128,9 @@ local startBallAgain = function (mainFunc, automaticallyRestartLevel, timeIsUp, 
             timer.resume(mainFunc.levelTimerUpdateTimer)
         end
 
-        mainFunc.ballAndButtonAndScreenCreateScript.pauseScreenOverlay.alpha = 0
-        mainFunc.ballAndButtonAndScreenCreateScript.pauseScreenOverlay:removeEventListener("tap", mainFunc.dummyListener)
-        mainFunc.ballAndButtonAndScreenCreateScript.pauseScreenOverlay:removeEventListener("touch", mainFunc.dummyListener)
+        mainFunc.ballBtnScreenCreate.pauseScreenOverlay.alpha = 0
+        mainFunc.ballBtnScreenCreate.pauseScreenOverlay:removeEventListener("tap", mainFunc.dummyListener)
+        mainFunc.ballBtnScreenCreate.pauseScreenOverlay:removeEventListener("touch", mainFunc.dummyListener)
     end
     -- if ballActivateButtonSet == true then
         
@@ -147,9 +147,9 @@ local startBallAgain = function (mainFunc, automaticallyRestartLevel, timeIsUp, 
     end
 
     if timeIsUp == false then
-        mainFunc.ballAndButtonAndScreenCreateScript.instance2.alpha = 0
+        mainFunc.ballBtnScreenCreate.ball.alpha = 0
     end
-    mainFunc.tm["ball"][mainFunc.ballAndButtonAndScreenCreateScript.instance2.relevantArrayIndex]:cancelAll()
+    mainFunc.tm["ball"][mainFunc.ballBtnScreenCreate.ball.relevantArrayIndex]:cancelAll()
 
     -- prepare animation to show one life lost and restarting of ball
 
@@ -178,12 +178,12 @@ local startBallAgain = function (mainFunc, automaticallyRestartLevel, timeIsUp, 
         if mainFunc.levelTimerUpdateTimer and mainFunc.levelTimerUpdateTimer ~= nil then
             timer.pause(mainFunc.levelTimerUpdateTimer)
         end
-    	transition.to(mainFunc.ballAndButtonAndScreenCreateScript.livesLeftScreen, {alpha = 1, time = 300, onComplete = function ()
-        	for a = 1, #mainFunc.ballAndButtonAndScreenCreateScript.lifeIcon do
+    	transition.to(mainFunc.ballBtnScreenCreate.livesLeftScreen, {alpha = 1, time = 300, onComplete = function ()
+        	for a = 1, #mainFunc.ballBtnScreenCreate.lifeIcon do
                 if a <= totalLivesLeft + 1 then
-    			     mainFunc.ballAndButtonAndScreenCreateScript.lifeIcon[a].alpha = 1
+    			     mainFunc.ballBtnScreenCreate.lifeIcon[a].alpha = 1
                 else
-                     mainFunc.ballAndButtonAndScreenCreateScript.lifeIcon[a].alpha = 0.3
+                     mainFunc.ballBtnScreenCreate.lifeIcon[a].alpha = 0.3
                 end
     		end
 
@@ -194,9 +194,9 @@ local startBallAgain = function (mainFunc, automaticallyRestartLevel, timeIsUp, 
             blinkLifeIcon = function ()
                 local toggleAlpha = function ()
                     timer.performWithDelay(250, function ()
-                        mainFunc.ballAndButtonAndScreenCreateScript.lifeIcon[totalLivesLeft + 1].alpha = 1
+                        mainFunc.ballBtnScreenCreate.lifeIcon[totalLivesLeft + 1].alpha = 1
                         timer.performWithDelay(250, function ()
-                        mainFunc.ballAndButtonAndScreenCreateScript.lifeIcon[totalLivesLeft + 1].alpha = 0.3
+                        mainFunc.ballBtnScreenCreate.lifeIcon[totalLivesLeft + 1].alpha = 0.3
                             numTimesOccured = numTimesOccured + 1
                             blinkLifeIcon()
                         end)
@@ -207,12 +207,12 @@ local startBallAgain = function (mainFunc, automaticallyRestartLevel, timeIsUp, 
                     toggleAlpha()
                 else
                     timer.performWithDelay(450, function ()
-                        for a = 1, #mainFunc.ballAndButtonAndScreenCreateScript.lifeIcon do
-                            transition.to(mainFunc.ballAndButtonAndScreenCreateScript.lifeIcon[a], {alpha = 0, time = 200})
+                        for a = 1, #mainFunc.ballBtnScreenCreate.lifeIcon do
+                            transition.to(mainFunc.ballBtnScreenCreate.lifeIcon[a], {alpha = 0, time = 200})
                         end
 
                         timer.performWithDelay(250, function ()
-                            mainFunc.ballAndButtonAndScreenCreateScript.livesLeftScreen.alpha = 0
+                            mainFunc.ballBtnScreenCreate.livesLeftScreen.alpha = 0
 
                             if totalLivesLeft < 1 or automaticallyRestartLevel then
                                 timer.performWithDelay(400, function ()
@@ -266,7 +266,7 @@ local startBallAgain = function (mainFunc, automaticallyRestartLevel, timeIsUp, 
                                     saveTable(myTotalObjectArray, "myTotalObjectArray.json")
 
                                     mainFunc.backToLevelMenu()
-                                    mainFunc.ballAndButtonAndScreenCreateScript.instance2.transitioning = false
+                                    mainFunc.ballBtnScreenCreate.ball.transitioning = false
                                     if automaticallyRestartLevel ~= true and totalLivesLeft < 1 then
                                         thisMyGameSettings["total_lives"] = 3
                                     end
@@ -289,15 +289,15 @@ local startBallAgain = function (mainFunc, automaticallyRestartLevel, timeIsUp, 
 
     mainFunc.buttonListenerScript.removeEventListenersForPause(mainFunc, shapeArray, shapeArrayParameters)
 
-    mainFunc.ballAndButtonAndScreenCreateScript.pauseScreenOverlay.alpha = 0.3
-    mainFunc.ballAndButtonAndScreenCreateScript.pauseScreenOverlay:addEventListener("tap", mainFunc.dummyListener)
-    mainFunc.ballAndButtonAndScreenCreateScript.pauseScreenOverlay:addEventListener("touch", mainFunc.dummyListener)
+    mainFunc.ballBtnScreenCreate.pauseScreenOverlay.alpha = 0.3
+    mainFunc.ballBtnScreenCreate.pauseScreenOverlay:addEventListener("tap", mainFunc.dummyListener)
+    mainFunc.ballBtnScreenCreate.pauseScreenOverlay:addEventListener("touch", mainFunc.dummyListener)
 
     if timeIsUp then
         timer.performWithDelay(600, function ()
-            transition.to(mainFunc.ballAndButtonAndScreenCreateScript.timesUpNotice, {alpha = 1, time = 210, onComplete = function ()
+            transition.to(mainFunc.ballBtnScreenCreate.timesUpNotice, {alpha = 1, time = 210, onComplete = function ()
                 timer.performWithDelay(1200, function ()
-                    transition.to(mainFunc.ballAndButtonAndScreenCreateScript.timesUpNotice, {alpha = 0, time = 240, onComplete = function ()
+                    transition.to(mainFunc.ballBtnScreenCreate.timesUpNotice, {alpha = 0, time = 240, onComplete = function ()
                         timer.performWithDelay(400, function ()
                             showLivesLeftScreen(totalLivesLeft)
                         end)
@@ -370,10 +370,10 @@ local function bulletFire (mainFunc, shapeArray, shapeArrayParameters)
                     bulletCollide = function (event)
 
                         local bulletKillsBall = function ()
-                            if (mainFunc.ballAndButtonAndScreenCreateScript.instance2.transitioning == false) then
-                                mainFunc.ballAndButtonAndScreenCreateScript.instance2.transitioning = true
-                                mainFunc.ballAndButtonAndScreenCreateScript.instance2.x = -9000
-                                mainFunc.ballAndButtonAndScreenCreateScript.instance2.y = -9000
+                            if (mainFunc.ballBtnScreenCreate.ball.transitioning == false) then
+                                mainFunc.ballBtnScreenCreate.ball.transitioning = true
+                                mainFunc.ballBtnScreenCreate.ball.x = -9000
+                                mainFunc.ballBtnScreenCreate.ball.y = -9000
                                 mainFunc.allLevelSettings.shouldBallMoveState = "false"
                                 mainFunc.allLevelSettings.isBallMovingState = "false"
                                 startBallAgain(mainFunc, false, false, shapeArray, shapeArrayParameters)

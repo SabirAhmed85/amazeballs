@@ -1,10 +1,22 @@
 local t = {}
+local sprite = require("modules.object-create.sprite");
 
 local switchImageSheet = graphics.newImageSheet( "images/objects/switchSprite.png", {frames = { {x = xCalc(0), y =yCalc(0), width = xCalc(59), height = yCalc(52)}, {x = xCalc(59), y = yCalc(0), width = xCalc(61), height = yCalc(52)} }, sheetContentWidth = xCalc(119), sheetContentHeight = yCalc(52)})
 local switchSequenceData = {
     { name = "off", start=1, count=1,   loopCount=1 },
     { name = "on", start=2, count=1, loopCount=1 }
 }
+
+local function positionShape(shape, x, y, props)
+    shape.x = x;
+    shape.y = y;
+    shape.width = props["width"] and props["width"] or shape.width;
+    shape.height = props["height"] and props["height"] or shape.height;
+    shape.xScale = props["xScale"] and props["xScale"] or shape.xScale;
+    shape.yScale = props["yScale"] and props["yScale"] or shape.yScale;
+    shape.rotation = props["rotation"] and props["rotation"] or shape.rotation;
+    shape.alpha = props["alpha"] and props["alpha"] or shape.alpha;
+end;
 
 local function spawn (z, mainFunc)
     local shapeParameters = shapeArrayParameters[z];
@@ -13,47 +25,34 @@ local function spawn (z, mainFunc)
     local shapeSubType = shapeParameters["subType"];
     
     if hasValue({ "autoFan", "manualFan", "simple", "spitter", "tunnel", "backFire", "characterChangePoint" }, shapeType) then
-        object = display.newSprite(mainFunc.allLevelSettings.allFansImageSheet, mainFunc.allLevelSettings.allFansSequenceData)
-        object:setSequence(shapeType)
+        object = sprite(mainFunc.allLevelSettings.allFansImageSheet, mainFunc.allLevelSettings.allFansSequenceData, shapeType)
+
         if (shapeType == "tunnel") then
             mainFunc.thisLevelSettings.tunnelCounter = mainFunc.thisLevelSettings.tunnelCounter + 1
         end
-    elseif shapeType == "door" or shapeType == "switch" then
-        local shapeWidth = 60
-        local shapeHeight = 52
-        if (shapeType == "door") then
-            shapeWidth = 26
-            shapeHeight = 54
-        end
-
-        if (shapeType == "switch") then
-            object = display.newSprite(switchImageSheet, switchSequenceData)
-            object:setSequence("off")
-            object.width = xCalc(60)
-            object.height = yCalc(52)
-        else
-            object = display.newImageRect("images/objects/"..shapeParameters["type"]..".png", shapeWidth, shapeHeight)
-        end
+    elseif shapeType == "door" then
+        object = display.newImageRect("images/objects/"..shapeParameters["type"]..".png", 26, 54)
+    elseif shapeType == "switch" then
+        object = sprite(switchImageSheet, switchSequenceData, "off", 60, 52);
     elseif shapeType == "shape" then
         if shapeParameters["props"][3] ~= "breakable" then
             if hasValue({ "triangleTopRightShape", "triangleBottomRightShape", "triangleBottomLeftShape", "triangleTopLeftShape" }, shapeSubType) then
-                local shapeString = shapeParameters["subType"]
+                local shapeString = shapeSubType;
                 if shapeParameters["props"][3] and (shapeParameters["props"][3] == "icy" or shapeParameters["props"][3] == "fire" or shapeParameters["props"][3] == "hyroll") then
                     shapeString = shapeParameters["props"][3] .. "-" .. shapeString
                 end
-                object = display.newSprite(mainFunc.allLevelSettings.triangleImageSheet, mainFunc.allLevelSettings.triangleSequenceData)
-                object:setSequence(shapeString)
+                object = sprite(mainFunc.allLevelSettings.triangleImageSheet, mainFunc.allLevelSettings.triangleSequenceData, shapeString);
             elseif shapeSubType == "triangleLeftAndRightShape" then
-                object = display.newSprite(mainFunc.allLevelSettings.triangleLeftAndRightImageSheet, mainFunc.allLevelSettings.triangleLeftAndRightSequenceData)
-                object:setSequence(shapeParameters["subType"])
+                object = sprite(mainFunc.allLevelSettings.triangleLeftAndRightImageSheet, mainFunc.allLevelSettings.triangleLeftAndRightSequenceData, shapeSubType);
+
                 if shapeParameters["props"][1] == 2 then
-                    object.rotation = 180
+                    object.rotation = 180;
                 end
             elseif shapeSubType == "triangleTopAndBottomShape" then
-                object = display.newSprite(mainFunc.allLevelSettings.triangleTopAndBottomImageSheet, mainFunc.allLevelSettings.triangleTopAndBottomSequenceData)
-                object:setSequence(shapeParameters["subType"])
+                object = sprite(mainFunc.allLevelSettings.triangleTopAndBottomImageSheet, mainFunc.allLevelSettings.triangleTopAndBottomSequenceData, shapeSubType);
+
                 if shapeParameters["props"][1] == 1 then
-                    object.rotation = 180
+                    object.rotation = 180;
                 end
             elseif shapeSubType == "bar" or shapeSubType == "doubleBar" then
                 local barSize = "single"
@@ -65,68 +64,66 @@ local function spawn (z, mainFunc)
                     barShape = shapeParameters["props"][1]
                 end
 
-                object = display.newSprite(mainFunc.allLevelSettings.barImageSheet[barSize][barShape], mainFunc.allLevelSettings.barSequenceData[barSize][barShape])
-                object:setSequence(shapeSubType)
+                object = sprite(mainFunc.allLevelSettings.barImageSheet[barSize][barShape], mainFunc.allLevelSettings.barSequenceData[barSize][barShape], shapeSubType);
             end
         else
-            object = display.newSprite(mainFunc.allLevelSettings.triangleImageSheet, mainFunc.allLevelSettings.triangleSequenceData)
-            object:setSequence("breakable-" .. shapeSubType)
+            object = sprite(mainFunc.allLevelSettings.triangleImageSheet, mainFunc.allLevelSettings.triangleSequenceData, "breakable-" .. shapeSubType);
+
             object.broken = false
         end
     elseif shapeType == "gem" then
         local levelItems2ImageSheet = graphics.newImageSheet(mainFunc.allLevelSettings.levelItems2ImageSheet, mainFunc.allLevelSettings.levelItems2ImageSheetSettings)
         local levelItems2SequenceData = mainFunc.allLevelSettings.levelItems2SequenceData
-        object = display.newSprite(levelItems2ImageSheet, levelItems2SequenceData)
-        object:play()
-        object:setSequence(shapeSubType .. "Floating")
-
-        object.width = xCalc(60)
-        object.height = yCalc(52)
+        object = sprite(levelItems2ImageSheet, levelItems2SequenceData, shapeSubType .. "Floating", true, 60, 52);
     elseif shapeType == "item" then
         local itemsImageSheet = mainFunc.allLevelSettings.itemsImageSheet
         local itemsSequenceData = mainFunc.allLevelSettings.itemsSequenceData
 
         local levelItemsImageSheet = graphics.newImageSheet(mainFunc.allLevelSettings.levelItemsImageSheet, mainFunc.allLevelSettings.levelItemsImageSheetSettings)
-        local levelItemsSequenceData = mainFunc.allLevelSettings.levelItemsSequenceData
+        local levelItemsSequenceData = mainFunc.allLevelSettings.levelItemsSequenceData;
 
-        if hasValue({ "bomb", "hook", "jet", "clock", "mystery-block", "big-present", "small-present", "coins" }, shapeName) then
-            object = display.newSprite(itemsImageSheet, itemsSequenceData)
-            object.width = xCalc(60)
-            object.height = yCalc(52)
-        elseif shapeName == "map" or shapeName == "compass" then
-            object = display.newSprite(levelItemsImageSheet, levelItemsSequenceData)
-            object.width = xCalc(43)
-            object.height = yCalc(34)
-        end
+        local getGeneralItemSequence = function()
+            local sequence = shapeName;
+            if shapeName == "coins"
+            and shapeSubType > 99 then
+                sequence = sequence .. "-big"
+            elseif shapeName == "coins"
+            and shapeSubType < 99 then
+                sequence = sequence .. "-small"
+            end
+            return sequence;
+        end;
+
+        local itemProps =
+            hasValue({ "bomb", "hook", "jet", "clock", "mystery-block", "big-present", "small-present", "coins" }, shapeName) and
+                {
+                    sheet = itemsImageSheet,
+                    sequenceData = itemsSequenceData,
+                    width = 60,
+                    height = 52,
+                    sequence = getGeneralItemSequence()
+                }
+                or
+                { 
+                    sheet = levelItemsImageSheet,
+                    sequenceData = levelItemsSequenceData,
+                    width = 43,
+                    height = 34,
+                    sequence = currentMedal .. shapeName:gsub("^%l", string.upper)
+                };
+        object = sprite(itemProps.sheet, itemProps.sequenceData, itemProps.sequence, true, itemProps.width, itemProps.height);
 
         if (shapeName == "map")
         and mainFunc.thisLevelSettings.mapObtained == true then
             object.x = -10000
             object.alpha = 0
+            object:pause();
         elseif (shapeName == "compass")
         and mainFunc.thisLevelSettings.compassObtained == true then
             object.x = -10000
             object.alpha = 0
-        else
-            object:play()
-            if shapeName == "map" or shapeName == "compass" then
-                local label = "Map"
-                if shapeParameters["name"] == "compass" then
-                    label = "Compass"
-                end
-                object:setSequence(currentMedal .. label)
-            else
-                local itemLabel = shapeName;
-                if shapeName == "coins"
-                and shapeSubType > 99 then
-                    itemLabel = itemLabel .. "-big"
-                elseif shapeName == "coins"
-                and shapeSubType < 99 then
-                    itemLabel = itemLabel .. "-small"
-                end
-                object:setSequence(itemLabel)
-            end
-        end
+            object:pause();
+        end;
     elseif shapeType == "endPoint" then
         object = display.newImageRect("images/objects/" .. currentMedal .. "Medal.png", 63, 55)
     elseif shapeType == "gun" then
@@ -137,9 +134,7 @@ local function spawn (z, mainFunc)
             { name = "down", start=3, count=1, loopCount=1 },
             { name = "left", start=4, count=1, loopCount=1 }
         }
-        object = display.newSprite(gunImageSheet, gunSequenceData)
-        object:play()
-        object:setSequence(shapeSubType)
+        object = sprite(gunImageSheet, gunSequenceData, shapeSubType, true);
     end
     return object
 end
@@ -1012,36 +1007,34 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
                 shapeArray[z].x = shapeArray[z].x
                 shapeArray[z].fullName = shapeArray[z].name .. shapeParameters["location"]["xScreen"] .. shapeParameters["location"]["yScreen"] .. shapeParameters["location"]["xSquare"] .. shapeParameters["location"]["ySquare"]
 
+                shapeArray[z].circle = sprite(mainFunc.allLevelSettings.levelItemsBackboardImageSheet, mainFunc.allLevelSettings.levelItemsBackboardSequenceData, "purpleRing");
+
+                positionShape(shapeArray[z].circle, shapeArray[z].x, shapeArray[z].y, { 
+                    xScale = 0.7, yScale = 0.7, alpha = 0.5
+                });
+                mainFunc.allLevelSettings.backgroundObjectsGroup:insert( shapeArray[z].circle )
+                shapeArray[z].circle:toFront();
+                
                 for a = 1, #myGameSettings[currentWorld]["levels"][currentLevel][currentMedal .. "-achievements"]["gems_gained_array"] do
                     if myGameSettings[currentWorld]["levels"][currentLevel][currentMedal .. "-achievements"]["gems_gained_array"][a] == shapeArray[z].fullName then
                         shapeArray[z].wasCollectedPreviously = true
                     end
                 end
-
-                shapeArray[z].circle = display.newSprite(mainFunc.allLevelSettings.levelItemsBackboardImageSheet, mainFunc.allLevelSettings.levelItemsBackboardSequenceData)
-                shapeArray[z].circle:setSequence("purpleRing")
-                shapeArray[z].circle.x = shapeArray[z].x
-                shapeArray[z].circle.y = shapeArray[z].y
-                shapeArray[z].circle.xScale = 0.7
-                shapeArray[z].circle.yScale = 0.7
-                shapeArray[z].circle.alpha = 0.5
-                mainFunc.allLevelSettings.backgroundObjectsGroup:insert( shapeArray[z].circle )
-                shapeArray[z].circle:toFront()
-
                 if shapeArray[z].wasCollectedPreviously == false then
                     shapeArray[z].circle.alpha = 0.6
                 end
             else
-                shapeArray[z].backBoard = display.newSprite(mainFunc.allLevelSettings.levelItemsBackboardImageSheet, mainFunc.allLevelSettings.levelItemsBackboardSequenceData)
-                shapeArray[z].backBoard:setSequence(shapeArray[z].gemType)
-                shapeArray[z].backBoard.x = shapeArray[z].x
-                
-                if shapeArray[z].wasCollectedPreviously then
-                    shapeArray[z].backBoard.alpha = 0.7
-                    shapeArray[z].backBoard.xScale = 0.7
-                    shapeArray[z].backBoard.yScale = 0.7
-                end
-                shapeArray[z].backBoard.y = shapeArray[z].y
+                shapeArray[z].backBoard = sprite(mainFunc.allLevelSettings.levelItemsBackboardImageSheet, mainFunc.allLevelSettings.levelItemsBackboardSequenceData, shapeArray[z].gemType);
+
+                positionShape(
+                    shapeArray[z].backBoard,
+                    shapeArray[z].x,
+                    shapeArray[z].y,
+                    shapeArray[z].wasCollectedPreviously and {
+                        alpha = 0.7,
+                        xScale = 0.7,
+                        yScale = 0.7
+                    } or {});
                 mainFunc.allLevelSettings.backgroundObjectsGroup:insert( shapeArray[z].backBoard )
                 shapeArray[z].backBoard:toFront()
             end;
@@ -1099,11 +1092,7 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
         if (shapeParameters["name"] ~= "mystery-block") then
             shapeArray[z].backBoard = display.newSprite(mainFunc.allLevelSettings.levelItemsBackboardImageSheet, mainFunc.allLevelSettings.levelItemsBackboardSequenceData)
             shapeArray[z].backBoard:setSequence("item")
-            shapeArray[z].backBoard.x = shapeArray[z].x
-            shapeArray[z].backBoard.y = shapeArray[z].y
-            shapeArray[z].backBoard.alpha = 0.9
-            shapeArray[z].backBoard.xScale = 0.85
-            shapeArray[z].backBoard.yScale = 0.85
+            positionShape(shapeArray[z].backBoard, shapeArray[z].x, shapeArray[z].y, { alpha = 0.9, xScale = 0.85, yScale = 0.85 });
             mainFunc.allLevelSettings.backgroundObjectsGroup:insert( shapeArray[z].backBoard )
             shapeArray[z].backBoard:toBack()
         end

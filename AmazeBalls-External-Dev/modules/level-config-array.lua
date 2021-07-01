@@ -12,12 +12,12 @@ local worldRequirementsArray = {
 	t.nextSlide = nextSlide
 
 local popUpIntroTutorial = function (mainFunc, popUpNum, itemName, popUpSlideArray, levelStart)
-	mainFunc.ballAndButtonAndScreenCreateScript.backBtn:removeEventListener("tap", mainFunc.buttonListener)
-	mainFunc.ballAndButtonAndScreenCreateScript.randomBtn:removeEventListener("tap", mainFunc.buttonListener)
-	mainFunc.ballAndButtonAndScreenCreateScript.playBtn:removeEventListener("tap", mainFunc.buttonListener)
-	mainFunc.ballAndButtonAndScreenCreateScript.backBtn.alpha = 0
-	mainFunc.ballAndButtonAndScreenCreateScript.randomBtn.alpha = 0
-	mainFunc.ballAndButtonAndScreenCreateScript.playBtn.alpha = 0
+	mainFunc.ballBtnScreenCreate.backBtn:removeEventListener("tap", mainFunc.buttonListener)
+	mainFunc.ballBtnScreenCreate.randomBtn:removeEventListener("tap", mainFunc.buttonListener)
+	mainFunc.ballBtnScreenCreate.playBtn:removeEventListener("tap", mainFunc.buttonListener)
+	mainFunc.ballBtnScreenCreate.backBtn.alpha = 0
+	mainFunc.ballBtnScreenCreate.randomBtn.alpha = 0
+	mainFunc.ballBtnScreenCreate.playBtn.alpha = 0
 
 	mainFunc.tutorialPopUp[popUpNum] = display.newImageRect("images/central-images/Tutorials/introTuts/introTutorialScreen.png", 480, 320)
 	mainFunc.tutorialPopUp[popUpNum].anchorX = 0.5
@@ -99,10 +99,10 @@ local popUpIntroTutorial = function (mainFunc, popUpNum, itemName, popUpSlideArr
 			    	saveTable(myGameSettings, "myGameSettings.json")
 			    	local closeTutorial = function ()
 			    		transition.to(mainFunc.tutorialPopUp[popUpNum], {alpha = 0, time = 100, onComplete = function ()
-					    	transition.to(mainFunc.ballAndButtonAndScreenCreateScript.randomBtn, {alpha = 1, time = 100})
-					    	transition.to(mainFunc.ballAndButtonAndScreenCreateScript.playBtn, {alpha = 1, time = 100})
-							mainFunc.ballAndButtonAndScreenCreateScript.randomBtn:addEventListener("tap", mainFunc.buttonListener)
-					    	mainFunc.ballAndButtonAndScreenCreateScript.playBtn:addEventListener("tap", mainFunc.buttonListener)
+					    	transition.to(mainFunc.ballBtnScreenCreate.randomBtn, {alpha = 1, time = 100})
+					    	transition.to(mainFunc.ballBtnScreenCreate.playBtn, {alpha = 1, time = 100})
+							mainFunc.ballBtnScreenCreate.randomBtn:addEventListener("tap", mainFunc.buttonListener)
+					    	mainFunc.ballBtnScreenCreate.playBtn:addEventListener("tap", mainFunc.buttonListener)
 	    					mainFunc.thisLevelSettings.tutorialsToDo = {}
 	    					if levelStart == false then
 	    						timer.performWithDelay(250, function ()
@@ -110,28 +110,28 @@ local popUpIntroTutorial = function (mainFunc, popUpNum, itemName, popUpSlideArr
 								    mainFunc.buttonListenerScript.addBackShapeListenersForPause(mainFunc, shapeArray, shapeArrayParameters)
 								    mainFunc.buttonListenerScript.addBackButtonListenersForItemGained(mainFunc)
 
-								    mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.itemBagScreenOverlay.alpha = 0
-						        	mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.itemBagScreenOverlay:removeEventListener("tap", mainFunc.dummyListener)
-						        	mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.itemBagScreenOverlay:removeEventListener("touch", mainFunc.dummyListener)
+								    mainFunc.ballBtnScreenCreate.itemBagScreen.itemBagScreenOverlay.alpha = 0
+						        	mainFunc.ballBtnScreenCreate.itemBagScreen.itemBagScreenOverlay:removeEventListener("tap", mainFunc.dummyListener)
+						        	mainFunc.ballBtnScreenCreate.itemBagScreen.itemBagScreenOverlay:removeEventListener("touch", mainFunc.dummyListener)
 	    						end)
 
 					        	if mainFunc.thisLevelSettings.itemBagButtonsVisible then
-							        mainFunc.ballAndButtonAndScreenCreateScript.itemBtn:addEventListener( "tap", mainFunc.buttonListener )
-						    		transition.to(mainFunc.ballAndButtonAndScreenCreateScript.itemBtn, {alpha=1, time=400})
-						    		if (mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.img
-						    		and mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.img ~= nil) then
-						    			transition.to(mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.img, {alpha=1, time=400})
+							        mainFunc.ballBtnScreenCreate.itemBtn:addEventListener( "tap", mainFunc.buttonListener )
+						    		transition.to(mainFunc.ballBtnScreenCreate.itemBtn, {alpha=1, time=400})
+						    		if (mainFunc.ballBtnScreenCreate.itemBtn.img
+						    		and mainFunc.ballBtnScreenCreate.itemBtn.img ~= nil) then
+						    			transition.to(mainFunc.ballBtnScreenCreate.itemBtn.img, {alpha=1, time=400})
 						    		end
 						    		
-						    		transition.to(mainFunc.ballAndButtonAndScreenCreateScript.itemBagBtn, {alpha=1, time=400})
-									mainFunc.ballAndButtonAndScreenCreateScript.itemBagBtn:addEventListener( "tap", mainFunc.buttonListener )
+						    		transition.to(mainFunc.ballBtnScreenCreate.itemBagBtn, {alpha=1, time=400})
+									mainFunc.ballBtnScreenCreate.itemBagBtn:addEventListener( "tap", mainFunc.buttonListener )
 							        mainFunc.thisLevelSettings.hasToolArray = true
 							    end
 
-	    						mainFunc.tm["ball"][mainFunc.ballAndButtonAndScreenCreateScript.instance2.relevantArrayIndex]:resumeAll()
+	    						mainFunc.tm["ball"][mainFunc.ballBtnScreenCreate.ball.relevantArrayIndex]:resumeAll()
 	    					else
-					    		transition.to(mainFunc.ballAndButtonAndScreenCreateScript.backBtn, {alpha = 1, time = 100, onComplete = function ()
-					    			mainFunc.ballAndButtonAndScreenCreateScript.backBtn:addEventListener("tap", mainFunc.buttonListener)
+					    		transition.to(mainFunc.ballBtnScreenCreate.backBtn, {alpha = 1, time = 100, onComplete = function ()
+					    			mainFunc.ballBtnScreenCreate.backBtn:addEventListener("tap", mainFunc.buttonListener)
 					    		end})
 	    					end
 						end})
@@ -443,10 +443,10 @@ local levelConfigArray = {
 										t.blinkPopUp(tutorialPopUp[11], mainFunc)
 									end
 
-									if (mainFunc.ballAndButtonAndScreenCreateScript.instance2.x > xCalc(90)
-									and mainFunc.ballAndButtonAndScreenCreateScript.instance2.x < xCalc(330) ) then
-										if (mainFunc.ballAndButtonAndScreenCreateScript.instance2.direction == "right"
-										and mainFunc.ballAndButtonAndScreenCreateScript.instance2.x > xCalc(300) ) then
+									if (mainFunc.ballBtnScreenCreate.ball.x > xCalc(90)
+									and mainFunc.ballBtnScreenCreate.ball.x < xCalc(330) ) then
+										if (mainFunc.ballBtnScreenCreate.ball.direction == "right"
+										and mainFunc.ballBtnScreenCreate.ball.x > xCalc(300) ) then
 											showWrongTurnPopUp()
 										else
 											transition.to(mainFunc.tutorialPopUp[5], {alpha = 1, time = 200})
@@ -730,8 +730,8 @@ local levelConfigArray = {
 									    end
 
 											-- if ball is too high, different path
-										if (mainFunc.ballAndButtonAndScreenCreateScript.instance2.y < yCalc(56) )
-										or (mainFunc.ballAndButtonAndScreenCreateScript.instance2.y > yCalc(246) ) then
+										if (mainFunc.ballBtnScreenCreate.ball.y < yCalc(56) )
+										or (mainFunc.ballBtnScreenCreate.ball.y > yCalc(246) ) then
 												showWrongTurnPopUp()
 										else
 											-- else if ball is in right place, just show right path

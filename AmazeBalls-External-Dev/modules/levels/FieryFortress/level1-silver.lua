@@ -1,5 +1,5 @@
 local t = {};
-local getShapeArray = require("modules.utils.get-shape-array");
+local getShapeArray = require("utils.get-shape-array");
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
     table.insert(shapeArrayParameters, getShapeArray("shape", "bar1_1_1", { 1, 1, 1, 2 }, "bar", { "vert", 2 }))

@@ -69,39 +69,39 @@ local objectListener = function (event, mainFunc, shapeArray, shapeArrayParamete
                 characterChangePointDisplay[key]:removeEventListener("tap", chooseCharacter)
             end
 
-            local currentBall = mainFunc.ballAndButtonAndScreenCreateScript.instance2
-            local prevDirection = mainFunc.ballAndButtonAndScreenCreateScript.instance2.direction
+            local currentBall = mainFunc.ballBtnScreenCreate.ball
+            local prevDirection = mainFunc.ballBtnScreenCreate.ball.direction
             local prevX = currentBall.x
             local prevY = currentBall.y
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2:removeSelf()
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2 = nil
+            mainFunc.ballBtnScreenCreate.ball:removeSelf()
+            mainFunc.ballBtnScreenCreate.ball = nil
             local sheetSequenceData = mainFunc.allLevelSettings.specialCharacterInLevelSequenceData
             if event.target.value == "normal" then
                 sheetSequenceData = mainFunc.allLevelSettings.normalCharacterInLevelSequenceData
             end
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2 = display.newSprite(mainFunc.allLevelSettings.characterInLevelImageSheet[event.target.value], sheetSequenceData)
-            physics.addBody( mainFunc.ballAndButtonAndScreenCreateScript.instance2, { density = 1, friction = 1, bounce = 0, radius = (mainFunc.allLevelSettings.squareHeight/4) } )
-            mainFunc.allLevelSettings.midScreenObjectsGroup:insert( mainFunc.ballAndButtonAndScreenCreateScript.instance2 )
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2.width = 31
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2.height = 34
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2.character = event.target.value
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2.projectileType = "ball"
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2.direction = prevDirection
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2.relevantArrayIndex = 0
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2.transitionId = mainFunc.ballAndButtonAndScreenCreateScript.instance2.relevantArrayIndex
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2.gravityScale = 0
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2.x = prevX
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2.y = prevY
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2.isFixedRotation = true
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2.character = event.target.value
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2.autoFanCounter = 0
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2.fanCenteringCounter = 0
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2.movementSpeed = 100
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2.transitioning = false
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2:toFront()
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2:setSequence(prevDirection)
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2:play()
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2.specialConditionsArray = {}
+            mainFunc.ballBtnScreenCreate.ball = display.newSprite(mainFunc.allLevelSettings.characterInLevelImageSheet[event.target.value], sheetSequenceData)
+            physics.addBody( mainFunc.ballBtnScreenCreate.ball, { density = 1, friction = 1, bounce = 0, radius = (mainFunc.allLevelSettings.squareHeight/4) } )
+            mainFunc.allLevelSettings.midScreenObjectsGroup:insert( mainFunc.ballBtnScreenCreate.ball )
+            mainFunc.ballBtnScreenCreate.ball.width = 31
+            mainFunc.ballBtnScreenCreate.ball.height = 34
+            mainFunc.ballBtnScreenCreate.ball.character = event.target.value
+            mainFunc.ballBtnScreenCreate.ball.projectileType = "ball"
+            mainFunc.ballBtnScreenCreate.ball.direction = prevDirection
+            mainFunc.ballBtnScreenCreate.ball.relevantArrayIndex = 0
+            mainFunc.ballBtnScreenCreate.ball.transitionId = mainFunc.ballBtnScreenCreate.ball.relevantArrayIndex
+            mainFunc.ballBtnScreenCreate.ball.gravityScale = 0
+            mainFunc.ballBtnScreenCreate.ball.x = prevX
+            mainFunc.ballBtnScreenCreate.ball.y = prevY
+            mainFunc.ballBtnScreenCreate.ball.isFixedRotation = true
+            mainFunc.ballBtnScreenCreate.ball.character = event.target.value
+            mainFunc.ballBtnScreenCreate.ball.autoFanCounter = 0
+            mainFunc.ballBtnScreenCreate.ball.fanCenteringCounter = 0
+            mainFunc.ballBtnScreenCreate.ball.movementSpeed = 100
+            mainFunc.ballBtnScreenCreate.ball.transitioning = false
+            mainFunc.ballBtnScreenCreate.ball:toFront()
+            mainFunc.ballBtnScreenCreate.ball:setSequence(prevDirection)
+            mainFunc.ballBtnScreenCreate.ball:play()
+            mainFunc.ballBtnScreenCreate.ball.specialConditionsArray = {}
 
             timer.performWithDelay(
                 200,
@@ -145,7 +145,7 @@ local objectListener = function (event, mainFunc, shapeArray, shapeArrayParamete
 
             if (isSpecificCharacter == false and myGameSettings["characterUnlocked"][key]) or (isSpecificCharacter and key == event.target.relatedObject.specificCharacter) then
             --if thisMyGameSettings["characterUnlocked"][key] == true then
-                if isSpecificCharacter and mainFunc.ballAndButtonAndScreenCreateScript.instance2.character == key then
+                if isSpecificCharacter and mainFunc.ballBtnScreenCreate.ball.character == key then
                     key = "normal"
                 end
                 characterChangeSprites[key] = {}
@@ -183,10 +183,10 @@ local objectListener = function (event, mainFunc, shapeArray, shapeArrayParamete
             if (mainFunc.allLevelSettings.transitionArrayIndex[d][2][1] == "flip-horizontal"
             or mainFunc.allLevelSettings.transitionArrayIndex[d][2][1] == "flip-vertical")
             and event.target.name == transitionArrayIndex[d][1][1] then
-                if mainFunc.ballAndButtonAndScreenCreateScript.instance2.x > (event.target.x - 60)
-                and mainFunc.ballAndButtonAndScreenCreateScript.instance2.x < (event.target.x + 60)
-                and mainFunc.ballAndButtonAndScreenCreateScript.instance2.y > (event.target.y - 60)
-                and mainFunc.ballAndButtonAndScreenCreateScript.instance2.y < (event.target.y + 60) then
+                if mainFunc.ballBtnScreenCreate.ball.x > (event.target.x - 60)
+                and mainFunc.ballBtnScreenCreate.ball.x < (event.target.x + 60)
+                and mainFunc.ballBtnScreenCreate.ball.y > (event.target.y - 60)
+                and mainFunc.ballBtnScreenCreate.ball.y < (event.target.y + 60) then
                     event.target.flipDisabled = true
                     thisFlippedCounterObject = event.target
                     local function addThisCounterBack ()
@@ -381,18 +381,18 @@ local objectListener = function (event, mainFunc, shapeArray, shapeArrayParamete
                 event.target.isApplied = true
                 event.target.alpha = 0.7
 
-                mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.relevantShapeArrayCounterForItem = mainFunc.allLevelSettings.showingToolsArray[d].toolArrayCounter
+                mainFunc.ballBtnScreenCreate.itemBtn.relevantShapeArrayCounterForItem = mainFunc.allLevelSettings.showingToolsArray[d].toolArrayCounter
 
                 -- this is only needed because the event fires multiple times - maybe introduce a counter with a stop?
-                if mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.img
-                and mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.img ~= nil then
-                    mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.img:removeSelf()
-                    mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.img = nil
+                if mainFunc.ballBtnScreenCreate.itemBtn.img
+                and mainFunc.ballBtnScreenCreate.itemBtn.img ~= nil then
+                    mainFunc.ballBtnScreenCreate.itemBtn.img:removeSelf()
+                    mainFunc.ballBtnScreenCreate.itemBtn.img = nil
                 end
-                if mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.counterImg
-                and mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.counterImg ~= nil then
-                    mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.counterImg:removeSelf()
-                    mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.counterImg = nil
+                if mainFunc.ballBtnScreenCreate.itemBtn.counterImg
+                and mainFunc.ballBtnScreenCreate.itemBtn.counterImg ~= nil then
+                    mainFunc.ballBtnScreenCreate.itemBtn.counterImg:removeSelf()
+                    mainFunc.ballBtnScreenCreate.itemBtn.counterImg = nil
                 end
 
                 local itemsImageSheet = graphics.newImageSheet( "images/objects/items.png", {width = 60, height = 52, numFrames = 12, sheetContentWidth = 720, sheetContentHeight = 52})
@@ -411,24 +411,24 @@ local objectListener = function (event, mainFunc, shapeArray, shapeArrayParamete
                     { name = "mystery-block", start=12, count=1, loopCount=1 }
                 }
 
-                mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.isActive = true
+                mainFunc.ballBtnScreenCreate.itemBtn.isActive = true
 
-                mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.img = display.newSprite(itemsImageSheet, itemsSequenceData)
-                mainFunc.allLevelSettings.itemScreenObjectsGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.img)
-                itemBtnImage = mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.img
+                mainFunc.ballBtnScreenCreate.itemBtn.img = display.newSprite(itemsImageSheet, itemsSequenceData)
+                mainFunc.allLevelSettings.itemScreenObjectsGroup:insert(mainFunc.ballBtnScreenCreate.itemBtn.img)
+                itemBtnImage = mainFunc.ballBtnScreenCreate.itemBtn.img
                 itemBtnImage:play()
                 itemBtnImage:setSequence(mainFunc.thisLevelSettings.toolArray[mainFunc.allLevelSettings.showingToolsArray[d].toolArrayCounter]["name"])
-                itemBtnImage.x = mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.x
-                itemBtnImage.y = mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.y + 9
+                itemBtnImage.x = mainFunc.ballBtnScreenCreate.itemBtn.x
+                itemBtnImage.y = mainFunc.ballBtnScreenCreate.itemBtn.y + 9
                 itemBtnImage.xScale = 0.35
                 itemBtnImage.yScale = 0.35
 
-                mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.counterImg = display.newImage("images/objects/imageNumber" .. mainFunc.thisLevelSettings.toolArray[mainFunc.allLevelSettings.showingToolsArray[d].toolArrayCounter]["quantity"] .. ".png")
-                mainFunc.allLevelSettings.itemScreenObjectsGroup:insert(mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.counterImg)
-                mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.counterImg.x = mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.x
-                mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.counterImg.y = mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.y - 10
-                mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.counterImg.xScale = 0.5
-                mainFunc.ballAndButtonAndScreenCreateScript.itemBtn.counterImg.yScale = 0.5
+                mainFunc.ballBtnScreenCreate.itemBtn.counterImg = display.newImage("images/objects/imageNumber" .. mainFunc.thisLevelSettings.toolArray[mainFunc.allLevelSettings.showingToolsArray[d].toolArrayCounter]["quantity"] .. ".png")
+                mainFunc.allLevelSettings.itemScreenObjectsGroup:insert(mainFunc.ballBtnScreenCreate.itemBtn.counterImg)
+                mainFunc.ballBtnScreenCreate.itemBtn.counterImg.x = mainFunc.ballBtnScreenCreate.itemBtn.x
+                mainFunc.ballBtnScreenCreate.itemBtn.counterImg.y = mainFunc.ballBtnScreenCreate.itemBtn.y - 10
+                mainFunc.ballBtnScreenCreate.itemBtn.counterImg.xScale = 0.5
+                mainFunc.ballBtnScreenCreate.itemBtn.counterImg.yScale = 0.5
             end
         end
     end
@@ -484,12 +484,12 @@ local spitterArrowTouch = function (event, mainFunc, shapeArray, shapeArrayParam
     
     local function moveBallFromSpitter()
         mainFunc.allLevelSettings.spitterCounter = 1
-        event.target.relatedSpitter.lastBallReleaseDirection = mainFunc.ballAndButtonAndScreenCreateScript.instance2.direction
+        event.target.relatedSpitter.lastBallReleaseDirection = mainFunc.ballBtnScreenCreate.ball.direction
         mainFunc.allLevelSettings.shouldBallMoveState = "true"
         mainFunc.allLevelSettings.isBallMovingState = "true"
 
         local thisFan = event.target.relatedSpitter
-        local obj = mainFunc.ballAndButtonAndScreenCreateScript.instance2
+        local obj = mainFunc.ballBtnScreenCreate.ball
         local fanYTarget = thisFan.y
         local fanXTarget = thisFan.x
         local calculateTarget = function (axis)
@@ -519,8 +519,8 @@ local spitterArrowTouch = function (event, mainFunc, shapeArray, shapeArrayParam
             obj.y = fanYTarget
         end
 
-        mainFunc.projectileMovementRemoveAndRespawnScript.moveProjectile(mainFunc.ballAndButtonAndScreenCreateScript.instance2, mainFunc)
-        mainFunc.ballAndButtonAndScreenCreateScript.instance2:setSequence(mainFunc.ballAndButtonAndScreenCreateScript.instance2.direction)
+        mainFunc.projectileMovementRemoveAndRespawnScript.moveProjectile(mainFunc.ballBtnScreenCreate.ball, mainFunc)
+        mainFunc.ballBtnScreenCreate.ball:setSequence(mainFunc.ballBtnScreenCreate.ball.direction)
         if mainFunc.allLevelSettings.followShapeWithBallApplied and mainFunc.allLevelSettings.shapeToBeFollowedIndex == thisFan.shapeArrayIndex then
             Runtime:removeEventListener("enterFrame", mainFunc.objectToBallTransitionScript.listener)
             mainFunc.allLevelSettings.followShapeWithBallApplied = false
@@ -529,7 +529,7 @@ local spitterArrowTouch = function (event, mainFunc, shapeArray, shapeArrayParam
         local function reactivateBallSpitter ()
             thisBallSpitter.isBallPresent = false
             mainFunc.allLevelSettings.spitterCounter = 0
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2.lastFanIndex = nil
+            mainFunc.ballBtnScreenCreate.ball.lastFanIndex = nil
             event.target.relatedSpitter.lastBallReleaseDirection = nil
         end
         timer.performWithDelay(185, reactivateBallSpitter)
@@ -544,13 +544,13 @@ local spitterArrowTouch = function (event, mainFunc, shapeArray, shapeArrayParam
         mainFunc.objectListenerScript.deactivateSpitter(mainFunc, shapeArray, true)
     end
 
-    mainFunc.ballAndButtonAndScreenCreateScript.instance2.direction = event.target.direction
+    mainFunc.ballBtnScreenCreate.ball.direction = event.target.direction
     thisBallSpitter = event.target.relatedSpitter
     moveBallFromSpitter()
     
     local function addBackAutoFan ()
         Runtime:addEventListener("enterFrame", mainFunc.autoFanTransitionListener)
-        mainFunc.ballAndButtonAndScreenCreateScript.instance2.autoFanCounter = 0
+        mainFunc.ballBtnScreenCreate.ball.autoFanCounter = 0
     end
     
     timer.performWithDelay(90, addBackAutoFan, 1)
@@ -560,7 +560,7 @@ end
 local objectBallActivate = function (event, mainFunc, shapeArray, shapeArrayParameters)
     if event.target.objectType == "simple" or event.target.objectType == "backFire" or event.target.objectType == "characterChangePoint" then
         local thisFan = event.target
-        local obj = mainFunc.ballAndButtonAndScreenCreateScript.instance2
+        local obj = mainFunc.ballBtnScreenCreate.ball
         local fanYTarget = thisFan.y
         local fanXTarget = thisFan.x
         local calculateTarget = function (axis)
@@ -578,7 +578,7 @@ local objectBallActivate = function (event, mainFunc, shapeArray, shapeArrayPara
         end
 
         local releaseBallFromSimple = function ()
-            mainFunc.projectileMovementRemoveAndRespawnScript.moveProjectile(mainFunc.ballAndButtonAndScreenCreateScript.instance2, mainFunc)
+            mainFunc.projectileMovementRemoveAndRespawnScript.moveProjectile(mainFunc.ballBtnScreenCreate.ball, mainFunc)
                 print("no")
             if mainFunc.allLevelSettings.followShapeWithBallApplied then
                 print("ko")
@@ -586,8 +586,8 @@ local objectBallActivate = function (event, mainFunc, shapeArray, shapeArrayPara
                 mainFunc.allLevelSettings.followShapeWithBallApplied = false
             end
             local function reactivateBallFromSimple ()
-                if (mainFunc.ballAndButtonAndScreenCreateScript.instance2.lastFanIndex == thisFan.shapeArrayIndex) then
-                    mainFunc.ballAndButtonAndScreenCreateScript.instance2.lastFanIndex = nil
+                if (mainFunc.ballBtnScreenCreate.ball.lastFanIndex == thisFan.shapeArrayIndex) then
+                    mainFunc.ballBtnScreenCreate.ball.lastFanIndex = nil
                 end
                 thisFan.lastBallReleaseDirection = nil
                 if mainFunc.levelConfigArray[currentWorld]["level"..currentLevel][currentMedal]["tutorial"] then
@@ -680,32 +680,32 @@ local objectBallActivate = function (event, mainFunc, shapeArray, shapeArrayPara
                 characterChangePointDisplay[key]:removeEventListener("tap", chooseCharacter)
             end
 
-            local currentBall = mainFunc.ballAndButtonAndScreenCreateScript.instance2
-            local prevDirection = mainFunc.ballAndButtonAndScreenCreateScript.instance2.direction
+            local currentBall = mainFunc.ballBtnScreenCreate.ball
+            local prevDirection = mainFunc.ballBtnScreenCreate.ball.direction
             local prevX = currentBall.x
             local prevY = currentBall.y
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2:removeSelf()
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2 = nil
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2 = display.newSprite(characterChangeSprites[event.target.value].imageSheet, spriteSequenceData)
-            physics.addBody( mainFunc.ballAndButtonAndScreenCreateScript.instance2, { density = 1, friction = 1, bounce = 0, radius = (mainFunc.allLevelSettings.squareHeight/4) } )
-            mainFunc.allLevelSettings.midScreenObjectsGroup:insert( mainFunc.ballAndButtonAndScreenCreateScript.instance2 )
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2.projectileType = "ball"
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2.direction = prevDirection
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2.relevantArrayIndex = 0
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2.transitionId = mainFunc.ballAndButtonAndScreenCreateScript.instance2.relevantArrayIndex
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2.gravityScale = 0
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2.x = prevX
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2.y = prevY
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2.isFixedRotation = true
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2.character = event.target.value
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2.autoFanCounter = 0
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2.fanCenteringCounter = 0
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2.movementSpeed = 100
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2.transitioning = false
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2:toFront()
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2:setSequence(prevDirection)
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2:play()
-            mainFunc.ballAndButtonAndScreenCreateScript.instance2.specialConditionsArray = {}
+            mainFunc.ballBtnScreenCreate.ball:removeSelf()
+            mainFunc.ballBtnScreenCreate.ball = nil
+            mainFunc.ballBtnScreenCreate.ball = display.newSprite(characterChangeSprites[event.target.value].imageSheet, spriteSequenceData)
+            physics.addBody( mainFunc.ballBtnScreenCreate.ball, { density = 1, friction = 1, bounce = 0, radius = (mainFunc.allLevelSettings.squareHeight/4) } )
+            mainFunc.allLevelSettings.midScreenObjectsGroup:insert( mainFunc.ballBtnScreenCreate.ball )
+            mainFunc.ballBtnScreenCreate.ball.projectileType = "ball"
+            mainFunc.ballBtnScreenCreate.ball.direction = prevDirection
+            mainFunc.ballBtnScreenCreate.ball.relevantArrayIndex = 0
+            mainFunc.ballBtnScreenCreate.ball.transitionId = mainFunc.ballBtnScreenCreate.ball.relevantArrayIndex
+            mainFunc.ballBtnScreenCreate.ball.gravityScale = 0
+            mainFunc.ballBtnScreenCreate.ball.x = prevX
+            mainFunc.ballBtnScreenCreate.ball.y = prevY
+            mainFunc.ballBtnScreenCreate.ball.isFixedRotation = true
+            mainFunc.ballBtnScreenCreate.ball.character = event.target.value
+            mainFunc.ballBtnScreenCreate.ball.autoFanCounter = 0
+            mainFunc.ballBtnScreenCreate.ball.fanCenteringCounter = 0
+            mainFunc.ballBtnScreenCreate.ball.movementSpeed = 100
+            mainFunc.ballBtnScreenCreate.ball.transitioning = false
+            mainFunc.ballBtnScreenCreate.ball:toFront()
+            mainFunc.ballBtnScreenCreate.ball:setSequence(prevDirection)
+            mainFunc.ballBtnScreenCreate.ball:play()
+            mainFunc.ballBtnScreenCreate.ball.specialConditionsArray = {}
 
             timer.performWithDelay(
                 200,
@@ -749,7 +749,7 @@ local objectBallActivate = function (event, mainFunc, shapeArray, shapeArrayPara
             key = mainFunc.characterConfigArray[a]
             if (isSpecificCharacter == false and myGameSettings["characterUnlocked"][key]) or (isSpecificCharacter and key == event.target.specificCharacter) then
             --if thisMyGameSettings["characterUnlocked"][key] == true then
-                if isSpecificCharacter and mainFunc.ballAndButtonAndScreenCreateScript.instance2.character == key then
+                if isSpecificCharacter and mainFunc.ballBtnScreenCreate.ball.character == key then
                     key = "normal"
                 end
                 characterChangeSprites[key] = {}
@@ -758,7 +758,7 @@ local objectBallActivate = function (event, mainFunc, shapeArray, shapeArrayPara
                 local relSheetHeight = mainFunc.fullCharacterConfigArray[key]["sheetHeight"]
                 characterChangeSprites[key].imageSheet = graphics.newImageSheet( relSheetPath, {width = relSheetWidth/4, height = relSheetHeight/2, numFrames = 8, sheetContentWidth = relSheetWidth, sheetContentHeight = relSheetHeight}) 
                 characterChangePointDisplay[key] = display.newSprite(characterChangeSprites[key].imageSheet, spriteSequenceData)
-                characterChangePointDisplay[key]:setSequence(mainFunc.ballAndButtonAndScreenCreateScript.instance2.direction)
+                characterChangePointDisplay[key]:setSequence(mainFunc.ballBtnScreenCreate.ball.direction)
                 characterChangePointDisplay[key].x = (xVal/480) * display.contentWidth
                 characterChangePointDisplay[key].y = (258/320) * display.contentHeight
                 characterChangePointDisplay[key].value = key
@@ -778,7 +778,7 @@ local closeMysteryBagScreen = function (mainFunc, blockChanged)
         transition.to(mainFunc.mysteryBagScreen.mysteryBlock, {alpha = 0, time = 200})
         mainFunc.mysteryBagScreen.mysteryBlock:removeEventListener("tap", mainFunc.mysteryBlockTouch)
     end
-    mainFunc.globalFunctions.hideObjects(mainFunc.allLevelSettings, mainFunc.ballAndButtonAndScreenCreateScript, true)
+    mainFunc.globalFunctions.hideObjects(mainFunc.allLevelSettings, mainFunc.ballBtnScreenCreate, true)
     transition.to(mainFunc.mysteryBagScreen.bg, {alpha = 0, time = 250})
     transition.to(mainFunc.mysteryBagScreen.selectedTile, {alpha = 0, time = 250})
     for b = 1, #mainFunc.mysteryBagScreen.allowedShapes do
@@ -796,12 +796,12 @@ local closeMysteryBagScreen = function (mainFunc, blockChanged)
         transition.to(mainFunc.mysteryBagScreen.allowedShapesTabs[b].tabBg, {alpha = 0, time = 250})
         transition.to(mainFunc.mysteryBagScreen.allowedShapesTabs[b].tabIcon, {alpha = 0, time = 250})
     end
-    for a = 1, #mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.toolBGTiles do
-        mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.toolBGTiles[a]:removeSelf()
-        mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.toolBGTiles[a] = nil
+    for a = 1, #mainFunc.ballBtnScreenCreate.itemBagScreen.toolBGTiles do
+        mainFunc.ballBtnScreenCreate.itemBagScreen.toolBGTiles[a]:removeSelf()
+        mainFunc.ballBtnScreenCreate.itemBagScreen.toolBGTiles[a] = nil
     end
-    mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.scrollView:removeSelf()
-    mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.scrollView = nil
+    mainFunc.ballBtnScreenCreate.itemBagScreen.scrollView:removeSelf()
+    mainFunc.ballBtnScreenCreate.itemBagScreen.scrollView = nil
     mainFunc.mysteryBagScreen.scrollBg:removeSelf()
     mainFunc.mysteryBagScreen.scrollBg = nil
     mainFunc.mysteryBagScreen.closeButton:removeSelf()
@@ -826,7 +826,7 @@ local closeMysteryBagScreen = function (mainFunc, blockChanged)
             mainFunc.mysteryBagScreen.allowedShapesTiles[b]:removeSelf()
             mainFunc.mysteryBagScreen.allowedShapesTiles[b] = nil
         end
-        transition.to(mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.itemBagScreenOverlay, {alpha = 0, time = 150})
+        transition.to(mainFunc.ballBtnScreenCreate.itemBagScreen.itemBagScreenOverlay, {alpha = 0, time = 150})
         mainFunc.allLevelSettings.mysteryBlockBagIsOpen = false
 
         mainFunc.allLevelSettings.isScreenPausedState = false
@@ -841,10 +841,10 @@ end
     t.closeMysteryBagScreen = closeMysteryBagScreen
 
 local mysteryBlockShapeListener = function (event, mainFunc, shapeArray, shapeArrayParameters)
-    local newX = event.target.x + mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.scrollView.x
-    local newY = event.target.y + mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.scrollView.y
+    local newX = event.target.x + mainFunc.ballBtnScreenCreate.itemBagScreen.scrollView.x
+    local newY = event.target.y + mainFunc.ballBtnScreenCreate.itemBagScreen.scrollView.y
     mainFunc.allLevelSettings.itemScreenObjectsGroup:remove(event.target)
-    mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.scrollView:remove(event.target)
+    mainFunc.ballBtnScreenCreate.itemBagScreen.scrollView:remove(event.target)
     mainFunc.allLevelSettings.pauseScreenObjectsGroup:insert(event.target)
     event.target.x = newX
     event.target.y = newY
@@ -1050,18 +1050,18 @@ local closeMysteryBlockRemoveOption = function (event, mainFunc)
         mainFunc.mysteryBagScreen.closeButton = nil
         mainFunc.mysteryBagScreen.agreeButton:removeSelf()
         mainFunc.mysteryBagScreen.agreeButton = nil
-        transition.to(mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.itemBagScreenOverlay, {alpha = 0, time = 200, onComplete = function ()
-            mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.itemBagScreenOverlay:removeEventListener("tap", mainFunc.dummyListener)
-            mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.itemBagScreenOverlay:removeEventListener("touch", mainFunc.dummyListener)
+        transition.to(mainFunc.ballBtnScreenCreate.itemBagScreen.itemBagScreenOverlay, {alpha = 0, time = 200, onComplete = function ()
+            mainFunc.ballBtnScreenCreate.itemBagScreen.itemBagScreenOverlay:removeEventListener("tap", mainFunc.dummyListener)
+            mainFunc.ballBtnScreenCreate.itemBagScreen.itemBagScreenOverlay:removeEventListener("touch", mainFunc.dummyListener)
         end})
     end})
 end
     t.closeMysteryBlockRemoveOption = closeMysteryBlockRemoveOption
 
 local mysteryBlockRemoveOption = function (event, mainFunc, shapeArray, shapeArrayParameters)
-    transition.to(mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.itemBagScreenOverlay, {alpha = 0.15, time = 200})
-    mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.itemBagScreenOverlay:addEventListener("tap", mainFunc.dummyListener)
-    mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.itemBagScreenOverlay:addEventListener("touch", mainFunc.dummyListener)
+    transition.to(mainFunc.ballBtnScreenCreate.itemBagScreen.itemBagScreenOverlay, {alpha = 0.15, time = 200})
+    mainFunc.ballBtnScreenCreate.itemBagScreen.itemBagScreenOverlay:addEventListener("tap", mainFunc.dummyListener)
+    mainFunc.ballBtnScreenCreate.itemBagScreen.itemBagScreenOverlay:addEventListener("touch", mainFunc.dummyListener)
 
     mainFunc.mysteryBagScreen = {}
     mainFunc.mysteryBagScreen.mysteryBlockToRemove = event.target
@@ -1084,9 +1084,9 @@ local mysteryBlockTouchFunction = function (event, mainFunc, shapeArray, shapeAr
     and mainFunc.allLevelSettings.mysteryBlockBagIsOpen == false
     and mainFunc.allLevelSettings.isBallMovingState == "false" then
         -- shut off background listeners
-        transition.to(mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.itemBagScreenOverlay, {alpha = 0.25, time = 200})
-        mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.itemBagScreenOverlay:addEventListener("tap", mainFunc.dummyListener)
-        mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.itemBagScreenOverlay:addEventListener("touch", mainFunc.dummyListener)
+        transition.to(mainFunc.ballBtnScreenCreate.itemBagScreen.itemBagScreenOverlay, {alpha = 0.25, time = 200})
+        mainFunc.ballBtnScreenCreate.itemBagScreen.itemBagScreenOverlay:addEventListener("tap", mainFunc.dummyListener)
+        mainFunc.ballBtnScreenCreate.itemBagScreen.itemBagScreenOverlay:addEventListener("touch", mainFunc.dummyListener)
 
         mainFunc.allLevelSettings.itemBagIsOpen = false
         mainFunc.allLevelSettings.mysteryBlockBagIsOpen = true
@@ -1206,7 +1206,7 @@ local mysteryBlockTouchFunction = function (event, mainFunc, shapeArray, shapeAr
         mainFunc.mysteryBagScreen.scrollBg.y = yCalc(193)
         mainFunc.allLevelSettings.itemScreenObjectsGroup:insert(mainFunc.mysteryBagScreen.scrollBg)
 
-        mainFunc.globalFunctions.createItemBagToolScreenAndScroll(mainFunc, "triangle", mainFunc.allLevelSettings.shapesImageSheet, mainFunc.allLevelSettings.shapesSequenceData, mainFunc.ballAndButtonAndScreenCreateScript, mainFunc.allLevelSettings, mainFunc.buttonListenerScript, mainFunc.mysteryBlockShapeListener, "mysteryBlockBag")
+        mainFunc.globalFunctions.createItemBagToolScreenAndScroll(mainFunc, "triangle", mainFunc.allLevelSettings.shapesImageSheet, mainFunc.allLevelSettings.shapesSequenceData, mainFunc.ballBtnScreenCreate, mainFunc.allLevelSettings, mainFunc.buttonListenerScript, mainFunc.mysteryBlockShapeListener, "mysteryBlockBag")
 
         mainFunc.mysteryBagScreen.selectedTile = display.newImageRect("images/objects/Layout/mysteryBag-selectedTab.png", 58, 38)
         mainFunc.mysteryBagScreen.selectedTile.rotation = 180

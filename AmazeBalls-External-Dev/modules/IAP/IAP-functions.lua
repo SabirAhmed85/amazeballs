@@ -587,7 +587,7 @@ local buyButtonPressedMain = function (buyButton, IAPStoreConfigurationArray, IA
 								end
 
 								if (mainFunc.allLevelSettings.itemBagIsOpen) then
-									mainFunc.globalFunctions.createToolInnerScreen(mainFunc, mainFunc.ballAndButtonAndScreenCreateScript, mainFunc.allLevelSettings, mainFunc.buttonListenerScript, mainFunc.ballAndButtonAndScreenCreateScript.itemBagScreen.currentScreen, "inGame")
+									mainFunc.globalFunctions.createToolInnerScreen(mainFunc, mainFunc.ballBtnScreenCreate, mainFunc.allLevelSettings, mainFunc.buttonListenerScript, mainFunc.ballBtnScreenCreate.itemBagScreen.currentScreen, "inGame")
 								end
 							end
 

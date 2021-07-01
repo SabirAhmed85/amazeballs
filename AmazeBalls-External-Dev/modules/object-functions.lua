@@ -27,7 +27,7 @@ local bombGroupCheck = function (mainFunc, stage, shape)
                             mainFunc.allLevelSettings.midScreenObjectsGroup:insert(bombArray[a].displayObjects["directionLabel"][b])
                         end
 
-                        mainFunc.ballAndButtonAndScreenCreateScript.instance2:toFront()
+                        mainFunc.ballBtnScreenCreate.ball:toFront()
 
                         for a = 1, #mainFunc.allLevelSettings.bullet do
                             mainFunc.allLevelSettings.bullet[a]:toFront()

@@ -1,5 +1,5 @@
 local t = {}
-local getShapeArray = require("modules.utils.get-shape-array");
+local getShapeArray = require("utils.get-shape-array");
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
     -- SCREEN 1-1

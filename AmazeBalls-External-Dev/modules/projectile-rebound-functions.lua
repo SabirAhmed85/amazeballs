@@ -170,11 +170,11 @@ local calculateReboundFunction = function (shape, obj, mainFunc, breakable)
 			                end
 
 	                        if obj.direction ~= "specialRule" then
-	                        	if mainFunc.ballAndButtonAndScreenCreateScript.instance2.specialConditionsArray["bulletVest"]
-								and mainFunc.ballAndButtonAndScreenCreateScript.instance2.specialConditionsArray["bulletVest"].active == true then
+	                        	if mainFunc.ballBtnScreenCreate.ball.specialConditionsArray["bulletVest"]
+								and mainFunc.ballBtnScreenCreate.ball.specialConditionsArray["bulletVest"].active == true then
 									obj:setSequence(obj.direction .. "-bullet")
-								elseif mainFunc.ballAndButtonAndScreenCreateScript.instance2.specialConditionsArray["characterSpecial"]
-								and mainFunc.ballAndButtonAndScreenCreateScript.instance2.specialConditionsArray["characterSpecial"].active == true then
+								elseif mainFunc.ballBtnScreenCreate.ball.specialConditionsArray["characterSpecial"]
+								and mainFunc.ballBtnScreenCreate.ball.specialConditionsArray["characterSpecial"].active == true then
 									obj:setSequence(obj.direction .. "-special")
 								else
 						    		obj:setSequence(obj.direction)
@@ -194,7 +194,7 @@ local calculateReboundFunction = function (shape, obj, mainFunc, breakable)
 	                    if obj.direction == "kill" then
 	                        mainFunc.allLevelSettings.shouldBallMoveState = "false"
 	                        mainFunc.allLevelSettings.isBallMovingState = "false"
-	                        mainFunc.ballAndButtonAndScreenCreateScript.backBtn:setSequence("go")
+	                        mainFunc.ballBtnScreenCreate.backBtn:setSequence("go")
 	                        mainFunc.projectileMovementRemoveAndRespawnScript.startBallAgain(mainFunc, false, false, shapeArray, shapeArrayParameters)
 	                    elseif obj.direction == "specialRule"
 	                    and breakable == false then
@@ -290,16 +290,16 @@ local detectRebound = function (event, mainFunc)
 	if (event.other.projectileType ~= "hookshot") then
 		breakability = false
 	    if (event.target.breakable == true
-	    and event.other == mainFunc.ballAndButtonAndScreenCreateScript.instance2
-	    and mainFunc.ballAndButtonAndScreenCreateScript.instance2.character == "PrincessBoulder" 
-	    and mainFunc.ballAndButtonAndScreenCreateScript.instance2.specialConditionsArray["characterSpecial"] 
-	    and mainFunc.ballAndButtonAndScreenCreateScript.instance2.specialConditionsArray["characterSpecial"].active == true) then
+	    and event.other == mainFunc.ballBtnScreenCreate.ball
+	    and mainFunc.ballBtnScreenCreate.ball.character == "PrincessBoulder" 
+	    and mainFunc.ballBtnScreenCreate.ball.specialConditionsArray["characterSpecial"] 
+	    and mainFunc.ballBtnScreenCreate.ball.specialConditionsArray["characterSpecial"].active == true) then
 	        breakability = true
 	    elseif (event.target.breakable == true
 	    and event.target.hyrollBreakable == false
-	    and event.other == mainFunc.ballAndButtonAndScreenCreateScript.instance2
-	    and mainFunc.ballAndButtonAndScreenCreateScript.instance2.specialConditionsArray["jetSuit"] 
-	    and mainFunc.ballAndButtonAndScreenCreateScript.instance2.specialConditionsArray["jetSuit"].active == true) then
+	    and event.other == mainFunc.ballBtnScreenCreate.ball
+	    and mainFunc.ballBtnScreenCreate.ball.specialConditionsArray["jetSuit"] 
+	    and mainFunc.ballBtnScreenCreate.ball.specialConditionsArray["jetSuit"].active == true) then
     		breakability = true
 	    end
 
@@ -308,12 +308,12 @@ local detectRebound = function (event, mainFunc)
 		mainFunc.projectileMovementRemoveAndRespawnScript.removeHookshot(event.other, mainFunc)
 		if (event.target.breakable == true) then
 			mainFunc.allLevelSettings.isBallMovingState = "false"
-			mainFunc.tm[mainFunc.ballAndButtonAndScreenCreateScript.instance2.projectileType][mainFunc.ballAndButtonAndScreenCreateScript.instance2.relevantArrayIndex]:cancelAll()
-			mainFunc.ballAndButtonAndScreenCreateScript.instance2.direction = event.other.direction
-			mainFunc.projectileMovementRemoveAndRespawnScript.moveProjectile(mainFunc.ballAndButtonAndScreenCreateScript.instance2, mainFunc)
+			mainFunc.tm[mainFunc.ballBtnScreenCreate.ball.projectileType][mainFunc.ballBtnScreenCreate.ball.relevantArrayIndex]:cancelAll()
+			mainFunc.ballBtnScreenCreate.ball.direction = event.other.direction
+			mainFunc.projectileMovementRemoveAndRespawnScript.moveProjectile(mainFunc.ballBtnScreenCreate.ball, mainFunc)
 			mainFunc.allLevelSettings.isBallMovingState = "true"
 		else
-			mainFunc.tm[mainFunc.ballAndButtonAndScreenCreateScript.instance2.projectileType][mainFunc.ballAndButtonAndScreenCreateScript.instance2.relevantArrayIndex]:resumeAll()
+			mainFunc.tm[mainFunc.ballBtnScreenCreate.ball.projectileType][mainFunc.ballBtnScreenCreate.ball.relevantArrayIndex]:resumeAll()
 		end
 	end
 end

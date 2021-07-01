@@ -392,7 +392,7 @@ local function toggleShapeOrToolView (mainArray, settingsArray, itemBagScreenArr
     if (viewScreenName == "levelSelect") then
         relItemBagArray = mainArray
     else
-        relItemBagArray = mainArray.ballAndButtonAndScreenCreateScript
+        relItemBagArray = mainArray.ballBtnScreenCreate
     end
     if settingsArray.itemBagIsOpen then
         hideTools(settingsArray, itemBagScreenArray)
@@ -482,7 +482,7 @@ local changeMysteryBlockBagSelectedTile = function (mainFunc, screenName, i)
         mysteryBagScreen.allowedShapesTabs[a].tabIcon:toFront()
     end
 
-    t.createItemBagToolScreenAndScroll(mainFunc, screenName, mainFunc.allLevelSettings.shapesImageSheet, mainFunc.allLevelSettings.shapesSequenceData, mainFunc.ballAndButtonAndScreenCreateScript, mainFunc.allLevelSettings, mainFunc.buttonListenerScript, mainFunc.mysteryBlockShapeListener, "mysteryBlockBag")
+    t.createItemBagToolScreenAndScroll(mainFunc, screenName, mainFunc.allLevelSettings.shapesImageSheet, mainFunc.allLevelSettings.shapesSequenceData, mainFunc.ballBtnScreenCreate, mainFunc.allLevelSettings, mainFunc.buttonListenerScript, mainFunc.mysteryBlockShapeListener, "mysteryBlockBag")
 
 end
     t.changeMysteryBlockBagSelectedTile = changeMysteryBlockBagSelectedTile
@@ -553,17 +553,17 @@ globalOpenItemBagFunction = function (mainArray, shapeArray, shapeArrayParameter
         mainArray.allLevelSettings.isScreenPausedState = true
 
         if (viewScreenName == "inGame") then
-            mainArray.ballAndButtonAndScreenCreateScript.itemBagBtn:setSequence("close")
+            mainArray.ballBtnScreenCreate.itemBagBtn:setSequence("close")
             mainArray.buttonListenerScript.removeEventListenersForPause(mainArray, shapeArray, shapeArrayParameters)
             mainArray.buttonListenerScript.removeShapeListenersForPause(mainArray, shapeArray, shapeArrayParameters)
 
             mainArray.allLevelSettings.shouldBallMoveCounter = mainArray.allLevelSettings.shouldBallMoveCounter + 1
 
             if mainArray.thisLevelSettings.mapObtained == true then
-                mainArray.ballAndButtonAndScreenCreateScript.playBtn.alpha = 0.3
+                mainArray.ballBtnScreenCreate.playBtn.alpha = 0.3
             end
-            mainArray.ballAndButtonAndScreenCreateScript.itemBtn:toFront()
-            mainArray.ballAndButtonAndScreenCreateScript.itemBagBtn:toFront()
+            mainArray.ballBtnScreenCreate.itemBtn:toFront()
+            mainArray.ballBtnScreenCreate.itemBagBtn:toFront()
         elseif viewScreenName == "levelSelect" then
         end
 

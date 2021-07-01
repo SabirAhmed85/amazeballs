@@ -308,13 +308,13 @@ backgroundGrid.alpha = 1
 backgroundObjectsGroup:insert( backgroundGrid )
 
 --------- MAIN BALL 
-local instance2 = display.newImage( "images/objects/ballSprite.png" )
-physics.addBody( instance2, { density = 1, friction = 1, bounce = 0, radius = 13 } )
-midScreenObjectsGroup:insert( instance2 )
-instance2.gravityScale = 0
-instance2.x = 62
-instance2.y = 275
-instance2.isFixedRotation = true
+local ball = display.newImage( "images/objects/ballSprite.png" )
+physics.addBody( ball, { density = 1, friction = 1, bounce = 0, radius = 13 } )
+midScreenObjectsGroup:insert( ball )
+ball.gravityScale = 0
+ball.x = 62
+ball.y = 275
+ball.isFixedRotation = true
 
 ---------  MENU SCREEN
 
@@ -963,8 +963,8 @@ end
 local function startBallAgain (event)
     Runtime:removeEventListener( "enterFrame", moveSomething )
     Runtime:removeEventListener("enterFrame", edgesTransitions)
-    instance2.x = 56
-    instance2.y = 275
+    ball.x = 56
+    ball.y = 275
     pressCount = 0
     playBtn.alpha = 1
     lifeCounter = lifeCounter + 1
@@ -974,16 +974,16 @@ local function moveSomething (event)
 
     if shouldBallMoveState == "true" then
 	if (direction) == "up" then
-	    instance2.y = instance2.y - ballspeed
+	    ball.y = ball.y - ballspeed
 	    
 	elseif (direction) == "down" then
-	    instance2.y = instance2.y + ballspeed
+	    ball.y = ball.y + ballspeed
 	    
 	elseif (direction) == "left" then
-	    instance2.x = instance2.x - ballspeed
+	    ball.x = ball.x - ballspeed
 	    
 	elseif (direction) == "right" then
-	    instance2.x = instance2.x + ballspeed
+	    ball.x = ball.x + ballspeed
 	end
     end
     
@@ -993,10 +993,10 @@ local function moveSlow (event)
 
     if tunnelCounter == 0 then
 	tunnelCounter = 1
-	instance2.x = ((nextHorzScreen - 1) * display.contentWidth) + (((nextHorzSquare - 1) * 60) + 30 + 30)
-	instance2.y = ((nextVertScreen - 1) * display.contentHeight) + (((nextVertSquare - 1) * 52) + 30 + 26)
+	ball.x = ((nextHorzScreen - 1) * display.contentWidth) + (((nextHorzSquare - 1) * 60) + 30 + 30)
+	ball.y = ((nextVertScreen - 1) * display.contentHeight) + (((nextVertSquare - 1) * 52) + 30 + 26)
 	direction = nextDirection
-	instance2.alpha = 1
+	ball.alpha = 1
 	Runtime:addEventListener( "enterFrame", moveSomething )
     end
 
@@ -1006,11 +1006,11 @@ local function specialRuleFunction(event)
 	
     if oldDirection == "left" then
     
-	if instance2.y > (thisObject.y) then
+	if ball.y > (thisObject.y) then
 	    
 	    direction = thisObject.directionsArray[thisObjectState * 2][8]
 		    
-	elseif instance2.y < (thisObject.y) then
+	elseif ball.y < (thisObject.y) then
 		    
 	    direction = thisObject.directionsArray[thisObjectState * 2][7]
 		    
@@ -1018,11 +1018,11 @@ local function specialRuleFunction(event)
     
     elseif oldDirection == "right" then
 	
-	if instance2.y > (thisObject.y) then
+	if ball.y > (thisObject.y) then
 	    
 	    direction = thisObject.directionsArray[thisObjectState * 2][6]
 		    
-	elseif instance2.y < (thisObject.y) then
+	elseif ball.y < (thisObject.y) then
 		    
 	    direction = thisObject.directionsArray[thisObjectState * 2][5]
 		    
@@ -1030,11 +1030,11 @@ local function specialRuleFunction(event)
 	
     elseif oldDirection == "down" then
 	
-	if instance2.x > (thisObject.x) then
+	if ball.x > (thisObject.x) then
 	    
 	    direction = thisObject.directionsArray[thisObjectState * 2][8]
 		    
-	elseif instance2.x < (thisObject.x) then
+	elseif ball.x < (thisObject.x) then
 		    
 	    direction = thisObject.directionsArray[thisObjectState * 2][7]
 		    
@@ -1042,11 +1042,11 @@ local function specialRuleFunction(event)
 	
     elseif oldDirection == "up" then
 	
-	if instance2.x > (thisObject.x) then
+	if ball.x > (thisObject.x) then
 	    
 	    direction = thisObject.directionsArray[thisObjectState * 2][6]
 		    
-	elseif instance2.x < (thisObject.x) then
+	elseif ball.x < (thisObject.x) then
 		    
 	    direction = thisObject.directionsArray[thisObjectState * 2][5]
 		    
@@ -1199,18 +1199,18 @@ end
 
 local function fanCentering (event)
 
-    if (instance2.x) > (thisFan.x + 31) then
-	instance2.x = instance2.x - 2
-    elseif (instance2.x) < (thisFan.x + 29) then
-	instance2.x = instance2.x + 2
+    if (ball.x) > (thisFan.x + 31) then
+	ball.x = ball.x - 2
+    elseif (ball.x) < (thisFan.x + 29) then
+	ball.x = ball.x + 2
     else
 	fanXCenteringComplete = true
     end
     
-    if (instance2.y) > (thisFan.y + 27) then
-	instance2.y = instance2.y - 2
-    elseif (instance2.y) < (thisFan.y + 25) then
-	instance2.y = instance2.y + 2
+    if (ball.y) > (thisFan.y + 27) then
+	ball.y = ball.y - 2
+    elseif (ball.y) < (thisFan.y + 25) then
+	ball.y = ball.y + 2
     else
 	fanYCenteringComplete = true
     end
@@ -1445,10 +1445,10 @@ local function autoFanTransition(event)
     for b = 1, #shapeArray do
 	
 	if shapeArrayParameters[b]["type"] == "autoFan" or shapeArrayParameters[b]["type"] == "spitter" then
-	    if  (instance2.x) > shapeArray[b].x and
-		(instance2.x) < (shapeArray[b].x + 60) and
-		instance2.y > shapeArray[b].y and
-		instance2.y < (shapeArray[b].y + 39) and
+	    if  (ball.x) > shapeArray[b].x and
+		(ball.x) < (shapeArray[b].x + 60) and
+		ball.y > shapeArray[b].y and
+		ball.y < (shapeArray[b].y + 39) and
 		autoFanCounter == 0 then
 		    Runtime:removeEventListener( "enterFrame", moveSomething )
 		    fanXCenteringComplete = false
@@ -1465,10 +1465,10 @@ local function autoFanTransition(event)
 	    end
 	elseif shapeArrayParameters[b]["type"] == "switch" then
 	    if shapeArray[b].switchCounter == 0 then
-		if  (instance2.x) > shapeArray[b].x
-		and (instance2.x) < (shapeArray[b].x + 60)
-		and instance2.y > shapeArray[b].y
-		and instance2.y < (shapeArray[b].y + 39)
+		if  (ball.x) > shapeArray[b].x
+		and (ball.x) < (shapeArray[b].x + 60)
+		and ball.y > shapeArray[b].y
+		and ball.y < (shapeArray[b].y + 39)
 		and shapeArray[b].switchOnOffCounter == 0 then
 		    thisSwitch = shapeArray[b]
 		    thisSwitch.switchOnOffCounter = 1
@@ -1525,13 +1525,13 @@ local function tunnelTransition(event)
 
     for z = 1, #shapeArray do
 	if shapeArray[z].objectType == "tunnel" then
-	    if (instance2.x) > shapeArray[z].relevantLowerX
-	    and (instance2.x) < (shapeArray[z].relevantHigherX)
-	    and (instance2.y) > shapeArray[z].relevantLowerY
-	    and (instance2.y) < (shapeArray[z].relevantHigherY)
+	    if (ball.x) > shapeArray[z].relevantLowerX
+	    and (ball.x) < (shapeArray[z].relevantHigherX)
+	    and (ball.y) > shapeArray[z].relevantLowerY
+	    and (ball.y) < (shapeArray[z].relevantHigherY)
 	    and direction == shapeArray[z].firstDirection then
 		tunnelCounter = 0
-		instance2.alpha = 0
+		ball.alpha = 0
 		nextDirection = shapeArrayParameters[z]["props"][3]
 		nextHorzScreen = shapeArrayParameters[z]["location"]["xScreen"]
 		nextVertScreen = shapeArrayParameters[z]["location"]["yScreen"]
@@ -1548,19 +1548,19 @@ end
 
 local function edgesTransitions(event)
     
-    if  (instance2.x + instance2.contentWidth) > rightScreenEdge and direction == "right" or
-	(instance2.x + instance2.contentWidth) < leftScreenEdge and direction == "left" or
-	(instance2.y + instance2.contentHeight) < topScreenEdge and direction == "up" or
-	(instance2.y + instance2.contentHeight) > bottomScreenEdge  and direction == "down" then
+    if  (ball.x + ball.contentWidth) > rightScreenEdge and direction == "right" or
+	(ball.x + ball.contentWidth) < leftScreenEdge and direction == "left" or
+	(ball.y + ball.contentHeight) < topScreenEdge and direction == "up" or
+	(ball.y + ball.contentHeight) > bottomScreenEdge  and direction == "down" then
 	    Runtime:removeEventListener( "enterFrame", moveSomething )
-	    if (instance2.x + instance2.contentWidth) > rightScreenEdge and direction == "right" then
-		instance2:translate( -520, 0)
-	    elseif (instance2.x + instance2.contentWidth) < leftScreenEdge and direction == "left" then
-		instance2:translate( 520, 0)
-	    elseif (instance2.y + instance2.contentHeight) < topScreenEdge and direction == "up" then
-		instance2:translate( 0, 380)
-	    elseif (instance2.y + instance2.contentHeight) > bottomScreenEdge  and direction == "down" then
-	        instance2:translate( 0, -380)
+	    if (ball.x + ball.contentWidth) > rightScreenEdge and direction == "right" then
+		ball:translate( -520, 0)
+	    elseif (ball.x + ball.contentWidth) < leftScreenEdge and direction == "left" then
+		ball:translate( 520, 0)
+	    elseif (ball.y + ball.contentHeight) < topScreenEdge and direction == "up" then
+		ball:translate( 0, 380)
+	    elseif (ball.y + ball.contentHeight) > bottomScreenEdge  and direction == "down" then
+	        ball:translate( 0, -380)
 	    end
 	    Runtime:addEventListener( "enterFrame", moveSomething )
     end
@@ -1579,12 +1579,12 @@ local function doorTransition (event)
 	    thisChangeScreenDirection = shapeArrayParameters[b]["subType"]
 	    if shapeArray[b].enabled == "enabled" then
 		if shapeArrayParameters[b]["subType"] == "right" then
-		    if (instance2.x + instance2.contentWidth) > (((shapeArrayParameters[b]["location"]["xScreen"] - 1) * display.contentWidth) + 490)
-		    and (instance2.x + instance2.contentWidth) < (((shapeArrayParameters[b]["location"]["xScreen"] - 1) * display.contentWidth) + 510)
+		    if (ball.x + ball.contentWidth) > (((shapeArrayParameters[b]["location"]["xScreen"] - 1) * display.contentWidth) + 490)
+		    and (ball.x + ball.contentWidth) < (((shapeArrayParameters[b]["location"]["xScreen"] - 1) * display.contentWidth) + 510)
 		    and direction == "right" then
 			higherY = ((shapeArrayParameters[b]["location"]["ySquare"] - 1) * 52) + 30
-			if instance2.y > higherY
-			and instance2.y < (higherY + 52)
+			if ball.y > higherY
+			and ball.y < (higherY + 52)
 			and ballScreenHorzValue == shapeArrayParameters[b]["location"]["xScreen"]
 			and ballScreenVertValue == shapeArrayParameters[b]["location"]["yScreen"]
 			and screenTimer == 0 then
@@ -1596,16 +1596,16 @@ local function doorTransition (event)
 			    Runtime:removeEventListener("enterFrame", edgesTransitions)
 			    timer.performWithDelay(100, addEdgesTransitions, 1)
 			    Runtime:addEventListener("enterFrame", changeToRightScreen)
-			    instance2.y = (higherY + 26)
+			    ball.y = (higherY + 26)
 			end
 		    end
 		elseif shapeArrayParameters[b]["subType"] == "left" then
-		    if (instance2.x + instance2.contentWidth) < (((shapeArrayParameters[b]["location"]["xScreen"] - 1) * display.contentWidth) + 10)
-		    and (instance2.x + instance2.contentWidth) > (((shapeArrayParameters[b]["location"]["xScreen"] - 1) * display.contentWidth))
+		    if (ball.x + ball.contentWidth) < (((shapeArrayParameters[b]["location"]["xScreen"] - 1) * display.contentWidth) + 10)
+		    and (ball.x + ball.contentWidth) > (((shapeArrayParameters[b]["location"]["xScreen"] - 1) * display.contentWidth))
 		    and direction == "left" then
 			higherY = ((shapeArrayParameters[b]["location"]["ySquare"] - 1) * 52) + 30
-			if instance2.y > higherY
-			and instance2.y < (higherY + 52)
+			if ball.y > higherY
+			and ball.y < (higherY + 52)
 			and ballScreenHorzValue == shapeArrayParameters[b]["location"]["xScreen"]
 			and ballScreenVertValue == shapeArrayParameters[b]["location"]["yScreen"]
 			and screenTimer == 0 then
@@ -1617,16 +1617,16 @@ local function doorTransition (event)
 			    Runtime:removeEventListener("enterFrame", edgesTransitions)
 			    timer.performWithDelay(100, addEdgesTransitions, 1)
 			    Runtime:addEventListener("enterFrame", changeToRightScreen)
-			    instance2.y = (higherY + 26)
+			    ball.y = (higherY + 26)
 			end
 		    end
 		elseif shapeArrayParameters[b]["subType"] == "up" then
-		    if (instance2.y + instance2.contentHeight) < (((shapeArrayParameters[b]["location"]["yScreen"] - 1) * display.contentHeight) + 10)
-		    and (instance2.y + instance2.contentHeight) > (((shapeArrayParameters[b]["location"]["yScreen"] - 1) * display.contentHeight) - 20)
+		    if (ball.y + ball.contentHeight) < (((shapeArrayParameters[b]["location"]["yScreen"] - 1) * display.contentHeight) + 10)
+		    and (ball.y + ball.contentHeight) > (((shapeArrayParameters[b]["location"]["yScreen"] - 1) * display.contentHeight) - 20)
 		    and direction == "up" then
 			lowerX = ((shapeArrayParameters[b]["location"]["xSquare"] - 1) * 60) + 30
-			if instance2.x > lowerX
-			and instance2.x < (lowerX + 60)
+			if ball.x > lowerX
+			and ball.x < (lowerX + 60)
 			and ballScreenVertValue == shapeArrayParameters[b]["location"]["yScreen"]
 			and ballScreenHorzValue == shapeArrayParameters[b]["location"]["xScreen"]
 			and screenTimer == 0 then
@@ -1638,16 +1638,16 @@ local function doorTransition (event)
 			    Runtime:removeEventListener("enterFrame", edgesTransitions)
 			    timer.performWithDelay(100, addEdgesTransitions, 1)
 			    Runtime:addEventListener("enterFrame", changeToRightScreen)
-			    instance2.x = (lowerX + 30)
+			    ball.x = (lowerX + 30)
 			end
 		    end
 		elseif shapeArrayParameters[b]["subType"] == "down" then
-		    if (instance2.y + instance2.contentHeight) > (((shapeArrayParameters[b]["location"]["yScreen"] - 1) * display.contentHeight) + 327)
-		    and (instance2.y + instance2.contentHeight) < (((shapeArrayParameters[b]["location"]["yScreen"] - 1) * display.contentHeight) + 335)
+		    if (ball.y + ball.contentHeight) > (((shapeArrayParameters[b]["location"]["yScreen"] - 1) * display.contentHeight) + 327)
+		    and (ball.y + ball.contentHeight) < (((shapeArrayParameters[b]["location"]["yScreen"] - 1) * display.contentHeight) + 335)
 		    and direction == "down" then
 			lowerX = ((shapeArrayParameters[b]["location"]["xSquare"] - 1) * 60) + 30
-			if instance2.x > lowerX
-			and instance2.x < (lowerX + 60)
+			if ball.x > lowerX
+			and ball.x < (lowerX + 60)
 			and ballScreenVertValue == shapeArrayParameters[b]["location"]["yScreen"]
 			and ballScreenHorzValue == shapeArrayParameters[b]["location"]["xScreen"]
 			and screenTimer == 0 then
@@ -1659,7 +1659,7 @@ local function doorTransition (event)
 			    Runtime:removeEventListener("enterFrame", edgesTransitions)
 			    timer.performWithDelay(100, addEdgesTransitions, 1)
 			    Runtime:addEventListener("enterFrame", changeToRightScreen)
-			    instance2.x = (lowerX + 30)
+			    ball.x = (lowerX + 30)
 			end
 		    end
 		end
@@ -1760,10 +1760,10 @@ local function transitionArrayStateChecknew ()
 	    local function addPhysicsBodyToShape ()
 		for a = 1, #shapeFormingArray do
 		    if shapeFormingArray[a][1] == shapeArrayParameters[z]["subType"] then
-			if instance2.x > (thisTransitionObject.x - 41)
-			and instance2.x < (thisTransitionObject.x + 38) 
-			and instance2.y > (thisTransitionObject.y - 38) 
-			and instance2.y < (thisTransitionObject.y + 40) then
+			if ball.x > (thisTransitionObject.x - 41)
+			and ball.x < (thisTransitionObject.x + 38) 
+			and ball.y > (thisTransitionObject.y - 38) 
+			and ball.y < (thisTransitionObject.y + 40) then
 			    timer.performWithDelay(50, addPhysicsBodyToShape, 1)
 			    local textObj = display.newText("hi", 0,0, nil, 14);
 			    textObj.x = 20
@@ -1842,7 +1842,7 @@ local function transitionMoveSomething ()
 		    end
 		end
 		if thisTransitionObject.enabled == true then
-		    instance2.x = instance2.x + (30 * thisTransitionXDirection)
+		    ball.x = ball.x + (30 * thisTransitionXDirection)
 		end
 	    end
         else
@@ -1875,7 +1875,7 @@ local function transitionMoveSomething ()
 		    end
 		end
 		if thisTransitionObject.enabled == true then
-		    instance2.y = instance2.y + (26 * thisTransitionXDirection)
+		    ball.y = ball.y + (26 * thisTransitionXDirection)
 		end
 	    end
         end
@@ -1921,7 +1921,7 @@ local function transitionMoveSomething ()
 			    end
 			end
 			if thisTransitionObject.enabled == true then
-			    instance2.y = instance2.y + (13 * thisTransitionXDirection)
+			    ball.y = ball.y + (13 * thisTransitionXDirection)
 			end
 		    end
 		    secondTransitionMoveCounter = secondTransitionMoveCounter + 13
@@ -1974,7 +1974,7 @@ local function transitionMoveSomething ()
 			    end
 			end
 			if thisTransitionObject.enabled == true then
-			    instance2.x = instance2.x + (20 * thisTransitionXDirection)
+			    ball.x = ball.x + (20 * thisTransitionXDirection)
 			end
 		    end
 		    secondTransitionMoveCounter = secondTransitionMoveCounter + 20
@@ -2120,10 +2120,10 @@ local function listener(event)
 	if (transitionArrayIndex[d][2][1] == "flip-horizontal"
 	or transitionArrayIndex[d][2][1] == "flip-vertical")
 	and event.target.name == transitionArrayIndex[d][1][1] then
-	    if instance2.x > (event.target.x - 60)
-	    and instance2.x < (event.target.x + 60)
-	    and instance2.y > (event.target.y - 60)
-	    and instance2.y < (event.target.y + 60) then
+	    if ball.x > (event.target.x - 60)
+	    and ball.x < (event.target.x + 60)
+	    and ball.y > (event.target.y - 60)
+	    and ball.y < (event.target.y + 60) then
 		event.target.flipDisabled = true
 		text3e.text = "hi"
 		text3e.x = event.target.x + 60
@@ -2349,10 +2349,10 @@ local function listener(event)
     for c=1, #shapeArray do
 	if event.target == shapeArray[c] then
 	    if  event.target.objectType == "manualFan"
-	    and (instance2.x) > (event.target.x - 10)
-	    and (instance2.x) < (event.target.x + 10 + 60)
-	    and (instance2.y) > (event.target.y - 6)
-	    and (instance2.y) < (event.target.y + 6 + 52)
+	    and (ball.x) > (event.target.x - 10)
+	    and (ball.x) < (event.target.x + 10 + 60)
+	    and (ball.y) > (event.target.y - 6)
+	    and (ball.y) < (event.target.y + 6 + 52)
 	    and event.phase == "began" then
 	    	Runtime:removeEventListener( "enterFrame", moveSomething )
 	    	fanXCenteringComplete = false

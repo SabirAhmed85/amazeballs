@@ -3,15 +3,15 @@ local t = {}
 -------- SCREENS AFTER INITIALISATION  ----------
 
 local showPauseScreen = function (mainFunc)
-    if mainFunc.ballAndButtonAndScreenCreateScript.pauseScreen.state == "unpaused" then
-        mainFunc.ballAndButtonAndScreenCreateScript.pauseScreenOverlay.alpha = 0.25
-        mainFunc.ballAndButtonAndScreenCreateScript.pauseScreenOverlay:addEventListener("tap", mainFunc.dummyListener)
-        mainFunc.ballAndButtonAndScreenCreateScript.pauseScreenOverlay:addEventListener("touch", mainFunc.dummyListener)
+    if mainFunc.ballBtnScreenCreate.pauseScreen.state == "unpaused" then
+        mainFunc.ballBtnScreenCreate.pauseScreenOverlay.alpha = 0.25
+        mainFunc.ballBtnScreenCreate.pauseScreenOverlay:addEventListener("tap", mainFunc.dummyListener)
+        mainFunc.ballBtnScreenCreate.pauseScreenOverlay:addEventListener("touch", mainFunc.dummyListener)
         if mainFunc.levelTimerUpdateTimer and mainFunc.levelTimerUpdateTimer ~= nil then
             timer.pause(mainFunc.levelTimerUpdateTimer)
         end
-        mainFunc.globalImageCreateFunctions.createLevelTimeString(mainFunc.ballAndButtonAndScreenCreateScript.levelTimeSeconds, mainFunc.ballAndButtonAndScreenCreateScript.levelTimeMinutes, mainFunc.ballAndButtonAndScreenCreateScript.timeCounter, false)
-    	transition.to(mainFunc.ballAndButtonAndScreenCreateScript.pauseScreen, {time = 100, y = 0, onComplete = function () mainFunc.ballAndButtonAndScreenCreateScript.pauseScreen.state = "paused" end})
+        mainFunc.globalImageCreateFunctions.createLevelTimeString(mainFunc.ballBtnScreenCreate.levelTimeSeconds, mainFunc.ballBtnScreenCreate.levelTimeMinutes, mainFunc.ballBtnScreenCreate.timeCounter, false)
+    	transition.to(mainFunc.ballBtnScreenCreate.pauseScreen, {time = 100, y = 0, onComplete = function () mainFunc.ballBtnScreenCreate.pauseScreen.state = "paused" end})
     	for a = 1, mainFunc.allLevelSettings.pauseScreenObjectsGroup.numChildren do
     		transition.to(mainFunc.allLevelSettings.pauseScreenObjectsGroup[a], {time = 100, y = mainFunc.allLevelSettings.pauseScreenObjectsGroup[a].yValue})
     	end
@@ -21,17 +21,17 @@ local showPauseScreen = function (mainFunc)
     		  transition.to(mainFunc.allLevelSettings.pauseScreenObjectsGroup[a], {time = 100, y = display.contentHeight + mainFunc.allLevelSettings.pauseScreenObjectsGroup[a].yValue})
             end
     	end
-    	transition.to(mainFunc.ballAndButtonAndScreenCreateScript.pauseScreen, {time = 100, y = display.contentHeight, onComplete = function () 
+    	transition.to(mainFunc.ballBtnScreenCreate.pauseScreen, {time = 100, y = display.contentHeight, onComplete = function () 
     		if mainFunc.allLevelSettings.isBallMovingState == "true"
-	        and mainFunc.ballAndButtonAndScreenCreateScript.mapScreen.state == "mapHidden" then
+	        and mainFunc.ballBtnScreenCreate.mapScreen.state == "mapHidden" then
 
 		    end
 		    mainFunc.allLevelSettings.shouldBallMoveState = "true"
-		    mainFunc.ballAndButtonAndScreenCreateScript.pauseScreen.state = "unpaused"
+		    mainFunc.ballBtnScreenCreate.pauseScreen.state = "unpaused"
 
-            mainFunc.ballAndButtonAndScreenCreateScript.pauseScreenOverlay.alpha = 0
-            mainFunc.ballAndButtonAndScreenCreateScript.pauseScreenOverlay:removeEventListener("tap", mainFunc.dummyListener)
-            mainFunc.ballAndButtonAndScreenCreateScript.pauseScreenOverlay:removeEventListener("touch", mainFunc.dummyListener)
+            mainFunc.ballBtnScreenCreate.pauseScreenOverlay.alpha = 0
+            mainFunc.ballBtnScreenCreate.pauseScreenOverlay:removeEventListener("tap", mainFunc.dummyListener)
+            mainFunc.ballBtnScreenCreate.pauseScreenOverlay:removeEventListener("touch", mainFunc.dummyListener)
 
             if mainFunc.levelTimerUpdateTimer and mainFunc.levelTimerUpdateTimer ~= nil then
                 timer.resume(mainFunc.levelTimerUpdateTimer)
