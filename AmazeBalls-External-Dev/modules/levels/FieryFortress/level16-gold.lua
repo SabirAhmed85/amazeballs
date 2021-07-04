@@ -1,5 +1,6 @@
-local widget = require("widget")
 local t = {}
+local getShapeArray = require("utils.get-shape-array");
+local widget = require("widget")
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
     --------  CREATE OBJECTS HERE   -----------
@@ -25,7 +26,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
 
     -- 2-1
     table.insert(shapeArrayParameters, getShapeArray("door","door1_2_1", {2, 1, 1, 1}, "left"))
-    table.insert(shapeArrayParameters, getShapeArray("shape","triangle1_2_1", {2, 1, 1, 1, "triangleBottomLeftShape"}))
+    table.insert(shapeArrayParameters, getShapeArray("shape","triangle1_2_1", {2, 1, 1, 1}, "triangleBottomLeftShape"))
     table.insert(shapeArrayParameters, getShapeArray("autoFan","autoFan1_2_1", {2, 1, 3, 1}, "right"))
     table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"autoFan1_2_1"},{"slide"},{},{2},{1},{2,1,1,3},{2},{2,1,3,1}})
     table.insert(shapeArrayParameters, getShapeArray("autoFan","autoFan2_2_1", {2, 1, 2, 2}, "right"))
@@ -43,7 +44,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     table.insert(shapeArrayParameters, getShapeArray("shape","bar2_2_1", {2, 1, 8, 3}, "bar", {"horz"}))
     table.insert(shapeArrayParameters, getShapeArray("autoFan","autoFan4_2_1", {2, 1, 2, 4}, "right"))
     table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"autoFan4_2_1"},{"slide"},{},{2},{1},{2,1,1,4},{2},{2,1,2,4}})
-    table.insert(shapeArrayParameters, getShapeArray("shape","triangle4_2_1", {2, 1, 4, 4, "triangleLeftAndRightShape", 2}))
+    table.insert(shapeArrayParameters, getShapeArray("shape","triangle4_2_1", {2, 1, 4, 4}, "triangleLeftAndRightShape", {2}))
     table.insert(shapeArrayParameters, getShapeArray("door","door3_2_1", {2, 1, 1, 5}, "left"))
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle5_2_1", {2, 1, 1, 5}, "triangleTopLeftShape"))
     table.insert(shapeArrayParameters, getShapeArray("shape","bar3_2_1", {2, 1, 2, 5}, "bar", {"horz", 3}))
@@ -53,7 +54,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
 
     --ALL SWITCHES
 
-    table.insert(shapeArrayParameters, getShapeArray("switch","switch1_1_1", {1, 1, 2, 1, { {"slide", "autoFan3_1_1"} } })
+    table.insert(shapeArrayParameters, getShapeArray("switch","switch1_1_1", {1, 1, 2, 1}, { {"slide", "autoFan3_1_1"} }))
 
     --GEMS
     table.insert(shapeArrayParameters, getShapeArray("gem","purple", {1, 1, 4, 4}, "purple"))
@@ -68,7 +69,8 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     table.insert(shapeArrayParameters, getShapeArray("gem","blueCoin", {2, 1, 5, 4}, "blueCoin"))
     table.insert(shapeArrayParameters, getShapeArray("gem","purpleCoin", {1, 1, 4, 2}, "purpleCoin"))
     --ITEMS
-    table.insert(shapeArrayParameters, getShapeArray("item","big-present", 2, 1, 2, 1, {} })
+    table.insert(shapeArrayParameters, getShapeArray("item","big-present", {2, 1, 2, 1}, {}))
+
     --table.insert(shapeArrayParameters, getShapeArray("item","coins", {1, 2, 7, 5}, 150))
     --table.insert(shapeArrayParameters, getShapeArray("item","coins", {1, 2, 6, 1}, 150))
 end

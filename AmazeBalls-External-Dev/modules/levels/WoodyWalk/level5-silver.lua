@@ -13,7 +13,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
 
     table.insert(shapeArrayParameters, getShapeArray("simple","simple1_1_1", {1, 1, 6, 3}))
 
-    table.insert(shapeArrayParameters, getShapeArray("endPoint","endPoint1_1_1", {1, 1, 3, 4} )
+    table.insert(shapeArrayParameters, getShapeArray("endPoint","endPoint1_1_1", {1, 1, 3, 4}))
 
     --GEMS
     table.insert(shapeArrayParameters, getShapeArray("gem","purple", {1, 1, 4, 1}, "purple"))
@@ -30,7 +30,8 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
 
     --ITEMS
     table.insert(shapeArrayParameters, getShapeArray("item","coins", {1, 1, 2, 2}, 90))  
-    table.insert(shapeArrayParameters, getShapeArray("item","small-present", {1, 1, 5, 4, {} })
+    table.insert(shapeArrayParameters, getShapeArray("item","small-present", {1, 1, 5, 4}, {}))
+
 
 end
 	t.createLevelObjects = createLevelObjects
@@ -65,7 +66,7 @@ t.compassObtained = false
 
 t.itemToolGainedArray = {
     {"clock-time", false},
-    {"bomb", false},
+    {"bomb", {false},
     {"hook-shot", false},
     {"jet-pack", false}
 }

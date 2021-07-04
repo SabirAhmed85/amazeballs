@@ -1,11 +1,12 @@
-local widget = require("widget")
 local t = {}
+local getShapeArray = require("utils.get-shape-array");
+local widget = require("widget")
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
     --------  CREATE OBJECTS HERE   -----------
     
     --------  CREATE OBJECTS HERE   -----------
-    --table.insert(shapeArrayParameters, getShapeArray("shape","triangle1_1_1", {1, 1, 2, 2, "triangleLeftAndRightShape", 1}))
+    --table.insert(shapeArrayParameters, getShapeArray("shape","triangle1_1_1", {1, 1, 2, 2}, "triangleLeftAndRightShape", {1}))
 
     table.insert(shapeArrayParameters, getShapeArray("simple","simple1_1_1", {1, 1, 6, 1}))
     table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"simple1_1_1"},{"switchSlide"},{labelled = false},{1},{1},{1,1,6,1},{2},{1,1,6,2}})
@@ -23,16 +24,16 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
 
 table.insert(shapeArrayParameters, getShapeArray("simple","fan1_1_1", {1, 1, 5, 4}))
 
-    table.insert(shapeArrayParameters, getShapeArray("characterChangePoint","characterChangePoint1_1_1", {1, 1, 6, 3} )
+    table.insert(shapeArrayParameters, getShapeArray("characterChangePoint","characterChangePoint1_1_1", {1, 1, 6, 3}))
 
-    table.insert(shapeArrayParameters, getShapeArray("endPoint","endPoint1_1_1", {1, 1, 7, 5} )
+    table.insert(shapeArrayParameters, getShapeArray("endPoint","endPoint1_1_1", {1, 1, 7, 5}))
 
 
     --
-    --table.insert(shapeArrayParameters, getShapeArray("switch","switch1", 1, 1, 1, 3, { {"toggle-slide", "simple2_1_1"} } } )
+    --table.insert(shapeArrayParameters, getShapeArray("switch","switch1", 1, 1, 1, 3, { {"toggle-slide", "simple2_1_1"} } }))
 
 
-    table.insert(shapeArrayParameters, getShapeArray("switch","switch2", 1, 1, 1, 3, { {"slide", "simple1_1_1"} } } )
+    table.insert(shapeArrayParameters, getShapeArray("switch","switch2", 1, 1, 1, 3}, { {"slide", "simple1_1_1"} } }))
 
 end
     t.createLevelObjects = createLevelObjects

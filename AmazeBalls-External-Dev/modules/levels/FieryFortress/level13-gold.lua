@@ -1,5 +1,6 @@
-local widget = require("widget")
 local t = {}
+local getShapeArray = require("utils.get-shape-array");
+local widget = require("widget")
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
     --------  CREATE OBJECTS HERE   -----------
@@ -42,10 +43,10 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"bar7_1_2"},{"switchSlide"},{timePerSquare = 100},{2},{1},{1,2,4,6},{2},{1,2,5,6}})
 
     --ALL SWITCHES
-    table.insert(shapeArrayParameters, getShapeArray("switch","switch1_1_1", {1, 1, 5, 3, { {"door-open","door1_1_1"} } })
+    table.insert(shapeArrayParameters, getShapeArray("switch","switch1_1_1", {1, 1, 5, 3}, { {"door-open","door1_1_1"} }))
 
-    table.insert(shapeArrayParameters, getShapeArray("switch","switch1_1_2", {1, 2, 4, 2, { {"slide","bar2_1_2"},{"slide","bar7_1_2"} } })
-    table.insert(shapeArrayParameters, getShapeArray("switch","switch2_1_2", {1, 2, 3, 3, { {"slide","bar5_1_2"} } })
+    table.insert(shapeArrayParameters, getShapeArray("switch","switch1_1_2", {1, 2, 4, 2}, { {"slide","bar2_1_2"},{"slide","bar7_1_2"} }))
+    table.insert(shapeArrayParameters, getShapeArray("switch","switch2_1_2", {1, 2, 3, 3}, { {"slide","bar5_1_2"} }))
 
     --GEMS
     table.insert(shapeArrayParameters, getShapeArray("gem","purple", {1, 1, 5, 1}, "purple"))
@@ -62,7 +63,8 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     table.insert(shapeArrayParameters, getShapeArray("gem","blueCoin", {1, 2, 2, 3}, "blueCoin"))
     table.insert(shapeArrayParameters, getShapeArray("gem","purpleCoin", {1, 2, 1, 4}, "purpleCoin"))
     --ITEMS
-    table.insert(shapeArrayParameters, getShapeArray("item","big-present", 1, 2, 1, 3, {} })
+    table.insert(shapeArrayParameters, getShapeArray("item","big-present", {1, 2, 1, 3}, {}))
+
     --table.insert(shapeArrayParameters, getShapeArray("item","coins", {1, 2, 3, 4}, 250))
     --table.insert(shapeArrayParameters, getShapeArray("item","coins", {1, 1, 1, 2}, 90))
     --table.insert(shapeArrayParameters, getShapeArray("item","coins", {1, 1, 1, 4}, 100))

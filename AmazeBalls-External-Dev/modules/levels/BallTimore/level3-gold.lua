@@ -1,5 +1,6 @@
-local widget = require("widget")
 local t = {}
+local getShapeArray = require("utils.get-shape-array");
+local widget = require("widget")
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
     --------  CREATE OBJECTS HERE   -----------
@@ -29,7 +30,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     --SCREEN 2-2
     table.insert(shapeArrayParameters, getShapeArray("autoFan","autoFan1_2_2", {2, 2, 1, 1}, "down"))
     table.insert(shapeArrayParameters, getShapeArray("door","door1_2_2", {2, 2, 2, 1}, "up"))
-    table.insert(shapeArrayParameters, getShapeArray("shape","triangle1_2_2", {2, 2, 6, 1, "triangleBottomLeftShape"}))
+    table.insert(shapeArrayParameters, getShapeArray("shape","triangle1_2_2", {2, 2, 6, 1}, "triangleBottomLeftShape"))
     table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"triangle1_2_2"},{"switchSlide"},{labelled=false},{1},{1},{2,2,6,1},{2},{2,2,7,1}})
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle2_2_2", {2, 2, 3, 2}, "triangleTopLeftShape", {1, _, "fire"}))
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle3_2_2", {2, 2, 4, 2}, "triangleBottomRightShape", {1, _, "fire"}))
@@ -58,9 +59,8 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle5_2_3", {2, 3, 3, 5}, "triangleBottomRightShape", {1, 9, "breakable"}))
 
     --SWITCHES
-    table.insert(shapeArrayParameters, getShapeArray("switch","switch1_2_2", {2, 2, 5, 2, { {"slide","triangle1_2_2"} }, "one-way", "not-labelled" })
-
-    table.insert(shapeArrayParameters, getShapeArray("switch","switch1_2_3", {2, 3, 4, 1, { {"door-open","door1_2_3"} } })
+    table.insert(shapeArrayParameters, getShapeArray("switch","switch1_2_2", {2, 2, 5, 2}, { {"slide","triangle1_2_2"} }, {"one-way", "not-labelled"}))
+    table.insert(shapeArrayParameters, getShapeArray("switch","switch1_2_3", {2, 3, 4, 1}, { {"door-open","door1_2_3"} }))
 
 end
     t.createLevelObjects = createLevelObjects

@@ -1,5 +1,6 @@
-local widget = require("widget")
 local t = {}
+local getShapeArray = require("utils.get-shape-array");
+local widget = require("widget")
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
     --------  CREATE OBJECTS HERE   -----------
@@ -16,7 +17,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     table.insert(shapeArrayParameters, getShapeArray("simple","simple1_2_1", {2, 1, 2, 2}))
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle1_2_1", {2, 1, 5, 2}, "triangleBottomLeftShape", {1, _, "breakable"}))
     table.insert(shapeArrayParameters, getShapeArray("manualFan","manualFan1_2_1", {2, 1, 1, 3}, "left"))
-    table.insert(shapeArrayParameters, getShapeArray("shape","triangle2_2_1", {2, 1, 7, 3}, "triangleBottomRightShape", {1, _})
+    table.insert(shapeArrayParameters, getShapeArray("shape","triangle2_2_1", {2, 1, 7, 3}, "triangleBottomRightShape", {1, _}))
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle3_2_1", {2, 1, 1, 4}, "triangleBottomRightShape", {1, _, "breakable"}))
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle4_2_1", {2, 1, 3, 4}, "triangleTopRightShape", {1, 1, "breakable"}))
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle5_2_1", {2, 1, 5, 4}, "triangleTopLeftShape", {1, _, "breakable"}))
@@ -29,8 +30,8 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     table.insert(shapeArrayParameters, getShapeArray("autoFan","autoFan2_3_1", {3, 1, 4, 2}, "down"))
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle2_3_1", {3, 1, 6, 2}, "triangleBottomLeftShape", {1, _, "fire"}))
     table.insert(shapeArrayParameters, getShapeArray("autoFan","autoFan3_3_1", {3, 1, 4, 3}, "down"))
-    table.insert(shapeArrayParameters, getShapeArray("shape","triangle3_3_1", {3, 1, 5, 3}, "triangleBottomLeftShape", {1, _})
-    table.insert(shapeArrayParameters, getShapeArray("shape","triangle4_3_1", {3, 1, 1, 4, "triangleBottomLeftShape"}))
+    table.insert(shapeArrayParameters, getShapeArray("shape","triangle3_3_1", {3, 1, 5, 3}, "triangleBottomLeftShape", {1, _}))
+    table.insert(shapeArrayParameters, getShapeArray("shape","triangle4_3_1", {3, 1, 1, 4}, "triangleBottomLeftShape"))
     table.insert(shapeArrayParameters, getShapeArray("endPoint","endPoint1_3_1", {3, 1, 4, 4}))
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle5_3_1", {3, 1, 1, 5}, "triangleTopRightShape"))
     table.insert(shapeArrayParameters, getShapeArray("simple","simple1_3_1", {3, 1, 3, 5}))

@@ -18,7 +18,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle6_1_1", {1, 1, 7, 5}, "triangleTopRightShape", {1}))
     table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"triangle6_1_1"},{"slide"},{"green"},{2},{1},{1,1,6,5},{2},{1,1,7,5}})
 
-    table.insert(shapeArrayParameters, getShapeArray("endPoint","endPoint1_1_1", {1, 1, 2, 5} )
+    table.insert(shapeArrayParameters, getShapeArray("endPoint","endPoint1_1_1", {1, 1, 2, 5}))
 
 end
 	t.createLevelObjects = createLevelObjects
@@ -54,7 +54,7 @@ t.compassObtained = false
 
 t.itemToolGainedArray = {
     {"clock-time", false},
-    {"bomb", false},
+    {"bomb", {false},
     {"hook-shot", false},
     {"jet-pack", false}
 }

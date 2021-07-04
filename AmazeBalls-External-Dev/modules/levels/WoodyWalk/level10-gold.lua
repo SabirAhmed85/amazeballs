@@ -1,27 +1,28 @@
-local widget = require("widget")
 local t = {}
+local getShapeArray = require("utils.get-shape-array");
+local widget = require("widget")
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
     --------  CREATE OBJECTS HERE   -----------
 
     --SCREEN 1-1
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle1_1_1", {1, 1, 3, 3}, "triangleTopRightShape"))
-    table.insert(shapeArrayParameters, getShapeArray("item","mystery-block", 1, 1, 6, 3, {
+    table.insert(shapeArrayParameters, getShapeArray("item","mystery-block", {1, 1, 6, 3}, {
         {name = "shape", properties = {shape = {"triangleTopRightShape"} } },
         {name = "autoFan", properties = {directions = {"right"} } },
         {name = "autoFan", properties = {directions = {"left"} } },
         {name = "manualFan", properties = {directions = {"left"} } },
         {name = "manualFan", properties = {directions = {"right"} } }
-    }} )
+    }))
     table.insert(shapeArrayParameters, getShapeArray("door","door1_1_1", {1, 1, 3, 5}, "down"))
     table.insert(shapeArrayParameters, getShapeArray("simple","simple1_1_1", {1, 1, 6, 5}))
 
     --SCREEN 1-2
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle1_1_2", {1, 2, 2, 1}, "triangleBottomRightShape"))
-    table.insert(shapeArrayParameters, getShapeArray("shape","triangle2_1_2", {1, 2, 4, 1, "triangleBottomLeftShape"}))
+    table.insert(shapeArrayParameters, getShapeArray("shape","triangle2_1_2", {1, 2, 4, 1}, "triangleBottomLeftShape"))
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle3_1_2", {1, 2, 5, 1}, "triangleBottomRightShape"))
     table.insert(shapeArrayParameters, getShapeArray("door","door1_1_2", {1, 2, 6, 1}, "up"))
-    table.insert(shapeArrayParameters, getShapeArray("shape","triangle4_1_2", {1, 2, 7, 1, "triangleBottomLeftShape"}))
+    table.insert(shapeArrayParameters, getShapeArray("shape","triangle4_1_2", {1, 2, 7, 1}, "triangleBottomLeftShape"))
     table.insert(shapeArrayParameters, getShapeArray("item","map", {1, 2, 1, 2}))
     table.insert(shapeArrayParameters, getShapeArray("simple","simple1_1_2", {1, 2, 1, 3}))
     table.insert(shapeArrayParameters, getShapeArray("shape","bar1_1_2", {1, 2, 5, 3}, "bar", {"vert", 4}))
@@ -39,7 +40,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     table.insert(shapeArrayParameters, getShapeArray("door","door2_1_2", {1, 2, 7, 5}, "down"))
 
     --SCREEN 1-3
-    table.insert(shapeArrayParameters, getShapeArray("endPoint","endPoint1_1_3", {1, 3, 1, 3} )
+    table.insert(shapeArrayParameters, getShapeArray("endPoint","endPoint1_1_3", {1, 3, 1, 3}))
     table.insert(shapeArrayParameters, getShapeArray("shape","bar1_1_3", {1, 3, 2, 3}, "bar", {"horz", 3}))
     table.insert(shapeArrayParameters, getShapeArray("shape","bar2_1_3", {1, 3, 6, 3}, "bar", {"horz", 3}))
     table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"bar2_1_3"},{"slide"},{"brown"},{4},{1},{1,3,3,1},{2},{1,3,4,3},{3},{1,3,5,3},{4},{1,3,6,3}})
@@ -78,10 +79,11 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     table.insert(shapeArrayParameters, getShapeArray("item","coins", {1, 1, 1, 3, 375})) 
     table.insert(shapeArrayParameters, getShapeArray("item","coins", {1, 2, 7, 3}, 55))) 
     table.insert(shapeArrayParameters, getShapeArray("item","coins", {1, 3, 2, 3, 140}) 
-    table.insert(shapeArrayParameters, getShapeArray("item", "small-present", {1, 1, 6, 1, {} })
-    table.insert(shapeArrayParameters,  {"item","big-present", 1, 2, 6, 2, "present2_1_1", 
+    table.insert(shapeArrayParameters, getShapeArray("item", "small-present", {1, 1, 6, 1}, {}))
+
+    table.insert(shapeArrayParameters,  {"item","big-present", {1, 2, 6, 2, "present2_1_1", 
                                             { 
-                                                {"item","clock", 1, 2, 3, 2, "clock1_1_1", 10, 1},
+                                                {"item","clock", {1, 2, 3, 2, "clock1_1_1", 10, 1},
                                                 {"triangle", "triangleTopRightShape"},
                                                 {"spitter", {"up", "right", "down", "left"} },
                                                 {"manualFan", "right"},

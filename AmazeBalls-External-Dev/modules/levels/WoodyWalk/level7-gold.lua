@@ -1,5 +1,6 @@
-local widget = require("widget")
 local t = {}
+local getShapeArray = require("utils.get-shape-array");
+local widget = require("widget")
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
     --------  CREATE OBJECTS HERE   -----------
@@ -15,24 +16,24 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle1_1_2", {1, 2, 7, 2}, "triangleTopRightShape"))
     table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"triangle1_1_2"},{"slide"},{"green"},{3},{1},{1,2,4,3},{2},{1,2,6,2},{3},{1,2,7,2}})
     table.insert(shapeArrayParameters, getShapeArray("shape","bar7_1_2", {1, 2, 4, 3}, "bar", {"horz", 2}))
-    table.insert(shapeArrayParameters, getShapeArray("shape","triangle2_1_2", {1, 2, 2, 4, "triangleBottomLeftShape"}))
+    table.insert(shapeArrayParameters, getShapeArray("shape","triangle2_1_2", {1, 2, 2, 4}, "triangleBottomLeftShape"))
     table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"triangle2_1_2"},{"slide"},{"green"},{2},{1},{1,2,2,3},{2},{1,2,2,4},{3},{1,2,3,2}})
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle3_1_2", {1, 2, 7, 4}, "triangleTopLeftShape"))
     table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"triangle3_1_2"},{"slide"},{"green"},{4},{1},{1,2,5,4},{"*"},{1,2,5,5},{2},{1,2,6,5},{3},{1,2,6,4},{4},{1,2,7,4}})
 
     --SCREEN 2-1
-    table.insert(shapeArrayParameters, getShapeArray("shape","triangle1_1_1", {1, 1, 1, 2, "triangleTopAndBottomShape", 2}))
+    table.insert(shapeArrayParameters, getShapeArray("shape","triangle1_1_1", {1, 1, 1, 2}, "triangleTopAndBottomShape", {2}))
     table.insert(shapeArrayParameters, getShapeArray("simple","simple1_1_1", {1, 1, 4, 1}))
     table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"simple1_1_1"},{"slide"},{"green"},{1},{1},{1,1,4,1},{2},{1,1,4,2}})
-    table.insert(shapeArrayParameters, getShapeArray("shape","bar1_1_2", 1, 1, 8, 2}, "bar", {"horz", 2}))
-    table.insert(shapeArrayParameters, getShapeArray("shape","triangle2_1_1", {1, 1, 4, 3, "triangleLeftAndRightShape", 2}))
+    table.insert(shapeArrayParameters, getShapeArray("shape","bar1_1_1", {1, 1, 8, 2}, "bar", {"horz", 2}))
+    table.insert(shapeArrayParameters, getShapeArray("shape","triangle2_1_1", {1, 1, 4, 3}, "triangleLeftAndRightShape", {2}))
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle3_1_1", {1, 1, 5, 3}, "triangleBottomRightShape", {1}))
-    table.insert(shapeArrayParameters, getShapeArray("shape","triangle4_1_1", {1, 1, 6, 3, "triangleLeftAndRightShape", 2}))
+    table.insert(shapeArrayParameters, getShapeArray("shape","triangle4_1_1", {1, 1, 6, 3}, "triangleLeftAndRightShape", {2}))
     table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"triangle4_1_1"},{"slide"},{"green"},{2},{1},{1,1,6,2},{2},{1,1,6,3}})
-    table.insert(shapeArrayParameters, getShapeArray("shape","triangle5_1_1", {1, 1, 1, 4, "triangleTopAndBottomShape", 1}))
+    table.insert(shapeArrayParameters, getShapeArray("shape","triangle5_1_1", {1, 1, 1, 4}, "triangleTopAndBottomShape", {1}))
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle6_1_1", {1, 1, 5, 4}, "triangleTopRightShape", {1}))
-    table.insert(shapeArrayParameters, getShapeArray("endPoint","endPoint1_1_1", {1, 1, 7, 4} )
-    --table.insert(shapeArrayParameters, getShapeArray("timeOut","timeOut1_1_1", {1, 1, 4, 5} )
+    table.insert(shapeArrayParameters, getShapeArray("endPoint","endPoint1_1_1", {1, 1, 7, 4}))
+    --table.insert(shapeArrayParameters, getShapeArray("timeOut","timeOut1_1_1", {1, 1, 4, 5}))
 
     --GEMS
     table.insert(shapeArrayParameters, getShapeArray("gem","purple", {1, 1, 1, 1}, "purple"))
@@ -60,8 +61,9 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     table.insert(shapeArrayParameters, getShapeArray("gem","purpleCoin", {1, 1, 1, 3}, "purpleCoin"))
 
     table.insert(shapeArrayParameters, getShapeArray("item","coins", {1, 1, 7, 1}, 80)) 
-    table.insert(shapeArrayParameters, getShapeArray("item","coins", {1, 2, 3, 5, 120}) 
-    table.insert(shapeArrayParameters, getShapeArray("item", "small-present", {1, 2, 1, 4, {} })
+    table.insert(shapeArrayParameters, getShapeArray("item","coins", {1, 2, 3, 5}, 120))
+    table.insert(shapeArrayParameters, getShapeArray("item", "small-present", {1, 2, 1, 4}, {}))
+
 end
     t.createLevelObjects = createLevelObjects
 

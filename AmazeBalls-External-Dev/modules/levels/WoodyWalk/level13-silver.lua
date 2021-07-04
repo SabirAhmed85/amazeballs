@@ -7,8 +7,8 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     table.insert(shapeArrayParameters, getShapeArray("simple","simple1_1_1", {1, 1, 1, 1}))
     table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"simple1_1_1"},{"slide"},{"lightBlue"},{1},{1},{1,1,1,1},{2},{1,1,4,1},{3},{1,1,7,1}})
 
-    table.insert(shapeArrayParameters, getShapeArray("shape","triangle1_1_1", {1, 1, 4, 2, "triangleLeftAndRightShape", 2}))
-    table.insert(shapeArrayParameters, getShapeArray("shape","triangle2_1_1", {1, 1, 5, 2, "triangleLeftAndRightShape", 1}))
+    table.insert(shapeArrayParameters, getShapeArray("shape","triangle1_1_1", {1, 1, 4, 2}, "triangleLeftAndRightShape", {2}))
+    table.insert(shapeArrayParameters, getShapeArray("shape","triangle2_1_1", {1, 1, 5, 2}, "triangleLeftAndRightShape", {1}))
 
     table.insert(shapeArrayParameters, getShapeArray("simple","simple2_1_1", {1, 1, 7, 4}))
     table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"simple2_1_1"},{"slide"},{"lightBlue"},{2},{1},{1,1,2,4},{2},{1,1,7,4},{3},{1,1,7,3}})
@@ -26,7 +26,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
 
     -- 1-2
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle1_1_2", {1, 2, 1, 1}, "triangleBottomLeftShape", {1, 2}))
-    table.insert(shapeArrayParameters, getShapeArray("switch","switch1_1_2", {1, 2, 4, 1, { {"slide", "manualFan1_1_1"} }, "one-way", "not-labelled" })
+    table.insert(shapeArrayParameters, getShapeArray("switch","switch1_1_2", {1, 2, 4, 1}, { {"slide", "manualFan1_1_1"} }, {"one-way", "not-labelled"}))
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle2_1_2", {1, 2, 5, 1}, "triangleBottomRightShape"))
     table.insert(shapeArrayParameters, getShapeArray("shape","bar1_1_2", {1, 2, 7, 1, "bar","horz", 2}))
     table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"bar1_1_2"},{"slide"},{"brown"},{1},{1},{1,2,7,1},{2},{1,2,7,2}})
@@ -87,7 +87,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     table.insert(shapeArrayParameters, getShapeArray("gem","purple", {1, 3, 4, 4}, "purple"))
     table.insert(shapeArrayParameters, getShapeArray("gem","purple", {1, 3, 6, 3}, "purple"))
     table.insert(shapeArrayParameters, getShapeArray("gem","purple", {1, 3, 7, 5}, "purple"))
-    table.insert(shapeArrayParameters, getShapeArray("gem","redCoin", {1, 1, 7, 5, "redCoin"} )
+    table.insert(shapeArrayParameters, getShapeArray("gem","redCoin", {1, 1, 7, 5, "redCoin"}))
     table.insert(shapeArrayParameters, getShapeArray("gem","blueCoin", {1, 2, 1, 4}, "blueCoin"))
     table.insert(shapeArrayParameters, getShapeArray("gem","purpleCoin", {1, 3, 6, 1}, "purpleCoin"))
 
@@ -95,10 +95,14 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     table.insert(shapeArrayParameters, getShapeArray("item","coins", {1, 1, 4, 5}, 500)) 
     table.insert(shapeArrayParameters, getShapeArray("item","coins", {1, 2, 1, 2, 450})    
     table.insert(shapeArrayParameters, getShapeArray("item","coins", {1, 3, 3, 3, 300})    
-    table.insert(shapeArrayParameters, getShapeArray("item","small-present", {1, 3, 2, 3, {} })
-    table.insert(shapeArrayParameters, getShapeArray("item","small-present", {1, 3, 6, 5, {} })
-    table.insert(shapeArrayParameters, getShapeArray("item","big-present", 1, 2, 7, 2, {} })
-    table.insert(shapeArrayParameters, getShapeArray("item","big-present", 1, 1, 1, 5, {} })
+    table.insert(shapeArrayParameters, getShapeArray("item","small-present", {1, 3, 2, 3}, {}))
+
+    table.insert(shapeArrayParameters, getShapeArray("item","small-present", {1, 3, 6, 5}, {}))
+
+    table.insert(shapeArrayParameters, getShapeArray("item","big-present", {1, 2, 7, 2}, {}))
+
+    table.insert(shapeArrayParameters, getShapeArray("item","big-present", {1, 1, 1, 5}, {}))
+
 
 end
 	t.createLevelObjects = createLevelObjects
@@ -131,7 +135,7 @@ t.compassObtained = false
 
 t.itemToolGainedArray = {
     {"clock-time", false},
-    {"bomb", false},
+    {"bomb", {false},
     {"hook-shot", false},
     {"jet-pack", false}
 }

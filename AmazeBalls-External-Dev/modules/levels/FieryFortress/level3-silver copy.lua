@@ -4,12 +4,12 @@ local t = {}
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
 	--------  CREATE OBJECTS HERE   -----------
 
-    table.insert(shapeArrayParameters, getShapeArray("autoFan","autoFan3_1_1", {1, 1, 7, 3}, "up")
+    table.insert(shapeArrayParameters, getShapeArray("autoFan","autoFan3_1_1", {1, 1, 7, 3}, "up"))
 
-    table.insert(shapeArrayParameters, getShapeArray("shape","bar1_1_1", {1, 1, 1, 5}, "bar", {"horz", _})
+    table.insert(shapeArrayParameters, getShapeArray("shape","bar1_1_1", {1, 1, 1, 5}, "bar", {"horz", _}))
     table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"bar1_1_1"},{"slide"},{"green"},{1},{1},{1,1,1,5},{2},{1,1,2,4}})
 
-    table.insert(shapeArrayParameters, getShapeArray("spitter","spitter1_1_1", {1, 1, 1, 2, "up", "right", "down"}, "left")
+    table.insert(shapeArrayParameters, getShapeArray("spitter","spitter1_1_1", {1, 1, 1, 2, "up", "right", "down"}, "left"))
     table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"spitter1_1_1"},{"slide"},{"darkBlue"},{1},{1},{1,1,1,2},{2},{1,1,1,3},{3},{1,1,2,3}})
 end
 	t.createLevelObjects = createLevelObjects
@@ -44,7 +44,7 @@ t.compassObtained = false
 
 t.itemToolGainedArray = {
     {"clock-time", false},
-    {"bomb", false},
+    {"bomb", {false},
     {"hook-shot", false},
     {"jet-pack", false}
 }

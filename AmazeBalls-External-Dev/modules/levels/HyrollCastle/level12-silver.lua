@@ -1,5 +1,6 @@
-local widget = require("widget")
 local t = {}
+local getShapeArray = require("utils.get-shape-array");
+local widget = require("widget")
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
     --------  CREATE OBJECTS HERE   -----------
@@ -61,9 +62,9 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     --ITEMS
     table.insert(shapeArrayParameters, getShapeArray("item","coins", {1, 1, 4, 1, 125}))
     table.insert(shapeArrayParameters, getShapeArray("item","coins", {1, 2, 3, 2}, 75))
-    table.insert(shapeArrayParameters, getShapeArray("item","clock", 1, 1, 2, 4, "clock1_1_1", 10, 1}))
-    table.insert(shapeArrayParameters, getShapeArray("item","big-present", 1, 2, 5, 3, {}})
-    table.insert(shapeArrayParameters, getShapeArray("item","small-present", {1, 2, 7, 1, {}})
+    table.insert(shapeArrayParameters, getShapeArray("item","clock", {1, 1, 2, 4, "clock1_1_1", 10, 1}))
+    table.insert(shapeArrayParameters, getShapeArray("item","big-present", {1, 2, 5, 3}, {}))
+    table.insert(shapeArrayParameters, getShapeArray("item","small-present", {1, 2, 7, 1}, {}))
 end
     t.createLevelObjects = createLevelObjects
 

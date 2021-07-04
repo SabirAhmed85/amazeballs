@@ -1,5 +1,6 @@
-local widget = require("widget")
 local t = {}
+local getShapeArray = require("utils.get-shape-array");
+local widget = require("widget")
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
     --------  CREATE OBJECTS HERE   -----------
@@ -11,7 +12,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     table.insert(shapeArrayParameters, getShapeArray("autoFan","autoFan1_1_1", {1, 1, 3, 2}, "right"))
     table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"autoFan1_1_1"},{"slide"},{"green"},{1},{1},{1,1,3,2},{2},{1,1,4,2}})
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle2_1_1", {1, 1, 5, 2}, "triangleBottomRightShape", {1, 9, "breakable"}))
-    table.insert(shapeArrayParameters, getShapeArray("shape","triangle3_1_1", {1, 1, 6, 2, "triangleBottomLeftShape"}))
+    table.insert(shapeArrayParameters, getShapeArray("shape","triangle3_1_1", {1, 1, 6, 2}, "triangleBottomLeftShape"))
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle4_1_1", {1, 1, 6, 3}, "triangleTopLeftShape", {1, 6, "breakable"}))
     table.insert(shapeArrayParameters, getShapeArray("shape","bar1_1_1", {1, 1, 3, 4}, "bar", {"vert", 3}))
     table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"bar1_1_1"},{"autoSlide"},{timePerSquare = 300, pauseTime = 100},{1},{1},{1,1,3,4},{2},{1,1,4,4}})
@@ -55,7 +56,8 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     table.insert(shapeArrayParameters, getShapeArray("gem","blueCoin", {1, 2, 5, 1}, "blueCoin"))
     table.insert(shapeArrayParameters, getShapeArray("gem","purpleCoin", {1, 1, 2, 5}, "purpleCoin"))
     --ITEMS
-    table.insert(shapeArrayParameters, getShapeArray("item","small-present", {1, 2, 2, 4, {} })
+    table.insert(shapeArrayParameters, getShapeArray("item","small-present", {1, 2, 2, 4}, {}))
+
     --table.insert(shapeArrayParameters, getShapeArray("item","coins", {1, 2, 7, 1}, 250))
     --table.insert(shapeArrayParameters, getShapeArray("item","something", 1, 1, 6, 4}))
 end

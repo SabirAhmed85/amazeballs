@@ -1,5 +1,6 @@
-local widget = require("widget")
 local t = {}
+local getShapeArray = require("utils.get-shape-array");
+local widget = require("widget")
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
     --------  CREATE OBJECTS HERE   -----------
@@ -42,8 +43,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     table.insert(shapeArrayParameters, getShapeArray("shape","bar4_2_1", {2, 1, 5, 6}, "bar", {"vert", 2}))
 
     --SWITCHES
-    table.insert(shapeArrayParameters, getShapeArray("switch","switch1_1_1", {1, 1, 4, 5, { {"slide","bar1_2_1"} }, "two-way", "not-labelled" })
-
+    table.insert(shapeArrayParameters, getShapeArray("switch","switch1_1_1", {1, 1, 4, 5}, { {"slide","bar1_2_1"} }, "two-way", "not-labelled"))
     --GEMS
     table.insert(shapeArrayParameters, getShapeArray("gem","purple", {1, 1, 1, 2}, "purple"))
     table.insert(shapeArrayParameters, getShapeArray("gem","purple", {1, 1, 4, 2}, "purple"))
@@ -76,11 +76,14 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
 
     --ITEMS
     table.insert(shapeArrayParameters, getShapeArray("item","coins", {1, 1, 3, 3}, 100))
-    table.insert(shapeArrayParameters, getShapeArray("item","coins", {1, 1, 1, 5, 200})
+    table.insert(shapeArrayParameters, getShapeArray("item","coins", {1, 1, 1, 5, 20))
     table.insert(shapeArrayParameters, getShapeArray("item","coins", {2, 1, 2, 1}, 75))
-    table.insert(shapeArrayParameters, getShapeArray("item","superDummy", 1, 1, 5, 2, {} })
-    table.insert(shapeArrayParameters, getShapeArray("item","small-present", {2, 1, 6, 5, {} })
-    table.insert(shapeArrayParameters, getShapeArray("item","small-present", {2, 1, 5, 1, {} })
+    table.insert(shapeArrayParameters, getShapeArray("item","superDummy", 1, 1, 5, 2}, {}))
+
+    table.insert(shapeArrayParameters, getShapeArray("item","small-present", {2, 1, 6, 5}, {}))
+
+    table.insert(shapeArrayParameters, getShapeArray("item","small-present", {2, 1, 5, 1}, {}))
+
 end
     t.createLevelObjects = createLevelObjects
 
