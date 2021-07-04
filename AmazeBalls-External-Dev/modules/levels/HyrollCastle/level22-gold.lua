@@ -54,7 +54,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
         {name = "spitter", properties = {directions = {"right"} } },
         {name = "spitter", properties = {directions = {"up","right"} } },
         {name = "spitter", properties = {directions = {"up","right", "down"} } }
-        } })
+    }))
     table.insert(shapeArrayParameters, getShapeArray("door","door2_1_2", {1, 2, 5, 5}, "down"))
     table.insert(shapeArrayParameters, getShapeArray("door","door3_1_2", {1, 2, 6, 5}, "down"))
 
@@ -156,7 +156,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     table.insert(shapeArrayParameters, getShapeArray("item","small-present", {1, 3, 7, 3}, {}))
     table.insert(shapeArrayParameters, getShapeArray("item","bomb", {1, 1, 3, 1}, {}))
     table.insert(shapeArrayParameters, getShapeArray("item","hook", {2, 1, 2, 1}, {}))
-    table.insert(shapeArrayParameters, getShapeArray("item","characterSpecial", 2, 2, 1, 1}, {}))
+    table.insert(shapeArrayParameters, getShapeArray("item","characterSpecial", {2, 2, 1, 1}, {}))
 end
     t.createLevelObjects = createLevelObjects
 

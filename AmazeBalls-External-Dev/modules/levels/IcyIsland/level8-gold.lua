@@ -38,7 +38,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
 
     --SCREEN 2-2
     table.insert(shapeArrayParameters, getShapeArray("door","door1_2_2", {2, 2, 2, 1}, "up"))
-    --table.insert(shapeArrayParameters, getShapeArray("item","coins", {2, 2, 5, 1, 20))
+    --table.insert(shapeArrayParameters, getShapeArray("item","coins", {2, 2, 5, 1}, 20))
     table.insert(shapeArrayParameters, getShapeArray("autoFan","autoFan1_2_2", {2, 2, 6, 1}, "up"))
     table.insert(shapeArrayParameters, getShapeArray("door","door1_2_2", {2, 2, 7, 1}, "up"))
     table.insert(shapeArrayParameters, getShapeArray("manualFan","manualFan1_2_2", {2, 2, 7, 1}, "right"))

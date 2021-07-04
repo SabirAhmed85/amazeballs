@@ -17,7 +17,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
         {name = "manualFan", properties = { directions = {"right"} } },
         {name = "manualFan", properties = { directions = {"down"} } },
         {name = "spitter", properties = { directions = {"up","right"} } },
-    } })
+    }))
     table.insert(shapeArrayParameters, getShapeArray("manualFan","manualFan1_1_1", {1, 1, 2, 5}, "up"))
     table.insert(shapeArrayParameters, getShapeArray("spitter","spitter1_1_1", {1, 1, 6, 5, "up","none","none","left"}))
     table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"spitter1_1_1"},{"slide"},{},{2},{1},{1,1,5,5},{2},{1,1,6,5}})
