@@ -1,19 +1,19 @@
 local t = {}
-local getShapeArray = require("utils.get-shape-array");
+local addToShapeArray = require("utils.add-to-shape-array");
 local widget = require("widget")
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
-    --------  CREATE OBJECTS HERE   -----------
+    local sp = shapeArrayParameters;    --------  CREATE OBJECTS HERE   -----------
     
     --------  CREATE OBJECTS HERE   -----------
-    --table.insert(shapeArrayParameters, getShapeArray("shape","triangle1_1_1", {1, 1, 2, 2}, "triangleLeftAndRightShape", {1}))
+    --addToShapeArray(sp, "shape","triangle1_1_1", {1, 1, 2, 2}, "triangleLeftAndRightShape", {1})
 
-    table.insert(shapeArrayParameters, getShapeArray("simple","simple1_1_1", {1, 1, 6, 1}))
+    addToShapeArray(sp, "simple","simple1_1_1", {1, 1, 6, 1})
     table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"simple1_1_1"},{"switchSlide"},{labelled = false},{1},{1},{1,1,6,1},{2},{1,1,6,2}})
 
-    table.insert(shapeArrayParameters, getShapeArray("shape","triangle2_1_1", {1, 1, 1, 1}, "triangleTopRightShape", {1, _, "hyroll"}))
+    addToShapeArray(sp, "shape","triangle2_1_1", {1, 1, 1, 1}, "triangleTopRightShape", {1, _, "hyroll"})
 
-    table.insert(shapeArrayParameters, getShapeArray("simple","simple2_1_1", {1, 1, 5, 5}, "right"))
+    addToShapeArray(sp, "simple","simple2_1_1", {1, 1, 5, 5}, "right")
     --table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"simple2_1_1"},{"slide"},{"lightBlue"},{2},{1},{1,1,3,3},{2},{1,1,3,5}})
     -- if autoslide object is activeWhenSliding, then it must slide slowly
     table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"simple2_1_1"},{"autoSlide"},{timePerSquare = 500, pauseTime = 0},{3},{1},{1,1,3,2},{2},{1,1,3,5},{3},{1,1,5,5}})
@@ -22,18 +22,18 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     --
     --table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"simple2_1_1"},{"autoSlide"},{timePerSquare = 200, pauseTime = 400, labelled = false, isActiveWhenSliding = false},{3},{1},{1,1,3,2},{2},{1,1,3,4},{3},{1,1,3,5},{4},{1,1,5,5}})
 
-table.insert(shapeArrayParameters, getShapeArray("simple","fan1_1_1", {1, 1, 5, 4}))
+addToShapeArray(sp, "simple","fan1_1_1", {1, 1, 5, 4})
 
-    table.insert(shapeArrayParameters, getShapeArray("characterChangePoint","characterChangePoint1_1_1", {1, 1, 6, 3}))
+    addToShapeArray(sp, "characterChangePoint","characterChangePoint1_1_1", {1, 1, 6, 3})
 
-    table.insert(shapeArrayParameters, getShapeArray("endPoint","endPoint1_1_1", {1, 1, 7, 5}))
+    addToShapeArray(sp, "endPoint","endPoint1_1_1", {1, 1, 7, 5})
 
 
     --
-    --table.insert(shapeArrayParameters, getShapeArray("switch","switch1", 1, 1, 1, 3, { {"toggle-slide", "simple2_1_1"} } }))
+    --addToShapeArray(sp, "switch","switch1", {1, 1, 1, 3, { {"toggle-slide", "simple2_1_1"} } })
 
 
-    table.insert(shapeArrayParameters, getShapeArray("switch","switch2", 1, 1, 1, 3}, { {"slide", "simple1_1_1"} } }))
+    addToShapeArray(sp, "switch","switch2", {1, 1, 1, 3}, { {"slide", "simple1_1_1"} } })
 
 end
     t.createLevelObjects = createLevelObjects

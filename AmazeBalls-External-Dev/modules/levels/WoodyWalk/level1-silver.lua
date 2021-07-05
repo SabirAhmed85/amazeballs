@@ -1,15 +1,17 @@
-local widget = require("widget")
-local t = {}
+local widget = require("widget");
+local addToShapeArray = require("utils.add-to-shape-array");
+local t = {};
+
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
-	--------  CREATE OBJECTS HERE   -----------
+    local sp = shapeArrayParameters;	--------  CREATE OBJECTS HERE   -----------
 
-    table.insert(shapeArrayParameters, getShapeArray("shape","triangle1_1_1", {1, 1, 2, 4}, "triangleTopRightShape", {1}))
+    addToShapeArray(sp, "shape","triangle1_1_1", {1, 1, 2, 4}, "triangleTopRightShape", {1})
 
-    table.insert(shapeArrayParameters, getShapeArray("shape","triangle2_1_1", {1, 1, 5, 5}, "triangleTopLeftShape", {1}))
+    addToShapeArray(sp, "shape","triangle2_1_1", {1, 1, 5, 5}, "triangleTopLeftShape", {1})
     table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"triangle2_1_1"},{"slide"},{"green"},{2},{1},{1,1,5,4},{2},{1,1,5,5}})
     
-    table.insert(shapeArrayParameters, getShapeArray("endPoint","endPoint1_1_1", {1, 1, 5, 2}))
+    addToShapeArray(sp, "endPoint","endPoint1_1_1", {1, 1, 5, 2})
 
 end
 	t.createLevelObjects = createLevelObjects

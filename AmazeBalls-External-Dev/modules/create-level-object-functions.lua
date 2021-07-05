@@ -816,7 +816,7 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
             end
         end
 
-        shapeArray[z].secondDirection = shapeParameters["props"][4]
+        shapeArray[z].secondDirection = shapeParameters["subType"]
         shapeArray[z].relevantLowerX = shapeArray[z].x - (mainFunc.allLevelSettings.squareWidth/2)
         shapeArray[z].relevantHigherX = shapeArray[z].x + (mainFunc.allLevelSettings.squareWidth/2)
         shapeArray[z].relevantLowerY = shapeArray[z].y - (mainFunc.allLevelSettings.squareHeight/2)
@@ -831,8 +831,8 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
         mainFunc.allLevelSettings.screenObjectsGroup:insert( shapeArray[z].tunnelCircle )
         
         shapeArray[z].endTunnelPiece = display.newImageRect("images/objects/tunnel-endPoint.png", 31, 30)
-        shapeArray[z].endTunnelPiece.x = ((shapeParameters["subType"] - 1) * display.contentWidth) + (((shapeParameters["props"][2] - 1) * mainFunc.allLevelSettings.squareWidth) + mainFunc.allLevelSettings.gutterWidth ) + (mainFunc.allLevelSettings.squareWidth/2)
-        shapeArray[z].endTunnelPiece.y = ((shapeParameters["props"][1] - 1) * display.contentHeight) + (((shapeParameters["props"][3] - 1) * mainFunc.allLevelSettings.squareHeight) + mainFunc.allLevelSettings.gutterHeight ) + (mainFunc.allLevelSettings.squareHeight/2)
+        shapeArray[z].endTunnelPiece.x = ((shapeParameters["props"][1] - 1) * display.contentWidth) + (((shapeParameters["props"][3] - 1) * mainFunc.allLevelSettings.squareWidth) + mainFunc.allLevelSettings.gutterWidth ) + (mainFunc.allLevelSettings.squareWidth/2)
+        shapeArray[z].endTunnelPiece.y = ((shapeParameters["props"][2] - 1) * display.contentHeight) + (((shapeParameters["props"][4] - 1) * mainFunc.allLevelSettings.squareHeight) + mainFunc.allLevelSettings.gutterHeight ) + (mainFunc.allLevelSettings.squareHeight/2)
         shapeArray[z].endTunnelPiece.alpha = 0.55
         mainFunc.allLevelSettings.screenObjectsGroup:insert( shapeArray[z].endTunnelPiece )
 

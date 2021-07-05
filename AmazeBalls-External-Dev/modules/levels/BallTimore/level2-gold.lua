@@ -1,26 +1,26 @@
 local t = {}
-local getShapeArray = require("utils.get-shape-array");
+local addToShapeArray = require("utils.add-to-shape-array");
 local widget = require("widget")
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
-    --------  CREATE OBJECTS HERE   -----------
+    local sp = shapeArrayParameters;    --------  CREATE OBJECTS HERE   -----------
 
     --SCREEN 1-1
-    table.insert(shapeArrayParameters, getShapeArray("gun","gun1_1_1", {1, 1, 2, 2}, "right"))
-    table.insert(shapeArrayParameters, getShapeArray("shape","triangle1_1_1", {1, 1, 3, 3}, "triangleBottomLeftShape", {1, _, "breakable"}))
-    table.insert(shapeArrayParameters, getShapeArray("endPoint","endPoint1_1_1", {1, 1, 7, 3}))
-    table.insert(shapeArrayParameters, getShapeArray("gun","gun1_1_1", {1, 1, 2, 4}, "right"))
-    table.insert(shapeArrayParameters, getShapeArray("simple","simple1_1_1", {1, 1, 6, 5}))
-    table.insert(shapeArrayParameters, getShapeArray("shape","triangle2_1_1", {1, 1, 7, 5}, "triangleBottomLeftShape"))
+    addToShapeArray(sp, "gun","gun1_1_1", {1, 1, 2, 2}, "right")
+    addToShapeArray(sp, "shape","triangle1_1_1", {1, 1, 3, 3}, "triangleBottomLeftShape", {1, _, "breakable"})
+    addToShapeArray(sp, "endPoint","endPoint1_1_1", {1, 1, 7, 3})
+    addToShapeArray(sp, "gun","gun1_1_1", {1, 1, 2, 4}, "right")
+    addToShapeArray(sp, "simple","simple1_1_1", {1, 1, 6, 5})
+    addToShapeArray(sp, "shape","triangle2_1_1", {1, 1, 7, 5}, "triangleBottomLeftShape")
     table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"triangle2_1_1"},{"slide"},{},{2},{1},{1,1,5,4},{2},{1,1,7,5}})
 
     --SCREEN 1-2
-    table.insert(shapeArrayParameters, getShapeArray("shape","triangle1_1_2", {1, 2, 3, 1}, "triangleBottomRightShape", {1, _, "breakable"}))
-    table.insert(shapeArrayParameters, getShapeArray("door","door1_1_2", {1, 2, 6, 1}, "up"))
-    table.insert(shapeArrayParameters, getShapeArray("gun","gun1_1_2", {1, 2, 4, 2}, "left"))
-    table.insert(shapeArrayParameters, getShapeArray("shape","triangle2_1_2", {1, 2, 2, 3}, "triangleBottomRightShape"))
-    table.insert(shapeArrayParameters, getShapeArray("shape","triangle3_1_2", {1, 2, 6, 3}, "triangleTopLeftShape", {1, 5, "breakable"}))
-    table.insert(shapeArrayParameters, getShapeArray("shape","triangle4_1_2", {1, 2, 4, 4}, "triangleTopRightShape"))
+    addToShapeArray(sp, "shape","triangle1_1_2", {1, 2, 3, 1}, "triangleBottomRightShape", {1, _, "breakable"})
+    addToShapeArray(sp, "door","door1_1_2", {1, 2, 6, 1}, "up")
+    addToShapeArray(sp, "gun","gun1_1_2", {1, 2, 4, 2}, "left")
+    addToShapeArray(sp, "shape","triangle2_1_2", {1, 2, 2, 3}, "triangleBottomRightShape")
+    addToShapeArray(sp, "shape","triangle3_1_2", {1, 2, 6, 3}, "triangleTopLeftShape", {1, 5, "breakable"})
+    addToShapeArray(sp, "shape","triangle4_1_2", {1, 2, 4, 4}, "triangleTopRightShape")
     table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"triangle4_1_2"},{"slide"},{},{3},{1},{1,2,2,5},{2},{1,2,4,5},{3},{1,2,4,4}})
 
 end
