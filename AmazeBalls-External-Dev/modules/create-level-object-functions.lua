@@ -23,6 +23,7 @@ local function spawn (z, mainFunc)
     local shapeType = shapeParameters["type"];
     local shapeName = shapeParameters["name"];
     local shapeSubType = shapeParameters["subType"];
+    print(shapeType, shapeName, shapeSubType);
     
     if hasValue({ "autoFan", "manualFan", "simple", "spitter", "tunnel", "backFire", "characterChangePoint" }, shapeType) then
         object = sprite(mainFunc.allLevelSettings.allFansImageSheet, mainFunc.allLevelSettings.allFansSequenceData, shapeType)
@@ -84,6 +85,7 @@ local function spawn (z, mainFunc)
 
         local getGeneralItemSequence = function()
             local sequence = shapeName;
+            print(shapeSubType, shapeName);
             if shapeName == "coins"
             and shapeSubType > 99 then
                 sequence = sequence .. "-big"

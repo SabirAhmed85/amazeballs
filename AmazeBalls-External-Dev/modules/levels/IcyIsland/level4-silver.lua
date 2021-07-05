@@ -34,10 +34,10 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"manualFan1_2_1"},{"slide"},{},{3},{1},{2,1,3,3},{"*"},{2,1,4,3},{"*"},{2,1,4,4},{2},{2,1,5,4},{3},{2,1,5,5}})
 
     --SCREEN 2-2
-    table.insert(shapeArrayParameters, getShapeArray("spitter","spitter1_2_2", {2, 2, 2, 1, "none","right","none","none"}))
+    table.insert(shapeArrayParameters, getShapeArray("spitter","spitter1_2_2", {2, 2, 2, 1}, {"none","right","none","none"}))
     table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"spitter1_2_2"},{"slide"},{},{3},{1},{2,2,2,1},{2},{2,2,2,3},{3},{2,2,2,5}})
     table.insert(shapeArrayParameters, getShapeArray("door","door1_2_2", {2, 2, 7, 1}, "up"))
-    table.insert(shapeArrayParameters, getShapeArray("spitter","spitter2_2_2", {2, 2, 5, 2, "none","none","none","left"}))
+    table.insert(shapeArrayParameters, getShapeArray("spitter","spitter2_2_2", {2, 2, 5, 2}, {"none","none","none","left"}))
     table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"spitter2_2_2"},{"slide"},{},{3},{1},{2,2,5,1},{2},{2,2,5,2},{3},{2,2,5,4}})
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle2_2_2", {2, 2, 4, 3}, "triangleBottomLeftShape", {1, _, "breakable"}))
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle2_2_2", {2, 2, 4, 5}, "triangleBottomRightShape", {1, 14, "breakable"}))

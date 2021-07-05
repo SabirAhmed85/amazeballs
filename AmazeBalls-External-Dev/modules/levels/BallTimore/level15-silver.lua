@@ -6,7 +6,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     --------  CREATE OBJECTS HERE   -----------
 
     --SCREEN 1-1
-    table.insert(shapeArrayParameters, getShapeArray("spitter","spitter1_1_1", {1, 1, 7, 2, "none","none","down","none"}))
+    table.insert(shapeArrayParameters, getShapeArray("spitter","spitter1_1_1", {1, 1, 7, 2}, {"none","none","down","none"}))
     table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"spitter1_1_1"},{"slide"},{},{4},{1},{1,1,2,2},{2},{1,1,3,2},{3},{1,1,5,2},{4},{1,1,7,2}})
     table.insert(shapeArrayParameters, getShapeArray("item","mystery-block", {1, 1, 3, 5}, {
         {name = "backFire"},

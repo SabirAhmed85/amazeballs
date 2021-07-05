@@ -28,7 +28,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     table.insert(shapeArrayParameters, getShapeArray("shape","bar3_1_1", {1, 1, 3, 6}, "bar", {"vert", 2}))
 
     --SCREEN 2-1
-    table.insert(shapeArrayParameters, getShapeArray("spitter","spitter1_2_1", {2, 1, 1, 1, "none","right","none","none"}))
+    table.insert(shapeArrayParameters, getShapeArray("spitter","spitter1_2_1", {2, 1, 1, 1}, {"none","right","none","none"}))
     table.insert(shapeArrayParameters, getShapeArray("autoFan","autoFan1_2_1", {2, 1, 3, 1}, "down"))
     table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"autoFan1_2_1"},{"slide"},{},{1},{1},{2,1,3,1},{2},{2,1,4,1},{3},{2,1,6,1}})
     table.insert(shapeArrayParameters, getShapeArray("gun","gun1_2_1", {2, 1, 2, 2}, "right"))
@@ -37,11 +37,11 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     table.insert(shapeArrayParameters, getShapeArray("door","door1_2_1", {2, 1, 4, 5}, "down"))
 
     --SCREEN 2-2
-    table.insert(shapeArrayParameters, getShapeArray("spitter","spitter1_2_2", {2, 2, 4, 1, "none","right","none","left"}))
+    table.insert(shapeArrayParameters, getShapeArray("spitter","spitter1_2_2", {2, 2, 4, 1}, {"none","right","none","left"}))
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle1_2_2", {2, 2, 5, 2}, "triangleBottomRightShape", {1, _, "fire"}))
-    table.insert(shapeArrayParameters, getShapeArray("spitter","spitter2_2_2", {2, 2, 7, 2, "none","none","none","left"}))
+    table.insert(shapeArrayParameters, getShapeArray("spitter","spitter2_2_2", {2, 2, 7, 2}, {"none","none","none","left"}))
     table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"spitter2_2_2"},{"autoSlide"},{timePerSquare = 360, pauseTime = 0},{2},{1},{2,2,7,1},{2},{2,2,7,2}})
-    table.insert(shapeArrayParameters, getShapeArray("spitter","spitter3_2_2", {2, 2, 1, 4, "none","right","none","none"}))
+    table.insert(shapeArrayParameters, getShapeArray("spitter","spitter3_2_2", {2, 2, 1, 4}, {"none","right","none","none"}))
     table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"spitter3_2_2"},{"autoSlide"},{timePerSquare = 360, pauseTime = 0},{2},{1},{2,2,1,1},{2},{2,2,1,4}})
     table.insert(shapeArrayParameters, getShapeArray("shape","bar1_2_2", {2, 2, 4, 3}, "bar", {"horz", 2}))
     table.insert(shapeArrayParameters, getShapeArray("endPoint","endPoint1_2_2", {2, 2, 4, 3}))

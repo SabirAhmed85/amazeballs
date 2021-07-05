@@ -6,9 +6,9 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     --------  CREATE OBJECTS HERE   -----------
 
     --SCREEN 1-1
-    table.insert(shapeArrayParameters, getShapeArray("spitter","spitter1_1_1", {1, 1, 2, 1, "none","right","none","none"}))
+    table.insert(shapeArrayParameters, getShapeArray("spitter","spitter1_1_1", {1, 1, 2, 1}, {"none","right","none","none"}))
     table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"spitter1_1_1"},{"slide"},{"lightBlue"},{1},{1},{1,1,2,1},{2},{1,1,2,3}})
-    table.insert(shapeArrayParameters, getShapeArray("spitter","spitter2_1_1", {1, 1, 4, 2, "none","none","down","none"}))
+    table.insert(shapeArrayParameters, getShapeArray("spitter","spitter2_1_1", {1, 1, 4, 2}, {"none","none","down","none"}))
     table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"spitter2_1_1"},{"slide"},{"lightBlue"},{2},{1},{1,1,4,1},{2},{1,1,4,2}})
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle1_1_1", {1, 1, 4, 5}, "triangleTopRightShape"))
     table.insert(shapeArrayParameters, getShapeArray("door","door1_1_1", {1, 1, 7, 5}, "right"))
@@ -18,7 +18,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle1_2_1", {2, 1, 6, 2}, "triangleTopLeftShape", {1, 11, "breakable"}))
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle_2_1", {2, 1, 6, 3}, "triangleBottomRightShape", {1, _, "breakable"}))
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle3_2_1", {2, 1, 3, 4}, "triangleTopRightShape", {1, 10, "breakable"}))
-    table.insert(shapeArrayParameters, getShapeArray("spitter","spitter1_2_1", {2, 1, 1, 5, "none","right","none","none"}))
+    table.insert(shapeArrayParameters, getShapeArray("spitter","spitter1_2_1", {2, 1, 1, 5}, {"none","right","none","none"}))
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle4_2_1", {2, 1, 3, 5}, "triangleBottomLeftShape", {1, _, "breakable"}))
 
     --GEMS

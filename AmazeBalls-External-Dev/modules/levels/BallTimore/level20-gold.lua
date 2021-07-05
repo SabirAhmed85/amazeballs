@@ -13,7 +13,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"spitter2_2_1"},{"switchSlide"},{},{1},{1},{2,1,1,3},{2},{2,1,1,4}})
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle1_2_1", {2, 1, 3, 4}, "triangleTopLeftShape", {1, 15, "breakable"}))
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle1_2_1", {2, 1, 5, 4}, "triangleTopRightShape", {1, 10, "breakable"}))
-    table.insert(shapeArrayParameters, getShapeArray("spitter","spitter2_2_1", {2, 1, 7, 4, "none","none","none","left"}))
+    table.insert(shapeArrayParameters, getShapeArray("spitter","spitter2_2_1", {2, 1, 7, 4}, {"none","none","none","left"}))
     table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"spitter2_2_1"},{"switchSlide"},{},{1},{1},{2,1,7,4},{2},{2,1,7,5}})
 
     --SCREEN 1-2
@@ -41,7 +41,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     table.insert(shapeArrayParameters, getShapeArray("autoFan","autoFan5_2_2", {2, 2, 3, 4}, "down"))
     table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"autoFan5_2_2"},{"switchSlide"},{},{1},{1},{2,2,3,4},{2},{2,2,3,5}})
     table.insert(shapeArrayParameters, getShapeArray("door","door2_2_2", {2, 2, 3, 5}, "down"))
-    table.insert(shapeArrayParameters, getShapeArray("door","door3_2_2", {2, 2, 7, 5, "right", "disabled"}))
+    table.insert(shapeArrayParameters, getShapeArray("door","door3_2_2", {2, 2, 7, 5}, "right", {"disabled"}))
 
     --SCREEN 3-2
     table.insert(shapeArrayParameters, getShapeArray("manualFan","manualFan1_3_2", {3, 2, 1, 1}, "down"))

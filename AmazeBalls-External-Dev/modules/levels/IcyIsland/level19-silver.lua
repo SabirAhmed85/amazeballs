@@ -35,13 +35,13 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle4_2_1", {2, 1, 1, 4}, "triangleTopRightShape"))
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle5_2_1", {2, 1, 1, 5}, "triangleBottomRightShape", {1, _, "breakable"}))
     table.insert(shapeArrayParameters, getShapeArray("door","door1_2_1", {2, 1, 1, 5}, "down"))
-    table.insert(shapeArrayParameters, getShapeArray("shape","bar1_1_1", 2, 1, 8, 5}, "bar", {"horz", 2}))
+    table.insert(shapeArrayParameters, getShapeArray("shape","bar1_2_1", {2, 1, 8, 5}, "bar", {"horz", 2}))
 
     --SCREEN 1-2
     table.insert(shapeArrayParameters, getShapeArray("door","door1_1_2", {1, 2, 5, 1}, "up"))
 
     --SCREEN 2-2
-    table.insert(shapeArrayParameters, getShapeArray("spitter","spitter1_2_2", {2, 2, 1, 1, "none","right","none","left"}))
+    table.insert(shapeArrayParameters, getShapeArray("spitter","spitter1_2_2", {2, 2, 1, 1}, {"none","right","none","left"}))
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle1_2_2", {2, 2, 4, 1}, "triangleBottomLeftShape", {1, _, "breakable"}))
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle2_2_2", {2, 2, 4, 5}, "triangleBottomRightShape", {1, _, "breakable"}))
     table.insert(shapeArrayParameters, getShapeArray("endPoint","endPoint1_2_2", {2, 2, 1, 5}))

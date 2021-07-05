@@ -25,7 +25,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     table.insert(shapeArrayParameters, getShapeArray("simple","simple2_1_1", {1, 1, 4, 4}))
     table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"simple2_1_1"},{"slide"},{"lightBlue"},{1},{1},{1,1,4,4},{2},{1,1,5,4},{3},{1,1,7,4}})
 
-    table.insert(shapeArrayParameters, getShapeArray("endPoint","endPoint1_1_1", {1, 1, 7, 3, "right", "enabled"}))
+    table.insert(shapeArrayParameters, getShapeArray("endPoint","endPoint1_1_1", {1, 1, 7, 3}, "right", {"enabled"}))
 
     table.insert(shapeArrayParameters, getShapeArray("door","door1_1_1", {1, 1, 3, 5, "down", "disabled"}))
 
@@ -80,7 +80,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     table.insert(shapeArrayParameters, getShapeArray("gem","purple", {1, 2, 2, 1}, "purple"))
     table.insert(shapeArrayParameters, getShapeArray("gem","purple", {1, 2, 1, 3}, "purple"))
     table.insert(shapeArrayParameters, getShapeArray("gem","purple", {1, 2, 2, 4}, "purple"))
-    table.insert(shapeArrayParameters, getShapeArray("gem","redCoin", {1, 1, 6, 5, "redCoin"}))
+    table.insert(shapeArrayParameters, getShapeArray("gem","redCoin", {1, 1, 6, 5}, "redCoin"))
     table.insert(shapeArrayParameters, getShapeArray("gem","blueCoin", {1, 2, 4, 5}, "blueCoin"))
     table.insert(shapeArrayParameters, getShapeArray("gem","purpleCoin", {1, 1, 3, 1}, "purpleCoin"))
 

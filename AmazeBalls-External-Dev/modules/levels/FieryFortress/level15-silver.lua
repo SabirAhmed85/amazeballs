@@ -23,9 +23,9 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle1_2_1", {2, 1, 3, 1}, "triangleBottomLeftShape", {1, 7}))
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle2_2_1", {2, 1, 5, 2}, "triangleBottomLeftShape"))
     table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"triangle2_2_1"},{"slide"},{"green"},{2},{1},{2,1,4,2},{2},{2,1,5,2}})
-    table.insert(shapeArrayParameters, getShapeArray("autoFan","autoFan3_1_1", 2, 1, 6, 3}, "up"))
-    table.insert(shapeArrayParameters, getShapeArray("autoFan","autoFan3_1_1", 2, 1, 4, 4}, "right"))
-    table.insert(shapeArrayParameters, getShapeArray("endPoint","endPoint1_1_1", 2, 1, 7, 4}))
+    table.insert(shapeArrayParameters, getShapeArray("autoFan","autoFan3_2_1", {2, 1, 6, 3}, "up"))
+    table.insert(shapeArrayParameters, getShapeArray("autoFan","autoFan3_2_1", {2, 1, 4, 4}, "right"))
+    table.insert(shapeArrayParameters, getShapeArray("endPoint","endPoint1_2_1", {2, 1, 7, 4}))
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle3_2_1", {2, 1, 6, 5}, "triangleBottomRightShape", {1, 9}))
 
     --GEMS

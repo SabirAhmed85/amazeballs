@@ -21,7 +21,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle6_2_1", {2, 1, 7, 5}, "triangleTopLeftShape", {1, 5, "breakable"}))
 
     --SCREEN 3-1
-    table.insert(shapeArrayParameters, getShapeArray("door","door1_3_1", {3, 1, 1, 1, "left", "disabled"}))
+    table.insert(shapeArrayParameters, getShapeArray("door","door1_3_1", {3, 1, 1, 1}, "left", {"disabled"}))
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle1_3_1", {3, 1, 2, 1}, "triangleBottomLeftShape", {1, 4, "breakable"}))
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle2_3_1", {3, 1, 3, 1}, "triangleBottomRightShape"))
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle3_3_1", {3, 1, 4, 1}, "triangleBottomLeftShape"))

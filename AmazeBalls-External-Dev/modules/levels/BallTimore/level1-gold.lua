@@ -21,7 +21,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     table.insert(shapeArrayParameters, getShapeArray("simple","simple1_1_1", {1, 1, 3, 5}))
 
     --SCREEN 2-1
-    table.insert(shapeArrayParameters, getShapeArray("spitter","spitter1_2_1", {2, 1, 3, 1, "none","none","down","none"}))
+    table.insert(shapeArrayParameters, getShapeArray("spitter","spitter1_2_1", {2, 1, 3, 1}, {"none","none","down","none"}))
     table.insert(shapeArrayParameters, getShapeArray("autoFan","autoFan1_2_1", {2, 1, 2, 3}, "right"))
     table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"autoFan1_2_1"},{"autoSlide"},{timePerSquare=480},{1},{1},{2,1,2,3},{2},{2,1,5,3}})
     table.insert(shapeArrayParameters, getShapeArray("shape","bar1_2_1", {2, 1, 3, 4}, "bar", {"vert", 2}))

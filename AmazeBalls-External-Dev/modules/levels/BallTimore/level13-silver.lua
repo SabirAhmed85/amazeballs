@@ -6,7 +6,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     --------  CREATE OBJECTS HERE   -----------
 
     --SCREEN 1-1
-    table.insert(shapeArrayParameters, getShapeArray("door","door1_1_1", {1, 1, 7, 1, "right", "disabled"}))
+    table.insert(shapeArrayParameters, getShapeArray("door","door1_1_1", {1, 1, 7, 1}, "right", {"disabled"}))
     table.insert(shapeArrayParameters, getShapeArray("tunnel","tunnel1_1_1", {1, 1, 1, 2, 1, 2, 2, 1}, "down"))
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle1_1_1", {1, 1, 2, 2}, "triangleTopRightShape"))
     table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"triangle1_1_1"},{"slide"},{},{1},{1},{1,1,2,2},{2},{1,1,3,1}})

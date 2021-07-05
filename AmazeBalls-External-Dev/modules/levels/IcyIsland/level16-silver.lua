@@ -35,7 +35,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle3_2_2", {2, 2, 7, 3}, "triangleBottomRightShape"))
     table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"triangle3_2_2"},{"flip-vertical"}})
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle4_2_2", {2, 2, 7, 4}, "triangleBottomLeftShape", {1, _, "breakable"}))
-    table.insert(shapeArrayParameters, getShapeArray("tunnel","tunnel1_2_2", {2, 2, 2, 5, 1, 2, 2, 1, "none"}))
+    table.insert(shapeArrayParameters, getShapeArray("tunnel","tunnel1_2_2", {2, 2, 2, 5, 1, 2, 2, 1}, {"none"}))
     table.insert(shapeArrayParameters, getShapeArray("shape","triangle5_2_2", {2, 2, 5, 5}, "triangleTopLeftShape"))
 
     --GEMS
