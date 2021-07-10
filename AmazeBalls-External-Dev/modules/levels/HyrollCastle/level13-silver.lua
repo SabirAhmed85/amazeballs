@@ -1,6 +1,5 @@
 local t = {}
 local addToShapeArray = require("utils.add-to-shape-array");
-local widget = require("widget")
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
     local sp = shapeArrayParameters;    local sp = shapeArrayParameters;

@@ -1,4 +1,3 @@
-local widget = require("widget");
 local addToShapeArray = require("utils.add-to-shape-array");
 local t = {}
 
