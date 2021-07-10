@@ -1,8 +1,10 @@
 local t = {}
 local addToShapeArray = require("utils.add-to-shape-array");
+local addToTransitionArray = require("utils.add-to-transition-array");
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
-    local sp = shapeArrayParameters;    --------  CREATE OBJECTS HERE   -----------
+    local sp = shapeArrayParameters;
+    local ta = mainFunc.allLevelSettings.transitionArrayIndex;   
 
     --SCREEN 1-1
     addToShapeArray(sp, "shape","triangle1_1_1", {1, 1, 1, 1}, "triangleBottomRightShape")
@@ -19,7 +21,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     addToShapeArray(sp, "shape","triangle7_1_1", {1, 1, 1, 5}, "triangleTopRightShape")
     addToShapeArray(sp, "shape","triangle8_1_1", {1, 1, 4, 5}, "triangleTopLeftShape")
     addToShapeArray(sp, "shape","triangle9_1_1", {1, 1, 6, 5}, "triangleTopAndBottomShape", {1})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"triangle9_1_1"},{"slide"},{},{3},{1},{1,1,5,4},{2},{1,1,5,5},{3},{1,1,6,5}})
+    addToTransitionArray(ta,{{"triangle9_1_1"},{"slide"},{},{3},{1},{1,1,5,4},{2},{1,1,5,5},{3},{1,1,6,5}})
 
     --SCREEN 2-1
     addToShapeArray(sp, "manualFan","manualFan1_2_1", {2, 1, 2, 1}, "right")
@@ -32,7 +34,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     addToShapeArray(sp, "shape","triangle7_2_1", {2, 1, 5, 4}, "triangleBottomLeftShape", {1, _, "breakable"})
     addToShapeArray(sp, "shape","bar1_2_1", {2, 1, 2, 5}, "bar", {"horz", 3})
     addToShapeArray(sp, "shape","bar2_2_1", {2, 1, 3, 5}, "bar", {"horz", 3})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"bar2_2_1"},{"slide"},{},{2},{1},{2,1,3,4},{2},{2,1,3,5}})
+    addToTransitionArray(ta,{{"bar2_2_1"},{"slide"},{},{2},{1},{2,1,3,4},{2},{2,1,3,5}})
     addToShapeArray(sp, "manualFan","manualFan2_2_1", {2, 1, 4, 5}, "down")
     addToShapeArray(sp, "door","door1_2_1", {2, 1, 4, 5}, "down")
     addToShapeArray(sp, "shape","triangle8_2_1", {2, 1, 7, 5}, "triangleTopLeftShape")
@@ -40,27 +42,27 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
 
     --SCREEN 2-2
     addToShapeArray(sp, "shape","bar1_2_2", {2, 2, 3, 1}, "bar", {"vert"})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"bar1_2_2"},{"switchSlide"},{},{1},{1},{2,2,3,1},{2},{2,2,4,1}})
+    addToTransitionArray(ta,{{"bar1_2_2"},{"switchSlide"},{},{1},{1},{2,2,3,1},{2},{2,2,4,1}})
     addToShapeArray(sp, "shape","bar2_2_2", {2, 2, 7, 1}, "bar", {"vert", 3})
     addToShapeArray(sp, "door","door1_2_2", {2, 2, 7, 1}, "right")
     addToShapeArray(sp, "shape","bar3_2_2", {2, 2, 3, 2}, "bar", {"vert", 3})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"bar3_2_2"},{"switchSlide"},{},{1},{1},{2,2,3,2},{2},{2,2,4,2}})
+    addToTransitionArray(ta,{{"bar3_2_2"},{"switchSlide"},{},{1},{1},{2,2,3,2},{2},{2,2,4,2}})
     addToShapeArray(sp, "shape","triangle1_2_2", {2, 2, 3, 2}, "triangleTopLeftShape", {1, 5, "breakable"})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"triangle1_2_2"},{"switchSlide"},{},{2},{1},{2,2,3,1},{2},{2,2,3,2}})
+    addToTransitionArray(ta,{{"triangle1_2_2"},{"switchSlide"},{},{2},{1},{2,2,3,1},{2},{2,2,3,2}})
     addToShapeArray(sp, "shape","bar4_2_2", {2, 2, 6, 2}, "bar", {"horz", 2})
     addToShapeArray(sp, "shape","bar5_2_2", {2, 2, 7, 2}, "bar", {"vert"})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"bar5_2_2"},{"switchSlide"},{},{2},{1},{2,2,5,2},{2},{2,2,7,2}})
+    addToTransitionArray(ta,{{"bar5_2_2"},{"switchSlide"},{},{2},{1},{2,2,5,2},{2},{2,2,7,2}})
     addToShapeArray(sp, "shape","triangle2_2_2", {2, 2, 6, 2}, "triangleBottomLeftShape", {1, 2})
     addToShapeArray(sp, "backFire","backFire1_2_2", {2, 2, 4, 3})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"backFire1_1_1"},{"slide"},{},{1},{1},{2,2,4,3},{2},{2,2,5,3}})
+    addToTransitionArray(ta,{{"backFire1_1_1"},{"slide"},{},{1},{1},{2,2,4,3},{2},{2,2,5,3}})
     addToShapeArray(sp, "manualFan","manualFan1_2_2", {2, 2, 2, 4}, "right")
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"manualFan1_2_2"},{"slide"},{},{3},{1},{2,2,1,2},{2},{2,2,1,4},{2},{2,2,2,4}})
+    addToTransitionArray(ta,{{"manualFan1_2_2"},{"slide"},{},{3},{1},{2,2,1,2},{2},{2,2,1,4},{2},{2,2,2,4}})
     addToShapeArray(sp, "shape","triangle3_2_2", {2, 2, 5, 4}, "triangleTopLeftShape")
     addToShapeArray(sp, "shape","bar6_2_2", {2, 2, 7, 4}, "bar", {"horz", 3})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"bar6_2_2"},{"slide"},{},{1},{1},{2,2,7,4},{2},{2,2,7,5}})
+    addToTransitionArray(ta,{{"bar6_2_2"},{"slide"},{},{1},{1},{2,2,7,4},{2},{2,2,7,5}})
     addToShapeArray(sp, "autoFan","autoFan3_2_2", {2, 2, 7, 4}, "up")
     addToShapeArray(sp, "shape","triangle4_2_2", {2, 2, 2, 5}, "triangleTopRightShape")
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"triangle4_2_2"},{"slide"},{},{1},{1},{2,2,2,5},{2},{2,2,3,5},{3},{2,2,4,5}})
+    addToTransitionArray(ta,{{"triangle4_2_2"},{"slide"},{},{1},{1},{2,2,2,5},{2},{2,2,3,5},{3},{2,2,4,5}})
     addToShapeArray(sp, "door","door2_2_2", {2, 2, 7, 5}, "right")
 
     --SCREEN 3-2
@@ -122,10 +124,10 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     addToShapeArray(sp, "item","coins", {1, 1, 3, 5}, 60)
     addToShapeArray(sp, "item","coins", {1, 1, 7, 1}, 75)
     addToShapeArray(sp, "item","coins", {2, 1, 5, 3}, 90)
-    addToShapeArray(sp, "item","coins", {2, 1, 3, 4, 51)
+    addToShapeArray(sp, "item","coins", {2, 1, 3, 4}, 51)
     addToShapeArray(sp, "item","coins", {2, 2, 2, 2}, 165)
     addToShapeArray(sp, "item","coins", {2, 2, 1, 5}, 145)
-    addToShapeArray(sp, "item","coins", {3, 2, 1, 4, 285})
+    addToShapeArray(sp, "item","coins", {3, 2, 1, 4}, 285)
     addToShapeArray(sp, "item","big-present", {2, 2, 7, 2}, {})
     addToShapeArray(sp, "item","big-present", {3, 2, 5, 1}, {})
     addToShapeArray(sp, "item","small-present", {2, 2, 6, 1}, {})

@@ -1,21 +1,23 @@
 local t = {}
 local addToShapeArray = require("utils.add-to-shape-array");
+local addToTransitionArray = require("utils.add-to-transition-array");
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
-    local sp = shapeArrayParameters;    --------  CREATE OBJECTS HERE   -----------
+    local sp = shapeArrayParameters;
+    local ta = mainFunc.allLevelSettings.transitionArrayIndex;   
 
     --SCREEN 1-1
     addToShapeArray(sp, "shape","triangle1_1_1", {1, 1, 5, 1}, "triangleTopRightShape")
     addToShapeArray(sp, "door","door1_1_1", {1, 1, 7, 1}, "right")
     addToShapeArray(sp, "shape","triangle2_1_1", {1, 1, 1, 2}, "triangleTopRightShape", {1, 16})
     addToShapeArray(sp, "simple","simple1_1_1", {1, 1, 3, 2})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"simple1_1_1"},{"slide"},{},{1},{1},{1,1,3,2},{2},{1,1,3,4}})
+    addToTransitionArray(ta,{{"simple1_1_1"},{"slide"},{},{1},{1},{1,1,3,2},{2},{1,1,3,4}})
     addToShapeArray(sp, "manualFan","manualFan1_1_1", {1, 1, 4, 2}, "right")
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"manualFan1_1_1"},{"autoSlide"},{pauseTime = 1500, isActiveWhenSliding = false},{1},{1},{1,1,4,2},{2},{1,1,4,4}})
+    addToTransitionArray(ta,{{"manualFan1_1_1"},{"autoSlide"},{pauseTime = 1500, isActiveWhenSliding = false},{1},{1},{1,1,4,2},{2},{1,1,4,4}})
     addToShapeArray(sp, "manualFan","manualFan2_1_1", {1, 1, 5, 2}, "down")
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"manualFan2_1_1"},{"autoSlide"},{pauseTime = 1500, isActiveWhenSliding = false},{1},{1},{1,1,5,2},{2},{1,1,5,4}})
+    addToTransitionArray(ta,{{"manualFan2_1_1"},{"autoSlide"},{pauseTime = 1500, isActiveWhenSliding = false},{1},{1},{1,1,5,2},{2},{1,1,5,4}})
     addToShapeArray(sp, "manualFan","manualFan3_1_1", {1, 1, 6, 2}, "left")
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"manualFan3_1_1"},{"autoSlide"},{pauseTime = 1500, isActiveWhenSliding = false},{1},{1},{1,1,6,2},{2},{1,1,6,4}})
+    addToTransitionArray(ta,{{"manualFan3_1_1"},{"autoSlide"},{pauseTime = 1500, isActiveWhenSliding = false},{1},{1},{1,1,6,2},{2},{1,1,6,4}})
     addToShapeArray(sp, "shape","bar1_1_1", {1, 1, 4, 4}, "bar", {"horz", 4})
     addToShapeArray(sp, "shape","bar2_1_1", {1, 1, 5, 4}, "bar", {"vert", 2})
 

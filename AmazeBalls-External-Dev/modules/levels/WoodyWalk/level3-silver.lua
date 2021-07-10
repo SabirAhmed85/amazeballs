@@ -1,9 +1,11 @@
 local addToShapeArray = require("utils.add-to-shape-array");
+local addToTransitionArray = require("utils.add-to-transition-array");
 local t = {};
 
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
-    local sp = shapeArrayParameters;	--------  CREATE OBJECTS HERE   -----------
+    local sp = shapeArrayParameters;
+    local ta = mainFunc.allLevelSettings.transitionArrayIndex;
 
     addToShapeArray(sp, "simple","simple1_1_1", {1, 1, 5, 5})
 

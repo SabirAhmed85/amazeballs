@@ -1,8 +1,10 @@
 local t = {}
 local addToShapeArray = require("utils.add-to-shape-array");
+local addToTransitionArray = require("utils.add-to-transition-array");
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
-    local sp = shapeArrayParameters;    --------  CREATE OBJECTS HERE   -----------
+    local sp = shapeArrayParameters;
+    local ta = mainFunc.allLevelSettings.transitionArrayIndex;   
 
     --SCREEN 1-1
     addToShapeArray(sp, "autoFan","autoFan1_1_1", {1, 1, 2, 2}, "down")
@@ -13,7 +15,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
 
     --SCREEN 1-2
     addToShapeArray(sp, "shape","triangle1_1_2", {1, 2, 6, 1}, "triangleTopRightShape")
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"triangle1_1_2"},{"flip-vertical"}})
+    addToTransitionArray(ta,{{"triangle1_1_2"},{"flip-vertical"}})
     addToShapeArray(sp, "shape","triangle2_1_2", {1, 2, 1, 2}, "triangleBottomRightShape")
     addToShapeArray(sp, "manualFan","manualFan1_1_2", {1, 2, 4, 2}, "left")
     addToShapeArray(sp, "shape","triangle3_1_2", {1, 2, 2, 3}, "triangleTopRightShape")
@@ -28,11 +30,11 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     --SCREEN 2-2
     addToShapeArray(sp, "shape","triangle1_2_2", {2, 2, 5, 1}, "triangleBottomLeftShape")
     addToShapeArray(sp, "backFire","backFire1_2_2", {2, 2, 4, 2})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"backFire1_2_2"},{"slide"},{},{2},{1},{2,2,2,1},{2},{2,2,2,2},{3},{2,2,4,2}})
+    addToTransitionArray(ta,{{"backFire1_2_2"},{"slide"},{},{2},{1},{2,2,2,1},{2},{2,2,2,2},{3},{2,2,4,2}})
     addToShapeArray(sp, "shape","triangle2_2_2", {2, 2, 4, 3}, "triangleTopRightShape", {1, 1})
     addToShapeArray(sp, "manualFan","manualFan1_2_2", {2, 2, 6, 3}, "left")
     addToShapeArray(sp, "shape","triangle3_2_2", {2, 2, 7, 3}, "triangleBottomRightShape")
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"triangle3_2_2"},{"flip-vertical"}})
+    addToTransitionArray(ta,{{"triangle3_2_2"},{"flip-vertical"}})
     addToShapeArray(sp, "shape","triangle4_2_2", {2, 2, 7, 4}, "triangleBottomLeftShape", {1, _, "breakable"})
     addToShapeArray(sp, "tunnel","tunnel1_2_2", {2, 2, 2, 5, 1, 2, 2, 1}, {"none"})
     addToShapeArray(sp, "shape","triangle5_2_2", {2, 2, 5, 5}, "triangleTopLeftShape")

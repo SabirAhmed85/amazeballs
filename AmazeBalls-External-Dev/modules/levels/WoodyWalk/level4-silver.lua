@@ -1,12 +1,14 @@
 local addToShapeArray = require("utils.add-to-shape-array");
+local addToTransitionArray = require("utils.add-to-transition-array");
 local t = {};
 
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
-    local sp = shapeArrayParameters;	--------  CREATE OBJECTS HERE   -----------
+    local sp = shapeArrayParameters;
+    local ta = mainFunc.allLevelSettings.transitionArrayIndex;
 
     addToShapeArray(sp, "simple","simple1_1_1", {1, 1, 4, 2})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"simple1_1_1"},{"slide"},{"lightBlue"},{1},{1},{1,1,4,2},{2},{1,1,4,3}})
+    addToTransitionArray(ta,{{"simple1_1_1"},{"slide"},{"lightBlue"},{1},{1},{1,1,4,2},{2},{1,1,4,3}})
 
     addToShapeArray(sp, "shape","triangle1_1_1", {1, 1, 7, 3}, "triangleBottomLeftShape", {1})
 

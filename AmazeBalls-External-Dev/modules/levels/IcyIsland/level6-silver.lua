@@ -1,8 +1,10 @@
 local t = {}
 local addToShapeArray = require("utils.add-to-shape-array");
+local addToTransitionArray = require("utils.add-to-transition-array");
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
-    local sp = shapeArrayParameters;    --------  CREATE OBJECTS HERE   -----------
+    local sp = shapeArrayParameters;
+    local ta = mainFunc.allLevelSettings.transitionArrayIndex;   
 
     --SCREEN 1-1
     addToShapeArray(sp, "tunnel","tunnel1_1_1", {1, 1, 4, 1, 1, 1, 2, 5}, "right")
@@ -15,10 +17,10 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
 
     --SCREEN 1-2
     addToShapeArray(sp, "autoFan","autoFan1_1_2", {1, 2, 1, 2}, "right")
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"autoFan1_1_2"},{"slide"},{},{1},{1},{1,2,1,2},{2},{1,2,2,2}})
+    addToTransitionArray(ta,{{"autoFan1_1_2"},{"slide"},{},{1},{1},{1,2,1,2},{2},{1,2,2,2}})
     addToShapeArray(sp, "tunnel","tunnel1_1_2", {1, 2, 4, 2, 1, 2, 6, 1}, "down")
     addToShapeArray(sp, "autoFan","autoFan2_1_2", {1, 2, 1, 4}, "right")
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"autoFan2_1_2"},{"slide"},{},{1},{1},{1,2,1,4},{2},{1,2,2,4}})
+    addToTransitionArray(ta,{{"autoFan2_1_2"},{"slide"},{},{1},{1},{1,2,1,4},{2},{1,2,2,4}})
     addToShapeArray(sp, "tunnel","tunnel2_1_2", {1, 2, 4, 4, 1, 2, 7, 1}, "down")
     addToShapeArray(sp, "endPoint","endPoint1_1_2", {1, 2, 6, 5})
     addToShapeArray(sp, "shape","bar1_1_2", {1, 2, 7, 6}, "bar", {"vert", 2})

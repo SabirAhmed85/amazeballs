@@ -1,8 +1,10 @@
 local t = {}
 local addToShapeArray = require("utils.add-to-shape-array");
+local addToTransitionArray = require("utils.add-to-transition-array");
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
-    local sp = shapeArrayParameters;    --------  CREATE OBJECTS HERE   -----------
+    local sp = shapeArrayParameters;
+    local ta = mainFunc.allLevelSettings.transitionArrayIndex;   
 
     --SCREEN 1-1
     addToShapeArray(sp, "autoFan","autoFan1_1_1", {1, 1, 1, 1}, "down")
@@ -30,15 +32,15 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     --SCREEN 1-3
     addToShapeArray(sp, "door","door1_1_3", {1, 3, 3, 1}, "up")
     addToShapeArray(sp, "spitter","spitter1_1_3", {1, 3, 3, 1, "up","none","down","none"})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"spitter1_1_3"},{"switchSlide"},{},{1},{1},{1,3,3,1},{2},{1,3,4,1}})
+    addToTransitionArray(ta,{{"spitter1_1_3"},{"switchSlide"},{},{1},{1},{1,3,3,1},{2},{1,3,4,1}})
     addToShapeArray(sp, "manualFan","manualFan1_1_3", {1, 3, 4, 2}, "right")
     addToShapeArray(sp, "shape","bar1_1_3", {1, 3, 6, 2}, "bar", {"horz", 2})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"bar1_1_3"},{"slide"},{},{1},{1},{1,3,6,2},{2},{1,3,6,4}})
+    addToTransitionArray(ta,{{"bar1_1_3"},{"slide"},{},{1},{1},{1,3,6,2},{2},{1,3,6,4}})
     addToShapeArray(sp, "autoFan","autoFan1_1_3", {1, 3, 6, 2}, "down")
     --addToShapeArray(sp, "item","coins", {1, 3, 6, 4}, 250)
     addToShapeArray(sp, "autoFan","autoFan2_1_3", {1, 3, 4, 4}, "up")
     addToShapeArray(sp, "shape","bar2_1_3", {1, 3, 6, 4}, "bar", {"vert", 4})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"bar2_1_3"},{"slide"},{},{2},{1},{1,3,4,4},{2},{1,3,6,4}})
+    addToTransitionArray(ta,{{"bar2_1_3"},{"slide"},{},{2},{1},{1,3,4,4},{2},{1,3,6,4}})
     addToShapeArray(sp, "manualFan","manualFan2_1_3", {1, 3, 6, 4}, "left")
     addToShapeArray(sp, "gem","purple", {1, 3, 4, 5}, "purple")
     addToShapeArray(sp, "shape","bar3_1_3", {1, 3, 6, 5}, "bar", {"vert", 2})

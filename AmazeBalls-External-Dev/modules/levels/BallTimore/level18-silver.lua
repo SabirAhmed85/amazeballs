@@ -1,13 +1,15 @@
 local t = {}
 local addToShapeArray = require("utils.add-to-shape-array");
+local addToTransitionArray = require("utils.add-to-transition-array");
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
-    local sp = shapeArrayParameters;    --------  CREATE OBJECTS HERE   -----------
+    local sp = shapeArrayParameters;
+    local ta = mainFunc.allLevelSettings.transitionArrayIndex;   
 
     --SCREEN 1-1
     addToShapeArray(sp, "gun","gun1_1_1", {1, 1, 2, 1}, "right")
     addToShapeArray(sp, "shape","triangle1_1_1", {1, 1, 6, 1}, "triangleBottomLeftShape")
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"triangle1_1_1"},{"switchSlide"},{},{1},{1},{1,1,6,1},{2},{1,1,6,2}})
+    addToTransitionArray(ta,{{"triangle1_1_1"},{"switchSlide"},{},{1},{1},{1,1,6,1},{2},{1,1,6,2}})
     addToShapeArray(sp, "endPoint","endPoint1_1_1", {1, 1, 3, 3})
     addToShapeArray(sp, "shape","triangle2_1_1", {1, 1, 6, 4}, "triangleTopLeftShape")
     addToShapeArray(sp, "backFire","backFire1_1_1", {1, 1, 4, 5})
@@ -22,10 +24,10 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     addToShapeArray(sp, "shape","triangle3_2_1", {2, 1, 3, 3}, "triangleTopLeftShape", {1, _, "breakable"})
     addToShapeArray(sp, "gun","gun1_2_1", {2, 1, 2, 4}, "right")
     addToShapeArray(sp, "autoFan","autoFan1_2_1", {2, 1, 5, 4}, "up")
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"autoFan1_2_1"},{"slide"},{},{2},{1},{2,1,5,2},{2},{2,1,5,4}})
+    addToTransitionArray(ta,{{"autoFan1_2_1"},{"slide"},{},{2},{1},{2,1,5,2},{2},{2,1,5,4}})
     addToShapeArray(sp, "simple","simple1_2_1", {2, 1, 1, 5})
     addToShapeArray(sp, "autoFan","autoFan2_2_1", {2, 1, 3, 5}, "up")
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"autoFan2_2_1"},{"slide"},{},{1},{1},{2,1,3,5},{2},{2,1,6,5}})
+    addToTransitionArray(ta,{{"autoFan2_2_1"},{"slide"},{},{1},{1},{2,1,3,5},{2},{2,1,6,5}})
 
     --SWITCHES
     addToShapeArray(sp, "switch","switch1_2_1", {2, 1, 6, 3}, { {"slide","triangle1_1_1"},{"slide","autoFan1_2_1"} }, {"one-way"})

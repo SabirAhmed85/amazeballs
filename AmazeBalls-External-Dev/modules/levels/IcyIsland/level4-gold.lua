@@ -1,13 +1,15 @@
 local t = {}
 local addToShapeArray = require("utils.add-to-shape-array");
+local addToTransitionArray = require("utils.add-to-transition-array");
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
-    local sp = shapeArrayParameters;    --------  CREATE OBJECTS HERE   -----------
+    local sp = shapeArrayParameters;
+    local ta = mainFunc.allLevelSettings.transitionArrayIndex;   
 
     --SCREEN 1-1
     addToShapeArray(sp, "shape","triangle1_1_1", {1, 1, 1, 1}, "triangleLeftAndRightShape", {1})
     addToShapeArray(sp, "shape","triangle2_1_1", {1, 1, 5, 1}, "triangleTopRightShape")
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"triangle2_1_1"},{"slide"},{},{1},{1},{1,1,5,1},{"*"},{1,1,5,2},{2},{1,1,6,2}})
+    addToTransitionArray(ta,{{"triangle2_1_1"},{"slide"},{},{1},{1},{1,1,5,1},{"*"},{1,1,5,2},{2},{1,1,6,2}})
     addToShapeArray(sp, "shape","triangle3_1_1", {1, 1, 6, 1}, "triangleBottomLeftShape")
     addToShapeArray(sp, "shape","triangle4_1_1", {1, 1, 4, 2}, "triangleBottomRightShape")
     addToShapeArray(sp, "shape","triangle5_1_1", {1, 1, 1, 3}, "triangleLeftAndRightShape", {1})
@@ -20,9 +22,9 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
 
     --SCREEN 2-1
     addToShapeArray(sp, "shape","triangle1_2_1", {2, 1, 2, 1}, "triangleTopLeftShape", {1, 6})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"triangle1_2_1"},{"slide"},{},{1},{1},{2,1,2,1},{2},{2,1,2,2}})
+    addToTransitionArray(ta,{{"triangle1_2_1"},{"slide"},{},{1},{1},{2,1,2,1},{2},{2,1,2,2}})
     addToShapeArray(sp, "shape","triangle2_2_1", {2, 1, 7, 1}, "triangleBottomRightShape", {1, 3})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"triangle2_2_1"},{"slide"},{},{3},{1},{2,1,3,3},{2},{2,1,4,2},{"*"},{2,1,4,1},{3},{2,1,7,1}})
+    addToTransitionArray(ta,{{"triangle2_2_1"},{"slide"},{},{3},{1},{2,1,3,3},{2},{2,1,4,2},{"*"},{2,1,4,1},{3},{2,1,7,1}})
     addToShapeArray(sp, "door","door2_2_1", {2, 1, 1, 2}, "left")
     addToShapeArray(sp, "shape","triangle3_2_1", {2, 1, 6, 2}, "triangleTopLeftShape")
     addToShapeArray(sp, "shape","triangle4_2_1", {2, 1, 7, 2}, "triangleTopRightShape")
@@ -32,7 +34,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     addToShapeArray(sp, "shape","triangle6_2_1", {2, 1, 2, 5}, "triangleBottomLeftShape")
     addToShapeArray(sp, "characterChangePoint","characterChangePoint1_2_1", {2, 1, 6, 5})
     addToShapeArray(sp, "shape","triangle7_2_1", {2, 1, 7, 5}, "triangleBottomRightShape")
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"triangle7_2_1"},{"slide"},{},{2},{1},{2,1,7,3},{2},{2,1,7,5}})
+    addToTransitionArray(ta,{{"triangle7_2_1"},{"slide"},{},{2},{1},{2,1,7,3},{2},{2,1,7,5}})
 
     --GEMS
     addToShapeArray(sp, "gem","purple", {1, 1, 5, 3}, "purple")

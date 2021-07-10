@@ -1,40 +1,42 @@
 local t = {}
 local addToShapeArray = require("utils.add-to-shape-array");
+local addToTransitionArray = require("utils.add-to-transition-array");
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
-    local sp = shapeArrayParameters;    --------  CREATE OBJECTS HERE   -----------
+    local sp = shapeArrayParameters;
+    local ta = mainFunc.allLevelSettings.transitionArrayIndex;   
     
     --SCREEN 1-1
     addToShapeArray(sp, "shape","triangle1_1_1", {1, 1, 3, 1}, "triangleTopRightShape", {1})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"triangle1_1_1"},{"slide"},{"green"},{2},{1},{1,1,1,1},{2},{1,1,3,1}})
+    addToTransitionArray(ta,{{"triangle1_1_1"},{"slide"},{"green"},{2},{1},{1,1,1,1},{2},{1,1,3,1}})
     addToShapeArray(sp, "autoFan","autoFan1_1_1", {1, 1, 1, 2}, "right")
     addToShapeArray(sp, "shape","triangle2_1_1", {1, 1, 5, 2}, "triangleBottomLeftShape", {1})
     addToShapeArray(sp, "shape","triangle3_1_1", {1, 1, 7, 2}, "triangleBottomLeftShape", {1, 2})
     addToShapeArray(sp, "shape","triangle4_1_1", {1, 1, 3, 3}, "triangleTopRightShape", {1})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"triangle4_1_1"},{"slide"},{"green"},{1},{1},{1,1,3,3},{2},{1,1,3,4}})
+    addToTransitionArray(ta,{{"triangle4_1_1"},{"slide"},{"green"},{1},{1},{1,1,3,3},{2},{1,1,3,4}})
     addToShapeArray(sp, "item","map", {1, 1, 4, 3})
     addToShapeArray(sp, "autoFan","autoFan2_1_1", {1, 1, 1, 4}, "down")
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"autoFan2_1_1"},{"slide"},{"orange"},{1},{1},{1,1,1,4},{2},{1,1,2,2}})
+    addToTransitionArray(ta,{{"autoFan2_1_1"},{"slide"},{"orange"},{1},{1},{1,1,1,4},{2},{1,1,2,2}})
     addToShapeArray(sp, "autoFan","autoFan3_1_1", {1, 1, 7, 4}, "down")
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"autoFan3_1_1"},{"slide"},{"orange"},{1},{1},{1,1,7,4},{2},{1,1,7,5}})
+    addToTransitionArray(ta,{{"autoFan3_1_1"},{"slide"},{"orange"},{1},{1},{1,1,7,4},{2},{1,1,7,5}})
     addToShapeArray(sp, "door","door1_1_1", {1, 1, 1, 5}, "down")
     addToShapeArray(sp, "door","door2_1_1", {1, 1, 2, 5}, "down")
     addToShapeArray(sp, "simple","simple1_1_1", {1, 1, 4, 5})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"simple1_1_1"},{"slide"},{"lightBlue"},{2},{1},{1,1,3,5},{2},{1,1,4,5},{3},{1,1,6,5}})
+    addToTransitionArray(ta,{{"simple1_1_1"},{"slide"},{"lightBlue"},{2},{1},{1,1,3,5},{2},{1,1,4,5},{3},{1,1,6,5}})
     addToShapeArray(sp, "door","door3_1_1", {1, 1, 5, 5}, "down")
     addToShapeArray(sp, "door","door4_1_1", {1, 1, 7, 5}, "down")
 
     --SCREEN 1-2
     addToShapeArray(sp, "shape","triangle1_1_2", {1, 2, 1, 1}, "triangleBottomRightShape", {1, 3})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"triangle1_1_2"},{"slide"},{"green"},{1},{1},{1,2,1,1},{2},{1,2,2,1}})
+    addToTransitionArray(ta,{{"triangle1_1_2"},{"slide"},{"green"},{1},{1},{1,2,1,1},{2},{1,2,2,1}})
     addToShapeArray(sp, "simple","simple1_1_2", {1, 2, 4, 1})
     addToShapeArray(sp, "door","door1_1_2", {1, 2, 4, 1}, "up")
     addToShapeArray(sp, "autoFan","autoFan1_1_2", {1, 2, 6, 3}, "up")
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"autoFan1_1_2"},{"slide"},{"orange"},{2},{1},{1,2,6,1},{2},{1,2,6,3}})
+    addToTransitionArray(ta,{{"autoFan1_1_2"},{"slide"},{"orange"},{2},{1},{1,2,6,1},{2},{1,2,6,3}})
     addToShapeArray(sp, "door","door2_1_2", {1, 2, 6, 1}, "up")
     addToShapeArray(sp, "shape","triangle2_1_2", {1, 2, 2, 2}, "triangleBottomLeftShape", {1, 4})
     addToShapeArray(sp, "shape","triangle3_1_2", {1, 2, 5, 2}, "triangleBottomRightShape", {1})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"triangle3_1_2"},{"slide"},{"green"},{2},{1},{1,2,3,2},{2},{1,2,5,2}})
+    addToTransitionArray(ta,{{"triangle3_1_2"},{"slide"},{"green"},{2},{1},{1,2,3,2},{2},{1,2,5,2}})
     addToShapeArray(sp, "autoFan","autoFan2_1_2", {1, 2, 7, 2}, "left")
     addToShapeArray(sp, "autoFan","autoFan3_1_2", {1, 2, 1, 3}, "right")
     addToShapeArray(sp, "shape","triangle4_1_2", {1, 2, 7, 3}, "triangleBottomLeftShape", {1})

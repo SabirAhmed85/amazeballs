@@ -1,8 +1,10 @@
 local t = {}
 local addToShapeArray = require("utils.add-to-shape-array");
+local addToTransitionArray = require("utils.add-to-transition-array");
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
-    local sp = shapeArrayParameters;    --------  CREATE OBJECTS HERE   -----------
+    local sp = shapeArrayParameters;
+    local ta = mainFunc.allLevelSettings.transitionArrayIndex;   
 
     --SCREEN 1-1
     addToShapeArray(sp, "shape","triangle1_1_1", {1, 1, 1, 1}, "triangleBottomRightShape")
@@ -18,9 +20,9 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
 
     --SCREEN 1-2
     addToShapeArray(sp, "autoFan","autoFan1_1_2", {1, 2, 4, 2}, "down")
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"autoFan1_1_2"},{"autoSlide"},{timePerSquare = 600},{2},{1},{1,2,4,2},{2},{1,2,4,5}})
+    addToTransitionArray(ta,{{"autoFan1_1_2"},{"autoSlide"},{timePerSquare = 600},{2},{1},{1,2,4,2},{2},{1,2,4,5}})
     addToShapeArray(sp, "spitter","spitter1_1_2", {1, 2, 5, 1}, {"none","right","none","none"})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"spitter1_1_2"},{"slide"},{},{1},{1},{1,2,5,1},{2},{1,2,5,2}})
+    addToTransitionArray(ta,{{"spitter1_1_2"},{"slide"},{},{1},{1},{1,2,5,1},{2},{1,2,5,2}})
     addToShapeArray(sp, "shape","triangle1_1_2", {1, 2, 7, 2}, "triangleBottomLeftShape")
     addToShapeArray(sp, "gun","gun1_1_2", {1, 2, 2, 4}, "right")
     addToShapeArray(sp, "endPoint","endPoint1_1_2", {1, 2, 7, 5})

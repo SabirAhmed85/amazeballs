@@ -1,23 +1,25 @@
 local t = {}
 local addToShapeArray = require("utils.add-to-shape-array");
+local addToTransitionArray = require("utils.add-to-transition-array");
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
-    local sp = shapeArrayParameters;    --------  CREATE OBJECTS HERE   -----------
+    local sp = shapeArrayParameters;
+    local ta = mainFunc.allLevelSettings.transitionArrayIndex;   
 
     --SCREEN 1-1
     addToShapeArray(sp, "item","map", {1, 1, 1, 1})
     addToShapeArray(sp, "spitter","spitter1_1_1", {1, 1, 3, 1}, {"none","right","none","left"})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"spitter1_1_1"},{"slide"},{},{1},{1},{1,1,3,1},{2},{1,1,3,3}})
+    addToTransitionArray(ta,{{"spitter1_1_1"},{"slide"},{},{1},{1},{1,1,3,1},{2},{1,1,3,3}})
     addToShapeArray(sp, "shape","triangle2_1_1", {1, 1, 6, 1}, "triangleBottomLeftShape", {1, 23, "breakable"})
     addToShapeArray(sp, "spitter","spitter2_1_1", {1, 1, 2, 2}, {"none","none","down","none"})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"spitter2_1_1"},{"slide"},{},{1},{1},{1,1,2,2},{2},{1,1,2,4}})
+    addToTransitionArray(ta,{{"spitter2_1_1"},{"slide"},{},{1},{1},{1,1,2,2},{2},{1,1,2,4}})
     addToShapeArray(sp, "shape","bar1_1_1", {1, 1, 4, 2}, "bar", {"horz", 2})
     addToShapeArray(sp, "spitter","spitter3_1_1", {1, 1, 5, 2}, {"none","right","none","none"})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"spitter3_1_1"},{"slide"},{},{1},{1},{1,1,5,2},{2},{1,1,5,3}})
+    addToTransitionArray(ta,{{"spitter3_1_1"},{"slide"},{},{1},{1},{1,1,5,2},{2},{1,1,5,3}})
     addToShapeArray(sp, "shape","triangle2_1_1", {1, 1, 4, 4}, "triangleTopLeftShape", {1, 5, "breakable"})
     addToShapeArray(sp, "door","door1_1_1", {1, 1, 2, 5}, "down")
     addToShapeArray(sp, "spitter","spitter4_1_1", {1, 1, 6, 5}, {"none","right","none","left"})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"spitter4_1_1"},{"slide"},{},{2},{1},{1,1,6,3},{2},{1,1,6,5}})
+    addToTransitionArray(ta,{{"spitter4_1_1"},{"slide"},{},{2},{1},{1,1,6,3},{2},{1,1,6,5}})
     addToShapeArray(sp, "shape","triangle3_1_1", {1, 1, 7, 5}, "triangleBottomLeftShape", {1, _, "icy"})
     addToShapeArray(sp, "door","door1_1_1", {1, 1, 7, 5}, "down")
 
@@ -25,15 +27,15 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     addToShapeArray(sp, "door","door1_1_2", {1, 2, 5, 1}, "up")
     addToShapeArray(sp, "door","door2_1_2", {1, 2, 6, 1}, "up")
     addToShapeArray(sp, "spitter","spitter1_1_2", {1, 2, 2, 3}, {"none","right","none","none"})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"spitter1_1_2"},{"slide"},{},{2},{1},{1,2,2,2},{2},{1,2,2,3}})
+    addToTransitionArray(ta,{{"spitter1_1_2"},{"slide"},{},{2},{1},{1,2,2,2},{2},{1,2,2,3}})
     addToShapeArray(sp, "spitter","spitter2_1_2", {1, 2, 5, 3, "up","none","none","none"})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"spitter2_1_2"},{"slide"},{},{2},{1},{1,2,5,1},{2},{1,2,5,3}})
+    addToTransitionArray(ta,{{"spitter2_1_2"},{"slide"},{},{2},{1},{1,2,5,1},{2},{1,2,5,3}})
     addToShapeArray(sp, "shape","bar1_1_2", {1, 2, 6, 3}, "bar", {"horz", 4})
     addToShapeArray(sp, "spitter","spitter3_1_2", {1, 2, 6, 3, "up","none","none","left"})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"spitter3_1_2"},{"slide"},{},{1},{1},{1,2,6,3},{2},{1,2,6,5}})
+    addToTransitionArray(ta,{{"spitter3_1_2"},{"slide"},{},{1},{1},{1,2,6,3},{2},{1,2,6,5}})
     addToShapeArray(sp, "endPoint","endPoint1_1_2", {1, 2, 7, 3})
     addToShapeArray(sp, "spitter","spitter4_1_2", {1, 2, 4, 5}, {"none","right","none","none"})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"spitter4_1_2"},{"slide"},{},{2},{1},{1,2,4,2},{2},{1,2,4,4},{3},{1,2,4,5}})
+    addToTransitionArray(ta,{{"spitter4_1_2"},{"slide"},{},{2},{1},{1,2,4,2},{2},{1,2,4,4},{3},{1,2,4,5}})
 
     --SWITCHES
 

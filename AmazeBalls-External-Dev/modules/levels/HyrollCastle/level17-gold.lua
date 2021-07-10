@@ -1,8 +1,10 @@
 local t = {}
 local addToShapeArray = require("utils.add-to-shape-array");
+local addToTransitionArray = require("utils.add-to-transition-array");
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
-    local sp = shapeArrayParameters;    --------  CREATE OBJECTS HERE   -----------
+    local sp = shapeArrayParameters;
+    local ta = mainFunc.allLevelSettings.transitionArrayIndex;   
 
     --SCREEN 1-1
     addToShapeArray(sp, "item","map", {1, 1, 3, 1})
@@ -29,7 +31,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     addToShapeArray(sp, "shape","triangle3_1_2", {1, 2, 7, 2}, "triangleTopLeftShape", {1, _, "hyroll"})
     addToShapeArray(sp, "shape","triangle4_1_2", {1, 2, 3, 3}, "triangleBottomLeftShape")
     addToShapeArray(sp, "backFire","backFire1_1_2", {1, 2, 5, 3})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"backFire1_1_2"},{"slide"},{},{1},{1},{1,2,5,3},{2},{1,2,5,5}})
+    addToTransitionArray(ta,{{"backFire1_1_2"},{"slide"},{},{1},{1},{1,2,5,3},{2},{1,2,5,5}})
     addToShapeArray(sp, "autoFan","autoFan2_1_2", {1, 2, 1, 4}, "right")
     addToShapeArray(sp, "door","door2_1_2", {1, 2, 7, 4}, "right")
 
@@ -40,9 +42,9 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     addToShapeArray(sp, "shape","triangle2_2_2", {2, 2, 2, 2}, "triangleBottomLeftShape", {1, _, "hyroll"})
     addToShapeArray(sp, "shape","bar2_2_2", {2, 2, 4, 2}, "bar", {"horz", 2})
     addToShapeArray(sp, "autoFan","autoFan1_2_2", {2, 2, 6, 2}, "right")
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"autoFan1_2_2"},{"slide"},{},{2},{1},{2,2,4,2},{2},{2,2,6,2},{3},{2,2,6,3}})
+    addToTransitionArray(ta,{{"autoFan1_2_2"},{"slide"},{},{2},{1},{2,2,4,2},{2},{2,2,6,2},{3},{2,2,6,3}})
     addToShapeArray(sp, "autoFan","autoFan2_2_2", {2, 2, 3, 3}, "up")
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"autoFan2_2_2"},{"slide"},{},{3},{1},{2,2,3,1},{2},{2,2,3,2},{3},{2,2,3,3}})
+    addToTransitionArray(ta,{{"autoFan2_2_2"},{"slide"},{},{3},{1},{2,2,3,1},{2},{2,2,3,2},{3},{2,2,3,3}})
     addToShapeArray(sp, "shape","triangle3_2_2", {2, 2, 4, 4}, "triangleTopLeftShape", {1, _, "hyroll"})
     addToShapeArray(sp, "door","door2_2_2", {2, 2, 1, 5}, "left")
     addToShapeArray(sp, "autoFan","autoFan3_2_2", {2, 2, 3, 5}, "left")

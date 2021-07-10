@@ -1,23 +1,25 @@
 local t = {}
 local addToShapeArray = require("utils.add-to-shape-array");
+local addToTransitionArray = require("utils.add-to-transition-array");
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
-    local sp = shapeArrayParameters;    --------  CREATE OBJECTS HERE   -----------
+    local sp = shapeArrayParameters;
+    local ta = mainFunc.allLevelSettings.transitionArrayIndex;   
 
     --SCREEN 1-1
     addToShapeArray(sp, "endPoint","endPoint1_1_1", {1, 1, 1, 1})
     addToShapeArray(sp, "shape","triangle1_1_1", {1, 1, 3, 2}, "triangleLeftAndRightShape", {1})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"triangle1_1_1"},{"slide"},{"green"},{2},{1},{1,1,2,2},{2},{1,1,3,2}})
+    addToTransitionArray(ta,{{"triangle1_1_1"},{"slide"},{"green"},{2},{1},{1,1,2,2},{2},{1,1,3,2}})
     addToShapeArray(sp, "shape","triangle2_1_1", {1, 1, 5, 2}, "triangleLeftAndRightShape", {2})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"triangle2_1_1"},{"slide"},{"green"},{1},{1},{1,1,5,2},{2},{1,1,6,2}})
+    addToTransitionArray(ta,{{"triangle2_1_1"},{"slide"},{"green"},{1},{1},{1,1,5,2},{2},{1,1,6,2}})
     addToShapeArray(sp, "door","door1_1_1", {1, 1, 6, 5}, "down")
 
     --SCREEN 1-2
     addToShapeArray(sp, "door","door1_1_2", {1, 2, 1, 1}, "up")
     addToShapeArray(sp, "shape","triangle1_1_2", {1, 2, 2, 4}, "triangleTopAndBottomShape", {1})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"triangle1_1_2"},{"slide"},{"green"},{2},{1},{1,2,1,4},{2},{1,2,2,4}})
+    addToTransitionArray(ta,{{"triangle1_1_2"},{"slide"},{"green"},{2},{1},{1,2,1,4},{2},{1,2,2,4}})
     addToShapeArray(sp, "shape","triangle2_1_2", {1, 2, 6, 4}, "triangleTopAndBottomShape", {1})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"triangle2_1_2"},{"slide"},{"green"},{2},{1},{1,2,5,4},{2},{1,2,6,4}})
+    addToTransitionArray(ta,{{"triangle2_1_2"},{"slide"},{"green"},{2},{1},{1,2,5,4},{2},{1,2,6,4}})
 
     --GEMS
     addToShapeArray(sp, "gem","purple", {1, 1, 4, 2}, "purple")

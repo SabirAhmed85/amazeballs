@@ -1,8 +1,10 @@
 local t = {}
 local addToShapeArray = require("utils.add-to-shape-array");
+local addToTransitionArray = require("utils.add-to-transition-array");
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
-    local sp = shapeArrayParameters;    --------  CREATE OBJECTS HERE   -----------
+    local sp = shapeArrayParameters;
+    local ta = mainFunc.allLevelSettings.transitionArrayIndex;   
 
     --SCREEN 1-1
     addToShapeArray(sp, "shape","bar1_1_1", {1, 1, 5, 1}, "bar", {"vert", 3})
@@ -10,32 +12,32 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     addToShapeArray(sp, "shape","triangle1_1_1", {1, 1, 3, 2}, "triangleBottomRightShape")
     addToShapeArray(sp, "autoFan","autoFan1_1_1", {1, 1, 4, 2}, "down")
     addToShapeArray(sp, "manualFan","manualFan1_1_1", {1, 1, 2, 3}, "down")
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"manualFan1_1_1"},{"slide"},{},{1},{1},{1,1,2,3},{"*"},{1,1,2,1},{2},{1,1,5,1},{3},{1,1,7,2}})
+    addToTransitionArray(ta,{{"manualFan1_1_1"},{"slide"},{},{1},{1},{1,1,2,3},{"*"},{1,1,2,1},{2},{1,1,5,1},{3},{1,1,7,2}})
     addToShapeArray(sp, "shape","triangle2_1_1", {1, 1, 2, 4}, "triangleTopRightShape")
     addToShapeArray(sp, "shape","triangle3_1_1", {1, 1, 3, 4}, "triangleTopLeftShape")
     addToShapeArray(sp, "autoFan","autoFan2_1_1", {1, 1, 6, 4}, "right")
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"autoFan2_1_1"},{"switchSlide"},{},{2},{1},{1,1,5,4},{2},{1,1,6,4}})
+    addToTransitionArray(ta,{{"autoFan2_1_1"},{"switchSlide"},{},{2},{1},{1,1,5,4},{2},{1,1,6,4}})
     addToShapeArray(sp, "manualFan","manualFan2_1_1", {1, 1, 7, 4}, "up")
     addToShapeArray(sp, "shape","bar3_1_1", {1, 1, 8, 4}, "bar", {"horz", 2})
     addToShapeArray(sp, "shape","triangle4_1_1", {1, 1, 4, 5}, "triangleTopRightShape")
     addToShapeArray(sp, "shape","triangle5_1_1", {1, 1, 6, 5}, "triangleTopRightShape", {1, 13})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"triangle5_1_1"},{"flip-horizontal"}})
+    addToTransitionArray(ta,{{"triangle5_1_1"},{"flip-horizontal"}})
     addToShapeArray(sp, "door","door1_1_1", {1, 1, 7, 5, "down", "disabled"})
 
     --SCREEN 1-2
     addToShapeArray(sp, "manualFan","manualFan1_1_2", {1, 2, 1, 1}, "right")
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"manualFan1_1_2"},{"switchSlide"},{},{1},{1},{1,2,1,1},{2},{1,2,2,1}})
+    addToTransitionArray(ta,{{"manualFan1_1_2"},{"switchSlide"},{},{1},{1},{1,2,1,1},{2},{1,2,2,1}})
     addToShapeArray(sp, "shape","triangle1_1_2", {1, 2, 5, 1}, "triangleTopLeftShape")
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"triangle1_1_2"},{"switchSlide"},{},{3},{1},{1,2,2,2},{2},{1,2,4,1},{3},{1,2,5,1}})
+    addToTransitionArray(ta,{{"triangle1_1_2"},{"switchSlide"},{},{3},{1},{1,2,2,2},{2},{1,2,4,1},{3},{1,2,5,1}})
     addToShapeArray(sp, "shape","bar1_1_2", {1, 2, 7, 1}, "bar", {"horz"})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"bar1_1_2"},{"switchSlide"},{},{1},{1},{1,2,7,1},{2},{1,2,7,2}})
+    addToTransitionArray(ta,{{"bar1_1_2"},{"switchSlide"},{},{1},{1},{1,2,7,1},{2},{1,2,7,2}})
     addToShapeArray(sp, "shape","bar2_1_2", {1, 2, 6, 2}, "bar", {"horz", 3})
     addToShapeArray(sp, "shape","triangle2_1_2", {1, 2, 2, 3}, "triangleBottomRightShape")
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"triangle2_1_2"},{"switchSlide"},{},{1},{1},{1,2,2,3},{2},{1,2,2,4}})
+    addToTransitionArray(ta,{{"triangle2_1_2"},{"switchSlide"},{},{1},{1},{1,2,2,3},{2},{1,2,2,4}})
     addToShapeArray(sp, "shape","bar3_1_2", {1, 2, 4, 3}, "bar", {"vert"})
     addToShapeArray(sp, "shape","triangle3_1_2", {1, 2, 5, 3}, "triangleBottomRightShape", {1, _, "icy"})
     addToShapeArray(sp, "autoFan","autoFan1_1_2", {1, 2, 6, 3}, "left")
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"autoFan1_1_2"},{"switchSlide"},{},{1},{1},{1,2,6,3},{2},{1,2,7,4}})
+    addToTransitionArray(ta,{{"autoFan1_1_2"},{"switchSlide"},{},{1},{1},{1,2,6,3},{2},{1,2,7,4}})
     addToShapeArray(sp, "door","door1_1_2", {1, 2, 4, 5}, "down")
 
     --SCREEN 1-3

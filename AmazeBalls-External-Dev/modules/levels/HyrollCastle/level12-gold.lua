@@ -1,8 +1,10 @@
 local t = {}
 local addToShapeArray = require("utils.add-to-shape-array");
+local addToTransitionArray = require("utils.add-to-transition-array");
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
-    local sp = shapeArrayParameters;    --------  CREATE OBJECTS HERE   -----------
+    local sp = shapeArrayParameters;
+    local ta = mainFunc.allLevelSettings.transitionArrayIndex;   
 
     --SCREEN 1-1
     addToShapeArray(sp, "shape","bar1_1_1", {1, 1, 1, 1}, "bar", {"horz"})
@@ -10,32 +12,32 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     addToShapeArray(sp, "manualFan","manualFan1_1_1", {1, 1, 1, 1}, "down")
     addToShapeArray(sp, "shape","bar3_1_1", {1, 1, 2, 1}, "bar", {"horz"})
     addToShapeArray(sp, "manualFan","manualFan2_1_1", {1, 1, 2, 2}, "down")
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"manualFan2_1_1"},{"slide"},{},{1},{1},{1,1,2,2},{2},{1,1,2,1},{3},{1,1,3,1}})
+    addToTransitionArray(ta,{{"manualFan2_1_1"},{"slide"},{},{1},{1},{1,1,2,2},{2},{1,1,2,1},{3},{1,1,3,1}})
     addToShapeArray(sp, "shape","bar4_1_1", {1, 1, 1, 3}, "bar", {"horz", 2})
     addToShapeArray(sp, "manualFan","manualFan3_1_1", {1, 1, 1, 3}, "up")
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"manualFan3_1_1"},{"slide"},{},{1},{1},{1,1,1,3},{2},{1,1,1,5}})
+    addToTransitionArray(ta,{{"manualFan3_1_1"},{"slide"},{},{1},{1},{1,1,1,3},{2},{1,1,1,5}})
     addToShapeArray(sp, "backFire","backFire1_1_1", {1, 1, 5, 4})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"backFire1_1_1"},{"slide"},{},{2},{1},{1,1,3,4},{2},{1,1,5,4}})
+    addToTransitionArray(ta,{{"backFire1_1_1"},{"slide"},{},{2},{1},{1,1,3,4},{2},{1,1,5,4}})
     addToShapeArray(sp, "door","door1_1_1", {1, 1, 1, 5}, "down")
     addToShapeArray(sp, "shape","bar5_1_1", {1, 1, 3, 5}, "bar", {"horz"})
     addToShapeArray(sp, "simple","simple1_1_1", {1, 1, 6, 5})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"simple1_1_1"},{"slide"},{},{2},{1},{1,1,5,5},{2},{1,1,6,5},{3},{1,1,6,3},{4},{1,1,7,3}})
+    addToTransitionArray(ta,{{"simple1_1_1"},{"slide"},{},{2},{1},{1,1,5,5},{2},{1,1,6,5},{3},{1,1,6,3},{4},{1,1,7,3}})
     addToShapeArray(sp, "shape","triangle1_1_1", {1, 1, 7, 5}, "triangleBottomLeftShape", {1, 4})
     addToShapeArray(sp, "shape","bar6_1_1", {1, 1, 8, 5}, "bar", {"horz"})
 
     --SCREEN 1-2
     addToShapeArray(sp, "autoFan","autoFan1_1_2", {1, 2, 5, 1}, "right")
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"autoFan1_1_2"},{"slide"},{},{2},{1},{1,2,2,1},{2},{1,2,5,1},{3},{1,2,5,3}})
+    addToTransitionArray(ta,{{"autoFan1_1_2"},{"slide"},{},{2},{1},{1,2,2,1},{2},{1,2,5,1},{3},{1,2,5,3}})
     addToShapeArray(sp, "autoFan","autoFan2_1_2", {1, 2, 7, 2}, "down")
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"autoFan2_1_2"},{"slide"},{},{2},{1},{1,2,6,2},{2},{1,2,7,2}})
+    addToTransitionArray(ta,{{"autoFan2_1_2"},{"slide"},{},{2},{1},{1,2,6,2},{2},{1,2,7,2}})
     addToShapeArray(sp, "autoFan","autoFan3_1_2", {1, 2, 2, 2}, "right")
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"autoFan3_1_2"},{"slide"},{},{2},{1},{1,2,1,3},{2},{1,2,1,2},{3},{1,2,2,2}})
+    addToTransitionArray(ta,{{"autoFan3_1_2"},{"slide"},{},{2},{1},{1,2,1,3},{2},{1,2,1,2},{3},{1,2,2,2}})
     addToShapeArray(sp, "backFire","backFire1_1_2", {1, 2, 3, 3})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"backFire1_1_2"},{"slide"},{},{3},{1},{1,2,1,5},{2},{1,2,3,5},{3},{1,2,3,3}})
+    addToTransitionArray(ta,{{"backFire1_1_2"},{"slide"},{},{3},{1},{1,2,1,5},{2},{1,2,3,5},{3},{1,2,3,3}})
     addToShapeArray(sp, "shape","bar1_1_2", {1, 2, 6, 3}, "bar", {"horz", 2})
     addToShapeArray(sp, "door","door1_1_2", {1, 2, 7, 3}, "right")
     addToShapeArray(sp, "backFire","backFire2_1_2", {1, 2, 6, 5})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"backFire2_1_2"},{"slide"},{},{2},{1},{1,2,5,5},{2},{1,2,6,5},{3},{1,2,6,4}})
+    addToTransitionArray(ta,{{"backFire2_1_2"},{"slide"},{},{2},{1},{1,2,5,5},{2},{1,2,6,5},{3},{1,2,6,4}})
 
     --SCREEN 2-2
     addToShapeArray(sp, "backFire","backFire1_2_2", {2, 2, 1, 3})

@@ -1,22 +1,24 @@
 local t = {}
 local addToShapeArray = require("utils.add-to-shape-array");
+local addToTransitionArray = require("utils.add-to-transition-array");
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
-    local sp = shapeArrayParameters;    --------  CREATE OBJECTS HERE   -----------
+    local sp = shapeArrayParameters;
+    local ta = mainFunc.allLevelSettings.transitionArrayIndex;   
 
     --SCREEN 1-1
     addToShapeArray(sp, "endPoint","endPoint1_1_1", {1, 1, 6, 1})
     addToShapeArray(sp, "shape","bar1_1_1", {1, 1, 1, 2}, "bar", {"vert", 3})
     addToShapeArray(sp, "shape","bar2_1_1", {1, 1, 5, 2}, "bar", {"vert", 2})
     addToShapeArray(sp, "simple","simple1_1_1", {1, 1, 6, 2})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"simple1_1_1"},{"autoSlide"},{timePerSquare = 400, pauseTime = 0},{2},{1},{1,1,4,2},{2},{1,1,6,2}})
+    addToTransitionArray(ta,{{"simple1_1_1"},{"autoSlide"},{timePerSquare = 400, pauseTime = 0},{2},{1},{1,1,4,2},{2},{1,1,6,2}})
     addToShapeArray(sp, "backFire","backFire1_1_1", {1, 1, 3, 3})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"backFire1_1_1"},{"slide"},{"lightDarkBlue"},{2},{1},{1,1,1,3},{2},{1,1,3,3},{3},{1,1,5,3}})
+    addToTransitionArray(ta,{{"backFire1_1_1"},{"slide"},{"lightDarkBlue"},{2},{1},{1,1,1,3},{2},{1,1,3,3},{3},{1,1,5,3}})
     addToShapeArray(sp, "shape","bar3_1_1", {1, 1, 3, 4}, "bar", {"vert", 3})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"bar3_1_1"},{"autoSlide"},{timePerSquare = 340, pauseTime = 0},{2},{1},{1,1,2,4},{2},{1,1,3,4}})
+    addToTransitionArray(ta,{{"bar3_1_1"},{"autoSlide"},{timePerSquare = 340, pauseTime = 0},{2},{1},{1,1,2,4},{2},{1,1,3,4}})
     addToShapeArray(sp, "shape","bar4_1_1", {1, 1, 6, 3}, "bar", {"vert", 3})
     addToShapeArray(sp, "backFire","backFire2_1_1", {1, 1, 6, 4})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"backFire2_1_1"},{"autoSlide"},{timePerSquare = 400, pauseTime = 0, labelled = false},{2},{1},{1,1,2,4},{2},{1,1,6,4}})
+    addToTransitionArray(ta,{{"backFire2_1_1"},{"autoSlide"},{timePerSquare = 400, pauseTime = 0, labelled = false},{2},{1},{1,1,2,4},{2},{1,1,6,4}})
     addToShapeArray(sp, "shape","bar5_1_1", {1, 1, 1, 6}, "bar", {"vert"})
     addToShapeArray(sp, "simple","simple2_1_1", {1, 1, 2, 5})
     addToShapeArray(sp, "shape","bar6_1_1", {1, 1, 6, 6}, "bar", {"vert", 2})
@@ -25,11 +27,11 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     addToShapeArray(sp, "door","door1_1_2", {1, 2, 2, 1}, "up")
     addToShapeArray(sp, "shape","triangle1_1_2", {1, 2, 2, 2}, "triangleTopRightShape", {1, 13})
     addToShapeArray(sp, "backFire","backFire1_1_2", {1, 2, 4, 2})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"backFire1_1_2"},{"slide"},{"lightDarkBlue"},{1},{1},{1,2,4,2},{2},{1,2,5,2}})
+    addToTransitionArray(ta,{{"backFire1_1_2"},{"slide"},{"lightDarkBlue"},{1},{1},{1,2,4,2},{2},{1,2,5,2}})
     addToShapeArray(sp, "shape","triangle2_1_2", {1, 2, 4, 3}, "triangleLeftAndRightShape", {2})
     addToShapeArray(sp, "shape","triangle3_1_2", {1, 2, 5, 3}, "triangleLeftAndRightShape", {1})
     addToShapeArray(sp, "backFire","backFire2_1_2", {1, 2, 7, 4})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"backFire2_1_2"},{"slide"},{"lightDarkBlue"},{2},{1},{1,2,7,2},{2},{1,2,7,4}})
+    addToTransitionArray(ta,{{"backFire2_1_2"},{"slide"},{"lightDarkBlue"},{2},{1},{1,2,7,2},{2},{1,2,7,4}})
 
     --GEMS
     addToShapeArray(sp, "gem","purple", {1, 1, 5, 1}, "purple")

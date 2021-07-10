@@ -1,8 +1,10 @@
 local t = {}
 local addToShapeArray = require("utils.add-to-shape-array");
+local addToTransitionArray = require("utils.add-to-transition-array");
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
-    local sp = shapeArrayParameters;    --------  CREATE OBJECTS HERE   -----------
+    local sp = shapeArrayParameters;
+    local ta = mainFunc.allLevelSettings.transitionArrayIndex;   
 
     --SCREEN 1-1
     addToShapeArray(sp, "shape","triangle1_1_1", {1, 1, 3, 1}, "triangleBottomRightShape", {1, _, "breakable"})
@@ -24,16 +26,16 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     --SCREEN 2-1
     addToShapeArray(sp, "backFire","backFire1_2_1", {2, 1, 3, 1})
     addToShapeArray(sp, "shape","triangle1_2_1", {2, 1, 6, 1}, "triangleBottomLeftShape")
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"triangle1_2_1"},{"slide"},{},{4},{1},{2,1,4,2},{2},{2,1,5,2},{3},{2,1,5,2},{4},{2,1,6,1}})
+    addToTransitionArray(ta,{{"triangle1_2_1"},{"slide"},{},{4},{1},{2,1,4,2},{2},{2,1,5,2},{3},{2,1,5,2},{4},{2,1,6,1}})
     addToShapeArray(sp, "autoFan","autoFan1_2_1", {2, 1, 6, 3}, "down")
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"autoFan1_2_1"},{"slide"},{},{1},{1},{2,1,6,3},{2},{2,1,7,4}})
+    addToTransitionArray(ta,{{"autoFan1_2_1"},{"slide"},{},{1},{1},{2,1,6,3},{2},{2,1,7,4}})
     addToShapeArray(sp, "shape","bar1_2_1", {2, 1, 1, 4}, "bar", {"horz", 3})
     addToShapeArray(sp, "shape","triangle2_2_1", {2, 1, 3, 4}, "triangleTopLeftShape")
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"triangle2_2_1"},{"flip-horizontal"}})
+    addToTransitionArray(ta,{{"triangle2_2_1"},{"flip-horizontal"}})
     addToShapeArray(sp, "manualFan","manualFan1_2_1", {2, 1, 3, 5}, "up")
     addToShapeArray(sp, "door","door1_2_1", {2, 1, 3, 5}, "down")
     addToShapeArray(sp, "shape","triangle3_2_1", {2, 1, 6, 5}, "triangleTopLeftShape")
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"triangle3_2_1"},{"flip-horizontal"}})
+    addToTransitionArray(ta,{{"triangle3_2_1"},{"flip-horizontal"}})
 
     --SCREEN 1-2
     addToShapeArray(sp, "door","door1_1_2", {1, 2, 4, 1}, "up")

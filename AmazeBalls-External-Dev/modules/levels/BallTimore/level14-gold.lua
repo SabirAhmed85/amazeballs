@@ -1,8 +1,10 @@
 local t = {}
 local addToShapeArray = require("utils.add-to-shape-array");
+local addToTransitionArray = require("utils.add-to-transition-array");
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
-    local sp = shapeArrayParameters;    --------  CREATE OBJECTS HERE   -----------
+    local sp = shapeArrayParameters;
+    local ta = mainFunc.allLevelSettings.transitionArrayIndex;   
 
     --SCREEN 1-1
     addToShapeArray(sp, "shape","triangle1_1_1", {1, 1, 4, 2}, "triangleBottomRightShape", {1, 9, "breakable"})
@@ -35,7 +37,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     addToShapeArray(sp, "shape","triangle5_3_1", {3, 1, 1, 5}, "triangleTopRightShape")
     addToShapeArray(sp, "simple","simple1_3_1", {3, 1, 3, 5})
     addToShapeArray(sp, "autoFan","autoFan4_2_2", 3, 1, 5, 5}, "up")
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"autoFan4_2_2"},{"autoSlide"},{timePerSquare = 600, pauseTime = 0},{1},{1},{3,1,5,5},{2},{3,1,6,5},{3},{3,1,7,5}})
+    addToTransitionArray(ta,{{"autoFan4_2_2"},{"autoSlide"},{timePerSquare = 600, pauseTime = 0},{1},{1},{3,1,5,5},{2},{3,1,6,5},{3},{3,1,7,5}})
 
     --SCREEN 1-2
     addToShapeArray(sp, "shape","triangle1_1_2", {1, 2, 1, 1}, "triangleBottomRightShape", {1, _, "breakable"})

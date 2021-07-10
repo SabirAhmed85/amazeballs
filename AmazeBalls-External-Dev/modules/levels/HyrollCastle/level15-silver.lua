@@ -1,8 +1,10 @@
 local t = {}
 local addToShapeArray = require("utils.add-to-shape-array");
+local addToTransitionArray = require("utils.add-to-transition-array");
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
-    local sp = shapeArrayParameters;    --------  CREATE OBJECTS HERE   -----------
+    local sp = shapeArrayParameters;
+    local ta = mainFunc.allLevelSettings.transitionArrayIndex;   
 
     --SCREEN 1-1
     addToShapeArray(sp, "autoFan","autoFan1_1_1", {1, 1, 4, 1}, "down")
@@ -36,15 +38,15 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     addToShapeArray(sp, "endPoint","endPoint1_2_1", {2, 1, 4, 1})
     addToShapeArray(sp, "shape","triangle1_2_1", {2, 1, 6, 1}, "triangleBottomLeftShape")
     addToShapeArray(sp, "shape","bar1_2_1", {2, 1, 1, 2}, "bar", {"vert", 4})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"bar1_2_1"},{"slide"},{"orange"},{2},{1},{2,1,1,2},{2},{2,1,3,2}})
+    addToTransitionArray(ta,{{"bar1_2_1"},{"slide"},{"orange"},{2},{1},{2,1,1,2},{2},{2,1,3,2}})
     addToShapeArray(sp, "manualFan","manualFan2_2_1", {2, 1, 1, 2}, "right")
     addToShapeArray(sp, "shape","triangle2_2_1", {2, 1, 5, 2}, "triangleBottomLeftShape")
     addToShapeArray(sp, "manualFan","manualFan3_2_1", {2, 1, 1, 3}, "right")
     addToShapeArray(sp, "shape","triangle3_2_1", {2, 1, 4, 3}, "triangleBottomLeftShape")
     addToShapeArray(sp, "shape","bar2_2_1", {2, 1, 1, 4}, "bar", {"vert", 4})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"bar2_2_1"},{"slide"},{"orange"},{1},{1},{2,1,1,4},{2},{2,1,4,5}})
+    addToTransitionArray(ta,{{"bar2_2_1"},{"slide"},{"orange"},{1},{1},{2,1,1,4},{2},{2,1,4,5}})
     addToShapeArray(sp, "shape","bar3_2_1", {2, 1, 6, 4}, "bar", {"vert", 4})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"bar3_2_1"},{"slide"},{"orange"},{2},{1},{2,1,1,3},{2},{2,1,6,4}})
+    addToTransitionArray(ta,{{"bar3_2_1"},{"slide"},{"orange"},{2},{1},{2,1,1,3},{2},{2,1,6,4}})
     addToShapeArray(sp, "shape","triangle4_2_1", {2, 1, 1, 5}, "triangleTopRightShape")
     addToShapeArray(sp, "manualFan","manualFan4_2_1", {2, 1, 4, 5}, "left")
     addToShapeArray(sp, "autoFan","autoFan1_2_1", {2, 1, 5, 5}, "left")

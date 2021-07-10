@@ -1,14 +1,16 @@
 local t = {}
 local addToShapeArray = require("utils.add-to-shape-array");
+local addToTransitionArray = require("utils.add-to-transition-array");
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
-    local sp = shapeArrayParameters;    --------  CREATE OBJECTS HERE   -----------
+    local sp = shapeArrayParameters;
+    local ta = mainFunc.allLevelSettings.transitionArrayIndex;   
 
     --SCREEN 1-1
     addToShapeArray(sp, "shape","triangle1_1_1", {1, 1, 4, 1}, "triangleLeftAndRightShape", {2})
     addToShapeArray(sp, "shape","bar1_1_1", {1, 1, 1, 2}, "bar", {"horz", 3})
     addToShapeArray(sp, "shape","triangle2_1_1", {1, 1, 5, 2}, "triangleBottomRightShape")
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"triangle2_1_1"},{"flip-vertical"}})
+    addToTransitionArray(ta,{{"triangle2_1_1"},{"flip-vertical"}})
     addToShapeArray(sp, "door","door1_1_1", {1, 1, 7, 2}, "right")
 
     --SCREEN 2-1
@@ -16,9 +18,9 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     addToShapeArray(sp, "shape","triangle2_2_1", {2, 1, 7, 2}, "triangleTopRightShape", {1, _, "breakable"})
     addToShapeArray(sp, "shape","bar2_2_1", {2, 1, 8, 2}, "bar", {"horz"})
     addToShapeArray(sp, "spitter","spitter1_2_1", {2, 1, 3, 3}, {"none", "right", "none"}, "left")
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"spitter1_2_1"},{"slide"},{},{1},{1},{2,1,3,3},{2},{2,1,3,4},{3},{2,1,3,5}})
+    addToTransitionArray(ta,{{"spitter1_2_1"},{"slide"},{},{1},{1},{2,1,3,3},{2},{2,1,3,4},{3},{2,1,3,5}})
     addToShapeArray(sp, "shape","bar3_2_1", {2, 1, 7, 3}, "bar", {"horz"})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"bar3_2_1"},{"autoSlide"},{},{1},{1},{2,1,7,3},{2},{2,1,7,5}})
+    addToTransitionArray(ta,{{"bar3_2_1"},{"autoSlide"},{},{1},{1},{2,1,7,3},{2},{2,1,7,5}})
     addToShapeArray(sp, "door","door1_2_1", {2, 1, 1, 4}, "left")
     addToShapeArray(sp, "shape","bar4_2_1", {2, 1, 6, 4}, "bar", {"horz", 3})
     --addToShapeArray(sp, "item","coins", {2, 1, 6, 4}, 100)

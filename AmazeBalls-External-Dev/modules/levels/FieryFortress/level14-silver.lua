@@ -1,8 +1,10 @@
 local t = {}
 local addToShapeArray = require("utils.add-to-shape-array");
+local addToTransitionArray = require("utils.add-to-transition-array");
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
-    local sp = shapeArrayParameters;    --------  CREATE OBJECTS HERE   -----------
+    local sp = shapeArrayParameters;
+    local ta = mainFunc.allLevelSettings.transitionArrayIndex;   
     
     --SCREEN 1-1
     addToShapeArray(sp, "door","door1_1_1", {1, 1, 7, 1}, "right")
@@ -15,7 +17,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     addToShapeArray(sp, "autoFan","autoFan1_1_1", {1, 1, 4, 4}, "right")
     addToShapeArray(sp, "item","map", {1, 1, 5, 4})
     addToShapeArray(sp, "simple","simple1_1_1", {1, 1, 7, 4})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"simple1_1_1"},{"slide"},{"lightBlue"},{4},{1},{1,1,7,1},{2},{1,1,7,2},{3},{1,1,7,3},{4},{1,1,7,4},{5},{1,1,7,5} })
+    addToTransitionArray(ta,{{"simple1_1_1"},{"slide"},{"lightBlue"},{4},{1},{1,1,7,1},{2},{1,1,7,2},{3},{1,1,7,3},{4},{1,1,7,4},{5},{1,1,7,5} })
     addToShapeArray(sp, "door","door4_1_1", {1, 1, 7, 5}, "right")
 
     --SCREEN 1-2

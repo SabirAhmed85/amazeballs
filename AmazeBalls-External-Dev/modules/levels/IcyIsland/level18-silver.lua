@@ -1,8 +1,10 @@
 local t = {}
 local addToShapeArray = require("utils.add-to-shape-array");
+local addToTransitionArray = require("utils.add-to-transition-array");
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
-    local sp = shapeArrayParameters;    --------  CREATE OBJECTS HERE   -----------
+    local sp = shapeArrayParameters;
+    local ta = mainFunc.allLevelSettings.transitionArrayIndex;   
 
     --SCREEN 1-1
     addToShapeArray(sp, "shape","bar1_1_1", {1, 1, 2, 1}, "bar", {"horz", 2})
@@ -10,7 +12,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     addToShapeArray(sp, "shape","triangle1_1_1", {1, 1, 2, 3}, "triangleBottomLeftShape", {1, _, "icy"})
     addToShapeArray(sp, "shape","triangle2_1_1", {1, 1, 5, 3}, "triangleTopRightShape", {1, _, "icy"})
     addToShapeArray(sp, "backFire","backFire1_1_1", {1, 1, 7, 3})
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"backFire1_1_1"},{"slide"},{},{2},{1},{1,1,7,1},{2},{1,1,7,3}})
+    addToTransitionArray(ta,{{"backFire1_1_1"},{"slide"},{},{2},{1},{1,1,7,1},{2},{1,1,7,3}})
     addToShapeArray(sp, "item","mystery-block", {1, 1, 2, 5}, {
         {name = "triangle", properties = {shape = {"triangleTopRightShape"} } },
         {name = "autoFan", properties = {directions = {"right"} } },
@@ -36,7 +38,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     addToShapeArray(sp, "door","door1_2_1", {2, 1, 1, 3}, "left")
     addToShapeArray(sp, "manualFan","manualFan3_2_1", {2, 1, 4, 3}, "left")
     addToShapeArray(sp, "shape","triangle2_2_1", {2, 1, 3, 4}, "triangleBottomRightShape")
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"triangle2_2_1"},{"slide"},{},{1},{1},{2,1,3,4},{2},{2,1,5,5}})
+    addToTransitionArray(ta,{{"triangle2_2_1"},{"slide"},{},{1},{1},{2,1,3,4},{2},{2,1,5,5}})
     addToShapeArray(sp, "autoFan","autoFan3_2_1", {2, 1, 6, 4}, "right")
     addToShapeArray(sp, "door","door1_2_1", {2, 1, 7, 4}, "right")
     addToShapeArray(sp, "autoFan","autoFan4_2_1", {2, 1, 2, 5}, "down")
@@ -49,15 +51,15 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     addToShapeArray(sp, "manualFan","manualFan2_2_2", 3, 1, 1, 2}, "down")
     addToShapeArray(sp, "manualFan","manualFan3_2_2", 3, 1, 4, 2}, "left")
     addToShapeArray(sp, "shape","triangle1_2_2", 3, 1, 5, 2}, "triangleBottomRightShape")
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"triangle1_2_2"},{"slide"},{},{3},{1},{3,1,4,4},{"*"},{3,1,4,3},{2},{3,1,5,3},{3},{3,1,5,2}})
+    addToTransitionArray(ta,{{"triangle1_2_2"},{"slide"},{},{3},{1},{3,1,4,4},{"*"},{3,1,4,3},{2},{3,1,5,3},{3},{3,1,5,2}})
     addToShapeArray(sp, "autoFan","autoFan2_2_2", 3, 1, 6, 2}, "up")
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"autoFan2_2_2"},{"slide"},{},{1},{1},{3,1,6,2},{"*"},{3,1,6,3},{2},{3,1,7,3}})
+    addToTransitionArray(ta,{{"autoFan2_2_2"},{"slide"},{},{1},{1},{3,1,6,2},{"*"},{3,1,6,3},{2},{3,1,7,3}})
     addToShapeArray(sp, "autoFan","autoFan3_2_2", 3, 1, 3, 3}, "left")
     addToShapeArray(sp, "autoFan","autoFan4_2_2", 3, 1, 7, 4}, "up")
     addToShapeArray(sp, "door","door2_2_2", 3, 1, 1, 5}, "left")
     addToShapeArray(sp, "shape","triangle2_2_2", 3, 1, 1, 5}, "triangleTopLeftShape")
     addToShapeArray(sp, "autoFan","autoFan5_2_2", 3, 1, 5, 5}, "left")
-    table.insert(mainFunc.allLevelSettings.transitionArrayIndex,{{"autoFan5_2_2"},{"slide"},{},{2},{1},{3,1,5,4},{2},{3,1,5,5}})
+    addToTransitionArray(ta,{{"autoFan5_2_2"},{"slide"},{},{2},{1},{3,1,5,4},{2},{3,1,5,5}})
 
     --GEMS
     addToShapeArray(sp, "gem","purple", {1, 1, 6, 1}, "purple")
