@@ -314,7 +314,6 @@ local function positionItemDetailedIcon (tool, xCord, yCord, thisIsShapeScreen, 
         }
 
         if propertiesArray["shape"] ~= "triangleTopRightShape" then
-            print(propertiesArray["shape"], "shap", propertiesArray)
             tool.rotation = triangleRotateArray[propertiesArray["shape"]]
             tool.x = tool.x + trianglePositionArray[propertiesArray["shape"]]["x"]
             tool.y = tool.y + trianglePositionArray[propertiesArray["shape"]]["y"]

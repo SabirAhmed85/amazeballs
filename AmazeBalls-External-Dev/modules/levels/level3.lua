@@ -1,5 +1,4 @@
 local addToShapeArray = require("utils.add-to-shape-array");
-local addToTransitionArray = require("utils.add-to-transition-array");
 local t = {};
 
 

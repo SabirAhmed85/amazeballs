@@ -180,9 +180,10 @@ local objectListener = function (event, mainFunc, shapeArray, shapeArrayParamete
     else
 
         for d=1, #mainFunc.allLevelSettings.transitionArrayIndex do
-            if (mainFunc.allLevelSettings.transitionArrayIndex[d][2][1] == "flip-horizontal"
-            or mainFunc.allLevelSettings.transitionArrayIndex[d][2][1] == "flip-vertical")
-            and event.target.name == transitionArrayIndex[d][1][1] then
+            local transition = mainFunc.allLevelSettings.transitionArrayIndex[d];
+
+            if hasValue({"flip-horizontal", "flip-vertical"}, transition["transitionType"])
+            and event.target.name == transition["shapeName"] then
                 if mainFunc.ballBtnScreenCreate.ball.x > (event.target.x - 60)
                 and mainFunc.ballBtnScreenCreate.ball.x < (event.target.x + 60)
                 and mainFunc.ballBtnScreenCreate.ball.y > (event.target.y - 60)
@@ -200,7 +201,7 @@ local objectListener = function (event, mainFunc, shapeArray, shapeArrayParamete
                         or (mainFunc.thisLevelSettings.compassObtained == true and (event.target.relevantHorzScreen  ~= mainFunc.allLevelSettings.ballScreenHorzValue or event.target.relevantVertScreen ~= mainFunc.allLevelSettings.ballScreenVertValue)) then
                             display.getCurrentStage():setFocus(event.target)
                             event.target.isFocus = true
-                            thisFlipDirection = transitionArrayIndex[d][2][1]
+                            thisFlipDirection = transition["transitionType"]
                             mainFunc.objectFlipScript.positionNewFlippedObject(event.target, thisFlipDirection, flipVerticalCounter, mainFunc)
                         end
                     else
@@ -211,8 +212,8 @@ local objectListener = function (event, mainFunc, shapeArray, shapeArrayParamete
                         end
                     end
                 end
-            elseif mainFunc.allLevelSettings.transitionArrayIndex[d][2][1] == "slide" then
-                if event.target.name == transitionArrayIndex[d][1][1] and stillTransitioningCounter == 0 and event.target.transitionCounter == 0 then
+            elseif transition["transitionType"] == "slide" then
+                if event.target.name == transition["shapeName"] and stillTransitioningCounter == 0 and event.target.transitionCounter == 0 then
                     
                     if event.phase == "began"
                     and mainFunc.allLevelSettings.ballActivateButtonSet == false
@@ -579,9 +580,7 @@ local objectBallActivate = function (event, mainFunc, shapeArray, shapeArrayPara
 
         local releaseBallFromSimple = function ()
             mainFunc.projectileMovementRemoveAndRespawnScript.moveProjectile(mainFunc.ballBtnScreenCreate.ball, mainFunc)
-                print("no")
             if mainFunc.allLevelSettings.followShapeWithBallApplied then
-                print("ko")
                 Runtime:removeEventListener("enterFrame", mainFunc.objectToBallTransitionScript.listener)
                 mainFunc.allLevelSettings.followShapeWithBallApplied = false
             end

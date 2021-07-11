@@ -509,7 +509,7 @@ local function openMedalScreen ()
     local totalGoldGemsGainedString = tostring(totalGoldGemsGained)
 
     for a = 1, #shapeArrayParameters do
-        if (shapeArrayParameters[a][1] == "gem" and shapeArrayParameters[a][7] == "purple") then
+        if (shapeArrayParameters[a]["type"] == "gem" and shapeArrayParameters[a]["subType"] == "purple") then
             totalSilverGems = totalSilverGems + 1
         end
     end
@@ -2605,7 +2605,6 @@ function scene:hide( event )
                     objectsGroup[a]:removeSelf()
                     objectsGroup[a] = nil
                 else
-                    --print('Nil ', objectsGroup.numChildren)
                     objectsGroup:remove(objectsGroup[a])
                 end
             end

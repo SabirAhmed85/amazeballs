@@ -439,7 +439,7 @@ local buyButtonPressedMain = function (buyButton, IAPStoreConfigurationArray, IA
 				for a = 1, #currentMyToolArray do
 					result.bool = false
 					local allPropertiesSame = false
-					--print("bit", toolObject[1], currentMyToolArray[a][1], currentMyToolArray[a][3])
+					
 					if toolObject["name"] == currentMyToolArray[a]["name"] then
 						allPropertiesSame = true
 		    			for key, val in pairs (currentMyToolArray[a]["properties"]) do

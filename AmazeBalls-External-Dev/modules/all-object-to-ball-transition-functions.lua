@@ -621,7 +621,7 @@ local fanCentering = function (obj, thisFan, fanCenterTime, mainFunc)
             if obj == ball then 
             	transition.to(obj, {xScale = 1, yScale = 1, time=210})
             end
-			print("HIIIII");
+			
             mainFunc.projectileMovementRemoveAndRespawnScript.moveProjectileArray[obj.direction](obj, mainFunc)
             if obj == ball
             and mainFunc.allLevelSettings.followShapeWithBallApplied then
@@ -715,7 +715,7 @@ local fanCentering = function (obj, thisFan, fanCenterTime, mainFunc)
 		            timer.performWithDelay(250, function () checkForNextObject() end)
 		        elseif thisSwitch.objectsToProcess[objToProcessIndex][1] == "toggle-slide" then
         			for a = 1, #mainFunc.allLevelSettings.transitionArrayIndex do
-        				if mainFunc.allLevelSettings.transitionArrayIndex[a][1][1] == shapeArray[i].name then
+        				if mainFunc.allLevelSettings.transitionArrayIndex[a]["shapeName"] == shapeArray[i].name then
         					if shapeArray[i].isAutoSlideObject then
         						mainFunc.transitionFunctionScript.toggleAutoSlideTimer(mainFunc, shapeArray[i])
         					else
@@ -726,7 +726,7 @@ local fanCentering = function (obj, thisFan, fanCenterTime, mainFunc)
         			end
         		elseif thisSwitch.objectsToProcess[objToProcessIndex][1] == "slide" then
         			for a = 1, #mainFunc.allLevelSettings.transitionArrayIndex do
-        				if mainFunc.allLevelSettings.transitionArrayIndex[a][1][1] == shapeArray[i].name then
+        				if mainFunc.allLevelSettings.transitionArrayIndex[a]["shapeName"] == shapeArray[i].name then
         					shapeArray[i].newDVal = a
                             local function startTransitionMoveSomething ()
 
@@ -830,7 +830,6 @@ local fanCentering = function (obj, thisFan, fanCenterTime, mainFunc)
         			timer.performWithDelay(transTime, function ()
 
 						mainFunc.buttonListenerScript.addBackEventListenersForPause(mainFunc, shapeArray, shapeArrayParameters)
-						print(obj.direction, obj)
             			mainFunc.projectileMovementRemoveAndRespawnScript.moveProjectileArray[obj.direction](obj, mainFunc)
 
 			        	if shapeArrayParameters[thisSwitch.shapeArrayIndex][8]
@@ -1768,7 +1767,6 @@ local prepareForFanCentering = function (obj, shapeIndex, fanCenterTime, fanCent
 
         obj:setSequence(obj.direction)
     end
-	print("PREPARED CENTERING");
     
     if shapeArrayParameters[shapeIndex]["type"] == "spitter" then
         spitterCounter = 0
@@ -2304,7 +2302,6 @@ local autoFanAndEtcTransition = function (mainFunc, shapeArray, shapeArrayParame
 			            if shapeArray[b].isAutoSlideObject then
 			            	mainFunc.allLevelSettings.currentShapeBallShouldFollow = shapeArray[b]
 			            	local listener = function ()
-			            	print("still")
 			            		if ball.x > mainFunc.allLevelSettings.currentShapeBallShouldFollow.x + 20 then
 			            			ball.x = ball.x - 7
 			            		end
@@ -2320,28 +2317,23 @@ local autoFanAndEtcTransition = function (mainFunc, shapeArray, shapeArrayParame
 
 			            		if ball.x < mainFunc.allLevelSettings.currentShapeBallShouldFollow.x + 20
 			            		and ball.x > mainFunc.allLevelSettings.currentShapeBallShouldFollow.x then
-			            		print("x")
 			            			ball.x = mainFunc.allLevelSettings.currentShapeBallShouldFollow.x
 			            		end
 			            		if ball.x > mainFunc.allLevelSettings.currentShapeBallShouldFollow.x - 20
 			            		and ball.x < mainFunc.allLevelSettings.currentShapeBallShouldFollow.x then
-			            		print("x1")
 			            			ball.x = mainFunc.allLevelSettings.currentShapeBallShouldFollow.x
 			            		end
 			            		if ball.y < mainFunc.allLevelSettings.currentShapeBallShouldFollow.y + 20
 			            		and ball.y > mainFunc.allLevelSettings.currentShapeBallShouldFollow.y then
-			            			print("y")
 			            			ball.y = mainFunc.allLevelSettings.currentShapeBallShouldFollow.y
 			            		end
 			            		if ball.y > mainFunc.allLevelSettings.currentShapeBallShouldFollow.y - 20
 			            		and ball.y < mainFunc.allLevelSettings.currentShapeBallShouldFollow.y then
-			            		print("y1")
 			            			ball.y = mainFunc.allLevelSettings.currentShapeBallShouldFollow.y
 			            		end
 			            	end
 			            	mainFunc.objectToBallTransitionScript.listener = listener
 			            	if mainFunc.allLevelSettings.followShapeWithBallApplied == false then
-			            		print("1")
 			            		Runtime:addEventListener("enterFrame", mainFunc.objectToBallTransitionScript.listener)
 			            		mainFunc.allLevelSettings.followShapeWithBallApplied = true
 			            		mainFunc.allLevelSettings.shapeToBeFollowedIndex = shapeArray[b].shapeArrayIndex
@@ -2433,7 +2425,7 @@ local autoFanAndEtcTransition = function (mainFunc, shapeArray, shapeArrayParame
 						end
 						shapeArray[b].shapeArrayIndex = b
 						mainFunc.allLevelSettings.isBallMovingState = "false"
-						print("FAN CENTERING");
+						
 		            	prepareForFanCentering(ball, b, fanCenterTime, fanCentering, mainFunc, shapeArray, shapeArrayParameters)
 			    	end
 			    end
@@ -2766,7 +2758,6 @@ local autoFanAndEtcTransition = function (mainFunc, shapeArray, shapeArrayParame
 		            	processItem(shapeArrayParameters[b])
 		            elseif hasValue({ "big-present", "small-present" }, shapeArrayParameters[b]["name"]) then
 		            	shapeArray[b].relevantToolIndexArray = {}
-						print('SHAPe', shapeArrayParameters[b]["props"][1]);
 		            	-- for a = 1, #shapeArrayParameters[b]["props"][1] do
 		            	-- 	processItem(shapeArrayParameters[b]["props"][1][1])
 		            	-- end

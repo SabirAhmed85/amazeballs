@@ -86,7 +86,7 @@ local removeShapeListenersForPause = function (mainFunc, shapeArray, shapeArrayP
                 end
             end  
             for d=1, #mainFunc.allLevelSettings.transitionArrayIndex do
-                if mainFunc.allLevelSettings.transitionArrayIndex[d][1][1] == shapeArrayParameters[c]["name"] then
+                if mainFunc.allLevelSettings.transitionArrayIndex[d]["shapeName"] == shapeArrayParameters[c]["name"] then
                     shapeArray[c]:removeEventListener("touch", mainFunc.listener)
                 end
             end
@@ -253,7 +253,7 @@ local addBackShapeListenersForPause = function (mainFunc, shapeArray, shapeArray
             end
             
             for d=1, #mainFunc.allLevelSettings.transitionArrayIndex do
-                if mainFunc.allLevelSettings.transitionArrayIndex[d][1][1] == shapeArrayParameters[c]["name"] then
+                if mainFunc.allLevelSettings.transitionArrayIndex[d]["shapeName"] == shapeArrayParameters[c]["name"] then
                     shapeArray[c]:addEventListener("touch", mainFunc.listener)
                 end
             end

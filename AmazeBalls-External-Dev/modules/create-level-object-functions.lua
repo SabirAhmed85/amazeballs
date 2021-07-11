@@ -23,7 +23,6 @@ local function spawn (z, mainFunc)
     local shapeType = shapeParameters["type"];
     local shapeName = shapeParameters["name"];
     local shapeSubType = shapeParameters["subType"];
-    print(shapeType, shapeName, shapeSubType);
     
     if hasValue({ "autoFan", "manualFan", "simple", "spitter", "tunnel", "backFire", "characterChangePoint" }, shapeType) then
         object = sprite(mainFunc.allLevelSettings.allFansImageSheet, mainFunc.allLevelSettings.allFansSequenceData, shapeType)
@@ -85,7 +84,7 @@ local function spawn (z, mainFunc)
 
         local getGeneralItemSequence = function()
             local sequence = shapeName;
-            print(shapeSubType, shapeName);
+            
             if shapeName == "coins"
             and shapeSubType > 99 then
                 sequence = sequence .. "-big"
@@ -198,7 +197,7 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
                 end
             end
         end
-        print("SHPE", shapeArray[z], relevantShape);
+        
         physics.addBody( shapeArray[z], "static", { density=10, friction=1, bounce=0, shape=relevantShape } )
         shapeArray[z].relevantPhysicsBodyParams = { density=10, friction=1, bounce=0, shape=relevantShape }
         shapeArray[z].shape = shapeParameters["subType"]
@@ -207,7 +206,7 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
         if shapeParameters["props"][1] then
             shapeArray[z].state = shapeParameters["props"][1]
         end
-        shapeArray[z].transitionArrayState = shapeParameters["props"][1]
+        shapeArray[z].transitionArrayState = shapeParameters["startPositionIndex"]
         shapeArray[z].isTransitioning = false
         sceneGroup:insert( shapeArray[z] )
         mainFunc.allLevelSettings.frontScreenObjectsGroup:insert( shapeArray[z] )
@@ -309,7 +308,6 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
     elseif shapeParameters["type"] == "shape" and shapeParameters["subType"] == "doubleBar" and shapeParameters["props"][1] == "horz" then
         shapeArray[z].height = mainFunc.allLevelSettings.squareHeight * 1.75
     elseif shapeParameters["type"] == "shape" and shapeParameters["subType"] == "doubleBar" and shapeParameters["props"][1] == "vert" then
-        print(shapeParameters["subType"], shapeParameters["props"][1])
         shapeArray[z].height = mainFunc.allLevelSettings.squareHeight * 2.75
     else
         shapeArray[z].height = mainFunc.allLevelSettings.squareHeight

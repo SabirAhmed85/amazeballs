@@ -1029,7 +1029,6 @@ function scene:show( event )
                 
       --        totalLevels = 0
             --  for secondKey, secondVal in pairs (levelConfigScript.levelConfigArray[Key]) do
-            --      print('sec ', secondKey, secondVal, Key)
             --      if myGameSettings[Key]["levels"][secondKey]["silver_gained"] == true then
             --          silverMedalCounter = silverMedalCounter + 1
             --      end
@@ -1575,25 +1574,23 @@ function scene:hide( event )
             for a=1, objectsGroup.numChildren do
                 if (objectsGroup[a] ~= nil) then
                     objectsGroup[a].alpha = 1
-                    --print('xCord: ', objectsGroup[a].x, ' -- ', objectsGroup[a].y, '-', objectsGroup.numChildren)
+                    
                     --[[
                     if (objectsGroup == mainFunc.allLevelSettings.backgroundObjectsGroup) then
-                        print('bg')
                         --objectsGroup:remove(objectsGroup[a])
                     elseif (objectsGroup == mainFunc.allLevelSettings.frontScreenObjectsGroup) then
-                        print('frontScreen')
+                        
                     elseif (objectsGroup == mainFunc.allLevelSettings.screenObjectsGroup) then
-                        print('screen')
+                        
                     elseif (objectsGroup == mainFunc.allLevelSettings.itemScreenObjectsGroup) then
-                        print('itemscreen')
+                        
                     elseif (objectsGroup == mainFunc.allLevelSettings.pauseScreenObjectsGroup) then
-                        print('pausescreen')
+                        
                     end
                     ]]
                     objectsGroup[a]:removeSelf()
                     objectsGroup[a] = nil
                 else
-                    --print('Nil ', objectsGroup.numChildren)
                     objectsGroup:remove(objectsGroup[a])
                 end
             end

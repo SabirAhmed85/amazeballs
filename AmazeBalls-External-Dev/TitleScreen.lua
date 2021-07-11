@@ -383,7 +383,7 @@ local function facebook (event)
         url = "http://coronalabs.com"
     }
     local isFacebookAvailable = native.canShowPopup( "social", "facebook" )
-    print(isFacebookAvailable, 'fb')
+    
     if (isFacebookAvailable) then
         native.showPopUp("social", options)
     end
@@ -1432,7 +1432,6 @@ function scene:hide( event )
                     objectsGroup[a]:removeSelf()
                     objectsGroup[a] = nil
                 else
-                    --print('Nil ', objectsGroup.numChildren)
                     objectsGroup:remove(objectsGroup[a])
                 end
             end

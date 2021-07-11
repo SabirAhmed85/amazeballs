@@ -794,9 +794,9 @@ end
 -- NOW CREATE TRANSITION SETTINGS
 
 for y = 1, #transitionArrayIndex do
-    if transitionArrayIndex[y][2][1] == "flip-horizontal" then
+    if transitionArrayIndex[y]["transitionType"] == "flip-horizontal" then
 	for z = 1, #shapeArray do
-	    if shapeArray[z].name == transitionArrayIndex[y][1][1] then
+	    if shapeArray[z].name == transitionArrayIndex[y]["shapeName"] then
 		if shapeArrayParameters[z]["props"][1] == 2 then
 		    shapeArray[z].transitionArrayState = 2
 		    shapeArray[z].originalState = 2
@@ -808,9 +808,9 @@ for y = 1, #transitionArrayIndex do
 		shapeArray[z].flipDisabled = false
 	    end
 	end
-    elseif transitionArrayIndex[y][2][1] == "flip-vertical" then
+    elseif transitionArrayIndex[y]["transitionType"] == "flip-vertical" then
 	for z = 1, #shapeArray do
-	    if shapeArray[z].name == transitionArrayIndex[y][1][1] then
+	    if shapeArray[z].name == transitionArrayIndex[y]["shapeName"] then
 		if shapeArrayParameters[z]["props"][1] == 2 then
 		    shapeArray[z].transitionArrayState = 2
 		    shapeArray[z].originalState = 2
@@ -821,16 +821,16 @@ for y = 1, #transitionArrayIndex do
 		shapeArray[z].flipped = false
 	    end
 	end
-    elseif transitionArrayIndex[y][2][1] == "slide" then
+    elseif transitionArrayIndex[y]["transitionType"] == "slide" then
 	local connector
-	local thisSpotColour = transitionArrayIndex[y][3][1]
+	local thisSpotColour = transitionArrayIndex[y]["props"][1]
 	for x = 6, #transitionArrayIndex[y] do
 	    if x % 2 == 0 then
 		connector = display.newImage("images/objects/" .. thisSpotColour .. "-connectorSpot.png")
 		--connector:setReferencePoint(display.CenterCenterReferencePoint);
 		table.insert(connectorArray, connector)
 		connector.alpha = 1
-		connector.relatedShape = transitionArrayIndex[y][1][1]
+		connector.relatedShape = transitionArrayIndex[y]["shapeName"]
 		connector.x = ((transitionArrayIndex[y][x][1] - 1) * display.contentWidth) + (((transitionArrayIndex[y][x][3] - 1) * 60) + 60)
 		connector.y = ((transitionArrayIndex[y][x][2] - 1) * display.contentHeight) + (((transitionArrayIndex[y][x][4] - 1) * 52) + 56)
 		local connectorTubeHorizontal
@@ -922,8 +922,8 @@ for y = 1, #transitionArrayIndex do
 	end
 	
 	for z = 1, #shapeArray do
-	    if shapeArray[z].name == transitionArrayIndex[y][1][1] then
-		shapeArray[z].transitionArrayState = transitionArrayIndex[y][4][1]
+	    if shapeArray[z].name == transitionArrayIndex[y]["shapeName"] then
+		shapeArray[z].transitionArrayState = transitionArrayIndex[y]["startPositionIndex"]
 		thisTransitioningObject = shapeArray[z]
 		
 		thisArrayCount = 0
@@ -1727,7 +1727,7 @@ local function transitionArrayStateChecknew ()
     for e=5, #transitionArrayIndex[d] do
 	if e % 2 ~= 0 then
 	    if transitionArrayIndex[d][e][1] == thisTransitionObject.transitionArrayState
-	    and transitionArrayIndex[d][1][1] == thisTransitionObject.name then
+	    and transitionArrayIndex[d]["shapeName"] == thisTransitionObject.name then
 		thisTransitionObject.thisTransitionHorzSquare = transitionArrayIndex[d][e+1][3]
 		thisTransitionObject.thisTransitionVertSquare = transitionArrayIndex[d][e+1][4]
 		if e < (thisArrayCount - 2) then
@@ -2117,9 +2117,9 @@ end
 local function listener(event)
 
     for d=1, #transitionArrayIndex do
-	if (transitionArrayIndex[d][2][1] == "flip-horizontal"
-	or transitionArrayIndex[d][2][1] == "flip-vertical")
-	and event.target.name == transitionArrayIndex[d][1][1] then
+	if (transitionArrayIndex[d]["transitionType"] == "flip-horizontal"
+	or transitionArrayIndex[d]["transitionType"] == "flip-vertical")
+	and event.target.name == transitionArrayIndex[d]["shapeName"] then
 	    if ball.x > (event.target.x - 60)
 	    and ball.x < (event.target.x + 60)
 	    and ball.y > (event.target.y - 60)
@@ -2146,7 +2146,7 @@ local function listener(event)
 		    thisActualFlippedObjectName = event.target.name
 		    thisActualFlippedObjectShape = event.target.shape
 		    thisActualFlippedObjectTransitionArrayState = event.target.transitionArrayState
-		    thisActualFlippedObjectDirection = transitionArrayIndex[d][2][1]
+		    thisActualFlippedObjectDirection = transitionArrayIndex[d]["transitionType"]
 		    
 		    positionNewFlippedObject()
 		else
@@ -2157,8 +2157,8 @@ local function listener(event)
 		    end
 		end
 	    end
-	elseif transitionArrayIndex[d][2][1] == "slide" then
-	    if event.target.name == transitionArrayIndex[d][1][1] and stillTransitioningCounter == 0 then
+	elseif transitionArrayIndex[d]["transitionType"] == "slide" then
+	    if event.target.name == transitionArrayIndex[d]["shapeName"] and stillTransitioningCounter == 0 then
 		if event.phase == "began" then
 		    thisTransitionObject = event.target
 		    thisTransitionObject.objectType = event.target.objectType
@@ -2529,7 +2529,7 @@ for c=1, #shapeArray do
     end
     
     for d=1, #transitionArrayIndex do
-	if transitionArrayIndex[d][1][1] == shapeArrayParameters[c]["name"] then
+	if transitionArrayIndex[d]["shapeName"] == shapeArrayParameters[c]["name"] then
 	    shapeArray[c]:addEventListener("touch", listener)
 	end
     end

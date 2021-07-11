@@ -484,41 +484,35 @@ local spitterArrowTouch = function (event)
 end
 
 local function activateAutoSlideObject(mainFunc, shapeArray, shapeArrayIndex, transArrayIndex)
-    local c = shapeArrayIndex
-    local d = transArrayIndex
-    local lengthOfArray = #mainFunc.allLevelSettings.transitionArrayIndex[d]
+    local c = shapeArrayIndex;
+    local transition = mainFunc.allLevelSettings.transitionArrayIndex[transArrayIndex];
+    local transPositionArrayLength = #transition["positionArray"];
+
     shapeArray[c].transitionIsNextOrPrev = "next"
-    shapeArray[c].transitionArrayIndex = d
+    shapeArray[c].transitionArrayIndex = transArrayIndex;
     shapeArray[c].timePerSquare = 400
     shapeArray[c].pauseTime = 50
-    if mainFunc.allLevelSettings.transitionArrayIndex[d][3]["timePerSquare"] then
-        shapeArray[c].timePerSquare = mainFunc.allLevelSettings.transitionArrayIndex[d][3]["timePerSquare"]
+    if transition["props"]["timePerSquare"] then
+        shapeArray[c].timePerSquare = transition["props"]["timePerSquare"]
     end
-    if mainFunc.allLevelSettings.transitionArrayIndex[d][3]["pauseTime"] then
-        shapeArray[c].pauseTime = mainFunc.allLevelSettings.transitionArrayIndex[d][3]["pauseTime"]
+    if transition["props"]["pauseTime"] then
+        shapeArray[c].pauseTime = transition["props"]["pauseTime"]
     end
     shapeArray[c].isActiveWhenSliding = true
     shapeArray[c].isAutoSlideObject = true
     shapeArray[c].shouldBallMoveInAutoSlide = false
     shapeArray[c].autoSlideIsPaused = false
-    if mainFunc.allLevelSettings.transitionArrayIndex[d][3]["isActiveWhenSliding"] == false then
+    if transition["props"]["isActiveWhenSliding"] == false then
         shapeArray[c].isActiveWhenSliding = false
     end
-    shapeArray[c].maxSlideTransitionIndex = mainFunc.allLevelSettings.transitionArrayIndex[d][lengthOfArray - 1][1]
-    shapeArray[c].currentSlideTransitionIndex = mainFunc.allLevelSettings.transitionArrayIndex[d][4][1]
+    shapeArray[c].maxSlideTransitionIndex = transPositionArrayLength;
+    shapeArray[c].currentSlideTransitionIndex = transition["startPositionIndex"]
     shapeArray[c].autoSlideTransition = {}
     shapeArray[c].autoSlideTimer = {}
-    for a = 1, #mainFunc.allLevelSettings.transitionArrayIndex[d] do
-        if a > 4 and a % 2 ~= 0 then
-            if mainFunc.allLevelSettings.transitionArrayIndex[d][a][1] == shapeArray[c].currentSlideTransitionIndex then
-                shapeArray[c].currentSlideTransitionIndex = a
-                if a == lengthOfArray - 1 then
-                    shapeArray[c].transitionIsNextOrPrev = "prev"
-                end
-            end
-        end
+    if shapeArray[c].currentSlideTransitionIndex == transPositionArrayLength then
+        shapeArray[c].transitionIsNextOrPrev = "prev"
     end
-
+    
     mainFunc.transitionFunctionScript.actionAutoSlideTimer(mainFunc, shapeArray[c], true)
 end
 
@@ -622,7 +616,6 @@ local function activateObjectsForPlay(mainFunc, shapeArray, shapeArrayIndex)
             and event.target.objectType == "manualFan" then
                 if (event.target.relevantHorzScreen  == mainFunc.allLevelSettings.ballScreenHorzValue and event.target.relevantVertScreen == mainFunc.allLevelSettings.ballScreenVertValue and mainFunc.allLevelSettings.mapShowCounter == 0)
                 or (mainFunc.thisLevelSettings.compassObtained == true and (event.target.relevantHorzScreen  ~= mainFunc.allLevelSettings.ballScreenHorzValue or event.target.relevantVertScreen ~= mainFunc.allLevelSettings.ballScreenVertValue)) then
-                    print("onno")
                     event.target:setSequence("autoFan")
                     event.target.activeNow = true
                     if mainFunc.allLevelSettings.manualFanCounter == 0 then
@@ -1489,7 +1482,7 @@ function scene:hide( event )
                 end
 		        
 		        for d=1, #mainFunc.allLevelSettings.transitionArrayIndex do
-		            if mainFunc.allLevelSettings.transitionArrayIndex[d][1][1] == shapeArrayParameters[c]["name"]
+		            if mainFunc.allLevelSettings.transitionArrayIndex[d]["shapeName"] == shapeArrayParameters[c]["name"]
                     and shapeArray[c].mainFuncListenerAdded == true then
 		                shapeArray[c]:removeEventListener("tap", mainFunc.listener)
 		            end
@@ -1513,7 +1506,6 @@ function scene:hide( event )
 		    		firstTotalNilledCounter = firstTotalNilledCounter + 1
 		        end
 		    end
-		    --print('firsttotal: ', firstTotalCounter, firstTotalNilledCounter)
 		    
 		    for z=1, #shapeArray do
 		    	if (shapeArrayParameters[z]["type"] == "spitter") then
@@ -1567,9 +1559,6 @@ function scene:hide( event )
 		        end
 		    end
 
-		    --print('secondtotal: ', secondTotalCounter, secondTotalNilledCounter)
-
-		    --print('total: ', mainFunc.allLevelSettings.backgroundObjectsGroup.numChildren)
 		    local numChildrenCounter = 0
 		    local numChildrenNilledCounter = 0
 
@@ -1602,7 +1591,6 @@ function scene:hide( event )
 			    		objectsGroup[a]:removeSelf()
 			        	objectsGroup[a] = nil
 			        else
-			        	--print('Nil ', objectsGroup.numChildren)
 			        	objectsGroup:remove(objectsGroup[a])
 			        end
 			    end

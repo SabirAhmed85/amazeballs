@@ -228,7 +228,7 @@ local levelConfigArray = {
 					onLevelStart = function (mainFunc, shapeArray)
 						for c = 1, #shapeArray do
 							for d=1, #mainFunc.allLevelSettings.transitionArrayIndex do
-					            if mainFunc.allLevelSettings.transitionArrayIndex[d][1][1] == shapeArrayParameters[c]["name"] then
+					            if mainFunc.allLevelSettings.transitionArrayIndex[d]["shapeName"] == shapeArrayParameters[c]["name"] then
 					                shapeArray[c]:removeEventListener("touch", mainFunc.listener)
 					        		shapeArray[c].mainFuncListenerAdded = false
 					            end
@@ -370,7 +370,6 @@ local levelConfigArray = {
 											    	
 											    	tutorialPopUp[11].currentBlinkPopUpShouldCancel = false
 											    	timer.performWithDelay(300, function ()
-											    		print("1")
 											    		t.blinkPopUp(tutorialPopUp[11], mainFunc)
 											    	end)
 											    end})
@@ -380,7 +379,7 @@ local levelConfigArray = {
 
 											    	for c = 1, #shapeArray do
 											        	for d=1, #mainFunc.allLevelSettings.transitionArrayIndex do
-												            if mainFunc.allLevelSettings.transitionArrayIndex[d][1][1] == shapeArrayParameters[c]["name"]
+												            if mainFunc.allLevelSettings.transitionArrayIndex[d]["shapeName"] == shapeArrayParameters[c]["name"]
 												            and shapeArray[c].mainFuncListenerAdded == false then
 												                shapeArray[c]:addEventListener("touch", mainFunc.listener)
 												                shapeArray[c].mainFuncListenerAdded = true
@@ -417,7 +416,6 @@ local levelConfigArray = {
 							if objectSlided.name == mainFunc.tutorialActions[b].actionPieceName then
 								if mainFunc.tutorialActions[b].actionPieceSwitchCounter == 0 then
 									if mainFunc.tutorialActions[b].actionCompletedOnce == false then
-										print("2")
 										if (mainFunc.popUpTimer[1]) then timer.cancel(mainFunc.popUpTimer[1]) end
 										tutorialPopUp[11].currentBlinkPopUpShouldCancel = true
 										tutorialPopUp[11].alpha = 0

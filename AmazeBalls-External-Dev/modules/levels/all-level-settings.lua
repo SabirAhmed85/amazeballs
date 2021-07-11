@@ -61,7 +61,7 @@ t.createLevelSettings = function (mainFunc, creationType)
 		isSomethingTransitioning = false
 		tunnelIsActive = true
 
-		ballspeed = 2
+		ballspeed = 13
 
 		defaultLevelTime = 6000
 
@@ -608,11 +608,11 @@ t.createLevelSettings = function (mainFunc, creationType)
 	levelItems2ImageSheet = "images/objects/level-items2.png"
 	levelItems2ImageSheetSettings = {width = 60, height = 52, numFrames = 8, sheetContentWidth = 240, sheetContentHeight = 104}
 	levelItems2SequenceData = {
-	    { name = "red", start=1, count=1,   loopCount=1 },
+	    { name = "red", start=1, count=1, loopCount=1 },
 	    { name = "blueCoin", start=2, count=1, loopCount=1 },
 	    { name = "purpleCoin", start=3, count=1, loopCount=1 },
 	    { name = "purple", start=4, count=1, loopCount=1 },
-	    { name = "redCoinFloating", start=5, count=1,   loopCount=1 },
+	    { name = "redCoinFloating", start=5, count=1, loopCount=1 },
 	    { name = "blueCoinFloating", start=6, count=1, loopCount=1 },
 	    { name = "purpleCoinFloating", start=7, count=1, loopCount=1 },
 	    { name = "purpleFloating", start=8, count=1, loopCount=1 }

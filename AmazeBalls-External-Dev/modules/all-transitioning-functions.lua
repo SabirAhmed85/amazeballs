@@ -44,30 +44,32 @@ end
 	t.toggleAutoSlideTimer = toggleAutoSlideTimer
 
 local actionAutoSlideTimer = function (mainFunc, shape, isFirstTime)
-	local delayTime = 0
+	local delayTime = 0;
+	local transition = mainFunc.allLevelSettings.transitionArrayIndex[shape.transitionArrayIndex];
+
 	if isFirstTime then
 		delayTime = 400
 	end
 	if shape.transitionIsNextOrPrev == "prev" then
-		shape.nextSlideTransitionIndex = shape.currentSlideTransitionIndex - 2
+		shape.nextSlideTransitionIndex = shape.currentSlideTransitionIndex - 1
 	else
-		shape.nextSlideTransitionIndex = shape.currentSlideTransitionIndex + 2
+		shape.nextSlideTransitionIndex = shape.currentSlideTransitionIndex + 1
 	end
 
 	if shape.nextSlideTransitionIndex == 3 then
-		shape.nextSlideTransitionIndex = shape.nextSlideTransitionIndex + 4
+		shape.nextSlideTransitionIndex = shape.nextSlideTransitionIndex + 2
 		shape.transitionIsNextOrPrev = "next"
 	end
 	
-	if shape.nextSlideTransitionIndex > #mainFunc.allLevelSettings.transitionArrayIndex[shape.transitionArrayIndex] then
-		shape.nextSlideTransitionIndex = shape.nextSlideTransitionIndex - 4
+	if shape.nextSlideTransitionIndex > #transition then
+		shape.nextSlideTransitionIndex = shape.nextSlideTransitionIndex - 2
 		shape.transitionIsNextOrPrev = "prev"
 	end
 
-	local currentHorzSquare = mainFunc.allLevelSettings.transitionArrayIndex[shape.transitionArrayIndex][shape.currentSlideTransitionIndex + 1][3]
-	local currentVertSquare = mainFunc.allLevelSettings.transitionArrayIndex[shape.transitionArrayIndex][shape.currentSlideTransitionIndex + 1][4]
-	local nextHorzSquare = mainFunc.allLevelSettings.transitionArrayIndex[shape.transitionArrayIndex][shape.nextSlideTransitionIndex + 1][3]
-	local nextVertSquare = mainFunc.allLevelSettings.transitionArrayIndex[shape.transitionArrayIndex][shape.nextSlideTransitionIndex + 1][4]
+	local currentHorzSquare = transition["positionArray"][shape.currentSlideTransitionIndex][3]
+	local currentVertSquare = transition["positionArray"][shape.currentSlideTransitionIndex][4]
+	local nextHorzSquare = transition["positionArray"][shape.nextSlideTransitionIndex][3]
+	local nextVertSquare = transition["positionArray"][shape.nextSlideTransitionIndex][4]
 
     local totalXDist = (nextHorzSquare - currentHorzSquare) * 60
     local totalYDist = (nextVertSquare - currentVertSquare) * mainFunc.allLevelSettings.squareHeight
@@ -197,7 +199,6 @@ local actionAutoSlideTimer = function (mainFunc, shape, isFirstTime)
             if mainFunc.allLevelSettings.followShapeWithBallApplied and
             mainFunc.ballBtnScreenCreate.ball.x == mainFunc.allLevelSettings.currentShapeBallShouldFollow.x and
 			mainFunc.ballBtnScreenCreate.ball.y == mainFunc.allLevelSettings.currentShapeBallShouldFollow.y then
-				print("kol")
 	            Runtime:removeEventListener("enterFrame", mainFunc.objectToBallTransitionScript.listener)
 	            mainFunc.allLevelSettings.followShapeWithBallApplied = false
 	            mainFunc.ballBtnScreenCreate.ball.x = mainFunc.allLevelSettings.currentShapeBallShouldFollow.x
@@ -220,45 +221,34 @@ end
 local transitionArrayStateCheckNew = function (thisTransitionObject, mainFunc, shapeArray, shapeArrayParameters)
 
 	local ad = thisTransitionObject.additionalCounterForDummyConnector * 2
-
-    d=thisTransitionObject.newDVal
-			
-    thisArrayCount = 0
-    for a=1, #mainFunc.allLevelSettings.transitionArrayIndex[d] do
-		thisArrayCount = thisArrayCount + 1	    
-    end
-			
-    for e=5, #mainFunc.allLevelSettings.transitionArrayIndex[d] do
-		if e % 2 ~= 0 then
-		    if mainFunc.allLevelSettings.transitionArrayIndex[d][e][1] == thisTransitionObject.transitionArrayState
-		    and mainFunc.allLevelSettings.transitionArrayIndex[d][1][1] == thisTransitionObject.name then
-				thisTransitionObject.thisTransitionHorzSquare = mainFunc.allLevelSettings.transitionArrayIndex[d][e+1+ad][3]
-				thisTransitionObject.thisTransitionVertSquare = mainFunc.allLevelSettings.transitionArrayIndex[d][e+1+ad][4]
-				thisTransitionObject.thisTransitionSquareIndex = mainFunc.allLevelSettings.transitionArrayIndex[d][e+ad][1]
-				if e < (thisArrayCount - 2) then
-				    thisTransitionObject.nextTransitionHorzSquare = mainFunc.allLevelSettings.transitionArrayIndex[d][e+3+ad][3]
-				    thisTransitionObject.nextTransitionVertSquare = mainFunc.allLevelSettings.transitionArrayIndex[d][e+3+ad][4]
-					thisTransitionObject.nextTransitionSquareIndex = mainFunc.allLevelSettings.transitionArrayIndex[d][e+2+ad][1]
-				else
-				    thisTransitionObject.nextTransitionHorzSquare = "null"
-				    thisTransitionObject.nextTransitionVertSquare = "null"
-					thisTransitionObject.nextTransitionSquareIndex = "null"
-				end
-				if e > 6 then
-				    thisTransitionObject.prevTransitionHorzSquare = mainFunc.allLevelSettings.transitionArrayIndex[d][e-1+ad][3]
-				    thisTransitionObject.prevTransitionVertSquare = mainFunc.allLevelSettings.transitionArrayIndex[d][e-1+ad][4]
-					thisTransitionObject.prevTransitionSquareIndex = mainFunc.allLevelSettings.transitionArrayIndex[d][e-2+ad][1]
-				else
-				    thisTransitionObject.prevTransitionHorzSquare = "null"
-				    thisTransitionObject.prevTransitionVertSquare = "null"
-					thisTransitionObject.prevTransitionSquareIndex = "null"
-				end
-				if thisTransitionObject.nextTransitionHorzSquare == "null" then
-			    
-				end
-		    end
+    local d = thisTransitionObject.newDVal;
+	local transition = mainFunc.allLevelSettings.transitionArrayIndex[d];
+	local positions = transition["positionArray"];
+	local tIndex = thisTransitionObject.transitionArrayState;
+	
+	if (transition["shapeName"] == thisTransitionObject.name) then
+		thisTransitionObject.thisTransitionHorzSquare = positions[tIndex+ad][3]
+		thisTransitionObject.thisTransitionVertSquare = positions[tIndex+ad][4]
+		thisTransitionObject.thisTransitionSquareIndex = tIndex+ad
+		if tIndex < #positions then
+			thisTransitionObject.nextTransitionHorzSquare = positions[tIndex+1+ad][3]
+			thisTransitionObject.nextTransitionVertSquare = positions[tIndex+1+ad][4]
+			thisTransitionObject.nextTransitionSquareIndex = tIndex+1+ad
+		else
+			thisTransitionObject.nextTransitionHorzSquare = "null"
+			thisTransitionObject.nextTransitionVertSquare = "null"
+			thisTransitionObject.nextTransitionSquareIndex = "null"
 		end
-    end
+		if tIndex > 1 then
+			thisTransitionObject.prevTransitionHorzSquare = positions[tIndex-1+ad][3]
+			thisTransitionObject.prevTransitionVertSquare = positions[tIndex-1+ad][4]
+			thisTransitionObject.prevTransitionSquareIndex = tIndex-1+ad
+		else
+			thisTransitionObject.prevTransitionHorzSquare = "null"
+			thisTransitionObject.prevTransitionVertSquare = "null"
+			thisTransitionObject.prevTransitionSquareIndex = "null"
+		end
+	end
     
     thisTransitionObject.enabled = true
     thisTransitionObject.transitionCounter = 0
@@ -324,7 +314,6 @@ end
 	t.transitionArrayStateCheckNew = transitionArrayStateCheckNew
 
 local mainTransitionMoveSomething = function (thisTransitionObject, mainFunc, shapeArray, shapeArrayParameters, isActualConnector)
-	print("dkn")
 	local endTransition, prepareSimpleTransition, prepareSpitterTransition, firstSlideTransition, secondSlideTransition, moveBallWithObjectTransition, endFirstTransition
 
 	moveBallWithObjectTransition = function (thisTransitionObject, direction, distance, slideTime)
@@ -640,10 +629,11 @@ end
 -- And apply relevant Transitions
 local prepareTransitioningObjects = function (mainFunc)
 	for y = 1, #mainFunc.allLevelSettings.transitionArrayIndex do
-	    
-	    if mainFunc.allLevelSettings.transitionArrayIndex[y][2][1] == "flip-horizontal" then
+	    local transition = mainFunc.allLevelSettings.transitionArrayIndex[y];
+		print("Trans", transition["transitionType"], transition["shapeName"]);
+	    if transition["transitionType"] == "flip-horizontal" then
 	        for z = 1, #shapeArray do
-	            if shapeArray[z].name == mainFunc.allLevelSettings.transitionArrayIndex[y][1][1] then
+	            if shapeArray[z].name == transition["shapeName"] then
 	                if shapeArrayParameters[z]["props"][1] == 2 then
 	                    shapeArray[z].transitionArrayState = 2
 	                    shapeArray[z].originalState = 2
@@ -661,9 +651,9 @@ local prepareTransitioningObjects = function (mainFunc)
 	                
 	            end
 	        end
-	    elseif mainFunc.allLevelSettings.transitionArrayIndex[y][2][1] == "flip-vertical" then
+	    elseif transition["transitionType"] == "flip-vertical" then
 	        for z = 1, #shapeArray do
-	            if shapeArray[z].name == mainFunc.allLevelSettings.transitionArrayIndex[y][1][1] then
+	            if shapeArray[z].name == transition["shapeName"] then
 	                if shapeArrayParameters[z]["props"][1] == 2 then
 	                    shapeArray[z].transitionArrayState = 2
 	                    shapeArray[z].originalState = 2
@@ -677,339 +667,339 @@ local prepareTransitioningObjects = function (mainFunc)
 	                mainFunc.objectCreateScript.addFlipIndicatorTriangles(mainFunc, shapeArray, shapeArrayParameters)
 	            end
 	        end
-	    elseif transitionArrayIndex[y][2][1] == "slide"
-	    or transitionArrayIndex[y][2][1] == "autoSlide"
-	    or transitionArrayIndex[y][2][1] == "switchSlide" then
+	    elseif transition["transitionType"] == "slide"
+	    or transition["transitionType"] == "autoSlide"
+	    or transition["transitionType"] == "switchSlide" then
 	        local connector, shapeType
 	        for z = 1, #shapeArray do
-	            if shapeArray[z].name == mainFunc.allLevelSettings.transitionArrayIndex[y][1][1] then
+	            if shapeArray[z].name == transition["shapeName"] then
 	                shapeType = shapeArrayParameters[z]["type"]
 	        		if shapeType == "shape" and (shapeArrayParameters[z]["subType"] == "bar" or shapeArrayParameters[z]["subType"] == "doubleBar") then
 	        			shapeType = "bar"
 	        		end
 	            end
 	        end
-	        local thisSpotColour = mainFunc.allLevelSettings.shapeColourArray[shapeType]
-	        local lastConnectorY, lastConnectorX, lastConnectorXSquare, lastConnectorYSquare
-	        local connectorXSquare, connectorYSquare, isActualConnector
+	        local thisSpotColour = mainFunc.allLevelSettings.shapeColourArray[shapeType];
+	        local lastConnectorY, lastConnectorX, lastConnectorXSquare, lastConnectorYSquare;
+	        local connectorXSquare, connectorYSquare, isActualConnector;
 
-	        if transitionArrayIndex[y][3]["labelled"] == false then
+	        if transition["props"]["labelled"] == false then
 
 	        else
-		        for x = 6, #transitionArrayIndex[y] do
-		            if x % 2 == 0 then
-		                connectorXSquare = transitionArrayIndex[y][x][3]
-		                connectorYSquare = transitionArrayIndex[y][x][4]
+		        for x = 1, #transition["positionArray"] do
+					local position = transition["positionArray"][x];
+					connectorXSquare = position[3];
+					connectorYSquare = position[4];
 
-		            	if transitionArrayIndex[y][x-1][1] == "*" then
-		            		isActualConnector = false
-		            	else
-		            		isActualConnector = true
-			                connector = display.newSprite(mainFunc.allLevelSettings.connectorSpotsImageSheet, mainFunc.allLevelSettings.connectorSpotsSequenceData)
-			                connector:setSequence(thisSpotColour)
-			                connector.height = yCalc(18)
-			                connector.width = xCalc(18)
-			                --connector:setReferencePoint(display.CenterCenterReferencePoint);
-			                connector.anchorX = 0.5
-			                connector.anchorY = 0.5
-			                table.insert(mainFunc.allLevelSettings.connectorArray, connector)
-			                connector.relatedShape = transitionArrayIndex[y][1][1]
-			                connector.x = ((transitionArrayIndex[y][x][1] - 1) * display.contentWidth) + (((transitionArrayIndex[y][x][3] - 1) * mainFunc.allLevelSettings.squareWidth) + (mainFunc.allLevelSettings.gutterWidth) + (mainFunc.allLevelSettings.squareWidth/2) )
-			                connector.xSquare = transitionArrayIndex[y][x][3]
-			                connector.y = ((transitionArrayIndex[y][x][2] - 1) * display.contentHeight) + (((transitionArrayIndex[y][x][4] - 1) * mainFunc.allLevelSettings.squareHeight) + (mainFunc.allLevelSettings.gutterHeight) + (mainFunc.allLevelSettings.squareHeight/2) )
-			                connector.ySquare = transitionArrayIndex[y][x][4]
+					if (x > 1 and transition["positionArray"][x-1][1] == "*") then
+						isActualConnector = false;
+					else
+						isActualConnector = true;
+						connector = display.newSprite(mainFunc.allLevelSettings.connectorSpotsImageSheet, mainFunc.allLevelSettings.connectorSpotsSequenceData)
+						connector:setSequence(thisSpotColour)
+						connector.height = yCalc(18)
+						connector.width = xCalc(18)
+						--connector:setReferencePoint(display.CenterCenterReferencePoint);
+						connector.anchorX = 0.5
+						connector.anchorY = 0.5
+						table.insert(mainFunc.allLevelSettings.connectorArray, connector)
+						connector.relatedShape = transition["shapeName"];
+						connector.x = ((position[1] - 1) * display.contentWidth) + (((position[3] - 1) * mainFunc.allLevelSettings.squareWidth) + (mainFunc.allLevelSettings.gutterWidth) + (mainFunc.allLevelSettings.squareWidth/2) )
+						connector.xSquare = position[3]
+						connector.y = ((position[2] - 1) * display.contentHeight) + (((position[4] - 1) * mainFunc.allLevelSettings.squareHeight) + (mainFunc.allLevelSettings.gutterHeight) + (mainFunc.allLevelSettings.squareHeight/2) )
+						connector.ySquare = position[4]
 
-			                for z = 1, #shapeArray do
-					            if shapeArray[z].name == mainFunc.allLevelSettings.transitionArrayIndex[y][1][1]
-					            and (shapeArrayParameters[z]["subType"] == "bar" or shapeArrayParameters[z]["subType"] == "doubleBar") then
-					            	if shapeArray[z].state == "horz" then
-					                	connector.x = connector.x - (mainFunc.allLevelSettings.squareWidth / 2)
-					                else
-					                	connector.y = connector.y - (mainFunc.allLevelSettings.squareHeight / 2)
-					                end
-					                if shapeArrayParameters[z]["subType"] == "doubleBar" then
-				                		if shapeArray[z].state == "vert" then
-						                	connector.x = connector.x - (mainFunc.allLevelSettings.squareWidth / 2)
-						                else
-						                	connector.y = connector.y + (mainFunc.allLevelSettings.squareHeight / 2)
-						                end
-					                end
-					            elseif shapeArray[z].name == mainFunc.allLevelSettings.transitionArrayIndex[y][1][1]
-					            and shapeArrayParameters[z]["subType"] == "triangleTopAndBottomShape" then
-					            	connector.x = connector.x + (mainFunc.allLevelSettings.squareWidth / 2)
-					            elseif shapeArray[z].name == mainFunc.allLevelSettings.transitionArrayIndex[y][1][1]
-					            and shapeArrayParameters[z]["subType"] == "triangleLeftAndRightShape" then
-					            	connector.y = connector.y + (mainFunc.allLevelSettings.squareHeight / 2)
-					            end
-					        end
-					    end
-
-					    if isActualConnector then
-		                	connectorX = connector.x
-		                	connectorY = connector.y
-		                else
-	                		connectorX = ((transitionArrayIndex[y][x][1] - 1) * display.contentWidth) + (((transitionArrayIndex[y][x][3] - 1) * mainFunc.allLevelSettings.squareWidth) + (mainFunc.allLevelSettings.gutterWidth) + (mainFunc.allLevelSettings.squareWidth/2) )
-		                	connectorY = ((transitionArrayIndex[y][x][2] - 1) * display.contentHeight) + (((transitionArrayIndex[y][x][4] - 1) * mainFunc.allLevelSettings.squareHeight) + (mainFunc.allLevelSettings.gutterHeight) + (mainFunc.allLevelSettings.squareHeight/2) )
-		                end
-
-		                if x > 6 then
-		                	thisConnectorHasXDistance = false
-		                    thisConnectorXDistance = connectorXSquare - lastConnectorXSquare
-
-		                    while thisConnectorXDistance > 0 do
-		                    	thisConnectorHasXDistance = true
-		                        connectorTubeHorizontal = display.newSprite(mainFunc.allLevelSettings.horizontalConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
-		                        connectorTubeHorizontal:setSequence(thisSpotColour)
-		                        
-		                        if thisConnectorXDistance  == 1 then
-
-		                        end
-
-		                        mainFunc.allLevelSettings.backgroundObjectsGroup:insert( connectorTubeHorizontal )
-		                        connectorTubeHorizontal.shapeType = "connectorTube"
-		                        --connectorTubeHorizontal:setReferencePoint(display.CenterLeftReferencePoint);
-				                connectorTubeHorizontal.anchorX = 0
-				                connectorTubeHorizontal.anchorY = 0.5
-				                connectorTubeHorizontal.width = mainFunc.allLevelSettings.squareWidth
-				                connectorTubeHorizontal.height = 8
-		                        connectorTubeHorizontal.x = lastConnectorX
-		                        connectorTubeHorizontal.y = lastConnectorY
-
-		                        for z = 1, #shapeArray do
-						            if shapeArray[z].name == mainFunc.allLevelSettings.transitionArrayIndex[y][1][1] then
-						            	if shapeArrayParameters[z]["subType"] == "triangleTopLeftShape" or shapeArrayParameters[z]["subType"] == "triangleBottomLeftShape" then
-						                	connectorTubeHorizontal.x = connectorTubeHorizontal.x + 4
-						                elseif shapeArrayParameters[z]["subType"] == "triangleBottomRightShape" or shapeArrayParameters[z]["subType"] == "triangleTopRightShape" then
-						                	connectorTubeHorizontal.x = connectorTubeHorizontal.x - 4
-						                end
-						            end
-						        end
-
-		                        lastConnectorX = lastConnectorX + mainFunc.allLevelSettings.squareWidth
-		                        thisConnectorXDistance = thisConnectorXDistance - 1
-		                    end
-		                    
-		                    thisConnectorYDistance = connectorYSquare - lastConnectorYSquare
-		                    wholeConnectorYDistance = thisConnectorYDistance
-		                    originalConnectorYDistance = thisConnectorYDistance
-
-		                    if thisConnectorYDistance < 0 then
-		                        while thisConnectorYDistance < 0 do
-		                        	local verticalBottomUsed = false
-		                        	local actuallyVerticalTop = false
-		                        	print("ja", thisConnectorYDistance, wholeConnectorYDistance, thisConnectorHasXDistance)
-		                            if thisConnectorYDistance == wholeConnectorYDistance and thisConnectorHasXDistance then
-	                        			connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.cornerConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
-	                        			verticalBottomUsed = true
-	                    				actuallyVerticalTop = true
-	                        		elseif thisConnectorYDistance == wholeConnectorYDistance and thisConnectorHasXDistance == false then
-	                        			if isActualConnector then
-							        		connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.verticalConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
-		                        			connectorTubeVertical:setSequence(thisSpotColour)
-							        		verticalBottomUsed = false
-							        		actuallyVerticalTop = false
-		                                --connectorTubeVertical.width = 52
-		                                --connectorTubeVertical.height = 8
-		                            	elseif isActualConnector == false and wholeConnectorYDistance == 1 then
-							        		connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.cornerConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
-							        		verticalBottomUsed = true
-							        		actuallyVerticalTop = false
-							        	elseif isActualConnector == false and wholeConnectorYDistance ~= 1 then
-							        		connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.verticalConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
-		                        			connectorTubeVertical:setSequence(thisSpotColour)
-							        		verticalBottomUsed = false
-							        		actuallyVerticalTop = false
-							        	end
-		                            elseif thisConnectorYDistance == 1 and wholeConnectorYDistance ~= 1 then
-		                            	if isActualConnector then
-							        		connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.verticalConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
-		                        			connectorTubeVertical:setSequence(thisSpotColour)
-							        		verticalBottomUsed = false
-							        		actuallyVerticalTop = false
-		                                --connectorTubeVertical.width = 52
-		                                --connectorTubeVertical.height = 8
-		                            	elseif isActualConnector == false then
-							        		connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.cornerConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
-							        		verticalBottomUsed = true
-							        		actuallyVerticalTop = false
-							        	end
-		                            elseif thisConnectorYDistance ~= wholeConnectorYDistance then
-							        	connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.verticalConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
-	                        			connectorTubeVertical:setSequence(thisSpotColour)
-							        	verticalBottomUsed = false
-							        	actuallyVerticalTop = false
-		                            end
-
-		                            --[[
-		                        	if thisConnectorYDistance == wholeConnectorYDistance and thisConnectorHasXDistance == true then
-	                        			connectorTubeVertical = display.newImageRect("images/objects/shapes/connectorPieces/" .. thisSpotColour .. "-Vertical-Bottom.png", 15, 52)
-		                            elseif thisConnectorYDistance == -1 then
-		                            	if isActualConnector then
-							        		connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.verticalConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
-		                        			connectorTubeVertical:setSequence(thisSpotColour)
-		                            	elseif isActualConnector == false then
-		                                	connectorTubeVertical = display.newImageRect("images/objects/shapes/connectorPieces/" .. thisSpotColour .. "-Vertical-Bottom.png", 15, 52)
-		                                end
-		                            elseif thisConnectorYDistance ~= wholeConnectorYDistance then
-		                            	connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.verticalConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
-		                        		connectorTubeVertical:setSequence(thisSpotColour)
-		                            end
-		                            ]]
-		                            
-		                            mainFunc.allLevelSettings.backgroundObjectsGroup:insert( connectorTubeVertical )
-		                            connectorTubeVertical.shapeType = "connectorTube"
-		                            --connectorTubeVertical:setReferencePoint(display.CenterLeftReferencePoint);
-		                			connectorTubeVertical.anchorX = 0
-		                			connectorTubeVertical.anchorY = 0.5
-
-		                            connectorTubeVertical.x = lastConnectorX
-		                            if thisConnectorYDistance == wholeConnectorYDistance then
-
-		                				connectorTubeVertical.height = mainFunc.allLevelSettings.squareHeight
-		                				if thisConnectorHasXDistance == false then
-		                					connectorTubeVertical.width = 8
-		                                	connectorTubeVertical.x = connectorTubeVertical.x - ((3.5/60) * mainFunc.allLevelSettings.squareWidth)
-		                            	else
-		                					connectorTubeVertical.width = 17
-		                                	connectorTubeVertical.x = connectorTubeVertical.x - ((10.2/60) * mainFunc.allLevelSettings.squareWidth)
-		                                end
-		                                connectorTubeVertical.y = lastConnectorY - (mainFunc.allLevelSettings.squareHeight/2) + ((4.5/52) * mainFunc.allLevelSettings.squareHeight)
-		                            else
-
-		                				connectorTubeVertical.height = mainFunc.allLevelSettings.squareHeight
-		                				connectorTubeVertical.width = 8
-		                            	--connectorTubeVertical.rotation = 90
-		                                connectorTubeVertical.y = lastConnectorY - ((21/52) * mainFunc.allLevelSettings.squareHeight)
-		                                connectorTubeVertical.x = connectorTubeVertical.x - ((2.9/60) * mainFunc.allLevelSettings.squareWidth)
-		                            end
-
-		                            lastConnectorY = lastConnectorY - mainFunc.allLevelSettings.squareHeight
-		                            thisConnectorYDistance = thisConnectorYDistance + 1
-		                        end
-		                    elseif thisConnectorYDistance > 0 then
-		                        while thisConnectorYDistance > 0 do
-
-		                        	local verticalBottomUsed = false
-		                        	local actuallyVerticalTop = false
-
-		                            if thisConnectorYDistance == wholeConnectorYDistance and thisConnectorHasXDistance then
-	                        			connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.cornerConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
-	                        			verticalBottomUsed = true
-	                    				actuallyVerticalTop = true
-	                        		elseif thisConnectorYDistance == wholeConnectorYDistance and thisConnectorHasXDistance == false then
-	                        			if isActualConnector then
-							        		connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.verticalConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
-		                        			connectorTubeVertical:setSequence(thisSpotColour)
-							        		verticalBottomUsed = false
-							        		actuallyVerticalTop = false
-		                                --connectorTubeVertical.width = 52
-		                                --connectorTubeVertical.height = 8
-		                            	elseif isActualConnector == false and wholeConnectorYDistance == 1 then
-							        		connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.cornerConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
-							        		verticalBottomUsed = true
-							        		actuallyVerticalTop = false
-							        	elseif isActualConnector == false and wholeConnectorYDistance ~= 1 then
-							        		connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.verticalConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
-		                        			connectorTubeVertical:setSequence(thisSpotColour)
-							        		verticalBottomUsed = false
-							        		actuallyVerticalTop = false
-							        	end
-		                            elseif thisConnectorYDistance == 1 and wholeConnectorYDistance ~= 1 then
-		                            	if isActualConnector then
-							        		connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.verticalConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
-		                        			connectorTubeVertical:setSequence(thisSpotColour)
-							        		verticalBottomUsed = false
-							        		actuallyVerticalTop = false
-		                                --connectorTubeVertical.width = 52
-		                                --connectorTubeVertical.height = 8
-		                            	elseif isActualConnector == false then
-							        		connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.cornerConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
-							        		verticalBottomUsed = true
-							        		actuallyVerticalTop = false
-							        	end
-		                            elseif thisConnectorYDistance ~= wholeConnectorYDistance then
-							        	connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.verticalConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
-	                        			connectorTubeVertical:setSequence(thisSpotColour)
-							        	verticalBottomUsed = false
-							        	actuallyVerticalTop = false
-		                            end
-
-		                            mainFunc.allLevelSettings.backgroundObjectsGroup:insert( connectorTubeVertical )
-		                            connectorTubeVertical.shapeType = "connectorTube"
-		                			connectorTubeVertical.anchorX = 0
-		                			connectorTubeVertical.anchorY = 0.5
-	                				connectorTubeVertical.height = mainFunc.allLevelSettings.squareHeight
-		                			if actuallyVerticalTop then
-		                				connectorTubeVertical.yScale = -1
-		                			end
-		                			if verticalBottomUsed then
-		                				connectorTubeVertical.width = 17
-		                				if actuallyVerticalTop == false then
-		                					connectorTubeVertical.xScale = -1
-		                				end
-		                			else
-		                				connectorTubeVertical.width = 8
-		                			end
-		                            connectorTubeVertical.x = lastConnectorX
-		                            if thisConnectorYDistance == wholeConnectorYDistance and isActualConnector then
-		                                connectorTubeVertical.y = lastConnectorY + (mainFunc.allLevelSettings.squareHeight/2) + yCalc(2)
-		                                connectorTubeVertical.x = connectorTubeVertical.x - ((3.5/60) * mainFunc.allLevelSettings.squareWidth)
-		                            elseif thisConnectorYDistance == wholeConnectorYDistance and isActualConnector == false then
-		                				if wholeConnectorYDistance == 1 then
-		                                	connectorTubeVertical.x = connectorTubeVertical.x + xCalc(10)
-		                                else
-		                                	connectorTubeVertical.x = connectorTubeVertical.x - xCalc(3)
-		                                end
-		                                connectorTubeVertical.y = lastConnectorY + (mainFunc.allLevelSettings.squareHeight/2) + yCalc(4)
-		                            else
-		                            	if (thisConnectorYDistance == originalConnectorYDistance and thisConnectorHasXDistance == true) then
-			                                connectorTubeVertical.x = connectorTubeVertical.x - ((4/60) * mainFunc.allLevelSettings.squareWidth)
-			                                connectorTubeVertical.y = lastConnectorY
-			                            else
-			                                connectorTubeVertical.y = lastConnectorY + (mainFunc.allLevelSettings.squareHeight/2) 
-			                                connectorTubeVertical.x = connectorTubeVertical.x - ((3.5/60) * mainFunc.allLevelSettings.squareWidth)
-			                                if verticalBottomUsed and actuallyVerticalTop == false then
-				                				connectorTubeVertical.y = connectorTubeVertical.y + yCalc(4)
-			                                	connectorTubeVertical.x = connectorTubeVertical.x + xCalc(14.5)
-			                                	connectorX = connectorX + 2
-				                			end
-			                            end
-		                            end
-		                            if actuallyVerticalTop then
-		                				connectorTubeVertical.x = connectorTubeVertical.x - xCalc(7.5)
-		                				connectorTubeVertical.y = connectorTubeVertical.y - yCalc(6.5)
-		                			end
-		                            lastConnectorY = lastConnectorY + mainFunc.allLevelSettings.squareHeight
-		                            thisConnectorYDistance = thisConnectorYDistance - 1
-		                        end
-		                    end
-	--[[
-		                    if (thisSpotColour == "green" and originalConnectorYDistance ~= 0) then
-
-			                    for z = 1, #shapeArray do
-						            if shapeArray[z].name == mainFunc.allLevelSettings.transitionArrayIndex[y][1][1] then
-						            	if shapeArrayParameters[z]["subType"] == "triangleTopLeftShape" or shapeArrayParameters[z]["subType"] == "triangleTopRightShape" then
-						            		if (originalConnectorYDistance > 0) then
-						                		connectorTubeVertical.y = connectorTubeVertical.y
-						                	end
-						                elseif shapeArrayParameters[z]["subType"] == "triangleBottomLeftShape" or shapeArrayParameters[z]["subType"] == "triangleBottomRightShape" then
-						                	connectorTubeVertical.y = connectorTubeVertical.y
-						                end
-						            end
-						        end
+						for z = 1, #shapeArray do
+							if shapeArray[z].name == transition["shapeName"]
+							and (shapeArrayParameters[z]["subType"] == "bar" or shapeArrayParameters[z]["subType"] == "doubleBar") then
+								if shapeArray[z].state == "horz" then
+									connector.x = connector.x - (mainFunc.allLevelSettings.squareWidth / 2)
+								else
+									connector.y = connector.y - (mainFunc.allLevelSettings.squareHeight / 2)
+								end
+								if shapeArrayParameters[z]["subType"] == "doubleBar" then
+									if shapeArray[z].state == "vert" then
+										connector.x = connector.x - (mainFunc.allLevelSettings.squareWidth / 2)
+									else
+										connector.y = connector.y + (mainFunc.allLevelSettings.squareHeight / 2)
+									end
+								end
+							elseif shapeArray[z].name == transition["shapeName"]
+							and shapeArrayParameters[z]["subType"] == "triangleTopAndBottomShape" then
+								connector.x = connector.x + (mainFunc.allLevelSettings.squareWidth / 2)
+							elseif shapeArray[z].name == transition["shapeName"]
+							and shapeArrayParameters[z]["subType"] == "triangleLeftAndRightShape" then
+								connector.y = connector.y + (mainFunc.allLevelSettings.squareHeight / 2)
 							end
-	]]
-		                    yConnectorCounter = 0
-		                end
+						end
+					end
 
-		                lastConnectorX = connectorX
-		                lastConnectorY = connectorY
-		                lastConnectorXSquare = connectorXSquare
-		                lastConnectorYSquare = connectorYSquare
-		                if isActualConnector == false then
-		                	lastConnectorX = lastConnectorX + xCalc(4)
-		                end
-		            end
+					if isActualConnector then
+						connectorX = connector.x
+						connectorY = connector.y
+					else
+						connectorX = ((position[1] - 1) * display.contentWidth) + (((position[3] - 1) * mainFunc.allLevelSettings.squareWidth) + (mainFunc.allLevelSettings.gutterWidth) + (mainFunc.allLevelSettings.squareWidth/2) )
+						connectorY = ((position[2] - 1) * display.contentHeight) + (((position[4] - 1) * mainFunc.allLevelSettings.squareHeight) + (mainFunc.allLevelSettings.gutterHeight) + (mainFunc.allLevelSettings.squareHeight/2) )
+					end
+
+					if x > 1 then
+						thisConnectorHasXDistance = false
+						thisConnectorXDistance = connectorXSquare - lastConnectorXSquare
+
+						while thisConnectorXDistance > 0 do
+							thisConnectorHasXDistance = true
+							connectorTubeHorizontal = display.newSprite(mainFunc.allLevelSettings.horizontalConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
+							connectorTubeHorizontal:setSequence(thisSpotColour)
+							
+							if thisConnectorXDistance  == 1 then
+
+							end
+
+							mainFunc.allLevelSettings.backgroundObjectsGroup:insert( connectorTubeHorizontal )
+							connectorTubeHorizontal.shapeType = "connectorTube"
+							--connectorTubeHorizontal:setReferencePoint(display.CenterLeftReferencePoint);
+							connectorTubeHorizontal.anchorX = 0
+							connectorTubeHorizontal.anchorY = 0.5
+							connectorTubeHorizontal.width = mainFunc.allLevelSettings.squareWidth
+							connectorTubeHorizontal.height = 8
+							connectorTubeHorizontal.x = lastConnectorX
+							connectorTubeHorizontal.y = lastConnectorY
+
+							for z = 1, #shapeArray do
+								if shapeArray[z].name == transition["shapeName"] then
+									if shapeArrayParameters[z]["subType"] == "triangleTopLeftShape" or shapeArrayParameters[z]["subType"] == "triangleBottomLeftShape" then
+										connectorTubeHorizontal.x = connectorTubeHorizontal.x + 4
+									elseif shapeArrayParameters[z]["subType"] == "triangleBottomRightShape" or shapeArrayParameters[z]["subType"] == "triangleTopRightShape" then
+										connectorTubeHorizontal.x = connectorTubeHorizontal.x - 4
+									end
+								end
+							end
+
+							lastConnectorX = lastConnectorX + mainFunc.allLevelSettings.squareWidth
+							thisConnectorXDistance = thisConnectorXDistance - 1
+						end
+						
+						thisConnectorYDistance = connectorYSquare - lastConnectorYSquare
+						wholeConnectorYDistance = thisConnectorYDistance
+						originalConnectorYDistance = thisConnectorYDistance
+
+						if thisConnectorYDistance < 0 then
+							while thisConnectorYDistance < 0 do
+								local verticalBottomUsed = false
+								local actuallyVerticalTop = false
+								
+								if thisConnectorYDistance == wholeConnectorYDistance and thisConnectorHasXDistance then
+									connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.cornerConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
+									verticalBottomUsed = true
+									actuallyVerticalTop = true
+								elseif thisConnectorYDistance == wholeConnectorYDistance and thisConnectorHasXDistance == false then
+									if isActualConnector then
+										connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.verticalConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
+										connectorTubeVertical:setSequence(thisSpotColour)
+										verticalBottomUsed = false
+										actuallyVerticalTop = false
+									--connectorTubeVertical.width = 52
+									--connectorTubeVertical.height = 8
+									elseif isActualConnector == false and wholeConnectorYDistance == 1 then
+										connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.cornerConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
+										verticalBottomUsed = true
+										actuallyVerticalTop = false
+									elseif isActualConnector == false and wholeConnectorYDistance ~= 1 then
+										connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.verticalConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
+										connectorTubeVertical:setSequence(thisSpotColour)
+										verticalBottomUsed = false
+										actuallyVerticalTop = false
+									end
+								elseif thisConnectorYDistance == 1 and wholeConnectorYDistance ~= 1 then
+									if isActualConnector then
+										connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.verticalConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
+										connectorTubeVertical:setSequence(thisSpotColour)
+										verticalBottomUsed = false
+										actuallyVerticalTop = false
+									--connectorTubeVertical.width = 52
+									--connectorTubeVertical.height = 8
+									elseif isActualConnector == false then
+										connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.cornerConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
+										verticalBottomUsed = true
+										actuallyVerticalTop = false
+									end
+								elseif thisConnectorYDistance ~= wholeConnectorYDistance then
+									connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.verticalConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
+									connectorTubeVertical:setSequence(thisSpotColour)
+									verticalBottomUsed = false
+									actuallyVerticalTop = false
+								end
+
+								--[[
+								if thisConnectorYDistance == wholeConnectorYDistance and thisConnectorHasXDistance == true then
+									connectorTubeVertical = display.newImageRect("images/objects/shapes/connectorPieces/" .. thisSpotColour .. "-Vertical-Bottom.png", 15, 52)
+								elseif thisConnectorYDistance == -1 then
+									if isActualConnector then
+										connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.verticalConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
+										connectorTubeVertical:setSequence(thisSpotColour)
+									elseif isActualConnector == false then
+										connectorTubeVertical = display.newImageRect("images/objects/shapes/connectorPieces/" .. thisSpotColour .. "-Vertical-Bottom.png", 15, 52)
+									end
+								elseif thisConnectorYDistance ~= wholeConnectorYDistance then
+									connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.verticalConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
+									connectorTubeVertical:setSequence(thisSpotColour)
+								end
+								]]
+								
+								mainFunc.allLevelSettings.backgroundObjectsGroup:insert( connectorTubeVertical )
+								connectorTubeVertical.shapeType = "connectorTube"
+								--connectorTubeVertical:setReferencePoint(display.CenterLeftReferencePoint);
+								connectorTubeVertical.anchorX = 0
+								connectorTubeVertical.anchorY = 0.5
+
+								connectorTubeVertical.x = lastConnectorX
+								if thisConnectorYDistance == wholeConnectorYDistance then
+
+									connectorTubeVertical.height = mainFunc.allLevelSettings.squareHeight
+									if thisConnectorHasXDistance == false then
+										connectorTubeVertical.width = 8
+										connectorTubeVertical.x = connectorTubeVertical.x - ((3.5/60) * mainFunc.allLevelSettings.squareWidth)
+									else
+										connectorTubeVertical.width = 17
+										connectorTubeVertical.x = connectorTubeVertical.x - ((10.2/60) * mainFunc.allLevelSettings.squareWidth)
+									end
+									connectorTubeVertical.y = lastConnectorY - (mainFunc.allLevelSettings.squareHeight/2) + ((4.5/52) * mainFunc.allLevelSettings.squareHeight)
+								else
+
+									connectorTubeVertical.height = mainFunc.allLevelSettings.squareHeight
+									connectorTubeVertical.width = 8
+									--connectorTubeVertical.rotation = 90
+									connectorTubeVertical.y = lastConnectorY - ((21/52) * mainFunc.allLevelSettings.squareHeight)
+									connectorTubeVertical.x = connectorTubeVertical.x - ((2.9/60) * mainFunc.allLevelSettings.squareWidth)
+								end
+
+								lastConnectorY = lastConnectorY - mainFunc.allLevelSettings.squareHeight
+								thisConnectorYDistance = thisConnectorYDistance + 1
+							end
+						elseif thisConnectorYDistance > 0 then
+							while thisConnectorYDistance > 0 do
+
+								local verticalBottomUsed = false
+								local actuallyVerticalTop = false
+
+								if thisConnectorYDistance == wholeConnectorYDistance and thisConnectorHasXDistance then
+									connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.cornerConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
+									verticalBottomUsed = true
+									actuallyVerticalTop = true
+								elseif thisConnectorYDistance == wholeConnectorYDistance and thisConnectorHasXDistance == false then
+									if isActualConnector then
+										connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.verticalConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
+										connectorTubeVertical:setSequence(thisSpotColour)
+										verticalBottomUsed = false
+										actuallyVerticalTop = false
+									--connectorTubeVertical.width = 52
+									--connectorTubeVertical.height = 8
+									elseif isActualConnector == false and wholeConnectorYDistance == 1 then
+										connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.cornerConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
+										verticalBottomUsed = true
+										actuallyVerticalTop = false
+									elseif isActualConnector == false and wholeConnectorYDistance ~= 1 then
+										connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.verticalConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
+										connectorTubeVertical:setSequence(thisSpotColour)
+										verticalBottomUsed = false
+										actuallyVerticalTop = false
+									end
+								elseif thisConnectorYDistance == 1 and wholeConnectorYDistance ~= 1 then
+									if isActualConnector then
+										connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.verticalConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
+										connectorTubeVertical:setSequence(thisSpotColour)
+										verticalBottomUsed = false
+										actuallyVerticalTop = false
+									--connectorTubeVertical.width = 52
+									--connectorTubeVertical.height = 8
+									elseif isActualConnector == false then
+										connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.cornerConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
+										verticalBottomUsed = true
+										actuallyVerticalTop = false
+									end
+								elseif thisConnectorYDistance ~= wholeConnectorYDistance then
+									connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.verticalConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
+									connectorTubeVertical:setSequence(thisSpotColour)
+									verticalBottomUsed = false
+									actuallyVerticalTop = false
+								end
+
+								mainFunc.allLevelSettings.backgroundObjectsGroup:insert( connectorTubeVertical )
+								connectorTubeVertical.shapeType = "connectorTube"
+								connectorTubeVertical.anchorX = 0
+								connectorTubeVertical.anchorY = 0.5
+								connectorTubeVertical.height = mainFunc.allLevelSettings.squareHeight
+								if actuallyVerticalTop then
+									connectorTubeVertical.yScale = -1
+								end
+								if verticalBottomUsed then
+									connectorTubeVertical.width = 17
+									if actuallyVerticalTop == false then
+										connectorTubeVertical.xScale = -1
+									end
+								else
+									connectorTubeVertical.width = 8
+								end
+								connectorTubeVertical.x = lastConnectorX
+								if thisConnectorYDistance == wholeConnectorYDistance and isActualConnector then
+									connectorTubeVertical.y = lastConnectorY + (mainFunc.allLevelSettings.squareHeight/2) + yCalc(2)
+									connectorTubeVertical.x = connectorTubeVertical.x - ((3.5/60) * mainFunc.allLevelSettings.squareWidth)
+								elseif thisConnectorYDistance == wholeConnectorYDistance and isActualConnector == false then
+									if wholeConnectorYDistance == 1 then
+										connectorTubeVertical.x = connectorTubeVertical.x + xCalc(10)
+									else
+										connectorTubeVertical.x = connectorTubeVertical.x - xCalc(3)
+									end
+									connectorTubeVertical.y = lastConnectorY + (mainFunc.allLevelSettings.squareHeight/2) + yCalc(4)
+								else
+									if (thisConnectorYDistance == originalConnectorYDistance and thisConnectorHasXDistance == true) then
+										connectorTubeVertical.x = connectorTubeVertical.x - ((4/60) * mainFunc.allLevelSettings.squareWidth)
+										connectorTubeVertical.y = lastConnectorY
+									else
+										connectorTubeVertical.y = lastConnectorY + (mainFunc.allLevelSettings.squareHeight/2) 
+										connectorTubeVertical.x = connectorTubeVertical.x - ((3.5/60) * mainFunc.allLevelSettings.squareWidth)
+										if verticalBottomUsed and actuallyVerticalTop == false then
+											connectorTubeVertical.y = connectorTubeVertical.y + yCalc(4)
+											connectorTubeVertical.x = connectorTubeVertical.x + xCalc(14.5)
+											connectorX = connectorX + 2
+										end
+									end
+								end
+								if actuallyVerticalTop then
+									connectorTubeVertical.x = connectorTubeVertical.x - xCalc(7.5)
+									connectorTubeVertical.y = connectorTubeVertical.y - yCalc(6.5)
+								end
+								lastConnectorY = lastConnectorY + mainFunc.allLevelSettings.squareHeight
+								thisConnectorYDistance = thisConnectorYDistance - 1
+							end
+						end
+--[[
+						if (thisSpotColour == "green" and originalConnectorYDistance ~= 0) then
+
+							for z = 1, #shapeArray do
+								if shapeArray[z].name == transition["shapeName"] then
+									if shapeArrayParameters[z]["subType"] == "triangleTopLeftShape" or shapeArrayParameters[z]["subType"] == "triangleTopRightShape" then
+										if (originalConnectorYDistance > 0) then
+											connectorTubeVertical.y = connectorTubeVertical.y
+										end
+									elseif shapeArrayParameters[z]["subType"] == "triangleBottomLeftShape" or shapeArrayParameters[z]["subType"] == "triangleBottomRightShape" then
+										connectorTubeVertical.y = connectorTubeVertical.y
+									end
+								end
+							end
+						end
+]]
+						yConnectorCounter = 0
+					end
+
+					lastConnectorX = connectorX
+					lastConnectorY = connectorY
+					lastConnectorXSquare = connectorXSquare
+					lastConnectorYSquare = connectorYSquare
+					if isActualConnector == false then
+						lastConnectorX = lastConnectorX + xCalc(4)
+					end
+						
 		            for a = 1, #mainFunc.allLevelSettings.connectorArray do
 		                
 		                mainFunc.allLevelSettings.backgroundObjectsGroup:insert( mainFunc.allLevelSettings.connectorArray[a] )
@@ -1034,52 +1024,38 @@ local prepareTransitioningObjects = function (mainFunc)
 	        for z = 1, #shapeArray do
 	        	--EXT: Loop through Level Objects to decide which particular TransitionHorzSquare & TransitionVertSquare the object is on
 	        	-- TransitionHorzSquare means which particular horizontal stage of it's transtition this object is at
-	            if shapeArray[z].name == transitionArrayIndex[y][1][1] then
-	                shapeArray[z].transitionArrayState = transitionArrayIndex[y][4][1]
-	                thisTransitioningObject = shapeArray[z]
+				if shapeArray[z].name == transition["shapeName"] then
+					local thisTransitioningObject = shapeArray[z];
+					local tIndex = transition["startPositionIndex"];
+					local positions = transition["positionArray"];
 
-	                if (transitionArrayIndex[y][2][1] == "slide") then
-	                	shapeArray[z].transitionCounter = 0
-	                end
-	                
-	                thisArrayCount = 0
-	                for a=1, #mainFunc.allLevelSettings.transitionArrayIndex[y] do
-	                    thisArrayCount = thisArrayCount + 1	    
-	                end
-	                
-	                for e=5, #mainFunc.allLevelSettings.transitionArrayIndex[y] do
-	                    if e % 2 ~= 0 then
-	                        if mainFunc.allLevelSettings.transitionArrayIndex[y][e][1] == thisTransitioningObject.transitionArrayState then
-	                            thisTransitioningObject.thisTransitionHorzSquare = mainFunc.allLevelSettings.transitionArrayIndex[y][e+1][3]
-	                            thisTransitioningObject.thisTransitionVertSquare = mainFunc.allLevelSettings.transitionArrayIndex[y][e+1][4]
-                                thisTransitioningObject.thisTransitionSquareIndex = mainFunc.allLevelSettings.transitionArrayIndex[y][e][1]
-	                            if e < (thisArrayCount - 2) then
-	                                thisTransitioningObject.nextTransitionHorzSquare = mainFunc.allLevelSettings.transitionArrayIndex[y][e+3][3]
-	                                thisTransitioningObject.nextTransitionVertSquare = mainFunc.allLevelSettings.transitionArrayIndex[y][e+3][4]
-	                                thisTransitioningObject.nextTransitionSquareIndex = mainFunc.allLevelSettings.transitionArrayIndex[y][e+2][1]
-	                            else
-	                                thisTransitioningObject.nextTransitionHorzSquare = "null"
-	                                thisTransitioningObject.nextTransitionVertSquare = "null"
-	                                thisTransitioningObject.nextTransitionSquareIndex = "null"
-	                            end
-	                            if e > 6 then
-	                                thisTransitioningObject.prevTransitionHorzSquare = mainFunc.allLevelSettings.transitionArrayIndex[y][e-1][3]
-	                                thisTransitioningObject.prevTransitionVertSquare = mainFunc.allLevelSettings.transitionArrayIndex[y][e-1][4]
-	                                thisTransitioningObject.prevTransitionSquareIndex = mainFunc.allLevelSettings.transitionArrayIndex[y][e-2][1]
-	                            else
-	                                thisTransitioningObject.prevTransitionHorzSquare = "null"
-	                                thisTransitioningObject.prevTransitionVertSquare = "null"
-	                                thisTransitioningObject.prevTransitionSquareIndex = "null"
-	                            end
-	                        end
-	                    end
-	                end
+	                thisTransitioningObject.transitionArrayState = tIndex;
+					thisTransitioningObject.transitionCounter = transition["transitionType"] == "slide" and 0;
+					thisTransitioningObject.thisTransitionHorzSquare = positions[tIndex][3];
+					thisTransitioningObject.thisTransitionVertSquare = positions[tIndex][4];
+					thisTransitioningObject.thisTransitionSquareIndex = tIndex;
+
+					if tIndex < #positions then
+						thisTransitioningObject.nextTransitionHorzSquare = positions[tIndex+1][3]
+						thisTransitioningObject.nextTransitionVertSquare = positions[tIndex+1][4]
+						thisTransitioningObject.nextTransitionSquareIndex = tIndex + 1
+					else
+						thisTransitioningObject.nextTransitionHorzSquare = "null"
+						thisTransitioningObject.nextTransitionVertSquare = "null"
+						thisTransitioningObject.nextTransitionSquareIndex = "null"
+					end
+					if tIndex > 1 then
+						thisTransitioningObject.prevTransitionHorzSquare = positions[tIndex-1][3]
+						thisTransitioningObject.prevTransitionVertSquare = positions[tIndex-1][4]
+						thisTransitioningObject.prevTransitionSquareIndex = tIndex - 1
+					else
+						thisTransitioningObject.prevTransitionHorzSquare = "null"
+						thisTransitioningObject.prevTransitionVertSquare = "null"
+						thisTransitioningObject.prevTransitionSquareIndex = "null"
+					end
 	            end
 	        end
 	    end
-	    
-	    
-	    
 	end
 end
    	t.prepareTransitioningObjects = prepareTransitioningObjects
