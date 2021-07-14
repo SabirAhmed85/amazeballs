@@ -4,37 +4,41 @@ local t = {};
 
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
-    local sp = shapeArrayParameters;
-    local ta = mainFunc.allLevelSettings.transitionArrayIndex;
+    local newShape = function(type, name, location, subType, props)
+        addToShapeArray(shapeArrayParameters, type, name, location, subType, props);
+    end
+    local newTransition = function(shapeName, transitionType, props, positionArray)
+        addToTransitionArray(mainFunc.allLevelSettings.transitionArrayIndex, shapeArrayParameters, shapeName, transitionType, props, positionArray);
+    end
 
-    addToShapeArray(sp, "simple","simple1_1_1", {1, 1, 4, 2})
-    addToTransitionArray(ta,{{"simple1_1_1"},{"slide"},{"lightBlue"},{1},{1},{1,1,4,2},{2},{1,1,4,3}})
+    newShape("simple","simple1_1_1", {1, 1, 4, 2})
+    newTransition("simple1_1_1", "slide", {"lightBlue"}, {{1,1,4,2},{1,1,4,3}})
 
-    addToShapeArray(sp, "shape","triangle1_1_1", {1, 1, 7, 3}, "triangleBottomLeftShape", {1})
+    newShape("shape","triangle1_1_1", {1, 1, 7, 3}, "triangleBottomLeftShape", {1})
 
-    addToShapeArray(sp, "shape","triangle2_1_1", {1, 1, 7, 5}, "triangleTopLeftShape", {1})
+    newShape("shape","triangle2_1_1", {1, 1, 7, 5}, "triangleTopLeftShape", {1})
 
-    addToShapeArray(sp, "endPoint","endPoint1_1_1", {1, 1, 2, 5})
+    newShape("endPoint","endPoint1_1_1", {1, 1, 2, 5})
 
     --GEMS
-    addToShapeArray(sp, "gem","purple", {1, 1, 2, 2}, "purple")
-    addToShapeArray(sp, "gem","purple", {1, 1, 3, 2}, "purple")
-    addToShapeArray(sp, "gem","purple", {1, 1, 5, 2}, "purple")
-    addToShapeArray(sp, "gem","purple", {1, 1, 6, 2}, "purple")
-    addToShapeArray(sp, "gem","purple", {1, 1, 1, 3}, "purple")
-    addToShapeArray(sp, "gem","purple", {1, 1, 3, 3}, "purple")
-    addToShapeArray(sp, "gem","purple", {1, 1, 5, 3}, "purple")
-    addToShapeArray(sp, "gem","purple", {1, 1, 3, 5}, "purple")
-    addToShapeArray(sp, "gem","purple", {1, 1, 5, 5}, "purple")
-    addToShapeArray(sp, "gem","purple", {1, 1, 7, 4}, "purple")
-    addToShapeArray(sp, "gem","redCoin", {1, 1, 7, 2}, "redCoin")
-    addToShapeArray(sp, "gem","blueCoin", {1, 1, 6, 5}, "blueCoin")
-    addToShapeArray(sp, "gem","purpleCoin", {1, 1, 1, 5}, "purpleCoin")
+    newShape("gem","purple", {1, 1, 2, 2}, "purple")
+    newShape("gem","purple", {1, 1, 3, 2}, "purple")
+    newShape("gem","purple", {1, 1, 5, 2}, "purple")
+    newShape("gem","purple", {1, 1, 6, 2}, "purple")
+    newShape("gem","purple", {1, 1, 1, 3}, "purple")
+    newShape("gem","purple", {1, 1, 3, 3}, "purple")
+    newShape("gem","purple", {1, 1, 5, 3}, "purple")
+    newShape("gem","purple", {1, 1, 3, 5}, "purple")
+    newShape("gem","purple", {1, 1, 5, 5}, "purple")
+    newShape("gem","purple", {1, 1, 7, 4}, "purple")
+    newShape("gem","redCoin", {1, 1, 7, 2}, "redCoin")
+    newShape("gem","blueCoin", {1, 1, 6, 5}, "blueCoin")
+    newShape("gem","purpleCoin", {1, 1, 1, 5}, "purpleCoin")
 
     --ITEMS
-    addToShapeArray(sp, "item","coins", {1, 1, 4, 5}, 90)
-    addToShapeArray(sp, "item","coins", {1, 1, 6, 3, 40})    
-    addToShapeArray(sp, "item","big-present", {1, 1, 2, 3}, {})
+    newShape("item","coins", {1, 1, 4, 5}, 90)
+    newShape("item","coins", {1, 1, 6, 3, 40})    
+    newShape("item","big-present", {1, 1, 2, 3}, {})
 
 end
 	t.createLevelObjects = createLevelObjects

@@ -4,19 +4,23 @@ local t = {};
 
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
-    local sp = shapeArrayParameters;
-    local ta = mainFunc.allLevelSettings.transitionArrayIndex;
+    local newShape = function(type, name, location, subType, props)
+        addToShapeArray(shapeArrayParameters, type, name, location, subType, props);
+    end
+    local newTransition = function(shapeName, transitionType, props, positionArray)
+        addToTransitionArray(mainFunc.allLevelSettings.transitionArrayIndex, shapeArrayParameters, shapeName, transitionType, props, positionArray);
+    end
 
-    addToShapeArray(sp, "shape","triangle1_1_1", {1, 1, 3, 1}, "triangleBottomRightShape", {1})
+    newShape("shape","triangle1_1_1", {1, 1, 3, 1}, "triangleBottomRightShape", {1})
 
-    addToShapeArray(sp, "shape","triangle2_1_1", {1, 1, 5, 1}, "triangleTopLeftShape", {1})
-    addToTransitionArray(ta,{{"triangle2_1_1"},{"slide"},{"green"},{1},{1},{1,1,5,1},{2},{1,1,6,1}})
+    newShape("shape","triangle2_1_1", {1, 1, 5, 1}, "triangleTopLeftShape", {1})
+    newTransition("triangle2_1_1", "slide", {"green"}, {{1,1,5,1},{1,1,6,1}})
 
-    addToShapeArray(sp, "shape","triangle3_1_1", {1, 1, 6, 2}, "triangleBottomLeftShape", {1})
+    newShape("shape","triangle3_1_1", {1, 1, 6, 2}, "triangleBottomLeftShape", {1})
 
-    addToShapeArray(sp, "simple","simple1_1_1", {1, 1, 6, 3})
+    newShape("simple","simple1_1_1", {1, 1, 6, 3})
 
-    addToShapeArray(sp, "endPoint","endPoint1_1_1", {1, 1, 3, 4})
+    newShape("endPoint","endPoint1_1_1", {1, 1, 3, 4})
 
 end
 	t.createLevelObjects = createLevelObjects

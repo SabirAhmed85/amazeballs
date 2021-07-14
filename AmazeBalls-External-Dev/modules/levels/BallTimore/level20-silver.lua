@@ -3,49 +3,53 @@ local addToShapeArray = require("utils.add-to-shape-array");
 local addToTransitionArray = require("utils.add-to-transition-array");
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
-    local sp = shapeArrayParameters;
-    local ta = mainFunc.allLevelSettings.transitionArrayIndex;   
+    local newShape = function(type, name, location, subType, props)
+        addToShapeArray(shapeArrayParameters, type, name, location, subType, props);
+    end
+    local newTransition = function(shapeName, transitionType, props, positionArray)
+        addToTransitionArray(mainFunc.allLevelSettings.transitionArrayIndex, shapeArrayParameters, shapeName, transitionType, props, positionArray);
+    end
 
     --SCREEN 1-1
-    addToShapeArray(sp, "shape","triangle1_1_1", {1, 1, 1, 1}, "triangleTopAndBottomShape", {2})
-    addToShapeArray(sp, "shape","triangle2_1_1", {1, 1, 4, 1}, "triangleBottomLeftShape", {1, _, "breakable"})
-    addToShapeArray(sp, "shape","triangle3_1_1", {1, 1, 5, 2}, "triangleBottomRightShape", {1, _, "breakable"})
-    addToShapeArray(sp, "shape","triangle4_1_1", {1, 1, 2, 3}, "triangleBottomRightShape", {1, 9, "breakable"})
-    addToShapeArray(sp, "backFire","backFire1_1_1", {1, 1, 6, 3})
-    addToTransitionArray(ta,{{"backFire1_1_1"},{"slide"},{},{2},{1},{1,1,6,5},{2},{1,1,6,3},{3},{1,1,7,2}})
-    addToShapeArray(sp, "autoFan","autoFan1_1_1", {1, 1, 3, 4}, "down")
-    addToShapeArray(sp, "shape","triangle5_1_1", {1, 1, 4, 4}, "triangleTopRightShape", {1, 13, "breakable"})
-    addToShapeArray(sp, "shape","triangle6_1_1", {1, 1, 5, 4}, "triangleTopLeftShape", {1, _, "breakable"})
-    addToShapeArray(sp, "spitter","spitter1_1_1", {1, 1, 1, 5}, {"none","right","none","none"})
-    addToTransitionArray(ta,{{"spitter1_1_1"},{"slide"},{},{3},{1},{1,1,1,2},{2},{1,1,1,3},{3},{1,1,1,5}})
-    addToShapeArray(sp, "door","door1_1_1", {1, 1, 3, 5}, "down")
-    addToShapeArray(sp, "shape","triangle7_1_1", {1, 1, 4, 5}, "triangleBottomRightShape", {1, 9, "breakable"})
+    newShape("shape","triangle1_1_1", {1, 1, 1, 1}, "triangleTopAndBottomShape", {2})
+    newShape("shape","triangle2_1_1", {1, 1, 4, 1}, "triangleBottomLeftShape", {1, _, "breakable"})
+    newShape("shape","triangle3_1_1", {1, 1, 5, 2}, "triangleBottomRightShape", {1, _, "breakable"})
+    newShape("shape","triangle4_1_1", {1, 1, 2, 3}, "triangleBottomRightShape", {1, 9, "breakable"})
+    newShape("backFire","backFire1_1_1", {1, 1, 6, 3})
+    newTransition("backFire1_1_1", "slide", {}, {{1,1,6,5},{1,1,6,3},{1,1,7,2}})
+    newShape("autoFan","autoFan1_1_1", {1, 1, 3, 4}, "down")
+    newShape("shape","triangle5_1_1", {1, 1, 4, 4}, "triangleTopRightShape", {1, 13, "breakable"})
+    newShape("shape","triangle6_1_1", {1, 1, 5, 4}, "triangleTopLeftShape", {1, _, "breakable"})
+    newShape("spitter","spitter1_1_1", {1, 1, 1, 5}, {"none","right","none","none"})
+    newTransition("spitter1_1_1", "slide", {}, {{1,1,1,2},{1,1,1,3},{1,1,1,5}})
+    newShape("door","door1_1_1", {1, 1, 3, 5}, "down")
+    newShape("shape","triangle7_1_1", {1, 1, 4, 5}, "triangleBottomRightShape", {1, 9, "breakable"})
 
     --SCREEN 2-1
-    addToShapeArray(sp, "autoFan","autoFan1_2_1", {2, 1, 1, 1}, "right")
-    addToShapeArray(sp, "shape","triangle1_2_1", {2, 1, 4, 2}, "triangleTopRightShape", {1, _, "breakable"})
-    addToShapeArray(sp, "door","door1_2_1", {2, 1, 1, 3}, "left")
-    addToShapeArray(sp, "autoFan","autoFan2_2_1", {2, 1, 2, 3}, "up")
-    addToTransitionArray(ta,{{"autoFan2_2_1"},{"slide"},{},{2},{1},{2,1,1,4},{2},{2,1,2,3}})
-    addToShapeArray(sp, "autoFan","autoFan3_2_1", {2, 1, 6, 3}, "left")
-    addToTransitionArray(ta,{{"autoFan3_2_1"},{"slide"},{},{2},{1},{2,1,5,3},{2},{2,1,6,3}})
-    addToShapeArray(sp, "shape","triangle2_2_1", {2, 1, 6, 4}, "triangleTopRightShape", {1, _, "breakable"})
-    addToShapeArray(sp, "shape","triangle3_2_1", {2, 1, 2, 5}, "triangleTopLeftShape", {1, _, "breakable"})
-    addToShapeArray(sp, "shape","triangle4_2_1", {2, 1, 5, 5}, "triangleBottomLeftShape", {1, _, "breakable"})
+    newShape("autoFan","autoFan1_2_1", {2, 1, 1, 1}, "right")
+    newShape("shape","triangle1_2_1", {2, 1, 4, 2}, "triangleTopRightShape", {1, _, "breakable"})
+    newShape("door","door1_2_1", {2, 1, 1, 3}, "left")
+    newShape("autoFan","autoFan2_2_1", {2, 1, 2, 3}, "up")
+    newTransition("autoFan2_2_1", "slide", {}, {{2,1,1,4},{2,1,2,3}})
+    newShape("autoFan","autoFan3_2_1", {2, 1, 6, 3}, "left")
+    newTransition("autoFan3_2_1", "slide", {}, {{2,1,5,3},{2,1,6,3}})
+    newShape("shape","triangle2_2_1", {2, 1, 6, 4}, "triangleTopRightShape", {1, _, "breakable"})
+    newShape("shape","triangle3_2_1", {2, 1, 2, 5}, "triangleTopLeftShape", {1, _, "breakable"})
+    newShape("shape","triangle4_2_1", {2, 1, 5, 5}, "triangleBottomLeftShape", {1, _, "breakable"})
 
     --SCREEN 1-2
-    addToShapeArray(sp, "shape","triangle1_1_2", {1, 2, 2, 1}, "triangleTopLeftShape", {1, 15, "breakable"})
-    addToShapeArray(sp, "gem","purple", {1, 2, 6, 1}, "purple")
-    addToShapeArray(sp, "manualFan","manualFan1_1_2", {1, 2, 2, 2}, "left")
-    addToShapeArray(sp, "spitter","spitter1_1_2", {1, 2, 5, 2}, {"none","none","none","left"})
-    addToTransitionArray(ta,{{"spitter1_1_2"},{"slide"},{},{1},{1},{1,2,5,2},{2},{1,2,5,4},{3},{1,2,5,5}})
-    addToShapeArray(sp, "shape","triangle2_1_2", {1, 2, 1, 3}, "triangleTopLeftShape", {1, 6, "breakable"})
-    addToShapeArray(sp, "manualFan","manualFan2_1_2", {1, 2, 3, 3}, "right")
-    addToShapeArray(sp, "shape","triangle3_1_2", {1, 2, 6, 3}, "triangleTopRightShape", {1, _, "icy"})
-    addToShapeArray(sp, "endPoint","endPoint1_1_2", {1, 2, 1, 4})
-    addToShapeArray(sp, "gun","gun1_1_2", {1, 2, 7, 4}, "down")
-    addToShapeArray(sp, "shape","bar1_1_2", {1, 2, 7, 5}, "bar", {"horz"})
-    addToShapeArray(sp, "gem","purple", {1, 2, 7, 5}, "purple")
+    newShape("shape","triangle1_1_2", {1, 2, 2, 1}, "triangleTopLeftShape", {1, 15, "breakable"})
+    newShape("gem","purple", {1, 2, 6, 1}, "purple")
+    newShape("manualFan","manualFan1_1_2", {1, 2, 2, 2}, "left")
+    newShape("spitter","spitter1_1_2", {1, 2, 5, 2}, {"none","none","none","left"})
+    newTransition("spitter1_1_2", "slide", {}, {{1,2,5,2},{1,2,5,4},{1,2,5,5}})
+    newShape("shape","triangle2_1_2", {1, 2, 1, 3}, "triangleTopLeftShape", {1, 6, "breakable"})
+    newShape("manualFan","manualFan2_1_2", {1, 2, 3, 3}, "right")
+    newShape("shape","triangle3_1_2", {1, 2, 6, 3}, "triangleTopRightShape", {1, _, "icy"})
+    newShape("endPoint","endPoint1_1_2", {1, 2, 1, 4})
+    newShape("gun","gun1_1_2", {1, 2, 7, 4}, "down")
+    newShape("shape","bar1_1_2", {1, 2, 7, 5}, "bar", {"horz"})
+    newShape("gem","purple", {1, 2, 7, 5}, "purple")
 
 end
     t.createLevelObjects = createLevelObjects

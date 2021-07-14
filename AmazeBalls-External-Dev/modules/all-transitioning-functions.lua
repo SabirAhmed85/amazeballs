@@ -45,31 +45,28 @@ end
 
 local actionAutoSlideTimer = function (mainFunc, shape, isFirstTime)
 	local delayTime = 0;
-	local transition = mainFunc.allLevelSettings.transitionArrayIndex[shape.transitionArrayIndex];
+	local thisTransition = mainFunc.allLevelSettings.transitionArrayIndex[shape.transitionArrayIndex];
 
 	if isFirstTime then
 		delayTime = 400
 	end
-	if shape.transitionIsNextOrPrev == "prev" then
-		shape.nextSlideTransitionIndex = shape.currentSlideTransitionIndex - 1
-	else
-		shape.nextSlideTransitionIndex = shape.currentSlideTransitionIndex + 1
-	end
-
-	if shape.nextSlideTransitionIndex == 3 then
-		shape.nextSlideTransitionIndex = shape.nextSlideTransitionIndex + 2
-		shape.transitionIsNextOrPrev = "next"
-	end
 	
-	if shape.nextSlideTransitionIndex > #transition then
-		shape.nextSlideTransitionIndex = shape.nextSlideTransitionIndex - 2
+	print("NEXT", shape.nextSlideTransitionIndex);
+
+	if shape.nextSlideTransitionIndex == 1 then
+		shape.transitionIsNextOrPrev = "next"
+	elseif shape.currentSlideTransitionIndex == #thisTransition["positionArray"] then
 		shape.transitionIsNextOrPrev = "prev"
 	end
 
-	local currentHorzSquare = transition["positionArray"][shape.currentSlideTransitionIndex][3]
-	local currentVertSquare = transition["positionArray"][shape.currentSlideTransitionIndex][4]
-	local nextHorzSquare = transition["positionArray"][shape.nextSlideTransitionIndex][3]
-	local nextVertSquare = transition["positionArray"][shape.nextSlideTransitionIndex][4]
+	shape.nextSlideTransitionIndex = shape.transitionIsNextOrPrev == "prev" and
+		shape.currentSlideTransitionIndex - 1 or
+		shape.currentSlideTransitionIndex + 1;
+
+	local currentHorzSquare = thisTransition["positionArray"][shape.currentSlideTransitionIndex][3]
+	local currentVertSquare = thisTransition["positionArray"][shape.currentSlideTransitionIndex][4]
+	local nextHorzSquare = thisTransition["positionArray"][shape.nextSlideTransitionIndex][3]
+	local nextVertSquare = thisTransition["positionArray"][shape.nextSlideTransitionIndex][4]
 
     local totalXDist = (nextHorzSquare - currentHorzSquare) * 60
     local totalYDist = (nextVertSquare - currentVertSquare) * mainFunc.allLevelSettings.squareHeight
@@ -95,6 +92,7 @@ local actionAutoSlideTimer = function (mainFunc, shape, isFirstTime)
         	if shape.isActiveWhenSliding == false and obj.alpha == 1 and isBall == false then
         		obj.alpha = 0.3
         	end
+			print("PRINTED!", shape, obj, isBall, thisTransition["shapeName"], transition.to);
         	shape.autoSlideTransition[#shape.autoSlideTransition + 1] = transition.to(obj, {y = obj.y + yCalc(totalYDist), x = obj.x + xCalc(totalXDist), time = numSquares * shape.timePerSquare, onComplete = function ()
 	            shape.autoSlideTransition[#shape.autoSlideTransition] = nil
 	            table.remove(shape.autoSlideTransition, #shape.autoSlideTransition)
@@ -222,31 +220,31 @@ local transitionArrayStateCheckNew = function (thisTransitionObject, mainFunc, s
 
 	local ad = thisTransitionObject.additionalCounterForDummyConnector * 2
     local d = thisTransitionObject.newDVal;
-	local transition = mainFunc.allLevelSettings.transitionArrayIndex[d];
-	local positions = transition["positionArray"];
+	local thisTransition = mainFunc.allLevelSettings.transitionArrayIndex[d];
+	local positions = thisTransition["positionArray"];
 	local tIndex = thisTransitionObject.transitionArrayState;
 	
-	if (transition["shapeName"] == thisTransitionObject.name) then
+	if (thisTransition["shapeName"] == thisTransitionObject.name) then
 		thisTransitionObject.thisTransitionHorzSquare = positions[tIndex+ad][3]
 		thisTransitionObject.thisTransitionVertSquare = positions[tIndex+ad][4]
-		thisTransitionObject.thisTransitionSquareIndex = tIndex+ad
+		thisTransitionObject.thisTransitionSquareIndex = positions[tIndex+ad][5] and positions[tIndex+ad][5] or nil
 		if tIndex < #positions then
-			thisTransitionObject.nextTransitionHorzSquare = positions[tIndex+1+ad][3]
-			thisTransitionObject.nextTransitionVertSquare = positions[tIndex+1+ad][4]
-			thisTransitionObject.nextTransitionSquareIndex = tIndex+1+ad
+			thisTransitionObject.nextTransitionHorzSquare = positions[tIndex+1+ad][3];
+			thisTransitionObject.nextTransitionVertSquare = positions[tIndex+1+ad][4];
+			thisTransitionObject.nextTransitionSquareIndex = positions[tIndex+1+ad][5] and positions[tIndex+1+ad][5] or nil;
 		else
 			thisTransitionObject.nextTransitionHorzSquare = "null"
 			thisTransitionObject.nextTransitionVertSquare = "null"
-			thisTransitionObject.nextTransitionSquareIndex = "null"
+			thisTransitionObject.nextTransitionSquareIndex = nil
 		end
 		if tIndex > 1 then
 			thisTransitionObject.prevTransitionHorzSquare = positions[tIndex-1+ad][3]
 			thisTransitionObject.prevTransitionVertSquare = positions[tIndex-1+ad][4]
-			thisTransitionObject.prevTransitionSquareIndex = tIndex-1+ad
+			thisTransitionObject.prevTransitionSquareIndex = positions[tIndex-1+ad][5] and positions[tIndex-1+ad][5] or nil;
 		else
 			thisTransitionObject.prevTransitionHorzSquare = "null"
 			thisTransitionObject.prevTransitionVertSquare = "null"
-			thisTransitionObject.prevTransitionSquareIndex = "null"
+			thisTransitionObject.prevTransitionSquareIndex = nil
 		end
 	end
     
@@ -492,9 +490,9 @@ local mainTransitionMoveSomething = function (thisTransitionObject, mainFunc, sh
 	            thisTransitionObject.storedTransitionDistance = thisTransitionObject.storedTransitionDistance * thisTransitionObject.thisTransitionXDirection
 	        end
 
-			if thisTransitionObject.nextOrPrevState == "next" and thisTransitionObject.nextTransitionSquareIndex == "*" then
+			if thisTransitionObject.nextOrPrevState == "next" and thisTransitionObject.nextTransitionSquareIndex then
                 thisTransitionObject.additionalCounterForDummyConnector = thisTransitionObject.additionalCounterForDummyConnector + 1
-			elseif thisTransitionObject.nextOrPrevState == "prev" and thisTransitionObject.prevTransitionSquareIndex == "*" then
+			elseif thisTransitionObject.nextOrPrevState == "prev" and thisTransitionObject.prevTransitionSquareIndex then
                 thisTransitionObject.additionalCounterForDummyConnector = thisTransitionObject.additionalCounterForDummyConnector - 1
             else
                 thisTransitionObject.additionalCounterForDummyConnector = 0
@@ -503,10 +501,10 @@ local mainTransitionMoveSomething = function (thisTransitionObject, mainFunc, sh
 	    	transitionArrayStateCheckNew(thisTransitionObject, mainFunc, shapeArray, shapeArrayParameters)
 	    	thisTransitionObject.additionalCounterForDummyConnector = 0
 
-	    	if thisTransitionObject.nextOrPrevState == "next" and thisTransitionObject.nextTransitionSquareIndex == "*" then
+	    	if thisTransitionObject.nextOrPrevState == "next" and thisTransitionObject.nextTransitionSquareIndex then
                 isActualConnector = false
                 thisTransitionObject.additionalCounterForDummyConnector = thisTransitionObject.additionalCounterForDummyConnector + 1
-            elseif thisTransitionObject.nextOrPrevState == "prev" and thisTransitionObject.prevTransitionSquareIndex == "*" then
+            elseif thisTransitionObject.nextOrPrevState == "prev" and thisTransitionObject.prevTransitionSquareIndex then
                 isActualConnector = false
                 thisTransitionObject.additionalCounterForDummyConnector = thisTransitionObject.additionalCounterForDummyConnector - 1
             else
@@ -629,11 +627,11 @@ end
 -- And apply relevant Transitions
 local prepareTransitioningObjects = function (mainFunc)
 	for y = 1, #mainFunc.allLevelSettings.transitionArrayIndex do
-	    local transition = mainFunc.allLevelSettings.transitionArrayIndex[y];
-		print("Trans", transition["transitionType"], transition["shapeName"]);
-	    if transition["transitionType"] == "flip-horizontal" then
+	    local thisTransition = mainFunc.allLevelSettings.transitionArrayIndex[y];
+
+	    if thisTransition["transitionType"] == "flip-horizontal" then
 	        for z = 1, #shapeArray do
-	            if shapeArray[z].name == transition["shapeName"] then
+	            if shapeArray[z].name == thisTransition["shapeName"] then
 	                if shapeArrayParameters[z]["props"][1] == 2 then
 	                    shapeArray[z].transitionArrayState = 2
 	                    shapeArray[z].originalState = 2
@@ -651,9 +649,9 @@ local prepareTransitioningObjects = function (mainFunc)
 	                
 	            end
 	        end
-	    elseif transition["transitionType"] == "flip-vertical" then
+	    elseif thisTransition["transitionType"] == "flip-vertical" then
 	        for z = 1, #shapeArray do
-	            if shapeArray[z].name == transition["shapeName"] then
+	            if shapeArray[z].name == thisTransition["shapeName"] then
 	                if shapeArrayParameters[z]["props"][1] == 2 then
 	                    shapeArray[z].transitionArrayState = 2
 	                    shapeArray[z].originalState = 2
@@ -667,12 +665,12 @@ local prepareTransitioningObjects = function (mainFunc)
 	                mainFunc.objectCreateScript.addFlipIndicatorTriangles(mainFunc, shapeArray, shapeArrayParameters)
 	            end
 	        end
-	    elseif transition["transitionType"] == "slide"
-	    or transition["transitionType"] == "autoSlide"
-	    or transition["transitionType"] == "switchSlide" then
+	    elseif thisTransition["transitionType"] == "slide"
+	    or thisTransition["transitionType"] == "autoSlide"
+	    or thisTransition["transitionType"] == "switchSlide" then
 	        local connector, shapeType
 	        for z = 1, #shapeArray do
-	            if shapeArray[z].name == transition["shapeName"] then
+	            if shapeArray[z].name == thisTransition["shapeName"] then
 	                shapeType = shapeArrayParameters[z]["type"]
 	        		if shapeType == "shape" and (shapeArrayParameters[z]["subType"] == "bar" or shapeArrayParameters[z]["subType"] == "doubleBar") then
 	        			shapeType = "bar"
@@ -683,15 +681,15 @@ local prepareTransitioningObjects = function (mainFunc)
 	        local lastConnectorY, lastConnectorX, lastConnectorXSquare, lastConnectorYSquare;
 	        local connectorXSquare, connectorYSquare, isActualConnector;
 
-	        if transition["props"]["labelled"] == false then
+	        if thisTransition["props"]["labelled"] == false then
 
 	        else
-		        for x = 1, #transition["positionArray"] do
-					local position = transition["positionArray"][x];
+		        for x = 1, #thisTransition["positionArray"] do
+					local position = thisTransition["positionArray"][x];
 					connectorXSquare = position[3];
 					connectorYSquare = position[4];
 
-					if (x > 1 and transition["positionArray"][x-1][1] == "*") then
+					if position[5] then
 						isActualConnector = false;
 					else
 						isActualConnector = true;
@@ -703,14 +701,14 @@ local prepareTransitioningObjects = function (mainFunc)
 						connector.anchorX = 0.5
 						connector.anchorY = 0.5
 						table.insert(mainFunc.allLevelSettings.connectorArray, connector)
-						connector.relatedShape = transition["shapeName"];
+						connector.relatedShape = thisTransition["shapeName"];
 						connector.x = ((position[1] - 1) * display.contentWidth) + (((position[3] - 1) * mainFunc.allLevelSettings.squareWidth) + (mainFunc.allLevelSettings.gutterWidth) + (mainFunc.allLevelSettings.squareWidth/2) )
 						connector.xSquare = position[3]
 						connector.y = ((position[2] - 1) * display.contentHeight) + (((position[4] - 1) * mainFunc.allLevelSettings.squareHeight) + (mainFunc.allLevelSettings.gutterHeight) + (mainFunc.allLevelSettings.squareHeight/2) )
 						connector.ySquare = position[4]
 
 						for z = 1, #shapeArray do
-							if shapeArray[z].name == transition["shapeName"]
+							if shapeArray[z].name == thisTransition["shapeName"]
 							and (shapeArrayParameters[z]["subType"] == "bar" or shapeArrayParameters[z]["subType"] == "doubleBar") then
 								if shapeArray[z].state == "horz" then
 									connector.x = connector.x - (mainFunc.allLevelSettings.squareWidth / 2)
@@ -724,10 +722,10 @@ local prepareTransitioningObjects = function (mainFunc)
 										connector.y = connector.y + (mainFunc.allLevelSettings.squareHeight / 2)
 									end
 								end
-							elseif shapeArray[z].name == transition["shapeName"]
+							elseif shapeArray[z].name == thisTransition["shapeName"]
 							and shapeArrayParameters[z]["subType"] == "triangleTopAndBottomShape" then
 								connector.x = connector.x + (mainFunc.allLevelSettings.squareWidth / 2)
-							elseif shapeArray[z].name == transition["shapeName"]
+							elseif shapeArray[z].name == thisTransition["shapeName"]
 							and shapeArrayParameters[z]["subType"] == "triangleLeftAndRightShape" then
 								connector.y = connector.y + (mainFunc.allLevelSettings.squareHeight / 2)
 							end
@@ -766,7 +764,7 @@ local prepareTransitioningObjects = function (mainFunc)
 							connectorTubeHorizontal.y = lastConnectorY
 
 							for z = 1, #shapeArray do
-								if shapeArray[z].name == transition["shapeName"] then
+								if shapeArray[z].name == thisTransition["shapeName"] then
 									if shapeArrayParameters[z]["subType"] == "triangleTopLeftShape" or shapeArrayParameters[z]["subType"] == "triangleBottomLeftShape" then
 										connectorTubeHorizontal.x = connectorTubeHorizontal.x + 4
 									elseif shapeArrayParameters[z]["subType"] == "triangleBottomRightShape" or shapeArrayParameters[z]["subType"] == "triangleTopRightShape" then
@@ -977,7 +975,7 @@ local prepareTransitioningObjects = function (mainFunc)
 						if (thisSpotColour == "green" and originalConnectorYDistance ~= 0) then
 
 							for z = 1, #shapeArray do
-								if shapeArray[z].name == transition["shapeName"] then
+								if shapeArray[z].name == thisTransition["shapeName"] then
 									if shapeArrayParameters[z]["subType"] == "triangleTopLeftShape" or shapeArrayParameters[z]["subType"] == "triangleTopRightShape" then
 										if (originalConnectorYDistance > 0) then
 											connectorTubeVertical.y = connectorTubeVertical.y
@@ -1024,13 +1022,13 @@ local prepareTransitioningObjects = function (mainFunc)
 	        for z = 1, #shapeArray do
 	        	--EXT: Loop through Level Objects to decide which particular TransitionHorzSquare & TransitionVertSquare the object is on
 	        	-- TransitionHorzSquare means which particular horizontal stage of it's transtition this object is at
-				if shapeArray[z].name == transition["shapeName"] then
+				if shapeArray[z].name == thisTransition["shapeName"] then
 					local thisTransitioningObject = shapeArray[z];
-					local tIndex = transition["startPositionIndex"];
-					local positions = transition["positionArray"];
+					local tIndex = thisTransition["startPositionIndex"];
+					local positions = thisTransition["positionArray"];
 
 	                thisTransitioningObject.transitionArrayState = tIndex;
-					thisTransitioningObject.transitionCounter = transition["transitionType"] == "slide" and 0;
+					thisTransitioningObject.transitionCounter = thisTransition["transitionType"] == "slide" and 0;
 					thisTransitioningObject.thisTransitionHorzSquare = positions[tIndex][3];
 					thisTransitioningObject.thisTransitionVertSquare = positions[tIndex][4];
 					thisTransitioningObject.thisTransitionSquareIndex = tIndex;
@@ -1038,20 +1036,20 @@ local prepareTransitioningObjects = function (mainFunc)
 					if tIndex < #positions then
 						thisTransitioningObject.nextTransitionHorzSquare = positions[tIndex+1][3]
 						thisTransitioningObject.nextTransitionVertSquare = positions[tIndex+1][4]
-						thisTransitioningObject.nextTransitionSquareIndex = tIndex + 1
+						thisTransitioningObject.nextTransitionSquareIndex = positions[tIndex+1][5] and positions[tIndex+1][5] or nil
 					else
 						thisTransitioningObject.nextTransitionHorzSquare = "null"
 						thisTransitioningObject.nextTransitionVertSquare = "null"
-						thisTransitioningObject.nextTransitionSquareIndex = "null"
+						thisTransitioningObject.nextTransitionSquareIndex = nil
 					end
 					if tIndex > 1 then
 						thisTransitioningObject.prevTransitionHorzSquare = positions[tIndex-1][3]
 						thisTransitioningObject.prevTransitionVertSquare = positions[tIndex-1][4]
-						thisTransitioningObject.prevTransitionSquareIndex = tIndex - 1
+						thisTransitioningObject.prevTransitionSquareIndex = positions[tIndex-1][5] and positions[tIndex-1][5] or nil
 					else
 						thisTransitioningObject.prevTransitionHorzSquare = "null"
 						thisTransitioningObject.prevTransitionVertSquare = "null"
-						thisTransitioningObject.prevTransitionSquareIndex = "null"
+						thisTransitioningObject.prevTransitionSquareIndex = nil
 					end
 	            end
 	        end

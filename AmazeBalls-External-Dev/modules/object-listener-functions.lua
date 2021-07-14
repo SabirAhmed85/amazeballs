@@ -180,10 +180,10 @@ local objectListener = function (event, mainFunc, shapeArray, shapeArrayParamete
     else
 
         for d=1, #mainFunc.allLevelSettings.transitionArrayIndex do
-            local transition = mainFunc.allLevelSettings.transitionArrayIndex[d];
+            local thisTransition = mainFunc.allLevelSettings.transitionArrayIndex[d];
 
-            if hasValue({"flip-horizontal", "flip-vertical"}, transition["transitionType"])
-            and event.target.name == transition["shapeName"] then
+            if hasValue({"flip-horizontal", "flip-vertical"}, thisTransition["transitionType"])
+            and event.target.name == thisTransition["shapeName"] then
                 if mainFunc.ballBtnScreenCreate.ball.x > (event.target.x - 60)
                 and mainFunc.ballBtnScreenCreate.ball.x < (event.target.x + 60)
                 and mainFunc.ballBtnScreenCreate.ball.y > (event.target.y - 60)
@@ -201,7 +201,7 @@ local objectListener = function (event, mainFunc, shapeArray, shapeArrayParamete
                         or (mainFunc.thisLevelSettings.compassObtained == true and (event.target.relevantHorzScreen  ~= mainFunc.allLevelSettings.ballScreenHorzValue or event.target.relevantVertScreen ~= mainFunc.allLevelSettings.ballScreenVertValue)) then
                             display.getCurrentStage():setFocus(event.target)
                             event.target.isFocus = true
-                            thisFlipDirection = transition["transitionType"]
+                            thisFlipDirection = thisTransition["transitionType"]
                             mainFunc.objectFlipScript.positionNewFlippedObject(event.target, thisFlipDirection, flipVerticalCounter, mainFunc)
                         end
                     else
@@ -212,8 +212,8 @@ local objectListener = function (event, mainFunc, shapeArray, shapeArrayParamete
                         end
                     end
                 end
-            elseif transition["transitionType"] == "slide" then
-                if event.target.name == transition["shapeName"] and stillTransitioningCounter == 0 and event.target.transitionCounter == 0 then
+            elseif thisTransition["transitionType"] == "slide" then
+                if event.target.name == thisTransition["shapeName"] and stillTransitioningCounter == 0 and event.target.transitionCounter == 0 then
                     
                     if event.phase == "began"
                     and mainFunc.allLevelSettings.ballActivateButtonSet == false
@@ -285,14 +285,12 @@ local objectListener = function (event, mainFunc, shapeArray, shapeArrayParamete
                             -- end
                             mainFunc.objectFunctionsScript.bombGroupCheck(mainFunc, "before", event.target)
                             --Runtime:addEventListener( "enterFrame", mainFunc.transitionMoveSomething)
-                            local isActualConnector
-                            if event.target.nextOrPrevState == "next" and event.target.nextTransitionSquareIndex == "*" then
-                                isActualConnector = false
-                            elseif event.target.nextOrPrevState == "prev" and event.target.prevTransitionSquareIndex == "*" then
-                                isActualConnector = false
-                            else
-                                isActualConnector = true
-                            end
+                            local isActualConnector = (
+                                (event.target.nextOrPrevState == "next" and event.target.nextTransitionSquareIndex) or
+                                (event.target.nextOrPrevState == "prev" and event.target.prevTransitionSquareIndex)) and
+                                    false or
+                                    true;
+                                    
                             mainFunc.transitionFunctionScript.mainTransitionMoveSomething(event.target, mainFunc, shapeArray, shapeArrayParameters, isActualConnector)
                         end
                             t.startTransitionMoveSomething = startTransitionMoveSomething

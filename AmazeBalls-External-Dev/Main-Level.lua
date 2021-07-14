@@ -485,28 +485,28 @@ end
 
 local function activateAutoSlideObject(mainFunc, shapeArray, shapeArrayIndex, transArrayIndex)
     local c = shapeArrayIndex;
-    local transition = mainFunc.allLevelSettings.transitionArrayIndex[transArrayIndex];
-    local transPositionArrayLength = #transition["positionArray"];
+    local thisTransition = mainFunc.allLevelSettings.transitionArrayIndex[transArrayIndex];
+    local transPositionArrayLength = #thisTransition["positionArray"];
 
     shapeArray[c].transitionIsNextOrPrev = "next"
     shapeArray[c].transitionArrayIndex = transArrayIndex;
     shapeArray[c].timePerSquare = 400
     shapeArray[c].pauseTime = 50
-    if transition["props"]["timePerSquare"] then
-        shapeArray[c].timePerSquare = transition["props"]["timePerSquare"]
+    if thisTransition["props"]["timePerSquare"] then
+        shapeArray[c].timePerSquare = thisTransition["props"]["timePerSquare"]
     end
-    if transition["props"]["pauseTime"] then
-        shapeArray[c].pauseTime = transition["props"]["pauseTime"]
+    if thisTransition["props"]["pauseTime"] then
+        shapeArray[c].pauseTime = thisTransition["props"]["pauseTime"]
     end
     shapeArray[c].isActiveWhenSliding = true
     shapeArray[c].isAutoSlideObject = true
     shapeArray[c].shouldBallMoveInAutoSlide = false
     shapeArray[c].autoSlideIsPaused = false
-    if transition["props"]["isActiveWhenSliding"] == false then
+    if thisTransition["props"]["isActiveWhenSliding"] == false then
         shapeArray[c].isActiveWhenSliding = false
     end
     shapeArray[c].maxSlideTransitionIndex = transPositionArrayLength;
-    shapeArray[c].currentSlideTransitionIndex = transition["startPositionIndex"]
+    shapeArray[c].currentSlideTransitionIndex = thisTransition["startPositionIndex"]
     shapeArray[c].autoSlideTransition = {}
     shapeArray[c].autoSlideTimer = {}
     if shapeArray[c].currentSlideTransitionIndex == transPositionArrayLength then

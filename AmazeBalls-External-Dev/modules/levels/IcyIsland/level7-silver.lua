@@ -3,22 +3,26 @@ local addToShapeArray = require("utils.add-to-shape-array");
 local addToTransitionArray = require("utils.add-to-transition-array");
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
-    local sp = shapeArrayParameters;
-    local ta = mainFunc.allLevelSettings.transitionArrayIndex;   
+    local newShape = function(type, name, location, subType, props)
+        addToShapeArray(shapeArrayParameters, type, name, location, subType, props);
+    end
+    local newTransition = function(shapeName, transitionType, props, positionArray)
+        addToTransitionArray(mainFunc.allLevelSettings.transitionArrayIndex, shapeArrayParameters, shapeName, transitionType, props, positionArray);
+    end
 
     --SCREEN 1-1
-    addToShapeArray(sp, "tunnel","tunnel1_1_1", {1, 1, 4, 1, 1, 1, 6, 1}, "up")
+    newShape("tunnel","tunnel1_1_1", {1, 1, 4, 1, 1, 1, 6, 1}, "up")
 
     --SCREEN 2-1
-    addToShapeArray(sp, "door","door1_2_1", {2, 1, 1, 3}, "left")
+    newShape("door","door1_2_1", {2, 1, 1, 3}, "left")
 
     --SCREEN 1-2
-    addToShapeArray(sp, "shape","triangle1_1_2", {1, 2, 2, 1}, "triangleBottomLeftShape", {1, _, "breakable"})
-    addToShapeArray(sp, "shape","triangle2_1_2", {1, 2, 7, 1}, "triangleBottomLeftShape")
-    addToShapeArray(sp, "item","big-present", {1, 2, 7, 3}, {})
+    newShape("shape","triangle1_1_2", {1, 2, 2, 1}, "triangleBottomLeftShape", {1, _, "breakable"})
+    newShape("shape","triangle2_1_2", {1, 2, 7, 1}, "triangleBottomLeftShape")
+    newShape("item","big-present", {1, 2, 7, 3}, {})
 
-    addToShapeArray(sp, "shape","triangle3_1_2", {1, 2, 5, 4}, "triangleBottomLeftShape", {1, _, "breakable"})
-    addToShapeArray(sp, "endPoint","endPoint1_1_2", {1, 2, 7, 4})
+    newShape("shape","triangle3_1_2", {1, 2, 5, 4}, "triangleBottomLeftShape", {1, _, "breakable"})
+    newShape("endPoint","endPoint1_1_2", {1, 2, 7, 4})
 
 end
     t.createLevelObjects = createLevelObjects

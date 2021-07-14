@@ -3,28 +3,32 @@ local addToShapeArray = require("utils.add-to-shape-array");
 local addToTransitionArray = require("utils.add-to-transition-array");
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
-    local sp = shapeArrayParameters;
-    local ta = mainFunc.allLevelSettings.transitionArrayIndex;   
+    local newShape = function(type, name, location, subType, props)
+        addToShapeArray(shapeArrayParameters, type, name, location, subType, props);
+    end
+    local newTransition = function(shapeName, transitionType, props, positionArray)
+        addToTransitionArray(mainFunc.allLevelSettings.transitionArrayIndex, shapeArrayParameters, shapeName, transitionType, props, positionArray);
+    end
 
     --SCREEN 1-1
-    addToShapeArray(sp, "endPoint","endPoint1_1_1", {1, 1, 3, 1})
-    addToShapeArray(sp, "shape","triangle1_1_1", {1, 1, 1, 2}, "triangleBottomRightShape", {1, _, "icy"})
-    addToShapeArray(sp, "shape","triangle2_1_1", {1, 1, 7, 2}, "triangleBottomLeftShape", {1, _, "icy"})
-    addToShapeArray(sp, "simple","simple1_1_1", {1, 1, 1, 3})
-    addToShapeArray(sp, "shape","triangle3_1_1", {1, 1, 3, 3}, "triangleBottomRightShape")
-    addToShapeArray(sp, "shape","triangle4_1_1", {1, 1, 5, 3}, "triangleBottomLeftShape")
-    addToShapeArray(sp, "manualFan","manualFan1_1_1", {1, 1, 3, 4}, "left")
-    addToShapeArray(sp, "shape","triangle5_1_1", {1, 1, 1, 5}, "triangleTopRightShape", {1, _, "fire"})
-    addToShapeArray(sp, "simple","simple2_1_1", {1, 1, 2, 5})
-    addToShapeArray(sp, "manualFan","manualFan2_1_1", {1, 1, 5, 5}, "down")
-    addToShapeArray(sp, "door","door1_1_1", {1, 1, 5, 5}, "down")
-    addToShapeArray(sp, "shape","triangle6_1_1", {1, 1, 7, 5}, "triangleTopLeftShape", {1, _, "breakable"})
+    newShape("endPoint","endPoint1_1_1", {1, 1, 3, 1})
+    newShape("shape","triangle1_1_1", {1, 1, 1, 2}, "triangleBottomRightShape", {1, _, "icy"})
+    newShape("shape","triangle2_1_1", {1, 1, 7, 2}, "triangleBottomLeftShape", {1, _, "icy"})
+    newShape("simple","simple1_1_1", {1, 1, 1, 3})
+    newShape("shape","triangle3_1_1", {1, 1, 3, 3}, "triangleBottomRightShape")
+    newShape("shape","triangle4_1_1", {1, 1, 5, 3}, "triangleBottomLeftShape")
+    newShape("manualFan","manualFan1_1_1", {1, 1, 3, 4}, "left")
+    newShape("shape","triangle5_1_1", {1, 1, 1, 5}, "triangleTopRightShape", {1, _, "fire"})
+    newShape("simple","simple2_1_1", {1, 1, 2, 5})
+    newShape("manualFan","manualFan2_1_1", {1, 1, 5, 5}, "down")
+    newShape("door","door1_1_1", {1, 1, 5, 5}, "down")
+    newShape("shape","triangle6_1_1", {1, 1, 7, 5}, "triangleTopLeftShape", {1, _, "breakable"})
 
     --SCREEN 1-2
-    addToShapeArray(sp, "door","door1_1_2", {1, 2, 3, 1}, "up")
-    addToShapeArray(sp, "door","door2_1_2", {1, 2, 5, 1}, "up")
-    addToShapeArray(sp, "simple","simple1_1_2", {1, 2, 5, 1})
-    addToShapeArray(sp, "item","mystery-block", {1, 2, 1, 2}, {
+    newShape("door","door1_1_2", {1, 2, 3, 1}, "up")
+    newShape("door","door2_1_2", {1, 2, 5, 1}, "up")
+    newShape("simple","simple1_1_2", {1, 2, 5, 1})
+    newShape("item","mystery-block", {1, 2, 1, 2}, {
         {name = "autoFan", properties = {directions = {"up"} } },
         {name = "autoFan", properties = {directions = {"right"} } },
         {name = "autoFan", properties = {directions = {"down"} } },
@@ -33,45 +37,45 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
         {name = "manualFan", properties = {directions = {"left"} } },
         {name = "spitter", properties = {directions = {"up", "left"} } }
     })
-    addToShapeArray(sp, "manualFan","manualFan1_1_2", {1, 2, 5, 2}, "left")
-    addToShapeArray(sp, "shape","triangle1_1_2", {1, 2, 2, 3}, "triangleTopRightShape")
-    addToTransitionArray(ta,{{"triangle1_1_2"},{"slide"},{},{2},{1},{1,2,1,5},{2},{1,2,2,3}})
-    addToShapeArray(sp, "shape","triangle2_1_2", {1, 2, 3, 3}, "triangleTopRightShape")
-    addToShapeArray(sp, "shape","triangle3_1_2", {1, 2, 5, 3}, "triangleTopLeftShape")
-    addToShapeArray(sp, "manualFan","manualFan2_1_2", {1, 2, 4, 4}, "down")
-    addToTransitionArray(ta,{{"manualFan2_1_2"},{"slide"},{},{2},{1},{1,2,3,5},{2},{1,2,4,4},{3},{1,2,6,4}})
+    newShape("manualFan","manualFan1_1_2", {1, 2, 5, 2}, "left")
+    newShape("shape","triangle1_1_2", {1, 2, 2, 3}, "triangleTopRightShape")
+    newTransition("triangle1_1_2", "slide", {}, {{1,2,1,5},{1,2,2,3}})
+    newShape("shape","triangle2_1_2", {1, 2, 3, 3}, "triangleTopRightShape")
+    newShape("shape","triangle3_1_2", {1, 2, 5, 3}, "triangleTopLeftShape")
+    newShape("manualFan","manualFan2_1_2", {1, 2, 4, 4}, "down")
+    newTransition("manualFan2_1_2", "slide", {}, {{1,2,3,5},{1,2,4,4},{1,2,6,4}})
 
     --GEMS
-    addToShapeArray(sp, "gem","purple", {1, 1, 4, 3}, "purple")
-    addToShapeArray(sp, "gem","purple", {1, 1, 2, 2}, "purple")
-    addToShapeArray(sp, "gem","purple", {1, 1, 4, 2}, "purple")
-    addToShapeArray(sp, "gem","purple", {1, 1, 5, 2}, "purple")
-    addToShapeArray(sp, "gem","purple", {1, 1, 6, 2}, "purple")
-    addToShapeArray(sp, "gem","purple", {1, 1, 7, 3}, "purple")
-    addToShapeArray(sp, "gem","purple", {1, 1, 2, 4}, "purple")
-    addToShapeArray(sp, "gem","purple", {1, 1, 4, 4}, "purple")
-    addToShapeArray(sp, "gem","purple", {1, 1, 6, 4}, "purple")
-    addToShapeArray(sp, "gem","purple", {1, 1, 6, 5}, "purple")
-    addToShapeArray(sp, "gem","purple", {1, 2, 1, 1}, "purple")
-    addToShapeArray(sp, "gem","purple", {1, 2, 1, 3}, "purple")
-    addToShapeArray(sp, "gem","purple", {1, 2, 3, 1}, "purple")
-    addToShapeArray(sp, "gem","purple", {1, 2, 2, 2}, "purple")
-    addToShapeArray(sp, "gem","purple", {1, 2, 4, 2}, "purple")
-    addToShapeArray(sp, "gem","purple", {1, 2, 6, 2}, "purple")
-    addToShapeArray(sp, "gem","purple", {1, 2, 5, 5}, "purple")
-    addToShapeArray(sp, "gem","purple", {1, 2, 7, 5}, "purple")
-    addToShapeArray(sp, "gem","redCoin", {1, 1, 5, 1}, "redCoin")
-    addToShapeArray(sp, "gem","blueCoin", {1, 2, 4, 3}, "blueCoin")
-    addToShapeArray(sp, "gem","purpleCoin", {1, 1, 7, 4}, "purpleCoin")
+    newShape("gem","purple", {1, 1, 4, 3}, "purple")
+    newShape("gem","purple", {1, 1, 2, 2}, "purple")
+    newShape("gem","purple", {1, 1, 4, 2}, "purple")
+    newShape("gem","purple", {1, 1, 5, 2}, "purple")
+    newShape("gem","purple", {1, 1, 6, 2}, "purple")
+    newShape("gem","purple", {1, 1, 7, 3}, "purple")
+    newShape("gem","purple", {1, 1, 2, 4}, "purple")
+    newShape("gem","purple", {1, 1, 4, 4}, "purple")
+    newShape("gem","purple", {1, 1, 6, 4}, "purple")
+    newShape("gem","purple", {1, 1, 6, 5}, "purple")
+    newShape("gem","purple", {1, 2, 1, 1}, "purple")
+    newShape("gem","purple", {1, 2, 1, 3}, "purple")
+    newShape("gem","purple", {1, 2, 3, 1}, "purple")
+    newShape("gem","purple", {1, 2, 2, 2}, "purple")
+    newShape("gem","purple", {1, 2, 4, 2}, "purple")
+    newShape("gem","purple", {1, 2, 6, 2}, "purple")
+    newShape("gem","purple", {1, 2, 5, 5}, "purple")
+    newShape("gem","purple", {1, 2, 7, 5}, "purple")
+    newShape("gem","redCoin", {1, 1, 5, 1}, "redCoin")
+    newShape("gem","blueCoin", {1, 2, 4, 3}, "blueCoin")
+    newShape("gem","purpleCoin", {1, 1, 7, 4}, "purpleCoin")
 
     --ITEMS
-    addToShapeArray(sp, "item","coins", {1, 1, 1, 4}, 470)
-    addToShapeArray(sp, "item","coins", {1, 1, 5, 4}, 70)
-    addToShapeArray(sp, "item","coins", {1, 2, 6, 5}, 80)
-    addToShapeArray(sp, "item","fireCape", {1, 2, 7, 2, 3, 5})
-    addToShapeArray(sp, "item","big-present", {1, 2, 3, 4}, {})
-    addToShapeArray(sp, "item","small-present", {1, 1, 3, 2}, {})
-    addToShapeArray(sp, "item","small-present", {1, 1, 4, 5}, {})
+    newShape("item","coins", {1, 1, 1, 4}, 470)
+    newShape("item","coins", {1, 1, 5, 4}, 70)
+    newShape("item","coins", {1, 2, 6, 5}, 80)
+    newShape("item","fireCape", {1, 2, 7, 2, 3, 5})
+    newShape("item","big-present", {1, 2, 3, 4}, {})
+    newShape("item","small-present", {1, 1, 3, 2}, {})
+    newShape("item","small-present", {1, 1, 4, 5}, {})
 
 end
     t.createLevelObjects = createLevelObjects

@@ -209,10 +209,10 @@ local changeToRightScreen = function (mainFunc, shapeArray, shapeArrayParameters
 
             for c = 1, #shapeArray do
                 for d = 1, #mainFunc.allLevelSettings.transitionArrayIndex do
-                    local transition = mainFunc.allLevelSettings.transitionArrayIndex[d];
-                    if transition["shapeName"] == shapeArrayParameters[c]["name"]
-                    and (transition["transitionType"] == "autoSlide"
-                        or (transition["transitionType"] == "switchSlide" and transition["props"]["isEnabledByDefault"]) )
+                    local thisTransition = mainFunc.allLevelSettings.transitionArrayIndex[d];
+                    if thisTransition["shapeName"] == shapeArrayParameters[c]["name"]
+                    and (thisTransition["transitionType"] == "autoSlide"
+                        or (thisTransition["transitionType"] == "switchSlide" and thisTransition["props"]["isEnabledByDefault"]) )
                     and shapeArrayParameters[c]["location"]["xScreen"] == mainFunc.thisLevelSettings.thisScreenHorzValue
                     and shapeArrayParameters[c]["location"]["yScreen"] == mainFunc.thisLevelSettings.thisScreenVertValue
                     and shapeArray[c].mainFuncListenerAdded == false then
@@ -230,9 +230,9 @@ local changeToRightScreen = function (mainFunc, shapeArray, shapeArrayParameters
                         else
                             mainFunc.activateAutoSlideObject(mainFunc, shapeArray, c, d)
                         end
-                    elseif transition["shapeName"] == shapeArrayParameters[c]["name"]
-                    and (transition["transitionType"] == "autoSlide"
-                        or (transition["transitionType"] == "switchSlide" and transition["props"]["isEnabledByDefault"]) )
+                    elseif thisTransition["shapeName"] == shapeArrayParameters[c]["name"]
+                    and (thisTransition["transitionType"] == "autoSlide"
+                        or (thisTransition["transitionType"] == "switchSlide" and thisTransition["props"]["isEnabledByDefault"]) )
                     and shapeArrayParameters[c]["location"]["xScreen"] == lastScreenHorzValue
                     and shapeArrayParameters[c]["location"]["yScreen"] == lastScreenVertValue then
                         if #shapeArray[c].autoSlideTransition > 0 then
@@ -337,17 +337,17 @@ local activateObjectsForPlay = function (mainFunc, shapeArray, shapeArrayParamet
         end
         
         for d=1, #mainFunc.allLevelSettings.transitionArrayIndex do
-            local transition = mainFunc.allLevelSettings.transitionArrayIndex[d];
+            local thisTransition = mainFunc.allLevelSettings.transitionArrayIndex[d];
             
-            if transition["shapeName"] == shapeArrayParameters[c]["name"]
-            and transition["transitionType"] ~= "autoSlide"
-            and transition["transitionType"] ~= "switchSlide"
+            if thisTransition["shapeName"] == shapeArrayParameters[c]["name"]
+            and thisTransition["transitionType"] ~= "autoSlide"
+            and thisTransition["transitionType"] ~= "switchSlide"
             and shapeArray[c].mainFuncListenerAdded == false then
                 shapeArray[c]:addEventListener("touch", mainFunc.listener)
                 shapeArray[c].mainFuncListenerAdded = true
-            elseif transition["shapeName"] == shapeArrayParameters[c]["name"]
-            and (transition["transitionType"] == "autoSlide"
-                or (transition["transitionType"] == "switchSlide" and transition["props"]["isEnabledByDefault"]) )
+            elseif thisTransition["shapeName"] == shapeArrayParameters[c]["name"]
+            and (thisTransition["transitionType"] == "autoSlide"
+                or (thisTransition["transitionType"] == "switchSlide" and thisTransition["props"]["isEnabledByDefault"]) )
             and shapeArrayParameters[c]["location"]["xScreen"] == mainFunc.thisLevelSettings.thisScreenHorzValue
             and shapeArrayParameters[c]["location"]["yScreen"] == mainFunc.thisLevelSettings.thisScreenVertValue
             and shapeArray[c].mainFuncListenerAdded == false then
@@ -463,7 +463,7 @@ local initialReturnToBallScreen = function (mainFunc, returnType, shapeArray, sh
                         end    
                         
                         -- for d=1, #mainFunc.allLevelSettings.transitionArrayIndex do
-                        --     if transition["shapeName"] == mainFunc.allLevelSettings.shapeArrayParameters[c]["name"] then
+                        --     if thisTransition["shapeName"] == mainFunc.allLevelSettings.shapeArrayParameters[c]["name"] then
                         --         mainFunc.allLevelSettings.shapeArray[c]:addEventListener("touch", mainFunc.listener)
                         --     end
                         -- end

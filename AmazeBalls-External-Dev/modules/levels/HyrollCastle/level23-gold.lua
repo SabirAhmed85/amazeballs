@@ -3,38 +3,42 @@ local addToShapeArray = require("utils.add-to-shape-array");
 local addToTransitionArray = require("utils.add-to-transition-array");
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
-    local sp = shapeArrayParameters;
-    local ta = mainFunc.allLevelSettings.transitionArrayIndex;   
+    local newShape = function(type, name, location, subType, props)
+        addToShapeArray(shapeArrayParameters, type, name, location, subType, props);
+    end
+    local newTransition = function(shapeName, transitionType, props, positionArray)
+        addToTransitionArray(mainFunc.allLevelSettings.transitionArrayIndex, shapeArrayParameters, shapeName, transitionType, props, positionArray);
+    end
     
     
-    --addToShapeArray(sp, "shape","triangle1_1_1", {1, 1, 2, 2}, "triangleLeftAndRightShape", {1})
+    --newShape("shape","triangle1_1_1", {1, 1, 2, 2}, "triangleLeftAndRightShape", {1})
 
-    addToShapeArray(sp, "simple","simple1_1_1", {1, 1, 6, 1})
-    addToTransitionArray(ta,{{"simple1_1_1"},{"switchSlide"},{labelled = false},{1},{1},{1,1,6,1},{2},{1,1,6,2}})
+    newShape("simple","simple1_1_1", {1, 1, 6, 1})
+    newTransition("simple1_1_1", "switchSlide", {labelled = false}, {{1,1,6,1},{1,1,6,2}})
 
-    addToShapeArray(sp, "shape","triangle2_1_1", {1, 1, 1, 1}, "triangleTopRightShape", {1, _, "hyroll"})
+    newShape("shape","triangle2_1_1", {1, 1, 1, 1}, "triangleTopRightShape", {1, _, "hyroll"})
 
-    addToShapeArray(sp, "simple","simple2_1_1", {1, 1, 5, 5}, "right")
-    --addToTransitionArray(ta,{{"simple2_1_1"},{"slide"},{"lightBlue"},{2},{1},{1,1,3,3},{2},{1,1,3,5}})
+    newShape("simple","simple2_1_1", {1, 1, 5, 5}, "right")
+    --newTransition("simple2_1_1", "slide", {"lightBlue"}, {{1,1,3,3},{1,1,3,5}})
     -- if autoslide object is activeWhenSliding, then it must slide slowly
-    addToTransitionArray(ta,{{"simple2_1_1"},{"autoSlide"},{timePerSquare = 500, pauseTime = 0},{3},{1},{1,1,3,2},{2},{1,1,3,5},{3},{1,1,5,5}})
+    newTransition("simple2_1_1", "autoSlide", {timePerSquare = 500, pauseTime = 0}, {{1,1,3,2},{1,1,3,5},{1,1,5,5}})
     -- SWITCHSLIDE alternative
-    --addToTransitionArray(ta,{{"simple2_1_1"},{"switchSlide"},{timePerSquare = 500, pauseTime = 0, isEnabledByDefault = true, labelled = false},{3},{1},{1,1,3,2},{2},{1,1,3,3},{3},{1,1,3,5},{4},{1,1,5,5}})
+    --newTransition("simple2_1_1", "switchSlide", {timePerSquare = 500, pauseTime = 0, isEnabledByDefault = true, labelled = false}, {{1,1,3,2},{1,1,3,3},{1,1,3,5},{1,1,5,5}})
     --
-    --addToTransitionArray(ta,{{"simple2_1_1"},{"autoSlide"},{timePerSquare = 200, pauseTime = 400, labelled = false, isActiveWhenSliding = false},{3},{1},{1,1,3,2},{2},{1,1,3,4},{3},{1,1,3,5},{4},{1,1,5,5}})
+    --newTransition("simple2_1_1", "autoSlide", {timePerSquare = 200, pauseTime = 400, labelled = false, isActiveWhenSliding = false}, {{1,1,3,2},{1,1,3,4},{1,1,3,5},{1,1,5,5}})
 
-addToShapeArray(sp, "simple","fan1_1_1", {1, 1, 5, 4})
+newShape("simple","fan1_1_1", {1, 1, 5, 4})
 
-    addToShapeArray(sp, "characterChangePoint","characterChangePoint1_1_1", {1, 1, 6, 3})
+    newShape("characterChangePoint","characterChangePoint1_1_1", {1, 1, 6, 3})
 
-    addToShapeArray(sp, "endPoint","endPoint1_1_1", {1, 1, 7, 5})
+    newShape("endPoint","endPoint1_1_1", {1, 1, 7, 5})
 
 
     --
-    --addToShapeArray(sp, "switch","switch1", {1, 1, 1, 3, { {"toggle-slide", "simple2_1_1"} } })
+    --newShape("switch","switch1", {1, 1, 1, 3, { {"toggle-slide", "simple2_1_1"} })
 
 
-    addToShapeArray(sp, "switch","switch2", {1, 1, 1, 3}, { {"slide", "simple1_1_1"} } })
+    newShape("switch","switch2", {1, 1, 1, 3}, { {"slide", "simple1_1_1"} })
 
 end
     t.createLevelObjects = createLevelObjects

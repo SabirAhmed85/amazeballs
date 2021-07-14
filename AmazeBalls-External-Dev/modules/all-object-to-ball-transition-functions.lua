@@ -738,9 +738,9 @@ local fanCentering = function (obj, thisFan, fanCenterTime, mainFunc)
 	                            mainFunc.objectFunctionsScript.bombGroupCheck(mainFunc, "before", shapeArray[i])
 
 	                            local isActualConnector
-	                            if shapeArray[i].nextOrPrevState == "next" and shapeArray[i].nextTransitionSquareIndex == "*" then
+	                            if shapeArray[i].nextOrPrevState == "next" and shapeArray[i].nextTransitionSquareIndex then
 	                                isActualConnector = false
-	                            elseif shapeArray[i].nextOrPrevState == "prev" and shapeArray[i].prevTransitionSquareIndex == "*" then
+	                            elseif shapeArray[i].nextOrPrevState == "prev" and shapeArray[i].prevTransitionSquareIndex then
 	                                isActualConnector = false
 	                            else
 	                                isActualConnector = true

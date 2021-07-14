@@ -3,27 +3,31 @@ local addToShapeArray = require("utils.add-to-shape-array");
 local addToTransitionArray = require("utils.add-to-transition-array");
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
-    local sp = shapeArrayParameters;
-    local ta = mainFunc.allLevelSettings.transitionArrayIndex;   
+    local newShape = function(type, name, location, subType, props)
+        addToShapeArray(shapeArrayParameters, type, name, location, subType, props);
+    end
+    local newTransition = function(shapeName, transitionType, props, positionArray)
+        addToTransitionArray(mainFunc.allLevelSettings.transitionArrayIndex, shapeArrayParameters, shapeName, transitionType, props, positionArray);
+    end
 
     --SCREEN 1-1
-    addToShapeArray(sp, "gun","gun1_1_1", {1, 1, 3, 1}, "down")
-    addToShapeArray(sp, "shape","bar1_1_1", {1, 1, 7, 1}, "bar", {"vert", 3})
-    addToShapeArray(sp, "autoFan","autoFan1_1_1", {1, 1, 4, 2}, "down")
-    addToShapeArray(sp, "shape","triangle1_1_1", {1, 1, 5, 2}, "triangleTopLeftShape")
-    addToTransitionArray(ta,{{"triangle1_1_1"},{"slide"},{},{2},{1},{1,1,3,3},{2},{1,1,5,2}})
-    addToShapeArray(sp, "autoFan","autoFan2_1_1", {1, 1, 4, 4}, "right")
-    addToShapeArray(sp, "shape","triangle2_1_1", {1, 1, 7, 4}, "triangleTopLeftShape")
-    addToTransitionArray(ta,{{"triangle2_1_1"},{"slide"},{},{2},{1},{1,1,5,5},{2},{1,1,7,4}})
-    addToShapeArray(sp, "door","door1_1_1", {1, 1, 7, 4}, "right")
-    addToShapeArray(sp, "simple","simple1_1_1", {1, 1, 2, 5})
+    newShape("gun","gun1_1_1", {1, 1, 3, 1}, "down")
+    newShape("shape","bar1_1_1", {1, 1, 7, 1}, "bar", {"vert", 3})
+    newShape("autoFan","autoFan1_1_1", {1, 1, 4, 2}, "down")
+    newShape("shape","triangle1_1_1", {1, 1, 5, 2}, "triangleTopLeftShape")
+    newTransition("triangle1_1_1", "slide", {}, {{1,1,3,3},{1,1,5,2}})
+    newShape("autoFan","autoFan2_1_1", {1, 1, 4, 4}, "right")
+    newShape("shape","triangle2_1_1", {1, 1, 7, 4}, "triangleTopLeftShape")
+    newTransition("triangle2_1_1", "slide", {}, {{1,1,5,5},{1,1,7,4}})
+    newShape("door","door1_1_1", {1, 1, 7, 4}, "right")
+    newShape("simple","simple1_1_1", {1, 1, 2, 5})
 
     --SCREEN 2-1
-    addToShapeArray(sp, "gun","gun1_2_1", {2, 1, 5, 1}, "down")
-    addToShapeArray(sp, "autoFan","autoFan1_2_1", {2, 1, 2, 2}, "left")
-    addToTransitionArray(ta,{{"autoFan1_2_1"},{"autoSlide"},{timePerSquare=600},{1},{1},{2,1,2,2},{2},{2,1,6,2}})
-    addToShapeArray(sp, "backFire","backFire1_2_1", {2, 1, 2, 4})
-    addToShapeArray(sp, "endPoint","endPoint1_2_1", {2, 1, 4, 4})
+    newShape("gun","gun1_2_1", {2, 1, 5, 1}, "down")
+    newShape("autoFan","autoFan1_2_1", {2, 1, 2, 2}, "left")
+    newTransition("autoFan1_2_1", "autoSlide", {timePerSquare=600}, {{2,1,2,2},{2,1,6,2}})
+    newShape("backFire","backFire1_2_1", {2, 1, 2, 4})
+    newShape("endPoint","endPoint1_2_1", {2, 1, 4, 4})
 
 end
     t.createLevelObjects = createLevelObjects

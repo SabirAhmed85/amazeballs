@@ -1023,23 +1023,23 @@ end
 local function transitionArrayStateChecknew ()
     local d = thisTransitionObject.newDVal;
 			
-	local transition = transitionArrayIndex[d];
+	local thisTransition = transitionArrayIndex[d];
 	
-	if transition["shapeName"] == thisTransitionObject.name then
-		for e=5, #transition["positionArray"] do			
+	if thisTransition["shapeName"] == thisTransitionObject.name then
+		for e=5, #thisTransition["positionArray"] do			
 			if e == thisTransitionObject.transitionArrayState then
-				thisTransitionObject.thisTransitionHorzSquare = transition[e][3];
-				thisTransitionObject.thisTransitionVertSquare = transition[e][4];
-				if e < #transition["positionArray"] then
-					thisTransitionObject.nextTransitionHorzSquare = transition[e+1][3];
-					thisTransitionObject.nextTransitionVertSquare = transition[e+1][4];
+				thisTransitionObject.thisTransitionHorzSquare = thisTransition[e][3];
+				thisTransitionObject.thisTransitionVertSquare = thisTransition[e][4];
+				if e < #thisTransition["positionArray"] then
+					thisTransitionObject.nextTransitionHorzSquare = thisTransition[e+1][3];
+					thisTransitionObject.nextTransitionVertSquare = thisTransition[e+1][4];
 				else
 					thisTransitionObject.nextTransitionHorzSquare = "null";
 					thisTransitionObject.nextTransitionVertSquare = "null";
 				end
 				if e > 1 then
-					thisTransitionObject.prevTransitionHorzSquare = transition[e-1][3];
-					thisTransitionObject.prevTransitionVertSquare = transition[e-1][4];
+					thisTransitionObject.prevTransitionHorzSquare = thisTransition[e-1][3];
+					thisTransitionObject.prevTransitionVertSquare = thisTransition[e-1][4];
 				else
 					thisTransitionObject.prevTransitionHorzSquare = "null";
 					thisTransitionObject.prevTransitionVertSquare = "null";
@@ -1431,10 +1431,10 @@ end
 local function listener(event)
 
     for d=1, #transitionArrayIndex do
-		local transition = transitionArrayIndex[d];
+		local thisTransition = transitionArrayIndex[d];
 
-		if hasValue({"flip-horizontal", "flip-vertical"}, transition["transitionType"])
-		and event.target.name == transition["shapeName"] then
+		if hasValue({"flip-horizontal", "flip-vertical"}, thisTransition["transitionType"])
+		and event.target.name == thisTransition["shapeName"] then
 			if ball.x > (event.target.x - 60)
 			and ball.x < (event.target.x + 60)
 			and ball.y > (event.target.y - 60)
@@ -1458,7 +1458,7 @@ local function listener(event)
 					thisActualFlippedObjectName = event.target.name
 					thisActualFlippedObjectShape = event.target.shape
 					thisActualFlippedObjectTransitionArrayState = event.target.transitionArrayState
-					thisActualFlippedObjectDirection = transition["transitionType"]
+					thisActualFlippedObjectDirection = thisTransition["transitionType"]
 					
 					positionNewFlippedObject()
 				else
@@ -1469,8 +1469,8 @@ local function listener(event)
 					end
 				end
 			end
-		elseif transition["transitionType"] == "slide" then
-			if event.target.name == transition["shapeName"] and stillTransitioningCounter == 0 then
+		elseif thisTransition["transitionType"] == "slide" then
+			if event.target.name == thisTransition["shapeName"] and stillTransitioningCounter == 0 then
 				if event.phase == "began" then
 					thisTransitionObject = event.target
 					thisTransitionObject.objectType = event.target.objectType
@@ -2198,11 +2198,11 @@ function scene:createScene( event )
     -- NOW CREATE TRANSITION SETTINGS
     
     for y = 1, #transitionArrayIndex do
-		local transition = transitionArrayIndex[y];
+		local thisTransition = transitionArrayIndex[y];
 
-		if transition["transitionType"] == "flip-horizontal" then
+		if thisTransition["transitionType"] == "flip-horizontal" then
 			for z = 1, #shapeArray do
-				if shapeArray[z].name == transition["shapeName"] then
+				if shapeArray[z].name == thisTransition["shapeName"] then
 					if shapeArrayParameters[z]["props"][1] == 2 then
 						shapeArray[z].transitionArrayState = 2
 						shapeArray[z].originalState = 2
@@ -2214,9 +2214,9 @@ function scene:createScene( event )
 					shapeArray[z].flipDisabled = false
 				end
 			end
-		elseif transition["transitionType"] == "flip-vertical" then
+		elseif thisTransition["transitionType"] == "flip-vertical" then
 			for z = 1, #shapeArray do
-				if shapeArray[z].name == transition["shapeName"] then
+				if shapeArray[z].name == thisTransition["shapeName"] then
 					if shapeArrayParameters[z]["props"][1] == 2 then
 						shapeArray[z].transitionArrayState = 2
 						shapeArray[z].originalState = 2
@@ -2227,17 +2227,17 @@ function scene:createScene( event )
 					shapeArray[z].flipped = false
 				end
 			end
-		elseif transition["transitionType"] == "slide" then
+		elseif thisTransition["transitionType"] == "slide" then
 			local connector
-			local thisSpotColour = transition["props"][1]
-			for x = 1, #transition["positionArray"] do
-				local position = transition["positionArray"][x];
+			local thisSpotColour = thisTransition["props"][1]
+			for x = 1, #thisTransition["positionArray"] do
+				local position = thisTransition["positionArray"][x];
 				
 				connector = display.newImage(thisSpotColour .. "-connectorSpot.png")
 				connector:setReferencePoint(display.CenterCenterReferencePoint);
 				table.insert(connectorArray, connector)
 				connector.alpha = 1
-				connector.relatedShape = transition["shapeName"]
+				connector.relatedShape = thisTransition["shapeName"]
 				connector.x = ((position[1] - 1) * display.contentWidth) + (((position[3] - 1) * 60) + 60)
 				connector.y = ((position[2] - 1) * display.contentHeight) + (((position[4] - 1) * 52) + 56)
 				if x > 1 then
@@ -2332,23 +2332,23 @@ function scene:createScene( event )
 			end
 			
 			for z = 1, #shapeArray do
-				if shapeArray[z].name == transition["shapeName"] then
-					shapeArray[z].transitionArrayState = transition["startPositionIndex"]
+				if shapeArray[z].name == thisTransition["shapeName"] then
+					shapeArray[z].transitionArrayState = thisTransition["startPositionIndex"]
 					local thisTransitioningObject = shapeArray[z];
 					local tIndex = thisTransitioningObject.transitionArrayState;
 					
-					thisTransitioningObject.thisTransitionHorzSquare = transition["positionArray"][tIndex][3]
-					thisTransitioningObject.thisTransitionVertSquare = transition["positionArray"][tIndex][4]
-					if tIndex < #transition["positionArray"] then
-						thisTransitioningObject.nextTransitionHorzSquare = transition["positionArray"][tIndex+1][3]
-						thisTransitioningObject.nextTransitionVertSquare = transition["positionArray"][tIndex+1][4]
+					thisTransitioningObject.thisTransitionHorzSquare = thisTransition["positionArray"][tIndex][3]
+					thisTransitioningObject.thisTransitionVertSquare = thisTransition["positionArray"][tIndex][4]
+					if tIndex < #thisTransition["positionArray"] then
+						thisTransitioningObject.nextTransitionHorzSquare = thisTransition["positionArray"][tIndex+1][3]
+						thisTransitioningObject.nextTransitionVertSquare = thisTransition["positionArray"][tIndex+1][4]
 					else
 						thisTransitioningObject.nextTransitionHorzSquare = "null"
 						thisTransitioningObject.nextTransitionVertSquare = "null"
 					end
 					if tIndex > 1 then
-						thisTransitioningObject.prevTransitionHorzSquare = transition["positionArray"][tIndex-1][3]
-						thisTransitioningObject.prevTransitionVertSquare = transition["positionArray"][tIndex-1][4]
+						thisTransitioningObject.prevTransitionHorzSquare = thisTransition["positionArray"][tIndex-1][3]
+						thisTransitioningObject.prevTransitionVertSquare = thisTransition["positionArray"][tIndex-1][4]
 					else
 						thisTransitioningObject.prevTransitionHorzSquare = "null"
 						thisTransitioningObject.prevTransitionVertSquare = "null"
@@ -2519,7 +2519,7 @@ function scene:enterScene( event )
         end
         
         for d=1, #transitionArrayIndex do
-            if transition["shapeName"] == shapeArrayParameters[c]["name"] then
+            if thisTransition["shapeName"] == shapeArrayParameters[c]["name"] then
                 shapeArray[c]:addEventListener("touch", listener)
             end
         end
@@ -2550,7 +2550,7 @@ function scene:didExitScene (event)
         end
         
         for d=1, #transitionArrayIndex do
-            if transition["shapeName"] == shapeArrayParameters[c]["name"] then
+            if thisTransition["shapeName"] == shapeArrayParameters[c]["name"] then
                 shapeArray[c]:removeEventListener("touch", listener)
             end
         end

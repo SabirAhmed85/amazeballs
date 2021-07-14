@@ -3,66 +3,75 @@ local addToShapeArray = require("utils.add-to-shape-array");
 local addToTransitionArray = require("utils.add-to-transition-array");
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
-    local sp = shapeArrayParameters;
-    local ta = mainFunc.allLevelSettings.transitionArrayIndex;   
+    local newShape = function(type, name, location, subType, props)
+        addToShapeArray(shapeArrayParameters, type, name, location, subType, props);
+    end
+    local newTransition = function(shapeName, transitionType, props, positionArray)
+        addToTransitionArray(mainFunc.allLevelSettings.transitionArrayIndex, shapeArrayParameters, shapeName, transitionType, props, positionArray);
+    end
+    local newShape = function(type, name, location, subType, props)
+        addToShapeArray(sp, type, name, location, subType, props);
+    end
+    local newTransition = function(shapeName, transitionType, props, startPositionIndex, positionArray)
+        addToTransitionArray(ta, shapeName, transitionType, props, startPositionIndex, positionArray);
+    end
 
     --SCREEN 1-1
-    addToShapeArray(sp, "shape","triangle1_1_1", {1, 1, 3, 1}, "triangleTopRightShape")
-    addToShapeArray(sp, "shape","triangle2_1_1", {1, 1, 4, 1}, "triangleTopLeftShape", {1, _, "icy"})
-    addToShapeArray(sp, "endPoint","endPoint1_1_1", {1, 1, 2, 2})
-    addToShapeArray(sp, "shape","triangle3_1_1", {1, 1, 5, 2}, "triangleTopLeftShape", {1, _, "breakable"})
-    addToShapeArray(sp, "shape","triangle4_1_1", {1, 1, 6, 2}, "triangleTopRightShape", {1, _, "fire"})
-    addToShapeArray(sp, "shape","triangle5_1_1", {1, 1, 2, 4}, "triangleTopRightShape", {1, _, "breakable"})
-    addToShapeArray(sp, "shape","triangle6_1_1", {1, 1, 3, 5}, "triangleBottomRightShape", {1, _, "breakable"})
-    addToShapeArray(sp, "shape","triangle7_1_1", {1, 1, 4, 5}, "triangleBottomLeftShape", {1, 2, "breakable"})
-    addToShapeArray(sp, "shape","triangle8_1_1", {1, 1, 6, 5}, "triangleTopLeftShape", {1, _, "breakable"})
+    newShape("shape","triangle1_1_1", {1, 1, 3, 1}, "triangleTopRightShape")
+    newShape("shape","triangle2_1_1", {1, 1, 4, 1}, "triangleTopLeftShape", {1, _, "icy"})
+    newShape("endPoint","endPoint1_1_1", {1, 1, 2, 2})
+    newShape("shape","triangle3_1_1", {1, 1, 5, 2}, "triangleTopLeftShape", {1, _, "breakable"})
+    newShape("shape","triangle4_1_1", {1, 1, 6, 2}, "triangleTopRightShape", {1, _, "fire"})
+    newShape("shape","triangle5_1_1", {1, 1, 2, 4}, "triangleTopRightShape", {1, _, "breakable"})
+    newShape("shape","triangle6_1_1", {1, 1, 3, 5}, "triangleBottomRightShape", {1, _, "breakable"})
+    newShape("shape","triangle7_1_1", {1, 1, 4, 5}, "triangleBottomLeftShape", {1, 2, "breakable"})
+    newShape("shape","triangle8_1_1", {1, 1, 6, 5}, "triangleTopLeftShape", {1, _, "breakable"})
 
     --SCREEN 2-1
-    addToShapeArray(sp, "spitter","spitter1_2_1", {2, 1, 2, 1}, {"none","right","none","none"})
-    addToTransitionArray(ta,{{"spitter1_2_1"},{"slide"},{},{1},{1},{2,1,2,1},{2},{2,1,2,2}})
-    addToShapeArray(sp, "simple","simple1_2_1", {2, 1, 1, 2})
-    addToShapeArray(sp, "shape","triangle2_2_1", {2, 1, 4, 2}, "triangleBottomLeftShape", {1, _, "breakable"})
-    addToShapeArray(sp, "shape","triangle2_2_1", {2, 1, 6, 2}, "triangleBottomRightShape", {1, _, "breakable"})
-    addToShapeArray(sp, "door","door1_2_1", {2, 1, 1, 4}, "left")
-    addToShapeArray(sp, "shape","triangle2_2_1", {2, 1, 4, 4}, "triangleTopRightShape", {1, _, "breakable"})
-    addToShapeArray(sp, "shape","triangle2_2_1", {2, 1, 6, 4}, "triangleTopLeftShape", {1, _, "breakable"})
-    addToShapeArray(sp, "simple","simple2_2_1", {2, 1, 2, 5})
+    newShape("spitter","spitter1_2_1", {2, 1, 2, 1}, {"none","right","none","none"})
+    newTransition("spitter1_2_1", "slide", {}, {{2,1,2,1},{2,1,2,2}})
+    newShape("simple","simple1_2_1", {2, 1, 1, 2})
+    newShape("shape","triangle2_2_1", {2, 1, 4, 2}, "triangleBottomLeftShape", {1, _, "breakable"})
+    newShape("shape","triangle2_2_1", {2, 1, 6, 2}, "triangleBottomRightShape", {1, _, "breakable"})
+    newShape("door","door1_2_1", {2, 1, 1, 4}, "left")
+    newShape("shape","triangle2_2_1", {2, 1, 4, 4}, "triangleTopRightShape", {1, _, "breakable"})
+    newShape("shape","triangle2_2_1", {2, 1, 6, 4}, "triangleTopLeftShape", {1, _, "breakable"})
+    newShape("simple","simple2_2_1", {2, 1, 2, 5})
 
     --SCREEN 2-2
-    addToShapeArray(sp, "autoFan","autoFan1_2_2", {2, 2, 1, 1}, "down")
-    addToShapeArray(sp, "door","door1_2_2", {2, 2, 2, 1}, "up")
-    addToShapeArray(sp, "shape","triangle1_2_2", {2, 2, 6, 1}, "triangleBottomLeftShape")
-    addToTransitionArray(ta,{{"triangle1_2_2"},{"switchSlide"},{labelled=false},{1},{1},{2,2,6,1},{2},{2,2,7,1}})
-    addToShapeArray(sp, "shape","triangle2_2_2", {2, 2, 3, 2}, "triangleTopLeftShape", {1, _, "fire"})
-    addToShapeArray(sp, "shape","triangle3_2_2", {2, 2, 4, 2}, "triangleBottomRightShape", {1, _, "fire"})
-    addToShapeArray(sp, "autoFan","autoFan1_2_2", {2, 2, 5, 3}, "down")
-    addToShapeArray(sp, "shape","triangle4_2_2", {2, 2, 1, 4}, "triangleTopRightShape", {1, 13})
-    addToTransitionArray(ta,{{"triangle4_2_2"},{"slide"},{},{2},{1},{2,2,1,3},{2},{2,2,1,4}})
-    addToShapeArray(sp, "shape","bar1_2_2", {2, 2, 3, 4}, "bar", {"vert", 3})
-    addToShapeArray(sp, "spitter","spitter1_2_2", {2, 2, 4, 5, "up", "right","none","none"})
-    addToTransitionArray(ta,{{"spitter1_2_2"},{"slide"},{},{3},{1},{2,2,2,5},{2},{2,2,3,5},{3},{2,2,4,5}})
-    addToShapeArray(sp, "door","door2_2_2", {2, 2, 5, 5}, "down")
-    addToShapeArray(sp, "shape","triangle6_2_2", {2, 2, 7, 5}, "triangleTopLeftShape", {1, _, "breakable"})
+    newShape("autoFan","autoFan1_2_2", {2, 2, 1, 1}, "down")
+    newShape("door","door1_2_2", {2, 2, 2, 1}, "up")
+    newShape("shape","triangle1_2_2", {2, 2, 6, 1}, "triangleBottomLeftShape")
+    newTransition("triangle1_2_2", "switchSlide", {labelled=false}, {{2,2,6,1},{2,2,7,1}})
+    newShape("shape","triangle2_2_2", {2, 2, 3, 2}, "triangleTopLeftShape", {1, _, "fire"})
+    newShape("shape","triangle3_2_2", {2, 2, 4, 2}, "triangleBottomRightShape", {1, _, "fire"})
+    newShape("autoFan","autoFan1_2_2", {2, 2, 5, 3}, "down")
+    newShape("shape","triangle4_2_2", {2, 2, 1, 4}, "triangleTopRightShape", {1, 13})
+    newTransition("triangle4_2_2", "slide", {}, {{2,2,1,3},{2,2,1,4}})
+    newShape("shape","bar1_2_2", {2, 2, 3, 4}, "bar", {"vert", 3})
+    newShape("spitter","spitter1_2_2", {2, 2, 4, 5}, "up", {"right","none","none"})
+    newTransition("spitter1_2_2", "slide", {}, {{2,2,2,5},{2,2,3,5},{2,2,4,5}})
+    newShape("door","door2_2_2", {2, 2, 5, 5}, "down")
+    newShape("shape","triangle6_2_2", {2, 2, 7, 5}, "triangleTopLeftShape", {1, _, "breakable"})
 
     --SCREEN 2-3
-    addToShapeArray(sp, "door","door1_2_3", {2, 3, 3, 1, "up", "disabled"})
-    addToShapeArray(sp, "shape","bar1_2_3", {2, 3, 6, 1}, "bar", {"vert", 3})
-    addToShapeArray(sp, "shape","bar2_2_3", {2, 3, 3, 2}, "bar", {"vert"})
-    addToShapeArray(sp, "shape","bar3_2_3", {2, 3, 3, 3}, "bar", {"horz"})
-    addToShapeArray(sp, "autoFan","autoFan1_2_3", {2, 3, 5, 3}, "left")
-    addToShapeArray(sp, "autoFan","autoFan2_2_3", {2, 3, 7, 3}, "left")
-    addToTransitionArray(ta,{{"autoFan2_2_3"},{"slide"},{},{3},{1},{2,3,6,1},{2},{2,3,7,2},{3},{2,3,7,3}})
-    addToShapeArray(sp, "shape","triangle1_2_3", {2, 3, 2, 4}, "triangleTopLeftShape", {1, _, "breakable"})
-    addToShapeArray(sp, "shape","triangle2_2_3", {2, 3, 3, 4}, "triangleTopRightShape", {1, _, "breakable"})
-    addToShapeArray(sp, "shape","triangle3_2_3", {2, 3, 6, 4}, "triangleTopLeftShape", {1, 5, "icy"})
-    addToShapeArray(sp, "shape","triangle4_2_3", {2, 3, 7, 4}, "triangleBottomRightShape", {1, _, "icy"})
-    addToShapeArray(sp, "gem","purple", {2, 3, 2, 5}, "purple")
-    addToShapeArray(sp, "shape","triangle5_2_3", {2, 3, 3, 5}, "triangleBottomRightShape", {1, 9, "breakable"})
+    newShape("door","door1_2_3", {2, 3, 3, 1, "up", "disabled"})
+    newShape("shape","bar1_2_3", {2, 3, 6, 1}, "bar", {"vert", 3})
+    newShape("shape","bar2_2_3", {2, 3, 3, 2}, "bar", {"vert"})
+    newShape("shape","bar3_2_3", {2, 3, 3, 3}, "bar", {"horz"})
+    newShape("autoFan","autoFan1_2_3", {2, 3, 5, 3}, "left")
+    newShape("autoFan","autoFan2_2_3", {2, 3, 7, 3}, "left")
+    newTransition("autoFan2_2_3", "slide", {}, {{2,3,6,1},{2,3,7,2},{2,3,7,3}})
+    newShape("shape","triangle1_2_3", {2, 3, 2, 4}, "triangleTopLeftShape", {1, _, "breakable"})
+    newShape("shape","triangle2_2_3", {2, 3, 3, 4}, "triangleTopRightShape", {1, _, "breakable"})
+    newShape("shape","triangle3_2_3", {2, 3, 6, 4}, "triangleTopLeftShape", {1, 5, "icy"})
+    newShape("shape","triangle4_2_3", {2, 3, 7, 4}, "triangleBottomRightShape", {1, _, "icy"})
+    newShape("gem","purple", {2, 3, 2, 5}, "purple")
+    newShape("shape","triangle5_2_3", {2, 3, 3, 5}, "triangleBottomRightShape", {1, 9, "breakable"})
 
     --SWITCHES
-    addToShapeArray(sp, "switch","switch1_2_2", {2, 2, 5, 2}, { {"slide","triangle1_2_2"} }, {"one-way", "not-labelled"})
-    addToShapeArray(sp, "switch","switch1_2_3", {2, 3, 4, 1}, { {"door-open","door1_2_3"} })
-
+    newShape("switch","switch1_2_2", {2, 2, 5, 2}, { {"slide","triangle1_2_2"} }, {"one-way", "not-labelled"})
+    newShape("switch","switch1_2_3", {2, 3, 4, 1}, { {"door-open","door1_2_3"} });
 end
     t.createLevelObjects = createLevelObjects
 

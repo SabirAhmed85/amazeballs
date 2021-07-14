@@ -4,18 +4,22 @@ local t = {};
 
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
-    local sp = shapeArrayParameters;
-    local ta = mainFunc.allLevelSettings.transitionArrayIndex;
+    local newShape = function(type, name, location, subType, props)
+        addToShapeArray(shapeArrayParameters, type, name, location, subType, props);
+    end
+    local newTransition = function(shapeName, transitionType, props, positionArray)
+        addToTransitionArray(mainFunc.allLevelSettings.transitionArrayIndex, shapeArrayParameters, shapeName, transitionType, props, positionArray);
+    end
 
-    addToShapeArray(sp, "simple","simple1_1_1", {1, 1, 5, 5})
+    newShape("simple","simple1_1_1", {1, 1, 5, 5})
 
-    addToShapeArray(sp, "shape","triangle2_1_1", {1, 1, 7, 5}, "triangleTopLeftShape", {1})
+    newShape("shape","triangle2_1_1", {1, 1, 7, 5}, "triangleTopLeftShape", {1})
 
-    addToShapeArray(sp, "shape","triangle3_1_1", {1, 1, 7, 1}, "triangleBottomLeftShape", {1})
+    newShape("shape","triangle3_1_1", {1, 1, 7, 1}, "triangleBottomLeftShape", {1})
 
-    addToShapeArray(sp, "simple","simple2_1_1", {1, 1, 6, 1})
+    newShape("simple","simple2_1_1", {1, 1, 6, 1})
 
-    addToShapeArray(sp, "endPoint","endPoint1_1_1", {1, 1, 2, 1})
+    newShape("endPoint","endPoint1_1_1", {1, 1, 2, 1})
 
 end
 	t.createLevelObjects = createLevelObjects

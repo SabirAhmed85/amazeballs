@@ -4,16 +4,20 @@ local t = {};
 
 
 local createLevelObjects = function (mainFunc, shapeArrayParameters)
-    local sp = shapeArrayParameters;
-    local ta = mainFunc.allLevelSettings.transitionArrayIndex;
+    local newShape = function(type, name, location, subType, props)
+        addToShapeArray(shapeArrayParameters, type, name, location, subType, props);
+    end
+    local newTransition = function(shapeName, transitionType, props, positionArray)
+        addToTransitionArray(mainFunc.allLevelSettings.transitionArrayIndex, shapeArrayParameters, shapeName, transitionType, props, positionArray);
+    end
 
-    addToShapeArray(sp, "autoFan","autoFan3_1_1", {1, 1, 7, 3}, "up")
+    newShape("autoFan","autoFan3_1_1", {1, 1, 7, 3}, "up")
 
-    addToShapeArray(sp, "shape","bar1_1_1", {1, 1, 1, 5}, "bar", {"horz", _})
-    addToTransitionArray(ta,{{"bar1_1_1"},{"slide"},{"green"},{1},{1},{1,1,1,5},{2},{1,1,2,4}})
+    newShape("shape","bar1_1_1", {1, 1, 1, 5}, "bar", {"horz", _})
+    newTransition("bar1_1_1", "slide", {"green"}, {{1,1,1,5},{1,1,2,4}})
 
-    addToShapeArray(sp, "spitter","spitter1_1_1", {1, 1, 1, 2, "up", "right", "down"}, "left")
-    addToTransitionArray(ta,{{"spitter1_1_1"},{"slide"},{"darkBlue"},{1},{1},{1,1,1,2},{2},{1,1,1,3},{3},{1,1,2,3}})
+    newShape("spitter","spitter1_1_1", {1, 1, 1, 2, "up", "right", "down"}, "left")
+    newTransition("spitter1_1_1", "slide", {"darkBlue"}, {{1,1,1,2},{1,1,1,3},{1,1,2,3}})
 end
 	t.createLevelObjects = createLevelObjects
 
