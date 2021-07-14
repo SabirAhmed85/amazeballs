@@ -1,7 +1,7 @@
 local getStartPosition;
 
 local addToTransitionArray = function (transitionArray, shapeArrayParameters, shapeName, transitionType, props, positionArray)
-print("local", shapeName, transitionType);
+    -- print("local", shapeName, transitionType);
     table.insert(transitionArray, {
         shapeName = shapeName,
         transitionType = transitionType,

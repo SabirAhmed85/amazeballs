@@ -1007,7 +1007,7 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
                 shapeArray[z].x = shapeArray[z].x
                 shapeArray[z].fullName = shapeArray[z].name .. shapeParameters["location"]["xScreen"] .. shapeParameters["location"]["yScreen"] .. shapeParameters["location"]["xSquare"] .. shapeParameters["location"]["ySquare"]
 
-                shapeArray[z].circle = sprite(mainFunc.allLevelSettings.levelItemsBackboardImageSheet, mainFunc.allLevelSettings.levelItemsBackboardSequenceData, "purpleRing");
+                shapeArray[z].circle = sprite(mainFunc.allLevelSettings.levelItemsBackboardImageSheet, mainFunc.allLevelSettings.levelItemsBackboardSequenceData, "purple");
 
                 positionShape(shapeArray[z].circle, shapeArray[z].x, shapeArray[z].y, { 
                     xScale = 0.7, yScale = 0.7, alpha = 0.5

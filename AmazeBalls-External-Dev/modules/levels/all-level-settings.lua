@@ -618,7 +618,7 @@ t.createLevelSettings = function (mainFunc, creationType)
 	    { name = "purpleFloating", start=8, count=1, loopCount=1 }
 	}
 
-	levelItemsBackboardImageSheet = graphics.newImageSheet( "images/objects/level-item-backboards.png", {width = 45, height = 37.5, numFrames = 5, sheetContentWidth = 225, sheetContentHeight = 75})
+	levelItemsBackboardImageSheet = graphics.newImageSheet( "images/objects/level-item-backboards.png", {width = 45, height = 38, numFrames = 10, sheetContentWidth = 225, sheetContentHeight = 76})
 	levelItemsBackboardSequenceData = {
         { name = "gem", start=1, count=1,   loopCount=1 },
         { name = "redCoin", start=2, count=1, loopCount=1 },
@@ -628,7 +628,8 @@ t.createLevelSettings = function (mainFunc, creationType)
         { name = "purpleRing", start=6, count=1, loopCount=1 },
         { name = "redCoinRing", start=7, count=1, loopCount=1 },
         { name = "blueCoinRing", start=8, count=1, loopCount=1 },
-        { name = "purpleCoinRing", start=9, count=1, loopCount=1 }
+        { name = "purpleCoinRing", start=9, count=1, loopCount=1 },
+        { name = "somethingRing", start=10, count=1, loopCount=1 }
     }
 
     lifeLostScreenBgImageSheet = graphics.newImageSheet( "images/objects/Layout/lifeLostScreenBg.png", {width = xCalc(522), height = yCalc(108), numFrames = 3, sheetContentWidth = xCalc(522), sheetContentHeight = yCalc(324)})
@@ -676,8 +677,8 @@ t.createLevelSettings = function (mainFunc, creationType)
 	}
 
 	horizontalConnectorTubesImageSheet = graphics.newImageSheet( "images/objects/shapes/connectorPieces/horizontal-TubesSprite.png", {width = xCalc(60), height = yCalc(8), numFrames = 11, sheetContentWidth = xCalc(60), sheetContentHeight = yCalc(88)})
-	verticalConnectorTubesImageSheet = graphics.newImageSheet( "images/objects/shapes/connectorPieces/vertical-TubesSprite.png", {width = 8, height = 60, numFrames = 8, sheetContentWidth = 64, sheetContentHeight = 60})
-	cornerConnectorTubesImageSheet = graphics.newImageSheet( "images/objects/shapes/connectorPieces/corner-TubesSprite.png", {width = 15, height = 55, numFrames = 8, sheetContentWidth = 15, sheetContentHeight = 440})
+	verticalConnectorTubesImageSheet = graphics.newImageSheet( "images/objects/shapes/connectorPieces/vertical-TubesSprite.png", {width = 8, height = yCalc(60), numFrames = 11, sheetContentWidth = 88, sheetContentHeight = 60})
+	cornerConnectorTubesImageSheet = graphics.newImageSheet( "images/objects/shapes/connectorPieces/corner-TubesSprite.png", {width = 15, height = 55, numFrames = 11, sheetContentWidth = 15, sheetContentHeight = 605})
 	connectorSpotsImageSheet = graphics.newImageSheet( "images/objects/shapes/connectorPieces/spotsSprite.png", {width = 22, height = 21, numFrames = 11, sheetContentWidth = 242, sheetContentHeight = 21})
 	connectorTubesSequenceData = {
     	{ name = "lightDarkBlue", start=1, count=1,   loopCount=1 },

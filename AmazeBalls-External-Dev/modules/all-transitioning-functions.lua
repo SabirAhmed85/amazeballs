@@ -50,8 +50,6 @@ local actionAutoSlideTimer = function (mainFunc, shape, isFirstTime)
 	if isFirstTime then
 		delayTime = 400
 	end
-	
-	print("NEXT", shape.nextSlideTransitionIndex);
 
 	if shape.nextSlideTransitionIndex == 1 then
 		shape.transitionIsNextOrPrev = "next"
@@ -92,7 +90,6 @@ local actionAutoSlideTimer = function (mainFunc, shape, isFirstTime)
         	if shape.isActiveWhenSliding == false and obj.alpha == 1 and isBall == false then
         		obj.alpha = 0.3
         	end
-			print("PRINTED!", shape, obj, isBall, thisTransition["shapeName"], transition.to);
         	shape.autoSlideTransition[#shape.autoSlideTransition + 1] = transition.to(obj, {y = obj.y + yCalc(totalYDist), x = obj.x + xCalc(totalXDist), time = numSquares * shape.timePerSquare, onComplete = function ()
 	            shape.autoSlideTransition[#shape.autoSlideTransition] = nil
 	            table.remove(shape.autoSlideTransition, #shape.autoSlideTransition)
