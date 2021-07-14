@@ -11,39 +11,39 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
         addToTransitionArray(mainFunc.allLevelSettings.transitionArrayIndex, shapeArrayParameters, shapeName, transitionType, props, positionArray);
     end
 
-    newShape("shape","triangle1_1_1", {1, 1, 2, 2}, "triangleTopRightShape", {1})
-    newTransition("triangle1_1_1", "slide", {"green"}, {{1,1,2,2},{1,1,2,3}})
+    newShape("shape", "triangle1_1_1", {1, 1, 2, 2}, "triangleTopRightShape", {1})
+    newTransition("triangle1_1_1", "slide", {}, {{1,1,2,2},{1,1,2,3}})
 
-    newShape("simple","simple1_1_1", {1, 1, 4, 3})
+    newShape("simple", "simple1_1_1", {1, 1, 4, 3})
 
-    newShape("shape","triangle2_1_1", {1, 1, 6, 4}, "triangleBottomLeftShape", {1})
-    newTransition("triangle2_1_1", "slide", {"green"}, {{1,1,6,3},{1,1,6,4}})
+    newShape("shape", "triangle2_1_1", {1, 1, 6, 4}, "triangleBottomLeftShape", {1})
+    newTransition("triangle2_1_1", "slide", {}, {{1,1,6,3},{1,1,6,4}})
 
-    newShape("shape","triangle3_1_1", {1, 1, 6, 5}, "triangleTopLeftShape", {1})
+    newShape("shape", "triangle3_1_1", {1, 1, 6, 5}, "triangleTopLeftShape", {1})
 
-    newShape("endPoint","endPoint1_1_1", {1, 1, 3, 5})
+    newShape("endPoint", "endPoint1_1_1", {1, 1, 3, 5})
 
     --GEMS
-    newShape("gem","purple", {1, 1, 3, 2}, "purple")
-    newShape("gem","purple", {1, 1, 4, 2}, "purple")
-    newShape("gem","purple", {1, 1, 6, 2}, "purple")
-    newShape("gem","purple", {1, 1, 7, 2}, "purple")
-    newShape("gem","purple", {1, 1, 1, 3}, "purple")
-    newShape("gem","purple", {1, 1, 3, 3}, "purple")
-    newShape("gem","purple", {1, 1, 5, 3}, "purple")
-    newShape("gem","purple", {1, 1, 2, 4}, "purple")
-    newShape("gem","purple", {1, 1, 4, 4}, "purple")
-    newShape("gem","purple", {1, 1, 1, 5}, "purple")
-    newShape("gem","purple", {1, 1, 5, 5}, "purple")
-    newShape("gem","purple", {1, 1, 7, 5}, "purple")
-    newShape("gem","redCoin", {1, 1, 7, 3}, "redCoin")
-    newShape("gem","blueCoin", {1, 1, 1, 2}, "blueCoin")
-    newShape("gem","purpleCoin", {1, 1, 1, 4}, "purpleCoin")
+    newShape("gem", "purple", {1, 1, 3, 2}, "purple")
+    newShape("gem", "purple", {1, 1, 4, 2}, "purple")
+    newShape("gem", "purple", {1, 1, 6, 2}, "purple")
+    newShape("gem", "purple", {1, 1, 7, 2}, "purple")
+    newShape("gem", "purple", {1, 1, 1, 3}, "purple")
+    newShape("gem", "purple", {1, 1, 3, 3}, "purple")
+    newShape("gem", "purple", {1, 1, 5, 3}, "purple")
+    newShape("gem", "purple", {1, 1, 2, 4}, "purple")
+    newShape("gem", "purple", {1, 1, 4, 4}, "purple")
+    newShape("gem", "purple", {1, 1, 1, 5}, "purple")
+    newShape("gem", "purple", {1, 1, 5, 5}, "purple")
+    newShape("gem", "purple", {1, 1, 7, 5}, "purple")
+    newShape("gem", "redCoin", {1, 1, 7, 3}, "redCoin")
+    newShape("gem", "blueCoin", {1, 1, 1, 2}, "blueCoin")
+    newShape("gem", "purpleCoin", {1, 1, 1, 4}, "purpleCoin")
 
     --ITEMS
-    newShape("item","coins", {1, 1, 3, 4}, 75)
-    newShape("item","coins", {1, 1, 7, 4, 350})  
-    newShape("item","small-present", {1, 1, 5, 4}, {})
+    newShape("item", "coins", {1, 1, 3, 4}, 75)
+    newShape("item", "coins", {1, 1, 7, 4, 350})  
+    newShape("item", "small-present", {1, 1, 5, 4}, {})
 
 
 end
@@ -80,7 +80,7 @@ t.compassObtained = false
 
 t.itemToolGainedArray = {
     {"clock-time", false},
-    {"bomb", {false},
+    {"bomb", {false}},
     {"hook-shot", false},
     {"jet-pack", false}
 }

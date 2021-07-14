@@ -1735,57 +1735,57 @@ function scene:createScene( event )
 
     local triangle = display.newImage("triangleTopLeft.png")
     table.insert(shapeArray, triangle)
-    table.insert(shapeArrayParameters,{"shape","triangle", 1, 1, 1, 1, "triangleTopLeftShape", 1})
+    table.insert(shapeArrayParameters,{"shape", "triangle", 1, 1, 1, 1, "triangleTopLeftShape", 1})
     
     local switch = display.newImage("switch.png")
     table.insert(shapeArray, switch)
-    table.insert(shapeArrayParameters,{"switch","switch1", 1, 1, 1, 3, "flip-horizontal", "triangle", "two-way"})
+    table.insert(shapeArrayParameters,{"switch", "switch1", 1, 1, 1, 3, "flip-horizontal", "triangle", "two-way"})
     
     local switch = display.newImage("switch.png")
     table.insert(shapeArray, switch)
-    table.insert(shapeArrayParameters,{"switch","switch1", 1, 1, 4, 1, "door-open", "door1", "two-way"})
+    table.insert(shapeArrayParameters,{"switch", "switch1", 1, 1, 4, 1, "door-open", "door1", "two-way"})
     
     local triangle3 = display.newImage("triangleTopRight.png")
     table.insert(shapeArray, triangle3)
-    table.insert(shapeArrayParameters,{"shape","triangle3", 1, 1, 2, 4, "triangleTopRightShape", 1})
-    table.insert(transitionArrayIndex,{{"triangle3"},{"slide"},{"green"},{2},{1},{1,1,1,4},{2},{1,1,2,4}})
+    table.insert(shapeArrayParameters,{"shape", "triangle3", 1, 1, 2, 4, "triangleTopRightShape", 1})
+    table.insert(transitionArrayIndex,{{"triangle3"},{"slide"},{},{2},{1},{1,1,1,4},{2},{1,1,2,4}})
     
     local triangle2 = display.newImage("triangle.png")
     table.insert(shapeArray, triangle2)
-    table.insert(shapeArrayParameters,{"shape","triangle2", 1, 1, 4, 4, "triangleLeftAndRightShape", 1, 1} )
+    table.insert(shapeArrayParameters,{"shape", "triangle2", 1, 1, 4, 4, "triangleLeftAndRightShape", 1, 1} )
     table.insert(transitionArrayIndex,{{"triangle2"},{"flip-horizontal"}})
     
     --local tunnel = display.newImage("triangle.png")
     --table.insert(shapeArray, tunnel)
-    --table.insert(shapeArrayParameters,{"tunnel","tunnel1", 1, 1, 6, 1, 3, 1, "right", "left"} )
+    --table.insert(shapeArrayParameters,{"tunnel", "tunnel1", 1, 1, 6, 1, 3, 1, "right", "left"} )
     
     local manualFan = display.newImage("manualFan.png")
     table.insert(shapeArray, manualFan)
-    table.insert(shapeArrayParameters,{"manualFan","fanUp1", 1, 1, 6, 4, "up"} )
+    table.insert(shapeArrayParameters,{"manualFan", "fanUp1", 1, 1, 6, 4, "up"} )
     table.insert(transitionArrayIndex,{{"fanUp1"},{"slide"},{"silver"},{2},{1},{1,1,4,2},{2},{1,1,6,4},{3},{1,1,7,4}})
     
     local door1 = display.newImage("door.png")
     table.insert(shapeArray, door1)
-    table.insert(shapeArrayParameters,{"door","door1", 1, 1, 7, 4, "right", "disabled"} )
+    table.insert(shapeArrayParameters,{"door", "door1", 1, 1, 7, 4, "right", "disabled"} )
     
     -------- SCREEN 2
 
     local triangle2_s2 = display.newImage("triangle2.png")
     table.insert(shapeArray, triangle2_s2)
-    table.insert(shapeArrayParameters,{"shape","triangle2_s2", 2, 1, 3, 5, "triangleLeftAndRightShape", 1, 1} )
+    table.insert(shapeArrayParameters,{"shape", "triangle2_s2", 2, 1, 3, 5, "triangleLeftAndRightShape", 1, 1} )
     
     local autoFan = display.newImage("autoFan.png")
     table.insert(shapeArray, autoFan)
-    table.insert(shapeArrayParameters,{"autoFan","autoFanUp1", 2, 1, 6, 3, "up"} )
+    table.insert(shapeArrayParameters,{"autoFan", "autoFanUp1", 2, 1, 6, 3, "up"} )
     
     local spitter = display.newImage("spitter.png")
     table.insert(shapeArray, spitter)
-    table.insert(shapeArrayParameters,{"spitter","spitter2", 2, 1, 1, 4, "none", "right", "down", "left"} )
+    table.insert(shapeArrayParameters,{"spitter", "spitter2", 2, 1, 1, 4, "none", "right", "down", "left"} )
     table.insert(transitionArrayIndex,{{"spitter2"},{"slide"},{"blue"},{1},{1},{2,1,1,4},{2},{2,1,2,4}})
     
     local spitter = display.newImage("spitter.png")
     table.insert(shapeArray, spitter)
-    table.insert(shapeArrayParameters,{"spitter","spitter1", 2, 1, 4, 4, "up", "right", "down", "left"} )
+    table.insert(shapeArrayParameters,{"spitter", "spitter1", 2, 1, 4, 4, "up", "right", "down", "left"} )
     table.insert(transitionArrayIndex,{{"spitter1"},{"slide"},{"blue"},{2},{1},{2,1,3,4},{2},{2,1,4,4}})
     
     
@@ -1920,10 +1920,10 @@ function scene:createScene( event )
 					end
 					--local textObj = display.newText(shapeArray[z].name, 0,0, nil, 14); textObj.x = 20;
 					local killBarPositionArray = {
-						{"triangleTopLeftShape","triangleTopRightShape", 0, 25, 90, "triangleLeftAndRightShape", 0, 25, 45, 0, -25, -135, "triangleTopAndBottomShape", -27, 25, 90, 27, 25, 90, "triangleBottomLeftShape", -3, -1, 135, "triangleBottomRightShape", 0, 0, 45},
-						{"triangleTopRightShape","triangleBottomRightShape", -25, 0, 180, "triangleLeftAndRightShape", -27, -24, 180, -27, 22, 180, "triangleTopAndBottomShape", -24, -4, 135, -24, 4, 135},
-						{"triangleBottomLeftShape","triangleBottomRightShape", 3, -25, -90, "triangleLeftAndRightShape", 3, -24, -45, -3, 24, 135, "triangleTopAndBottomShape", -27, -25, -90, 27, -25, -90, "triangleTopLeftShape", -3, -2, 225, "triangleTopRightShape", 2, -1, -45},
-						{"triangleTopLeftShape","triangleBottomLeftShape", 25, 0, 0, "triangleLeftAndRightShape", 27, 24, 0, 27, -22, 0, "triangleTopAndBottomShape", 24, -4, -45, 24, 4, 45}
+						{"triangleTopLeftShape", "triangleTopRightShape", 0, 25, 90, "triangleLeftAndRightShape", 0, 25, 45, 0, -25, -135, "triangleTopAndBottomShape", -27, 25, 90, 27, 25, 90, "triangleBottomLeftShape", -3, -1, 135, "triangleBottomRightShape", 0, 0, 45},
+						{"triangleTopRightShape", "triangleBottomRightShape", -25, 0, 180, "triangleLeftAndRightShape", -27, -24, 180, -27, 22, 180, "triangleTopAndBottomShape", -24, -4, 135, -24, 4, 135},
+						{"triangleBottomLeftShape", "triangleBottomRightShape", 3, -25, -90, "triangleLeftAndRightShape", 3, -24, -45, -3, 24, 135, "triangleTopAndBottomShape", -27, -25, -90, 27, -25, -90, "triangleTopLeftShape", -3, -2, 225, "triangleTopRightShape", 2, -1, -45},
+						{"triangleTopLeftShape", "triangleBottomLeftShape", 25, 0, 0, "triangleLeftAndRightShape", 27, 24, 0, 27, -22, 0, "triangleTopAndBottomShape", 24, -4, -45, 24, 4, 45}
 					}
 					
 					for b=1, #killBarPositionArray do

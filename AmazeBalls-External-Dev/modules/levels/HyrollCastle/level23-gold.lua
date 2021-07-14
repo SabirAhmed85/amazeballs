@@ -11,15 +11,15 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     end
     
     
-    --newShape("shape","triangle1_1_1", {1, 1, 2, 2}, "triangleLeftAndRightShape", {1})
+    --newShape("shape", "triangle1_1_1", {1, 1, 2, 2}, "triangleLeftAndRightShape", {1})
 
-    newShape("simple","simple1_1_1", {1, 1, 6, 1})
+    newShape("simple", "simple1_1_1", {1, 1, 6, 1})
     newTransition("simple1_1_1", "switchSlide", {labelled = false}, {{1,1,6,1},{1,1,6,2}})
 
-    newShape("shape","triangle2_1_1", {1, 1, 1, 1}, "triangleTopRightShape", {1, _, "hyroll"})
+    newShape("shape", "triangle2_1_1", {1, 1, 1, 1}, "triangleTopRightShape", {1, _, "hyroll"})
 
-    newShape("simple","simple2_1_1", {1, 1, 5, 5}, "right")
-    --newTransition("simple2_1_1", "slide", {"lightBlue"}, {{1,1,3,3},{1,1,3,5}})
+    newShape("simple", "simple2_1_1", {1, 1, 5, 5}, "right")
+    --newTransition("simple2_1_1", "slide", {}, {{1,1,3,3},{1,1,3,5}})
     -- if autoslide object is activeWhenSliding, then it must slide slowly
     newTransition("simple2_1_1", "autoSlide", {timePerSquare = 500, pauseTime = 0}, {{1,1,3,2},{1,1,3,5},{1,1,5,5}})
     -- SWITCHSLIDE alternative
@@ -27,18 +27,18 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     --
     --newTransition("simple2_1_1", "autoSlide", {timePerSquare = 200, pauseTime = 400, labelled = false, isActiveWhenSliding = false}, {{1,1,3,2},{1,1,3,4},{1,1,3,5},{1,1,5,5}})
 
-newShape("simple","fan1_1_1", {1, 1, 5, 4})
+newShape("simple", "fan1_1_1", {1, 1, 5, 4})
 
-    newShape("characterChangePoint","characterChangePoint1_1_1", {1, 1, 6, 3})
+    newShape("characterChangePoint", "characterChangePoint1_1_1", {1, 1, 6, 3})
 
-    newShape("endPoint","endPoint1_1_1", {1, 1, 7, 5})
+    newShape("endPoint", "endPoint1_1_1", {1, 1, 7, 5})
 
 
     --
-    --newShape("switch","switch1", {1, 1, 1, 3, { {"toggle-slide", "simple2_1_1"} })
+    --newShape("switch", "switch1", {1, 1, 1, 3, { {"toggle-slide", "simple2_1_1"} })
 
 
-    newShape("switch","switch2", {1, 1, 1, 3}, { {"slide", "simple1_1_1"} })
+    newShape("switch", "switch2", {1, 1, 1, 3}, { {"slide", "simple1_1_1"} })
 
 end
     t.createLevelObjects = createLevelObjects

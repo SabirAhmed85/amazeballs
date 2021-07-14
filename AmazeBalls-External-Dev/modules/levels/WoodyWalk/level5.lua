@@ -11,23 +11,23 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
         addToTransitionArray(mainFunc.allLevelSettings.transitionArrayIndex, shapeArrayParameters, shapeName, transitionType, props, positionArray);
     end
 
-    newShape("shape","triangle1_1_1", {1, 1, 2, 1}, "triangleBottomLeftShape", {1})
+    newShape("shape", "triangle1_1_1", {1, 1, 2, 1}, "triangleBottomLeftShape", {1})
 
-    newShape("shape","triangle2_1_1", {1, 1, 4, 2}, "triangleBottomLeftShape", {1})
-    newTransition("triangle2_1_1", "slide", {"green"}, {{1,1,4,1},{1,1,4,2}})
+    newShape("shape", "triangle2_1_1", {1, 1, 4, 2}, "triangleBottomLeftShape", {1})
+    newTransition("triangle2_1_1", "slide", {}, {{1,1,4,1},{1,1,4,2}})
 
-    newShape("shape","triangle3_1_1", {1, 1, 6, 2}, "triangleLeftAndRightShape", {2})
+    newShape("shape", "triangle3_1_1", {1, 1, 6, 2}, "triangleLeftAndRightShape", {2})
 
-    newShape("endPoint","endPoint1_1_1", {1, 1, 3, 3})
+    newShape("endPoint", "endPoint1_1_1", {1, 1, 3, 3})
 
-    newShape("shape","triangle4_1_1", {1, 1, 4, 3}, "triangleTopRightShape", {1})
+    newShape("shape", "triangle4_1_1", {1, 1, 4, 3}, "triangleTopRightShape", {1})
 
-    newShape("shape","triangle5_1_1", {1, 1, 3, 4}, "triangleTopRightShape", {1})
-    newTransition("triangle5_1_1", "slide", {"green"}, {{1,1,3,4},{1,1,3,5}})
+    newShape("shape", "triangle5_1_1", {1, 1, 3, 4}, "triangleTopRightShape", {1})
+    newTransition("triangle5_1_1", "slide", {}, {{1,1,3,4},{1,1,3,5}})
 
-    newShape("simple","simple1_1_1", {1, 1, 5, 5})
+    newShape("simple", "simple1_1_1", {1, 1, 5, 5})
 
-    newShape("shape","triangle6_1_1", {1, 1, 6, 5}, "triangleBottomLeftShape", {1})
+    newShape("shape", "triangle6_1_1", {1, 1, 6, 5}, "triangleBottomLeftShape", {1})
 
 end
 	t.createLevelObjects = createLevelObjects
@@ -63,7 +63,7 @@ t.compassObtained = false
 
 t.itemToolGainedArray = {
     {"clock-time", false},
-    {"bomb", {false},
+    {"bomb", {false}},
     {"hook-shot", false},
     {"jet-pack", false}
 }

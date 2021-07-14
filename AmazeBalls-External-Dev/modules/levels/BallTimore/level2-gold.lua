@@ -11,21 +11,21 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     end
 
     --SCREEN 1-1
-    newShape("gun","gun1_1_1", {1, 1, 2, 2}, "right")
-    newShape("shape","triangle1_1_1", {1, 1, 3, 3}, "triangleBottomLeftShape", {1, _, "breakable"})
-    newShape("endPoint","endPoint1_1_1", {1, 1, 7, 3})
-    newShape("gun","gun1_1_1", {1, 1, 2, 4}, "right")
-    newShape("simple","simple1_1_1", {1, 1, 6, 5})
-    newShape("shape","triangle2_1_1", {1, 1, 7, 5}, "triangleBottomLeftShape")
+    newShape("gun", "gun1_1_1", {1, 1, 2, 2}, "right")
+    newShape("shape", "triangle1_1_1", {1, 1, 3, 3}, "triangleBottomLeftShape", {1, _, "breakable"})
+    newShape("endPoint", "endPoint1_1_1", {1, 1, 7, 3})
+    newShape("gun", "gun1_1_1", {1, 1, 2, 4}, "right")
+    newShape("simple", "simple1_1_1", {1, 1, 6, 5})
+    newShape("shape", "triangle2_1_1", {1, 1, 7, 5}, "triangleBottomLeftShape")
     newTransition("triangle2_1_1", "slide", {}, {{1,1,5,4},{1,1,7,5}})
 
     --SCREEN 1-2
-    newShape("shape","triangle1_1_2", {1, 2, 3, 1}, "triangleBottomRightShape", {1, _, "breakable"})
-    newShape("door","door1_1_2", {1, 2, 6, 1}, "up")
-    newShape("gun","gun1_1_2", {1, 2, 4, 2}, "left")
-    newShape("shape","triangle2_1_2", {1, 2, 2, 3}, "triangleBottomRightShape")
-    newShape("shape","triangle3_1_2", {1, 2, 6, 3}, "triangleTopLeftShape", {1, 5, "breakable"})
-    newShape("shape","triangle4_1_2", {1, 2, 4, 4}, "triangleTopRightShape")
+    newShape("shape", "triangle1_1_2", {1, 2, 3, 1}, "triangleBottomRightShape", {1, _, "breakable"})
+    newShape("door", "door1_1_2", {1, 2, 6, 1}, "up")
+    newShape("gun", "gun1_1_2", {1, 2, 4, 2}, "left")
+    newShape("shape", "triangle2_1_2", {1, 2, 2, 3}, "triangleBottomRightShape")
+    newShape("shape", "triangle3_1_2", {1, 2, 6, 3}, "triangleTopLeftShape", {1, 5, "breakable"})
+    newShape("shape", "triangle4_1_2", {1, 2, 4, 4}, "triangleTopRightShape")
     newTransition("triangle4_1_2", "slide", {}, {{1,2,2,5},{1,2,4,5},{1,2,4,4}})
 
 end

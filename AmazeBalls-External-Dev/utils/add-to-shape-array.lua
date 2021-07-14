@@ -1,20 +1,13 @@
+local createLocation = require("utils.create-location");
+
 local addToShapeArray = function (shapeArrayParameters, type, name, location, subType, props)
-    local props = props or {};
-    
-    local shape = {
+    table.insert(shapeArrayParameters, {
         type = type,
         name = name,
-        location = {
-            xScreen = location[1],
-            yScreen = location[2],
-            xSquare = location[3],
-            ySquare = location[4]
-        },
+        location = createLocation(location[1], location[2], location[3], location[4]),
         subType = subType,
-        props = props
-    };
-
-    table.insert(shapeArrayParameters, shape);
+        props = props or {}
+    });
 end;
 
 return addToShapeArray;

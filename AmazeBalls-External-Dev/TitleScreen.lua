@@ -1082,7 +1082,7 @@ function scene:show( event )
         { name = "8", start=8, count=1, loopCount=1 },
         { name = "9", start=9, count=1, loopCount=1 },
         { name = "0", start=10, count=1, loopCount=1 },
-        { name = ",", start=11, count=1, loopCount=1 },
+        { name = ", ", start=11, count=1, loopCount=1 },
         { name = ".", start=12, count=1, loopCount=1 },
         { name = "-", start=13, count=1, loopCount=1 },
         { name = "/", start=14, count=1, loopCount=1 },

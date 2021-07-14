@@ -11,12 +11,12 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
         addToTransitionArray(mainFunc.allLevelSettings.transitionArrayIndex, shapeArrayParameters, shapeName, transitionType, props, positionArray);
     end
 
-    newShape("autoFan","autoFan3_1_1", {1, 1, 7, 3}, "up")
+    newShape("autoFan", "autoFan3_1_1", {1, 1, 7, 3}, "up")
 
-    newShape("shape","bar1_1_1", {1, 1, 1, 5}, "bar", {"horz", _})
-    newTransition("bar1_1_1", "slide", {"green"}, {{1,1,1,5},{1,1,2,4}})
+    newShape("shape", "bar1_1_1", {1, 1, 1, 5}, "bar", {"horz", _})
+    newTransition("bar1_1_1", "slide", {}, {{1,1,1,5},{1,1,2,4}})
 
-    newShape("spitter","spitter1_1_1", {1, 1, 1, 2, "up", "right", "down"}, "left")
+    newShape("spitter", "spitter1_1_1", {1, 1, 1, 2, "up", "right", "down"}, "left")
     newTransition("spitter1_1_1", "slide", {"darkBlue"}, {{1,1,1,2},{1,1,1,3},{1,1,2,3}})
 end
 	t.createLevelObjects = createLevelObjects
@@ -51,7 +51,7 @@ t.compassObtained = false
 
 t.itemToolGainedArray = {
     {"clock-time", false},
-    {"bomb", {false},
+    {"bomb", {false}},
     {"hook-shot", false},
     {"jet-pack", false}
 }

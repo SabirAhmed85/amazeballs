@@ -641,7 +641,7 @@ function scene:show( event )
             { name = "8", start=8, count=1, loopCount=1 },
             { name = "9", start=9, count=1, loopCount=1 },
             { name = "0", start=10, count=1, loopCount=1 },
-            { name = ",", start=11, count=1, loopCount=1 },
+            { name = ", ", start=11, count=1, loopCount=1 },
             { name = ".", start=12, count=1, loopCount=1 },
             { name = "-", start=13, count=1, loopCount=1 },
             { name = "/", start=14, count=1, loopCount=1 },
@@ -675,7 +675,7 @@ function scene:show( event )
             { name = "8", start=8, count=1, loopCount=1 },
             { name = "9", start=9, count=1, loopCount=1 },
             { name = "0", start=10, count=1, loopCount=1 },
-            { name = ",", start=11, count=1, loopCount=1 }
+            { name = ", ", start=11, count=1, loopCount=1 }
         }
 
         dollarIcon = display.newSprite(smallIconsImageSheet, smallIconsSequenceData)
@@ -938,7 +938,7 @@ function scene:show( event )
                 if currentIndex == 2 and #gemIconCounter == 4 then
                     stringContainsComma = true
                     gemIconCounterLabel[currentIndex] = display.newSprite(MainBarNumbersImageSheet, MainBarNumbersSequenceData)
-                    gemIconCounterLabel[currentIndex]:setSequence(",")
+                    gemIconCounterLabel[currentIndex]:setSequence(", ")
                     --gemIconCounterLabel[a]:setReferencePoint(display.BottomLeftReferencePoint);
                     gemIconCounterLabel[currentIndex].anchorX = 0
                     gemIconCounterLabel[currentIndex].anchorY = 1

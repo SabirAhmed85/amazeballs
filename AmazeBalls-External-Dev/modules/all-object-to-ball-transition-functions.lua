@@ -1440,7 +1440,7 @@ local fanCentering = function (obj, thisFan, fanCenterTime, mainFunc)
 				    	if #newVal > 3 then
 				    		local firstHalf = string.sub(newVal, 0, #newVal - 3)
 				    		local secondHalf = string.sub(newVal, #newVal - 2, #newVal)
-				    		newVal = firstHalf .. "," .. secondHalf
+				    		newVal = firstHalf .. ", " .. secondHalf
 				    	end
 
 				    	mainFunc.medalGainedScreen.CoinsCounterLength = #newVal - 1

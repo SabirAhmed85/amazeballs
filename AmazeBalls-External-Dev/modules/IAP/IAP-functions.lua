@@ -28,7 +28,7 @@ local function updateScreensOtherCoinsDisplay(coinsDisplayObj)
     	local stringStart = string.sub(coinsString, 1, #coinsString - 3)
     	local stringEnd = string.sub(coinsString, #coinsString - 2, #coinsString)
 
-    	coinsString = stringStart .. "," .. stringEnd
+    	coinsString = stringStart .. ", " .. stringEnd
     end
 
     for a = 1, 7 do
@@ -331,7 +331,7 @@ local function createCanBuyScreenCoinsAndIcon (value, itemPurchasing, currency)
 	    { name = "7", start=8, count=1, loopCount=1 },
 	    { name = "8", start=9, count=1, loopCount=1 },
 	    { name = "9", start=10, count=1, loopCount=1 },
-	    { name = ",", start=11, count=1, loopCount=1 },
+	    { name = ", ", start=11, count=1, loopCount=1 },
 	    { name = ".", start=12, count=1, loopCount=1 }
 	}
 
