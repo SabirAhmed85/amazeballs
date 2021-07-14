@@ -685,11 +685,9 @@ local prepareTransitioningObjects = function (mainFunc)
 					local position = thisTransition["positionArray"][x];
 					connectorXSquare = position[3];
 					connectorYSquare = position[4];
+					isActualConnector = position[5] ~= "*";
 
-					if position[5] then
-						isActualConnector = false;
-					else
-						isActualConnector = true;
+					if isActualConnector then
 						connector = display.newSprite(mainFunc.allLevelSettings.connectorSpotsImageSheet, mainFunc.allLevelSettings.connectorSpotsSequenceData)
 						connector:setSequence(thisSpotColour)
 						connector.height = yCalc(18)
@@ -727,14 +725,12 @@ local prepareTransitioningObjects = function (mainFunc)
 								connector.y = connector.y + (mainFunc.allLevelSettings.squareHeight / 2)
 							end
 						end
-					end
 
-					if isActualConnector then
 						connectorX = connector.x
 						connectorY = connector.y
 					else
 						connectorX = ((position[1] - 1) * display.contentWidth) + (((position[3] - 1) * mainFunc.allLevelSettings.squareWidth) + (mainFunc.allLevelSettings.gutterWidth) + (mainFunc.allLevelSettings.squareWidth/2) )
-						connectorY = ((position[2] - 1) * display.contentHeight) + (((position[4] - 1) * mainFunc.allLevelSettings.squareHeight) + (mainFunc.allLevelSettings.gutterHeight) + (mainFunc.allLevelSettings.squareHeight/2) )
+						connectorY = ((position[2] - 1) * display.contentHeight) + (((position[4] - 1) * mainFunc.allLevelSettings.squareHeight) + (mainFunc.allLevelSettings.gutterHeight) + (mainFunc.allLevelSettings.squareHeight/2) )						
 					end
 
 					if x > 1 then
@@ -780,49 +776,28 @@ local prepareTransitioningObjects = function (mainFunc)
 
 						if thisConnectorYDistance < 0 then
 							while thisConnectorYDistance < 0 do
-								local verticalBottomUsed = false
-								local actuallyVerticalTop = false
-								
 								if thisConnectorYDistance == wholeConnectorYDistance and thisConnectorHasXDistance then
 									connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.cornerConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
-									verticalBottomUsed = true
-									actuallyVerticalTop = true
 								elseif thisConnectorYDistance == wholeConnectorYDistance and thisConnectorHasXDistance == false then
 									if isActualConnector then
 										connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.verticalConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
-										connectorTubeVertical:setSequence(thisSpotColour)
-										verticalBottomUsed = false
-										actuallyVerticalTop = false
 									--connectorTubeVertical.width = 52
 									--connectorTubeVertical.height = 8
 									elseif isActualConnector == false and wholeConnectorYDistance == 1 then
 										connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.cornerConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
-										verticalBottomUsed = true
-										actuallyVerticalTop = false
 									elseif isActualConnector == false and wholeConnectorYDistance ~= 1 then
 										connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.verticalConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
-										connectorTubeVertical:setSequence(thisSpotColour)
-										verticalBottomUsed = false
-										actuallyVerticalTop = false
 									end
 								elseif thisConnectorYDistance == 1 and wholeConnectorYDistance ~= 1 then
 									if isActualConnector then
 										connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.verticalConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
-										connectorTubeVertical:setSequence(thisSpotColour)
-										verticalBottomUsed = false
-										actuallyVerticalTop = false
 									--connectorTubeVertical.width = 52
 									--connectorTubeVertical.height = 8
 									elseif isActualConnector == false then
 										connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.cornerConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
-										verticalBottomUsed = true
-										actuallyVerticalTop = false
 									end
 								elseif thisConnectorYDistance ~= wholeConnectorYDistance then
 									connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.verticalConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
-									connectorTubeVertical:setSequence(thisSpotColour)
-									verticalBottomUsed = false
-									actuallyVerticalTop = false
 								end
 
 								--[[
@@ -841,6 +816,7 @@ local prepareTransitioningObjects = function (mainFunc)
 								end
 								]]
 								
+								connectorTubeVertical:setSequence(thisSpotColour);
 								mainFunc.allLevelSettings.backgroundObjectsGroup:insert( connectorTubeVertical )
 								connectorTubeVertical.shapeType = "connectorTube"
 								--connectorTubeVertical:setReferencePoint(display.CenterLeftReferencePoint);
@@ -884,7 +860,6 @@ local prepareTransitioningObjects = function (mainFunc)
 								elseif thisConnectorYDistance == wholeConnectorYDistance and thisConnectorHasXDistance == false then
 									if isActualConnector then
 										connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.verticalConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
-										connectorTubeVertical:setSequence(thisSpotColour)
 										verticalBottomUsed = false
 										actuallyVerticalTop = false
 									--connectorTubeVertical.width = 52
@@ -895,14 +870,12 @@ local prepareTransitioningObjects = function (mainFunc)
 										actuallyVerticalTop = false
 									elseif isActualConnector == false and wholeConnectorYDistance ~= 1 then
 										connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.verticalConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
-										connectorTubeVertical:setSequence(thisSpotColour)
 										verticalBottomUsed = false
 										actuallyVerticalTop = false
 									end
 								elseif thisConnectorYDistance == 1 and wholeConnectorYDistance ~= 1 then
 									if isActualConnector then
 										connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.verticalConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
-										connectorTubeVertical:setSequence(thisSpotColour)
 										verticalBottomUsed = false
 										actuallyVerticalTop = false
 									--connectorTubeVertical.width = 52
@@ -914,11 +887,11 @@ local prepareTransitioningObjects = function (mainFunc)
 									end
 								elseif thisConnectorYDistance ~= wholeConnectorYDistance then
 									connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.verticalConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
-									connectorTubeVertical:setSequence(thisSpotColour)
 									verticalBottomUsed = false
 									actuallyVerticalTop = false
 								end
 
+								connectorTubeVertical:setSequence(thisSpotColour);
 								mainFunc.allLevelSettings.backgroundObjectsGroup:insert( connectorTubeVertical )
 								connectorTubeVertical.shapeType = "connectorTube"
 								connectorTubeVertical.anchorX = 0

@@ -1,5 +1,8 @@
 {
     "Lua.diagnostics.globals": [
+        "physics",
+        "transition",
+        "timer",
         "bombArray",
         "graphics",
         "saveTable",
