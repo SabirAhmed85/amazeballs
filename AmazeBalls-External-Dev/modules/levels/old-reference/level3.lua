@@ -1,4 +1,5 @@
 local addToShapeArray = require("utils.add-to-shape-array");
+local addToTransitionArray = require("utils.add-to-transition-array");
 local t = {};
 
 
@@ -57,7 +58,7 @@ t.compassObtained = false
 
 t.itemToolGainedArray = {
     {"clock-time", false},
-    {"bomb", {false},
+    {"bomb", {false}},
     {"hook-shot", false},
     {"jet-pack", false}
 }

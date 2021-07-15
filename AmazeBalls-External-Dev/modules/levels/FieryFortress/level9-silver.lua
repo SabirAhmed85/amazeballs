@@ -86,7 +86,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
 
     --ITEMS
     newShape("item", "coins", {1, 3, 7, 2}, 80)
-    newShape("item", "coins", {1, 1, 7, 2, 40)
+    newShape("item", "coins", {1, 1, 7, 2}, 40)
     newShape("item", "small-present", {1, 2, 7, 1}, {})
 
     newShape("item", "big-present", {1, 1, 6, 1}, {})

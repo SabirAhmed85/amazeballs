@@ -40,7 +40,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     newShape("endPoint","endPoint1_3_1", {3, 1, 4, 4})
     newShape("shape","triangle5_3_1", {3, 1, 1, 5}, "triangleTopRightShape")
     newShape("simple","simple1_3_1", {3, 1, 3, 5})
-    newShape("autoFan","autoFan4_2_2", 3, 1, 5, 5}, "up")
+    newShape("autoFan","autoFan3_1_2", {3, 1, 5, 5}, "up")
     newTransition("autoFan4_2_2", "autoSlide", {timePerSquare = 600, pauseTime = 0}, {{3,1,5,5},{3,1,6,5},{3,1,7,5}})
 
     --SCREEN 1-2

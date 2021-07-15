@@ -14,13 +14,13 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     newShape("autoFan", "autoFan2_1_1", {1, 1, 1, 1}, "down")
     newShape("autoFan", "autoFan2_1_1", {1, 1, 3, 2}, "right")
     newShape("shape", "triangle1_1_1", {1, 1, 6, 2}, "triangleBottomLeftShape")
-    newShape("item", "big-present", {1, 1, 1, 3, "present1_1_1", 
-                                            { 
-                                                -- put BOMB here
-                                                {"item", "clock", {1, 1, 3, 2, "clock1_1_1", 10, 1},
-                                                {"triangle", "triangleTopRightShape"},
-                                            } 
-                                        })
+    newShape("item", "big-present", {1, 1, 1, 3}, "present1_1_1", 
+        { 
+            -- put BOMB here
+            {"item", "clock", {1, 1, 3, 2, "clock1_1_1", 10, 1},
+            {"triangle", "triangleTopRightShape"},
+        } 
+    })
     newShape("shape", "triangle2_1_1", {1, 1, 3, 3}, "triangleBottomLeftShape", {1, _, "breakable"})
     newShape("shape", "triangle3_1_1", {1, 1, 4, 3}, "triangleBottomRightShape")
     newShape("simple", "simple1_1_1", {1, 1, 7, 3})

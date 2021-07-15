@@ -70,7 +70,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     --newShape("simple", "simple1_1_1", {1, 1, 7, 2})
     --newTransition("simple1_1_1", "slide", {}, {{1,1,6,2},{1,1,7,2}})
 
-    --newShape("item", "hook-shot", 1, 1, 4, 2, "hookshot1_1_1", "down", 3, 3})
+    --newShape("item", "hook-shot", {1, 1, 4, 2}, "hookshot1_1_1", "down", 3, 3})
 
     newShape("item", "hook", {1, 1, 6, 1, "hookshot2_1_1", "down", 2, 3})
 
@@ -118,7 +118,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
 
     --newShape("gun", "gun2_1_1", {1, 1, 7, 2}, "left")
 
-    newShape("endPoint", "endPoint", 1, 1, 4, 3})
+    newShape("endPoint", "endPoint", {1, 1, 4, 3})
     
     newShape("shape", "triangle3_1_1", {1, 1, 5, 3}, "triangleLeftAndRightShape", {1})
     newTransition("triangle3_1_1", "flip-horizontal")
@@ -150,7 +150,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     ---------
     -------- SCREEN 2
     
-    --newShape("endPoint", "endPoint", 1, 1, 3, 2})
+    --newShape("endPoint", "endPoint", {1, 1, 3, 2})
 end
 	t.createLevelObjects = createLevelObjects
 

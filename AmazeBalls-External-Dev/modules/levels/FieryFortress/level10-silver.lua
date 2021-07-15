@@ -56,7 +56,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     newShape("autoFan", "autoFan3_2_2", {2, 2, 7, 5}, "left")
 
     --SWITCHES
-    newShape("switch", "switch1_2_1", {2, 1, 4, 1}, { {"door-open", "door2_1_1"} }, "one-way", "not-labelled" })
+    newShape("switch", "switch1_2_1", {2, 1, 4, 1}, { {"door-open", "door2_1_1"} }, {"one-way", "not-labelled"})
     newShape("switch", "switch1_2_1", {2, 1, 7, 4}, { {"slide", "autoFan1_2_1"} }, {"one-way"})
 
     --GEMS

@@ -87,7 +87,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     newShape("item", "small-present", {1, 2, 2, 5}, {})
     newShape("item", "small-present", {1, 3, 3, 2}, {})
     newShape("item", "big-present", {1, 3, 6, 1}, {})
-    newShape("item", "superDummy", 1, 2, 1, 2}, {})
+    newShape("item", "superDummy", {1, 2, 1, 2}, {})
     newShape("item", "iceCape", {1, 3, 2, 1}, {})
 end
     t.createLevelObjects = createLevelObjects

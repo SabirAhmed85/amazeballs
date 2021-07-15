@@ -269,7 +269,7 @@ local transitionArrayStateCheckNew = function (thisTransitionObject, mainFunc, s
 						else
 						    physics.addBody( thisTransitionObject, "static", { density=10, friction=1, bounce=0, shape=shapeFormingArray[a][2] } )
 						    thisTransitionObject.isTransitioning = false
-						end   
+						end
 				    end
 				end
 				thisTransitionObject.alpha = 1
@@ -776,7 +776,9 @@ local prepareTransitioningObjects = function (mainFunc)
 
 						if thisConnectorYDistance < 0 then
 							while thisConnectorYDistance < 0 do
+								print(thisConnectorYDistance, wholeConnectorYDistance, thisConnectorHasXDistance);
 								if thisConnectorYDistance == wholeConnectorYDistance and thisConnectorHasXDistance then
+									print("he");
 									connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.cornerConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
 								elseif thisConnectorYDistance == wholeConnectorYDistance and thisConnectorHasXDistance == false then
 									if isActualConnector then
@@ -797,6 +799,7 @@ local prepareTransitioningObjects = function (mainFunc)
 										connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.cornerConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
 									end
 								elseif thisConnectorYDistance ~= wholeConnectorYDistance then
+									print("h");
 									connectorTubeVertical = display.newSprite(mainFunc.allLevelSettings.verticalConnectorTubesImageSheet, mainFunc.allLevelSettings.connectorTubesSequenceData)
 								end
 
@@ -832,15 +835,16 @@ local prepareTransitioningObjects = function (mainFunc)
 										connectorTubeVertical.x = connectorTubeVertical.x - ((3.5/60) * mainFunc.allLevelSettings.squareWidth)
 									else
 										connectorTubeVertical.width = 17
-										connectorTubeVertical.x = connectorTubeVertical.x - ((10.2/60) * mainFunc.allLevelSettings.squareWidth)
+										connectorTubeVertical.x = connectorTubeVertical.x - ((10/60) * mainFunc.allLevelSettings.squareWidth)
 									end
-									connectorTubeVertical.y = lastConnectorY - (mainFunc.allLevelSettings.squareHeight/2) + ((4.5/52) * mainFunc.allLevelSettings.squareHeight)
+									connectorTubeVertical.y = lastConnectorY - (mainFunc.allLevelSettings.squareHeight/2) + ((4/52) * mainFunc.allLevelSettings.squareHeight)
+									print("jo");
 								else
-
+									print("yo");
 									connectorTubeVertical.height = mainFunc.allLevelSettings.squareHeight
 									connectorTubeVertical.width = 8
 									--connectorTubeVertical.rotation = 90
-									connectorTubeVertical.y = lastConnectorY - ((21/52) * mainFunc.allLevelSettings.squareHeight)
+									connectorTubeVertical.y = lastConnectorY - ((19/52) * mainFunc.allLevelSettings.squareHeight)
 									connectorTubeVertical.x = connectorTubeVertical.x - ((2.9/60) * mainFunc.allLevelSettings.squareWidth)
 								end
 
@@ -910,9 +914,11 @@ local prepareTransitioningObjects = function (mainFunc)
 								end
 								connectorTubeVertical.x = lastConnectorX
 								if thisConnectorYDistance == wholeConnectorYDistance and isActualConnector then
+									print("1");
 									connectorTubeVertical.y = lastConnectorY + (mainFunc.allLevelSettings.squareHeight/2) + yCalc(2)
 									connectorTubeVertical.x = connectorTubeVertical.x - ((3.5/60) * mainFunc.allLevelSettings.squareWidth)
 								elseif thisConnectorYDistance == wholeConnectorYDistance and isActualConnector == false then
+									print("2");
 									if wholeConnectorYDistance == 1 then
 										connectorTubeVertical.x = connectorTubeVertical.x + xCalc(10)
 									else
@@ -920,6 +926,7 @@ local prepareTransitioningObjects = function (mainFunc)
 									end
 									connectorTubeVertical.y = lastConnectorY + (mainFunc.allLevelSettings.squareHeight/2) + yCalc(4)
 								else
+									print("3");
 									if (thisConnectorYDistance == originalConnectorYDistance and thisConnectorHasXDistance == true) then
 										connectorTubeVertical.x = connectorTubeVertical.x - ((4/60) * mainFunc.allLevelSettings.squareWidth)
 										connectorTubeVertical.y = lastConnectorY

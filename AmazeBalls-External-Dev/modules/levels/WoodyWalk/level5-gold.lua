@@ -12,7 +12,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
 
     --SCREEN 1-1
     newShape("shape", "triangle1_1_1", {1, 1, 7, 1}, "triangleBottomLeftShape", {_, 2})
-    newShape("shape", "triangle2_1_1", {1, 1, 2, 2}, "triangleTopRightShape", {_, 1)
+    newShape("shape", "triangle2_1_1", {1, 1, 2, 2}, "triangleTopRightShape", {_, 1})
     newShape("simple", "simple1_1_1", {1, 1, 5, 2})
     newTransition("simple1_1_1", "slide", {}, {{1,1,4,2},{1,1,5,2},{1,1,5,1},{1,1,6,3}})
     newShape("shape", "triangle3_1_1", {1, 1, 4, 3}, "triangleLeftAndRightShape", {2})

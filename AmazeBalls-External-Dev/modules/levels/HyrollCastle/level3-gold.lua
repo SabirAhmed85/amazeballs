@@ -34,7 +34,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     newShape("shape", "triangle1_1_2", {1, 2, 6, 3}, "triangleTopLeftShape", {1, 15, "breakable"})
     newShape("shape", "bar1_1_2", {1, 2, 3, 4}, "bar", {"vert", 2})
     newShape("shape", "bar2_1_2", {1, 2, 4, 4}, "bar", {"horz", 4})
-    newShape("endPoint", "endPoint", 1, 2, 3, 5})
+    newShape("endPoint", "endPoint", {1, 2, 3, 5})
     --GEMS
     newShape("gem", "purple", {1, 1, 2, 2}, "purple")
     newShape("gem", "purple", {1, 1, 4, 2}, "purple")

@@ -24,7 +24,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     newShape("autoFan", "autoFan2_2_1", {2, 1, 4, 2}, "down")
     newTransition("autoFan2_2_1", "slide", {}, {{2,1,4,2},{2,1,4,3,"*"},{2,1,5,3},{2,1,5,4}})
     newShape("shape", "bar2_2_1", {2, 1, 7, 3}, "bar", {"vert", 2})
-    newShape("simple", "simple1_2_1", {2, 1, 1, 4})) -- instead of timeout for now
+    newShape("simple", "simple1_2_1", {2, 1, 1, 4}) -- instead of timeout for now
     --newShape("timeOut", "timeOut1_2_1", {2, 1, 1, 4, 2})
     newShape("shape", "triangle1_2_1", {2, 1, 2, 4}, "triangleBottomLeftShape", {1, 7})
     newTransition("triangle1_2_1", "slide", {}, {{2,1,2,4},{2,1,3,4},{2,1,3,3}})

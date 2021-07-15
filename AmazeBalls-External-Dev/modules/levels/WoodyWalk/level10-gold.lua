@@ -81,21 +81,21 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     newShape("gem", "blueCoin", {1, 2, 3, 4}, "blueCoin")
     newShape("gem", "purpleCoin", {1, 1, 3, 4}, "purpleCoin")
 
-    newShape("item", "coins", {1, 1, 1, 3, 375})
-    newShape("item", "coins", {1, 2, 7, 3}, 55))
-    newShape("item", "coins", {1, 3, 2, 3, 140}) 
+    newShape("item", "coins", {1, 1, 1, 3}, 375)
+    newShape("item", "coins", {1, 2, 7, 3}, 55)
+    newShape("item", "coins", {1, 3, 2, 3}, 140)
     newShape("item", "small-present", {1, 1, 6, 1}, {})
 
-    addToTransitionArray(shapeArrayParameters,  {"item", "big-present", {1, 2, 6, 2, "present2_1_1", 
-                                            { 
-                                                {"item", "clock", {1, 2, 3, 2, "clock1_1_1", 10, 1},
-                                                {"triangle", "triangleTopRightShape"},
-                                                {"spitter", {"up", "right", "down", "left"} },
-                                                {"manualFan", "right"},
-                                                {"manualFan", "down"},
-                                                {"autoFan", "down"}
-                                            } 
-                                        } ) 
+    newShape("item", "big-present", {1, 2, 6, 2}, "present2_1_1", 
+        { 
+            {"item", "clock", {1, 2, 3, 2}, "clock1_1_1", 10, 1},
+            {"triangle", "triangleTopRightShape"},
+            {"spitter", {"up", "right", "down", "left"} },
+            {"manualFan", "right"},
+            {"manualFan", "down"},
+            {"autoFan", "down"}
+        } 
+    )
 
 end
     t.createLevelObjects = createLevelObjects

@@ -17,7 +17,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     newShape("shape", "triangle2_1_1", {1, 1, 3, 1}, "triangleBottomRightShape", {1})
     newTransition("triangle2_1_1", "slide", {}, {{1,1,2,1},{1,1,3,1}})
 
-    addToTransitionArray(shapeArrayParameters, {"shape", "triangle3_1_1", {1, 1, 6, 1}, "triangleTopAndBottomShape", {2})
+    -- addToTransitionArray(shapeArrayParameters, {"shape", "triangle3_1_1", {1, 1, 6, 1}, "triangleTopAndBottomShape", {2})
 
     newShape("endPoint", "endPoint1_1_1", {1, 1, 6, 3})
 

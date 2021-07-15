@@ -65,7 +65,7 @@ t.compassObtained = false
 
 t.itemToolGainedArray = {
     {"clock-time", false},
-    {"bomb", {false},
+    {"bomb", {false}},
     {"hook-shot", false},
     {"jet-pack", false}
 }

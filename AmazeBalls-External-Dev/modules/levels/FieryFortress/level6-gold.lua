@@ -40,7 +40,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     -- 2-2
     newShape("item", "compass", {2, 2, 5, 1})
     newShape("door", "door1_2_2", {2, 2, 7, 1}, "up")
-    newShape("endPoint", "endPoint1_1_1", 2, 2, 1, 2})
+    newShape("endPoint", "endPoint1_2_2", {2, 2, 1, 2})
     newShape("shape", "bar1_2_2", {2, 2, 2, 2}, "bar", {"horz"})
     newTransition("bar1_2_2", "slide", {"brown"}, {{2,2,2,2},{2,2,2,3}})
     newShape("shape", "triangle1_2_2", {2, 2, 3, 2}, "triangleTopLeftShape")

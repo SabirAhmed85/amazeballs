@@ -26,7 +26,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
 
     --SCREEN 1-2
     newShape("autoFan", "autoFan1_2_1", {2, 1, 4, 2}, "right")
-    newShape("endPoint", "endPoint1", 2, 1, 6, 2})
+    newShape("endPoint", "endPoint1", {2, 1, 6, 2})
     newShape("shape", "triangle1_2_1", {2, 1, 4, 5}, "triangleTopLeftShape")
 
     --GEMS
@@ -47,7 +47,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
     newShape("gem", "purpleCoin", {2, 1, 4, 4}, "purpleCoin")
 
     --ITEMS
-    newShape("item", "coins", {1, 1, 2, 3, 40)
+    newShape("item", "coins", {1, 1, 2, 3}, 40)
     newShape("item", "small-present", {1, 1, 5, 5}, {})
 
     newShape("item", "big-present", {1, 1, 5, 3}, {})

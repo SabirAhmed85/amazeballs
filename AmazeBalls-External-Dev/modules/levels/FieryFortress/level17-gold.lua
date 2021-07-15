@@ -92,7 +92,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
         {name = "autoFan", properties = {directions = {"left"} } },
         {name = "triangle", properties = {shape = "triangleTopRightShape" } },
         {name = "triangle", properties = {shape = "triangleTopLeftShape" } }
-        }})
+    })
     newShape("item", "mystery-block", {1, 3, 5, 5}, {
         --{name = "simple"},
         {name = "autoFan", properties = {directions = {"right"} } },
@@ -100,7 +100,7 @@ local createLevelObjects = function (mainFunc, shapeArrayParameters)
         {name = "manualFan", properties = {directions = {"right"} } },
         {name = "manualFan", properties = {directions = {"left"} } },
         {name = "spitter", properties = {directions = {"left", "right"} } }
-    }})
+    })
     newShape("shape", "bar3_1_3", {1, 3, 6, 5}, "bar", {"vert", 4})
     newShape("shape", "bar4_1_3", {1, 3, 2, 6}, "bar", {"vert", 2})
     newShape("shape", "bar5_1_3", {1, 3, 3, 6}, "bar", {"vert", 2})
