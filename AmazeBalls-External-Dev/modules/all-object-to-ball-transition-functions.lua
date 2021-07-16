@@ -1440,7 +1440,7 @@ local fanCentering = function (obj, thisFan, fanCenterTime, mainFunc)
 				    	if #newVal > 3 then
 				    		local firstHalf = string.sub(newVal, 0, #newVal - 3)
 				    		local secondHalf = string.sub(newVal, #newVal - 2, #newVal)
-				    		newVal = firstHalf .. ", " .. secondHalf
+				    		newVal = firstHalf .. "," .. secondHalf
 				    	end
 
 				    	mainFunc.medalGainedScreen.CoinsCounterLength = #newVal - 1
@@ -2050,7 +2050,8 @@ end
 	t.closeItemGainedScreenFunction = closeItemGainedScreenFunction
 
 local itemGainedFunction = function (mainFunc, shapeArray, shapeArrayParameters, itemType, itemLabel, relevantShapeArrayIndex, relevantToolArrayCounter)
-    if (mainFunc.allLevelSettings.itemBagIsOpen == false and itemLabel ~= 'coins') then
+    if (mainFunc.allLevelSettings.itemBagIsOpen == false and itemLabel ~= 'coins'
+		and (relevantShapeArrayIndex == nil or (relevantShapeArrayIndex ~= nil and shapeArrayParameters[relevantShapeArrayIndex][2]))) then
     	display.getCurrentStage():setFocus( nil )
         mainFunc.allLevelSettings.itemBagIsOpen = true
 
@@ -2072,13 +2073,13 @@ local itemGainedFunction = function (mainFunc, shapeArray, shapeArrayParameters,
     	screen.itemYVal = 165
     	if relevantShapeArrayIndex ~= nil then
     		-- this is an item-present, multiple items
-    		local itemNum = #shapeArrayParameters[relevantShapeArrayIndex][8]
-    		if #shapeArrayParameters[relevantShapeArrayIndex][8] > 5 then
+    		local itemNum = #shapeArrayParameters[relevantShapeArrayIndex]["props"][2]
+    		if #shapeArrayParameters[relevantShapeArrayIndex]["props"][2] > 5 then
     			itemNum = 5
     		end
     		screen.itemXVal = display.contentWidth/2 - (28 * itemNum)
     		screen.originalItemXVal = display.contentWidth/2 - (28 * itemNum)
-    		if #shapeArrayParameters[relevantShapeArrayIndex][8] > 5 then
+    		if #shapeArrayParameters[relevantShapeArrayIndex]["props"][2] > 5 then
 	    		screen.itemYVal = 130
 	    	end
     	else
@@ -2114,18 +2115,18 @@ local itemGainedFunction = function (mainFunc, shapeArray, shapeArrayParameters,
 
 			if relevantShapeArrayIndex ~= nil then
 				local itemToShowCounter = 1
-				for a = 1, #shapeArrayParameters[relevantShapeArrayIndex][8] do
+				for a = 1, #shapeArrayParameters[relevantShapeArrayIndex]["props"][2] do
 					mainFunc.thisLevelSettings.itemBagButtonsVisible = true
 					local name, thisIsShape
-					if shapeArrayParameters[relevantShapeArrayIndex][8][a][1] == "item" then
-						name = shapeArrayParameters[relevantShapeArrayIndex][8][a][2]
+					if shapeArrayParameters[relevantShapeArrayIndex]["props"][2][a][1] == "item" then
+						name = shapeArrayParameters[relevantShapeArrayIndex]["props"][2][a][2]
 						thisIsShape = false
 					else
-						name = shapeArrayParameters[relevantShapeArrayIndex][8][a][1]
+						name = shapeArrayParameters[relevantShapeArrayIndex]["props"][2][a][1]
 						thisIsShape = true
 					end
 
-					item = mainFunc.globalImageCreateFunctions.createItemDetailedIcon(thisIsShape, name, "ItemGainedScreenMulti", shapeArrayParameters[relevantShapeArrayIndex][8], a, nil, nil)
+					item = mainFunc.globalImageCreateFunctions.createItemDetailedIcon(thisIsShape, name, "ItemGainedScreenMulti", shapeArrayParameters[relevantShapeArrayIndex]["props"][2], a, nil, nil)
 					item.itemType = name
 					if myGameSettings["itemDiscovered"][item.itemType] then
 						table.insert(mainFunc.thisLevelSettings.itemWasDiscoveredInLevel, item.itemType)
@@ -2151,7 +2152,7 @@ local itemGainedFunction = function (mainFunc, shapeArray, shapeArrayParameters,
 			        mainFunc.allLevelSettings.itemScreenObjectsGroup:insert(item.displayObjects["counterNumber"])
 			        item.displayObjects["counterNumber"]:toFront()
 
-			        mainFunc.globalImageCreateFunctions.positionItemDetailedIcon(item, screen.itemXVal, screen.itemYVal, thisIsShape, name, "ItemGainedScreenMulti", shapeArrayParameters[relevantShapeArrayIndex][8], a, nil, nil) 
+			        mainFunc.globalImageCreateFunctions.positionItemDetailedIcon(item, screen.itemXVal, screen.itemYVal, thisIsShape, name, "ItemGainedScreenMulti", shapeArrayParameters[relevantShapeArrayIndex]["props"][2], a, nil, nil) 
 					
 
 					screen.itemXVal = screen.itemXVal + 70

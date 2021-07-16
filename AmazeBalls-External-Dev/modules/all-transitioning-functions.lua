@@ -831,18 +831,18 @@ local prepareTransitioningObjects = function (mainFunc)
 
 									connectorTubeVertical.height = mainFunc.allLevelSettings.squareHeight
 									if thisConnectorHasXDistance == false then
-										connectorTubeVertical.width = 8
+										-- connectorTubeVertical.width = 8
 										connectorTubeVertical.x = connectorTubeVertical.x - ((3.5/60) * mainFunc.allLevelSettings.squareWidth)
 									else
-										connectorTubeVertical.width = 17
-										connectorTubeVertical.x = connectorTubeVertical.x - ((10/60) * mainFunc.allLevelSettings.squareWidth)
+										-- connectorTubeVertical.width = 17
+										connectorTubeVertical.x = connectorTubeVertical.x - 10.5
 									end
-									connectorTubeVertical.y = lastConnectorY - (mainFunc.allLevelSettings.squareHeight/2) + ((4/52) * mainFunc.allLevelSettings.squareHeight)
+									connectorTubeVertical.y = lastConnectorY - (mainFunc.allLevelSettings.squareHeight/2) + 4.175
 									print("jo");
 								else
 									print("yo");
 									connectorTubeVertical.height = mainFunc.allLevelSettings.squareHeight
-									connectorTubeVertical.width = 8
+									-- connectorTubeVertical.width = 8
 									--connectorTubeVertical.rotation = 90
 									connectorTubeVertical.y = lastConnectorY - ((19/52) * mainFunc.allLevelSettings.squareHeight)
 									connectorTubeVertical.x = connectorTubeVertical.x - ((2.9/60) * mainFunc.allLevelSettings.squareWidth)
@@ -905,12 +905,12 @@ local prepareTransitioningObjects = function (mainFunc)
 									connectorTubeVertical.yScale = -1
 								end
 								if verticalBottomUsed then
-									connectorTubeVertical.width = 17
+									-- connectorTubeVertical.width = 16
 									if actuallyVerticalTop == false then
 										connectorTubeVertical.xScale = -1
 									end
 								else
-									connectorTubeVertical.width = 8
+									-- connectorTubeVertical.width = 8
 								end
 								connectorTubeVertical.x = lastConnectorX
 								if thisConnectorYDistance == wholeConnectorYDistance and isActualConnector then

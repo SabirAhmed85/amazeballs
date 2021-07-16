@@ -676,8 +676,8 @@ t.createLevelSettings = function (mainFunc, creationType)
         { name = "gunBase-sliding", start=16, count=1, loopCount=1 }
 	}
 
-	horizontalConnectorTubesImageSheet = graphics.newImageSheet( "images/objects/shapes/connectorPieces/horizontal-TubesSprite.png", {width = xCalc(60), height = yCalc(8), numFrames = 11, sheetContentWidth = xCalc(60), sheetContentHeight = yCalc(88)})
-	verticalConnectorTubesImageSheet = graphics.newImageSheet( "images/objects/shapes/connectorPieces/vertical-TubesSprite.png", {width = 8, height = yCalc(60), numFrames = 11, sheetContentWidth = 88, sheetContentHeight = 60})
+	horizontalConnectorTubesImageSheet = graphics.newImageSheet( "images/objects/shapes/connectorPieces/horizontal-TubesSprite.png", {width = 60, height = 8, numFrames = 11, sheetContentWidth = 60, sheetContentHeight = 88})
+	verticalConnectorTubesImageSheet = graphics.newImageSheet( "images/objects/shapes/connectorPieces/vertical-TubesSprite.png", {width = 8, height = 60, numFrames = 11, sheetContentWidth = 88, sheetContentHeight = 60})
 	cornerConnectorTubesImageSheet = graphics.newImageSheet( "images/objects/shapes/connectorPieces/corner-TubesSprite.png", {width = 15, height = 55, numFrames = 11, sheetContentWidth = 15, sheetContentHeight = 605})
 	connectorSpotsImageSheet = graphics.newImageSheet( "images/objects/shapes/connectorPieces/spotsSprite.png", {width = 22, height = 21, numFrames = 11, sheetContentWidth = 242, sheetContentHeight = 21})
 	connectorTubesSequenceData = {
