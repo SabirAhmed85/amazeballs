@@ -11,7 +11,7 @@ local addToTransitionArray = function (transitionArray, shapeArrayParameters, sh
     });
 end;
 
-getStartPosition = function (shapeName, positionArray, shapeArrayParameters)
+function getStartPosition(shapeName, positionArray, shapeArrayParameters)
     for a = 1, #shapeArrayParameters do
         if shapeArrayParameters[a]["name"] == shapeName then
             for b = 1, #positionArray do

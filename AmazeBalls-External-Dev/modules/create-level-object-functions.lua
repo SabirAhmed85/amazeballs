@@ -1,5 +1,6 @@
 local t = {}
 local sprite = require("modules.object-create.sprite");
+local createBGTile, createMainBGTiles, createGem, createCharacterChangePoint, calculateXFromPosition, calculateYFromPosition;
 
 local switchImageSheet = graphics.newImageSheet( "images/objects/switchSprite.png", {frames = { {x = xCalc(0), y =yCalc(0), width = xCalc(59), height = yCalc(52)}, {x = xCalc(59), y = yCalc(0), width = xCalc(61), height = yCalc(52)} }, sheetContentWidth = xCalc(119), sheetContentHeight = yCalc(52)})
 local switchSequenceData = {
@@ -28,6 +29,7 @@ local function spawn (z, mainFunc)
         object = sprite(mainFunc.allLevelSettings.allFansImageSheet, mainFunc.allLevelSettings.allFansSequenceData, shapeType)
 
         if (shapeType == "tunnel") then
+
             mainFunc.thisLevelSettings.tunnelCounter = mainFunc.thisLevelSettings.tunnelCounter + 1
         end
     elseif shapeType == "door" then
@@ -126,7 +128,7 @@ local function spawn (z, mainFunc)
             object:pause();
         end;
     elseif shapeType == "endPoint" then
-        object = display.newImageRect("images/objects/" .. currentMedal .. "Medal.png", 63, 55)
+        object = display.newImageRect("images/objects/" .. currentMedal .. "Medal.png", 60, 52)
     elseif shapeType == "gun" then
         local gunImageSheet = graphics.newImageSheet( "images/objects/gun.png", {width = 60, height = 52, numFrames = 4, sheetContentWidth = 240, sheetContentHeight = 52})
         local gunSequenceData = {
@@ -137,7 +139,12 @@ local function spawn (z, mainFunc)
         }
         object = sprite(gunImageSheet, gunSequenceData, shapeSubType, true);
     end
+
     return object
+end
+
+local createBGTile = function ()
+
 end
 
 local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
@@ -294,20 +301,20 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
     or shapeParameters["type"] == "tunnel"
     or shapeParameters["type"] == "characterChangePoint" then
 
-        if shapeParameters["type"] == "shape" and (shapeParameters["subType"] == "bar" or (shapeParameters["subType"] == "doubleBar") ) then
+        if (shapeParameters["subType"] == "bar" or shapeParameters["subType"] == "doubleBar") then
             shapeArray[z].width = (50/60) * mainFunc.allLevelSettings.squareWidth
-        elseif shapeParameters["type"] == "shape" and shapeParameters["subType"] == "triangleTopAndBottomShape" then
+        elseif shapeParameters["subType"] == "triangleTopAndBottomShape" then
             shapeArray[z].width = mainFunc.allLevelSettings.squareWidth * 2
         else
             shapeArray[z].width = mainFunc.allLevelSettings.squareWidth
         end
     end
     
-    if shapeParameters["type"] == "shape" and shapeParameters["subType"] == "triangleLeftAndRightShape" then
+    if shapeParameters["subType"] == "triangleLeftAndRightShape" then
         shapeArray[z].height = mainFunc.allLevelSettings.squareHeight * 2
-    elseif shapeParameters["type"] == "shape" and shapeParameters["subType"] == "doubleBar" and shapeParameters["props"][1] == "horz" then
+    elseif shapeParameters["subType"] == "doubleBar" and shapeParameters["props"][1] == "horz" then
         shapeArray[z].height = mainFunc.allLevelSettings.squareHeight * 1.75
-    elseif shapeParameters["type"] == "shape" and shapeParameters["subType"] == "doubleBar" and shapeParameters["props"][1] == "vert" then
+    elseif shapeParameters["subType"] == "doubleBar" and shapeParameters["props"][1] == "vert" then
         shapeArray[z].height = mainFunc.allLevelSettings.squareHeight * 2.75
     else
         shapeArray[z].height = mainFunc.allLevelSettings.squareHeight
@@ -316,8 +323,10 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
     local location = shapeParameters["location"];
     shapeArray[z].anchorX = 0.5;
     shapeArray[z].anchorY = 0.5;
-    shapeArray[z].x = ((location["xScreen"] - 1) * display.contentWidth) + (((location["xSquare"] - 1) * mainFunc.allLevelSettings.squareWidth) + mainFunc.allLevelSettings.gutterWidth ) + (mainFunc.allLevelSettings.squareWidth/2);
-    shapeArray[z].y = ((location["yScreen"] - 1) * display.contentHeight) + (((location["ySquare"] - 1) * mainFunc.allLevelSettings.squareHeight) + mainFunc.allLevelSettings.gutterHeight ) + (mainFunc.allLevelSettings.squareHeight/2);
+    shapeArray[z].x = calculateXFromPosition(location["xScreen"], location["xSquare"], mainFunc);
+    shapeArray[z].y = calculateYFromPosition(location["yScreen"], location["ySquare"], mainFunc);
+    shapeArray[z].originalX = shapeArray[z].x;
+    shapeArray[z].originalY = shapeArray[z].y;
     shapeArray[z].name = shapeParameters["name"]
     shapeArray[z].relevantHorzScreen = location["xScreen"]
     shapeArray[z].relevantVertScreen = location["yScreen"]
@@ -1157,54 +1166,117 @@ local function createLevelObject(shapeArrayParameters, shapeArray, z, mainFunc)
     end
 
     if shapeParameters["type"] == "characterChangePoint" then
-        shapeArray[z].specificCharacter = nil
-        if shapeParameters["subType"] then
-            shapeArray[z].specificCharacter = shapeParameters["subType"]
-            shapeArray[z].specificCharacterCircle = display.newImageRect("images/objects/Layout/ballChangerCircle.png", 60, 52)
-            shapeArray[z].specificCharacterCircle.x = shapeArray[z].x
-            shapeArray[z].specificCharacterCircle.y = shapeArray[z].y
-            mainFunc.allLevelSettings.screenObjectsGroup: insert(shapeArray[z].specificCharacterCircle)
+        createCharacterChangePoint(shapeArray[z], shapeParameters, mainFunc);
+    end
 
-            shapeArray[z].specificCharacterIcon = display.newSprite(mainFunc.allLevelSettings.charactersIconsImageSheet, mainFunc.allLevelSettings.charactersIconsSequenceData)
-            shapeArray[z].specificCharacterIcon:setSequence(shapeArray[z].specificCharacter)
-            shapeArray[z].specificCharacterIcon.xScale = 0.22
-            shapeArray[z].specificCharacterIcon.yScale = 0.22
-            shapeArray[z].specificCharacterIcon.x = shapeArray[z].x
-            shapeArray[z].specificCharacterIcon.y = shapeArray[z].y
-            mainFunc.allLevelSettings.screenObjectsGroup: insert(shapeArray[z].specificCharacterIcon)
-        end
+    if (hasValue({"door", "gem", "endPoint", "mystery-block", "item"}, shapeParameters["type"]) == false and
+        hasValue({"bar"}, shapeParameters["subType"]) == false) then
+        shapeArray[z].BGTiles = createMainBGTiles(shapeArray[z], mainFunc);
+    end
 
-        shapeArray[z].button = display.newImageRect("images/objects/Layout/ballChangerButton.png", 60, 52)
-        shapeArray[z].button.alpha = 0
-        shapeArray[z].button.objectType = "characterChangePointButton"
-        shapeArray[z].button.relatedObject = shapeArray[z]
-        shapeArray[z].button:addEventListener("tap", mainFunc.listener)
-        mainFunc.allLevelSettings.screenObjectsGroup: insert(shapeArray[z].button)
-        --shapeArray[z].button.alpha = 0
-        local xValAdd = mainFunc.allLevelSettings.squareWidth * 0.8
-        local yValAdd = mainFunc.allLevelSettings.squareHeight/1.5
-        local rotate = -25
-        if shapeParameters["location"]["xSquare"] > 4 then
-            xValAdd = xValAdd * -1
-            xScaleAdjust = 1
-        else
-            xScaleAdjust = -1
-        end
-
-        if shapeParameters["location"]["ySquare"] > 1 then
-            yValAdd = yValAdd * -1
-        end
-
-        shapeArray[z].button.x = shapeArray[z].x + xValAdd
-        shapeArray[z].button.y = shapeArray[z].y + yValAdd
-        shapeArray[z].button.xScale = xScaleAdjust
-
-        shapeArray[z].bigDirectionArrow = display.newSprite(mainFunc.allLevelSettings.tunnelPiecesImageSheet, mainFunc.allLevelSettings.tunnelPiecesSequenceData)
-        shapeArray[z].bigDirectionArrow:setSequence("purpleArrow")
-        shapeArray[z].bigDirectionArrow.alpha = 0
-        mainFunc.allLevelSettings.frontScreenObjectsGroup: insert(shapeArray[z].bigDirectionArrow)
+    if (hasValue({"gem", "item"}, shapeParameters["type"])
+        and shapeParameters["subType"] ~= "purple") then
+        shapeArray[z].BGTiles = {};
+        -- object.BGTile = createBGTile();
+        shapeArray[z].BGTiles[1] = createBGTile(shapeArray[z].x, shapeArray[z].y, 45, 38, mainFunc);
     end
 end
     t.createLevelObject = createLevelObject
+
+function createBGTile(x, y, width, height, mainFunc)
+    local tile = display.newImageRect("images/level-images/" .. currentWorld .. "/Layout/shape-bg-tile-small.png", width, height);
+    tile.x = x;
+    tile.y = y;
+    mainFunc.allLevelSettings.backgroundObjectsGroup: insert(tile);
+    tile:toBack();
+
+    return tile;
+end
+
+function createMainBGTiles(shape, mainFunc)
+    local extraTilesCounter = 0;
+    local BGTiles = {};
+    
+    BGTiles[1] = createBGTile(shape.originalX, shape.originalY, mainFunc.allLevelSettings.squareWidth, mainFunc.allLevelSettings.squareHeight, mainFunc);
+
+    for a = 1, #mainFunc.allLevelSettings.transitionArrayIndex do
+        local thisTransition = mainFunc.allLevelSettings.transitionArrayIndex[a];
+        if (thisTransition.shapeName == shape.name) then
+            for b = 1, #thisTransition.positionArray do
+                if (thisTransition.startPositionIndex ~= b) then
+                    local position = thisTransition.positionArray[b];
+                    local tileX = calculateXFromPosition(position[1], position[3], mainFunc);
+                    local tileY = calculateYFromPosition(position[2], position[4], mainFunc);
+                    
+                    BGTiles[extraTilesCounter + 2] = createBGTile(tileX, tileY, mainFunc.allLevelSettings.squareWidth, mainFunc.allLevelSettings.squareHeight, mainFunc);
+                    extraTilesCounter = extraTilesCounter + 1;
+                end
+            end
+        end
+    end
+
+    return BGTiles;
+end
+
+function createGem()
+
+end
+
+function createCharacterChangePoint(shape, shapeParameters, mainFunc)
+    shape.specificCharacter = nil
+    if shapeParameters["subType"] then
+        shape.specificCharacter = shapeParameters["subType"]
+        shape.specificCharacterCircle = display.newImageRect("images/objects/Layout/ballChangerCircle.png", 60, 52)
+        shape.specificCharacterCircle.x = shape.x
+        shape.specificCharacterCircle.y = shape.y
+        mainFunc.allLevelSettings.screenObjectsGroup: insert(shape.specificCharacterCircle)
+
+        shape.specificCharacterIcon = display.newSprite(mainFunc.allLevelSettings.charactersIconsImageSheet, mainFunc.allLevelSettings.charactersIconsSequenceData)
+        shape.specificCharacterIcon:setSequence(shape.specificCharacter)
+        shape.specificCharacterIcon.xScale = 0.22
+        shape.specificCharacterIcon.yScale = 0.22
+        shape.specificCharacterIcon.x = shape.x
+        shape.specificCharacterIcon.y = shape.y
+        mainFunc.allLevelSettings.screenObjectsGroup: insert(shape.specificCharacterIcon)
+    end
+
+    shape.button = display.newImageRect("images/objects/Layout/ballChangerButton.png", 60, 52)
+    shape.button.alpha = 0
+    shape.button.objectType = "characterChangePointButton"
+    shape.button.relatedObject = shape
+    shape.button:addEventListener("tap", mainFunc.listener)
+    mainFunc.allLevelSettings.screenObjectsGroup: insert(shape.button)
+    --shape.button.alpha = 0
+    local xValAdd = mainFunc.allLevelSettings.squareWidth * 0.8
+    local yValAdd = mainFunc.allLevelSettings.squareHeight/1.5
+    local rotate = -25
+    if shapeParameters["location"]["xSquare"] > 4 then
+        xValAdd = xValAdd * -1
+        xScaleAdjust = 1
+    else
+        xScaleAdjust = -1
+    end
+
+    if shapeParameters["location"]["ySquare"] > 1 then
+        yValAdd = yValAdd * -1
+    end
+
+    shape.button.x = shape.x + xValAdd
+    shape.button.y = shape.y + yValAdd
+    shape.button.xScale = xScaleAdjust
+
+    shape.bigDirectionArrow = display.newSprite(mainFunc.allLevelSettings.tunnelPiecesImageSheet, mainFunc.allLevelSettings.tunnelPiecesSequenceData)
+    shape.bigDirectionArrow:setSequence("purpleArrow")
+    shape.bigDirectionArrow.alpha = 0
+    mainFunc.allLevelSettings.frontScreenObjectsGroup: insert(shape.bigDirectionArrow)
+end
+
+function calculateXFromPosition(xScreen, xSquare, mainFunc)
+    return ((xScreen - 1) * display.contentWidth) + (((xSquare - 1) * mainFunc.allLevelSettings.squareWidth) + mainFunc.allLevelSettings.gutterWidth ) + (mainFunc.allLevelSettings.squareWidth/2);
+end
+
+function calculateYFromPosition(yScreen, ySquare, mainFunc)
+    return ((yScreen - 1) * display.contentHeight) + (((ySquare - 1) * mainFunc.allLevelSettings.squareHeight) + mainFunc.allLevelSettings.gutterHeight ) + (mainFunc.allLevelSettings.squareHeight/2);
+end
 
 return t
